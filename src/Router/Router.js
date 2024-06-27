@@ -1,11 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
+import ThemeExample from '../Style/ThemeExample';
 
 function Router() {
     return (
         <Routes>
             {/* <Route path='/' element={<MainPage />} /> */}
-            {/* 김예은 이민규 박주영 화이팅 ! */}
-            {/* git 문제 없길~ */}
+
+            {/* theme 사용 에시 페이지 */}
+            <Route path ='/theme' element = {<ThemeExample />} />
         </Routes>
     );
 }
