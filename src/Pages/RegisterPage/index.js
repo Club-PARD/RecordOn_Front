@@ -1,12 +1,13 @@
 import styled from "styled-components"
 
 
-const HomePage = () => {
+const RegisterPage = () => {
 
     return (
         <Container>
             안녕하세요
         </Container>
+
     )
 
 
@@ -29,7 +30,6 @@ margin: ${(props) => props.margin || ""};
 padding: ${(props) => props.padding || ""};
 box-sizing: border-box;
 position: ${(props) => props.position || ''};
-
 `
 
-export default HomePage;
+export default RegisterPage;

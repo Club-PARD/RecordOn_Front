@@ -4,13 +4,13 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import GlobalStyles from "./Style/GlobalStyles";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./Style/theme";
+import { Theme } from "./Style/Theme";
 
 function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={Theme}>
           <GlobalStyles />
           <Router />
         </ThemeProvider>

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 
-const HomePage = () => {
+const ExperiencePage = () => {
 
     return (
         <Container>
@@ -32,4 +32,4 @@ position: ${(props) => props.position || ''};
 
 `
 
-export default HomePage;
+export default ExperiencePage;

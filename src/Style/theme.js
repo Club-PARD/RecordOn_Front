@@ -1,5 +1,5 @@
 // 예시임
-export const theme = {
+export const Theme = {
   fontSizes: {
     header: "16px",
     button1: "20px",
@@ -8,7 +8,7 @@ export const theme = {
     textField1: "20px",
     textField2: "15px",
     title1: "16px",
-    title2: "26px",
+    title2: "50px",
     subTitle1: "16px",
     subTitle2: "14px",
     bodyText1: "22px",
@@ -19,8 +19,10 @@ export const theme = {
     menuRegular: "14px",
     menuBold: "14px",
   },
+  fontWeights: {
+  },
   colors: {
-    primary_normal: "#15521D",
+    primary_normal: "#000000",
     primary_light: "#E9F2EB",
     gray_000: "#FBFBFD",
     gray_001: "#F7F7F7",
