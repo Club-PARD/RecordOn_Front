@@ -1,91 +1,74 @@
-import styled from 'styled-components'
-import { useLocation, useNavigate } from 'react-router-dom'
+import styled from "styled-components";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigator = useNavigate();
 
-    const navigator = useNavigate();
+  const writeHandler = () => {
+    navigator("/WritingPage");
+  };
 
-    const writeHandler = () => {
-        navigator("/WritingPage")
-    }
+  const myPageHandler = () => {
+    navigator("/MyPage");
+  };
 
-    const myPageHandler = () => {
-        navigator("/MyPage")
-    }
-
-    return (
-        // 전체 컨테이너
-        <Container>
-            <Div justifyContent="space-between" backgroundColor="none">
-                <Div position="relative" backgroundColor="none">
-
-                    <Div position="absolute" backgroundColor="none">
-                    </Div>
-                    <Div position="absolute" width="130px" height="55px">
-                    </Div>
-                    <Div position="absolute" width="93px" height="35px" margin="0 630px 0 0">
-                    </Div>
-                    <Div position="absolute" width="100px" height="35px" margin="0 0 0  630px" onClick={myPageHandler}>
-                        <Div>
-                        </Div>
-                        <Div>사용자</Div>
-                    </Div>
-                </Div>
-            </Div>
-        </Container>
-    )
-}
-
-export default Header
-
-
-/* 스타일 컴포넌트 선언 */
-
-const Container = styled.div`
-display: flex;
-height: 60px;
-width:100%;
-background-color:  none;
-justify-content: center;
-border: ${(props) => props.border || '1px solid black'};
-`
+  return (
+    // 전체 헤더를 감싸는 div
+    <Div>
+      {/* 로고 들어가는 자리. img 임포트 해서 변경 */}
+      <LogoDiv>logo</LogoDiv>
+      {/* 로그인 버튼. 로그인 한 경우 프로필 이미지로 변경 */}
+      {isLoggedIn ? (
+        <div>프로필 이미지</div>
+      ) : (
+        <LogInButton>로그인</LogInButton>
+      )}
+    </Div>
+  );
+};
 
 const Div = styled.div`
-width: ${(props) => props.width || '100%'};
-height: ${(props) => props.height || '100%'};
-display: ${(props) => props.display || 'flex'};
-flex-direction: ${(props) => props.flexDirection || 'row'};
-justify-content: ${(props) => props.justifyContent || 'center'};
-align-items: ${(props) => props.alignItems || 'center'};
-align-content: ${(props) => props.alignContent || ''};
-background-color: ${(props) => props.backgroundColor || 'white'};
-border: ${(props) => props.border || '1px solid black'};
-font-size: ${(props) => props.fontSize || "15px"};
-font-weight: ${(props) => props.fontWeight || "bold"};
-margin: ${(props) => props.margin || ""};
-padding: ${(props) => props.padding || ""};
-box-sizing: border-box;
-position: ${(props) => props.position || ''};
-`
-const Input = styled.input`
-width: ${(props) => props.width || '100%'};
-height: ${(props) => props.height || '100%'};
-background-color: ${(props) => props.backgroundColor || 'white'};
-color: ${(props) => props.color || "black"};
-font-size: ${(props) => props.fontSize || "15px"};
-font-weight: ${(props) => props.fontWeight || ""};
-box-sizing: border-box;
-border: 0.5px solid #dbdbdb;
-padding: ${(props) => props.padding || ""};
-border-radius: 5px;
-/* input 태그 placeholder 스타일 정하기 */
-    &::placeholder{
-        color: #dbdbdb;
-    }
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-const Img = styled.img`
-width: ${(props) => props.width || '100%'};
-height: ${(props) => props.height || '100%'};
-border-radius: ${(props) => props.borderRadius || ''};
-`
+  width: 100%;
+  height: 70px;
+
+  background-color: #ffffff;
+  box-shadow: 0px 1px 3px 0px #00000033;
+`;
+
+const LogoDiv = styled.div`
+  justify-content: center;
+  width: 153px;
+  height: 40px;
+
+  border-radius: 7.5px;
+  background-color: #d9d9d9;
+`;
+
+const LogInButton = styled.div`
+  justify-content: center;
+  width: 102px;
+  height: 40px;
+
+  border-radius: 25px;
+
+  // 나중에 props로 대체
+  background-color: #0bc35f;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: white;
+
+  cursor: pointer;
+`;
+
+export default Header;
