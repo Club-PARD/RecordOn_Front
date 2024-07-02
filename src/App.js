@@ -1,4 +1,3 @@
-import "./App.css";
 import Router from "./Router/Router";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";

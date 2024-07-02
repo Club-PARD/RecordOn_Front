@@ -17,7 +17,7 @@ function Router() {
         <Route path="/project" element={<ProjectPage />} />
         <Route path="/experience" element={<ExperiencePage />} />
         {/* theme 사용 에시 페이지 */}
-        {/* <Route path='/theme' element={<ThemeExample />} /> */}
+        <Route path='/theme' element={<ThemeExample />} />
       </Routes>
     </>
   );
