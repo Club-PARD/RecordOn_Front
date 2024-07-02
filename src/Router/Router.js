@@ -9,8 +9,8 @@ import ExperiencePage from "../Pages/ExperiencePage";
 
 function Router() {
   return (
-    <Container>
-      <Header />
+    <>
+      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -19,7 +19,7 @@ function Router() {
         {/* theme 사용 에시 페이지 */}
         {/* <Route path='/theme' element={<ThemeExample />} /> */}
       </Routes>
-    </Container>
+    </>
   );
 }
 
