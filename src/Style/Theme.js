@@ -20,6 +20,8 @@ export const Theme = {
     menuBold: "14px",
   },
   fontWeights: {
+    // menuBold: "14px",
+    // menuBold: "14px",
   },
   colors: {
     primary_normal: "#000000",
