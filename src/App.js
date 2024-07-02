@@ -9,13 +9,10 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
 
-  const clientId = process.env.REACT_APP_CLIENT_ID;
-
-  console.log(clientId);
 
   return (
     <RecoilRoot>
-      <GoogleOAuthProvider clientId={clientId}>
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
         <BrowserRouter>
           <ThemeProvider theme={Theme}>
             <GlobalStyles />
