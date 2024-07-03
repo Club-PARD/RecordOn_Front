@@ -35,30 +35,43 @@ const Header = () => {
   };
 
   return (
-    <Div $scrolled={isScrolled}>
-      <LogoDiv>logo</LogoDiv>
-      {isLoggedIn ? (
-        <div onClick={myPageHandler}>프로필 이미지</div>
-      ) : (
-        <LogInButton onClick={loginHandler}>로그인</LogInButton>
-      )}
-    </Div>
+    <HeaderContainer $scrolled={isScrolled}>
+      <Div>
+        <LogoDiv>logo</LogoDiv>
+        {isLoggedIn ? (
+          <div onClick={myPageHandler}>프로필 이미지</div>
+        ) : (
+          <LogInButton onClick={loginHandler}>로그인</LogInButton>
+        )}
+      </Div>
+    </HeaderContainer>
   );
 };
 
-const Div = styled.header`
+const HeaderContainer = styled.header`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  width: 100%;
+  position: fixed;
+  top: 0;
+
+  z-index: 1000;
+  box-shadow: ${(props) => (props.$scrolled ? "0px 1px 3px 0px #00000033" : "transparent")};
+  transition: box-shadow 0.3s ease;
+`;
+
+const Div = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  min-width: 80%;
+
+  width: 1200px;
   height: 70px;
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-  background-color: ${(props) => (props.$scrolled ? "#7f8c8d" : "transparent")};
-  transition: background-color 0.3s ease;
+
+  background-color: #ffffff;
 `;
 
 const LogoDiv = styled.div`

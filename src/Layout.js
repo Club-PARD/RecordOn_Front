@@ -1,15 +1,20 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "./Common/Header";
+import styled from "styled-components";
 
 const Layout = () => {
   return (
-    <div>
+    <>
       <Header />
-      <main>
+      <Content>
         <Outlet />
-      </main>
-    </div>
+      </Content>
+    </>
   );
 };
+
+const Content = styled.main`
+  margin-top: 70px;
+`;
 
 export default Layout;

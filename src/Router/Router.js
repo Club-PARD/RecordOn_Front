@@ -10,19 +10,16 @@ import Layout from "../Layout";
 
 function Router() {
   return (
-    <>
-      {/* <Header /> */}
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/project" element={<ProjectPage />} />
-          <Route path="/experience" element={<ExperiencePage />} />
-          {/* theme 사용 에시 페이지 */}
-          <Route path="/theme" element={<ThemeExample />} />
-        </Route>
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/project" element={<ProjectPage />} />
+        <Route path="/experience" element={<ExperiencePage />} />
+        {/* theme 사용 에시 페이지 */}
+        <Route path="/theme" element={<ThemeExample />} />
+      </Route>
+    </Routes>
   );
 }
 
