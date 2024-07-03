@@ -8,6 +8,7 @@ const Header = () => {
 
   const navigate = useNavigate();
 
+  // 스크롤시 box shadow 나타나게 함
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -39,6 +40,8 @@ const Header = () => {
       <Div>
         <LogoDiv>logo</LogoDiv>
         {isLoggedIn ? (
+          // 구글 로그인 구현시 프로필 사진 삽입 가능한 원형으로 수정
+
           <div onClick={myPageHandler}>프로필 이미지</div>
         ) : (
           <LogInButton onClick={loginHandler}>로그인</LogInButton>
@@ -58,7 +61,8 @@ const HeaderContainer = styled.header`
   top: 0;
 
   z-index: 1000;
-  box-shadow: ${(props) => (props.$scrolled ? "0px 1px 3px 0px #00000033" : "transparent")};
+  box-shadow: ${(props) =>
+    props.$scrolled ? "0px 1px 3px 0px #00000033" : "transparent"};
   transition: box-shadow 0.3s ease;
 `;
 
@@ -86,10 +90,12 @@ const LogInButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 102px;
   height: 40px;
+
   border-radius: 25px;
-  background-color: #0bc35f;
+  background-color: ${(props) => props.theme.colors.Green};
   font-family: Pretendard, sans-serif;
   font-size: 20px;
   font-weight: 400;
