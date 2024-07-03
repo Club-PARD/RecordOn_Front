@@ -18,6 +18,7 @@ const Div = styled.div`
 display: flex;
 flex-direction: column;
 gap: 60px;
+background-color: aliceblue;
 `;
 
 const LoginButton = styled.div`

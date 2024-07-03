@@ -1,10 +1,26 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const navigator = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const scrollThreshold = 100;
+      setIsScrolled(scrollTop > scrollThreshold);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [navigator]);
 
   const writeHandler = () => {
     navigator("/WritingPage");
@@ -16,7 +32,7 @@ const Header = () => {
 
   return (
     // 전체 헤더를 감싸는 div
-    <Div>
+    <Div $scrolled = {isScrolled}>
       {/* 로고 들어가는 자리. img 임포트 해서 변경 */}
       <LogoDiv>logo</LogoDiv>
       {/* 로그인 버튼. 로그인 한 경우 프로필 이미지로 변경 */}
@@ -39,7 +55,8 @@ const Div = styled.div`
   height: 70px;
 
   background-color: #ffffff;
-  box-shadow: 0px 1px 3px 0px #00000033;
+  ${(props) => (props.$scrolled ? "#7f8c8d" : "transparent")};
+  transition: border-color 0.3s ease;
 `;
 
 const LogoDiv = styled.div`
