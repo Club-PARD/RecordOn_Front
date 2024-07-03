@@ -50,9 +50,11 @@ const Div = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  width: 100%;
+  min-width: 1200px;
   height: 70px;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 
   background-color: #ffffff;
   ${(props) => (props.$scrolled ? "#7f8c8d" : "transparent")};

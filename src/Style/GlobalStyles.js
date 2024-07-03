@@ -48,6 +48,7 @@ body {
   /* line-height: 1.5; */
 }
 
+
 /* 해당 태그들을 중앙정렬하고, 기본 css 속성 제거 */
 div, input, label, button, h1, h2, h3, h4{
     all: unset;
