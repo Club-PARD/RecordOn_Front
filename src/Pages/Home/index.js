@@ -1,35 +1,42 @@
-import styled from "styled-components"
-
+import styled from "styled-components";
+import { ReactComponent as MainEx } from "../../Assets/MainEx.svg";
+import { ReactComponent as GoogleLogo } from "../../Assets/GoogleLogo.svg";
 
 const HomePage = () => {
+  return (
+    <Div>
+      <MainEx />
+      <LoginButton>
+        <GoogleLogo />
+        <div>구글 계정으로 로그인</div>
+      </LoginButton>
+    </Div>
+  );
+};
 
-    return (
-        <Container>
-            안녕하세요
-        </Container>
-    )
+const Div = styled.div`
+display: flex;
+flex-direction: column;
+gap: 60px;
+`;
 
+const LoginButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5.31px;
 
-}
+  width: 228px;
+  height: 45px;
 
-const Container = styled.div`
-width: ${(props) => props.width || ''};
-height: ${(props) => props.height || ''};
-display: ${(props) => props.display || ''};
-flex-direction: ${(props) => props.flexDirection || ''};
-justify-content: ${(props) => props.justifyContent || ''};
-align-items: ${(props) => props.alignItems || ''};
-align-content: ${(props) => props.alignContent || ''};
-background-color: ${(props) => props.backgroundColor || ''};
-/* border: ${(props) => props.border || '1px solid black'}; */
-color: ${(props) => props.theme.colors.primary_normal};
-font-size: ${(props) => props.theme.fontSizes.title1};
-/* font-weight: ; */
-margin: ${(props) => props.margin || ""};
-padding: ${(props) => props.padding || ""};
-box-sizing: border-box;
-position: ${(props) => props.position || ''};
+  background-color: ${(props) => props.theme.colors.Black};
+  border-radius: 7.5px;
+  color: white;
 
-`
+  font-style: ${(props) => props.theme.fontStyles.TextS};
 
+  white-space: nowrap;
+  cursor: pointer;
+`;
 export default HomePage;
