@@ -15,10 +15,9 @@ const HomePage = () => {
 };
 
 const Div = styled.div`
-display: flex;
-flex-direction: column;
-gap: 60px;
-background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
 `;
 
 const LoginButton = styled.div`

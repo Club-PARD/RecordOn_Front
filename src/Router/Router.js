@@ -6,18 +6,21 @@ import Header from "../Common/Header";
 import styled from "styled-components";
 import ProjectPage from "../Pages/ProjectPage";
 import ExperiencePage from "../Pages/ExperiencePage";
+import Layout from "../Layout";
 
 function Router() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/project" element={<ProjectPage />} />
-        <Route path="/experience" element={<ExperiencePage />} />
-        {/* theme 사용 에시 페이지 */}
-        <Route path='/theme' element={<ThemeExample />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/project" element={<ProjectPage />} />
+          <Route path="/experience" element={<ExperiencePage />} />
+          {/* theme 사용 에시 페이지 */}
+          <Route path="/theme" element={<ThemeExample />} />
+        </Route>
       </Routes>
     </>
   );

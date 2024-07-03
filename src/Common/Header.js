@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,73 +20,70 @@ const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [navigator]);
+  }, []);
 
   const writeHandler = () => {
-    navigator("/WritingPage");
+    navigate("/WritingPage");
   };
 
   const myPageHandler = () => {
-    navigator("/MyPage");
+    navigate("/MyPage");
+  };
+
+  const loginHandler = () => {
+    navigate("/login");
   };
 
   return (
-    // 전체 헤더를 감싸는 div
-    <Div $scrolled = {isScrolled}>
-      {/* 로고 들어가는 자리. img 임포트 해서 변경 */}
+    <Div $scrolled={isScrolled}>
       <LogoDiv>logo</LogoDiv>
-      {/* 로그인 버튼. 로그인 한 경우 프로필 이미지로 변경 */}
       {isLoggedIn ? (
-        <div>프로필 이미지</div>
+        <div onClick={myPageHandler}>프로필 이미지</div>
       ) : (
-        <LogInButton>로그인</LogInButton>
+        <LogInButton onClick={loginHandler}>로그인</LogInButton>
       )}
     </Div>
   );
 };
 
-const Div = styled.div`
+const Div = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  min-width: 1200px;
+  max-width: 1200px;
+  min-width: 80%;
   height: 70px;
   position: fixed;
   top: 0;
   z-index: 1000;
-
-  background-color: #ffffff;
-  ${(props) => (props.$scrolled ? "#7f8c8d" : "transparent")};
-  transition: border-color 0.3s ease;
+  background-color: ${(props) => (props.$scrolled ? "#7f8c8d" : "transparent")};
+  transition: background-color 0.3s ease;
 `;
 
 const LogoDiv = styled.div`
   justify-content: center;
   width: 153px;
   height: 40px;
-
   border-radius: 7.5px;
   background-color: #d9d9d9;
 `;
 
 const LogInButton = styled.div`
+  display: flex;
   justify-content: center;
+  align-items: center;
   width: 102px;
   height: 40px;
-
   border-radius: 25px;
-
-  // 나중에 props로 대체
   background-color: #0bc35f;
-  font-family: Pretendard;
+  font-family: Pretendard, sans-serif;
   font-size: 20px;
   font-weight: 400;
   line-height: 26px;
   letter-spacing: -0.02em;
   text-align: center;
   color: white;
-
   cursor: pointer;
 `;
 
