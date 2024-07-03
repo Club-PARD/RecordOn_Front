@@ -9,6 +9,12 @@ const ProjectFilter = () => {
             <ProjectProcessText>
               진행현황
             </ProjectProcessText>
+            <ProjectProcessOngoing>
+
+            </ProjectProcessOngoing>
+            <ProjectProcessDone>
+
+            </ProjectProcessDone>
           </ProjectProcess>
           <ProjectDate>
 
@@ -52,8 +58,9 @@ const ProjectProcess = styled.div`
 width: 290px;
 height: 40px;
 border: 1px solid black;
-align-items: start;
-justify-content: center;
+align-items: center;
+justify-content: start;
+flex-direction: row;
 `
 const ProjectProcessText = styled.div`
 width: 78px;
@@ -68,6 +75,8 @@ height: 40px;
 border: 1px solid black;
 align-items: start;
 justify-content: center;
+border-radius: 25px;
+background-color: ${(props) => props.theme.Colors.Black}
 `
 const ProjectProcessDone = styled.div`
 width: 98px;
