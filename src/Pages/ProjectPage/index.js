@@ -1,11 +1,16 @@
 import styled from "styled-components";
+import ProjectCardGrid from "./Components/ProjectCardGrid";
+import ProjectFilter from "./Components/ProjectFilter";
 
 const ProjectPage = () => {
   return (
     <>
-      <div>안녕하세요</div>
+      <ProjectFilter />
+      <ProjectCardGrid />
+
     </>
   );
 };
+
 
 export default ProjectPage;
