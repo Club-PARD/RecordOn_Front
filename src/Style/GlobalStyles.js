@@ -39,8 +39,6 @@ ol[role='list'] {
 
 /* 핵심 body의 기본값을 설정합니다. */
 body {
-  max-width: 1440px;
-  background-color: aliceblue;
   display: flex;
   flex-direction: column;
   justify-content: center;

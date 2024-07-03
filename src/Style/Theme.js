@@ -4,57 +4,65 @@ export const Theme = {
     TitleL: {
       fontFamily: "pretendard-SemiBold",
       lineHeight: "130%",
-      fontSize: "60px",
+      fontSize: "48px",
       letterSpacing: "-2%",
-      fontWeight: "semibold"
+      fontWeight: "semibold",
     },
     TitleM: {
       fontFamily: "pretendard-SemiBold",
       lineHeight: "130%",
-      fontSize: "48px",
+      fontSize: "36px",
       letterSpacing: "-2%",
-      fontWeight: "semibold"
+      fontWeight: "semibold",
     },
     TitleS: {
       fontFamily: "pretendard-SemiBold",
       lineHeight: "130%",
-      fontSize: "36px",
+      fontSize: "30px",
       letterSpacing: "-2%",
-      fontWeight: "semibold"
+      fontWeight: "semibold",
     },
     TextXL: {
       fontFamily: "pretendard-Medium",
       lineHeight: "130%",
       fontSize: "24px",
       letterSpacing: "-2%",
-      fontWeight: "Medium"
+      fontWeight: "Medium",
     },
     TextL: {
       fontFamily: "pretendard-Regular",
       lineHeight: "130%",
       fontSize: "20px",
       letterSpacing: "-2%",
-      fontWeight: "Regular"
+      fontWeight: "Regular",
     },
     TextM: {
       fontFamily: "pretendard-Regular",
       lineHeight: "130%",
       fontSize: "18px",
       letterSpacing: "-2%",
-      fontWeight: "Regular"
+      fontWeight: "Regular",
     },
     TextS: {
       fontFamily: "pretendard-Regular",
       lineHeight: "130%",
       fontSize: "14px",
       letterSpacing: "-2%",
-      fontWeight: "Regular"
+      fontWeight: "Regular",
+    },
+    Caption: {
+      fontFamily: "pretendard-Regular",
+      lineHeight: "130%",
+      fontSize: "12px",
+      letterSpacing: "-2%",
+      fontWeight: "Regular",
     },
   },
 
   colors: {
     // primary_norm
-    Black: "#121212",
-    
+    Black: "rgba(18,18,18,1)",
+    Green: "rgba(11, 195, 95, 1)",
+    Yellow: "rgba(241, 255, 186, 1)",
   },
 };
