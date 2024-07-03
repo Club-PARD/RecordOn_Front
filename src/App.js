@@ -7,15 +7,13 @@ import { Theme } from "./Style/Theme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
-
-
   return (
     <RecoilRoot>
       <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
         <BrowserRouter>
           <ThemeProvider theme={Theme}>
             <GlobalStyles />
-            <Router />
+              <Router />
           </ThemeProvider>
         </BrowserRouter>
       </GoogleOAuthProvider>

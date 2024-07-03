@@ -15,9 +15,9 @@ const HomePage = () => {
 };
 
 const Div = styled.div`
-display: flex;
-flex-direction: column;
-gap: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
 `;
 
 const LoginButton = styled.div`

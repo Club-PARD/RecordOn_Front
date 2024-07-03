@@ -10,7 +10,7 @@ import ExperiencePage from "../Pages/ExperiencePage";
 function Router() {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />

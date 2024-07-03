@@ -15,7 +15,6 @@ const Header = () => {
   };
 
   return (
-    // 전체 헤더를 감싸는 div
     <Div>
       {/* 로고 들어가는 자리. img 임포트 해서 변경 */}
       <LogoDiv>logo</LogoDiv>
@@ -34,12 +33,13 @@ const Div = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  width: 100%;
+  min-width: 1200px;
   height: 70px;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 
   background-color: #ffffff;
-  box-shadow: 0px 1px 3px 0px #00000033;
 `;
 
 const LogoDiv = styled.div`
