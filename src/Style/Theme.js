@@ -64,5 +64,7 @@ export const Theme = {
     Black: "rgba(18,18,18,1)",
     Green: "rgba(11, 195, 95, 1)",
     Yellow: "rgba(241, 255, 186, 1)",
+    White: "rgba(255, 255, 255, 1)",
+    Gray: "rgba(200, 200, 200, 1)",
   },
 };
