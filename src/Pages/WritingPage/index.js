@@ -30,7 +30,7 @@ const WritingPage = () => {
   const addTagKeyword = (value) => () => {
     setSelectedTagKeywordList([...selectedTagKeyword, value]);
     setIsTagOpen(false);
-    console.log (selectedQuestionKeywordList);
+    console.log(selectedQuestionKeywordList);
   };
 
   return (
@@ -109,7 +109,7 @@ const WritingPage = () => {
             </ListContainer>
           </SelectArea>
           <TextAreaWidth2 />
-          </QuestionArea>
+        </QuestionArea>
 
         {/* 경험 추가 버튼 */}
         <AddButton>+ 경험 추가</AddButton>
@@ -232,8 +232,7 @@ const FixedArea = styled.div`
   width: 840px;
 `;
 
-const QuestionArea = styled.div`
-`;
+const QuestionArea = styled.div``;
 const FixedAreaLabel = styled.label`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
