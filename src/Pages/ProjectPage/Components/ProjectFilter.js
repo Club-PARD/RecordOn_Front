@@ -31,18 +31,18 @@ const ProjectFilter = () => {
       );
     }
     setIsOpen(false);
-    console.log(value);
+    // console.log(value);
   };
 
   const deleteKeyword = value => () => {
     setSelectedKeyword(
       selectedKeyword.filter(keywords => keywords !== value)
     );
-    console.log(value);
+    // console.log(value);
 
   };
 
-  console.log(selectedKeyword);
+  // console.log(selectedKeyword);
 
   // console.log(selectedStartDate);
 
@@ -58,13 +58,13 @@ const ProjectFilter = () => {
                 <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }}>
                   진행중
                 </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "rgba(200, 200, 200, 1)" }} onClick={processChange}>
+                <ProjectProcessDone style={{ backgroundColor: "white", border: "1px solid black" }} onClick={processChange}>
                   진행완료
                 </ProjectProcessDone>
               </ProjectProcessOnOff>
               :
               <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "rgba(200, 200, 200, 1)", color: "black" }} onClick={processChange}>
+                <ProjectProcessOngoing style={{ backgroundColor: "white", color: "black", border: "1px solid black" }} onClick={processChange}>
                   진행중
                 </ProjectProcessOngoing>
                 <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }}>
