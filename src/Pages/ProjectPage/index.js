@@ -3,7 +3,7 @@ import ProjectCardGrid from "./Components/ProjectCardGrid";
 import ProjectFilter from "./Components/ProjectFilter";
 import ProjectTitle from "./Components/ProjectTitle";
 import Pagination from "../../Common/Pagination";
-import ProjectDisplay from "./Components/ProjectDisplay";
+import Dropdown from "../../Common/Dropdown";
 
 const ProjectPage = () => {
   return (
@@ -12,7 +12,6 @@ const ProjectPage = () => {
       <ProjectFilter />
       <ProjectCardGrid />
       <Pagination />
-
     </>
   );
 };
