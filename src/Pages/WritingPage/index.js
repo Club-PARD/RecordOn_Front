@@ -21,14 +21,15 @@ const WritingPage = () => {
 
   // 서버에서 받아올 태그답변 JSON
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
-
+  const [experienceSections, setExperienceSections] = useState([
+    {id: 1, selectedTag: "", selectedQuestion: ""},
+  ]);
   const tagKeywords = ["성장", "갈등", "성공", "실패", "도전"];
 
   // 드롭다운 토글 상태 관리
   const toggleTag = () => setIsTagOpen(!isTagOpen);
   const toggleQuestion = () => {
     setIsQuestionOpen(!isQuestionOpen);
-    console.log(isQuestionOpen);
   };
 
   // 서버에서 태그와 질문을 받아오는 API
@@ -36,7 +37,6 @@ const WritingPage = () => {
     const fetchData = async () => {
       try {
         const response = await getAllTagAndQuestionAPI();
-        console.log(response);
         setTagAndQuestion(response);
         console.log(tagAndQuestion);
       } catch (error) {
@@ -46,25 +46,42 @@ const WritingPage = () => {
     fetchData();
   }, []);
 
-  //태그 선택 시 해당 태그 이름으로 질문 리스트 설정
-  const handleTagSelect = (tagName) => {
-    setSelectedTagKeyword(tagName);
+  const handleTagSelectInSection = (tagName, id) => {
+    const updatedSections = experienceSections.map((section) =>
+    section.id === id ? { ...section, selectedTag: tagName } : section);
 
-    // 선택된 태그 이름에 맞는 질문 리스트 찾기
-    const tagData = tagAndQuestion.find((item) => item.tag_name === tagName);
-    if (tagData) {
-      setSelectedQuestionKeywordList(tagData.questions);
-    } else {
-      setSelectedQuestionKeywordList([]);
-    }
-    setIsTagOpen(false);
-  };
+    setExperienceSections(updatedSections);
+};
+const handleQuestionSelectInSection = (question, id) => {
+  const updatedSections = experienceSections.map((section) =>
+  section.id === id ? { ...section, selectedQuestion: question } : section);
+  setExperienceSections(updatedSections);
+};
 
-  // 질문 선택 시
-  const handleQuestionSelect = (question) => {
-    setSelectedQuestionKeyword(question);
-    setIsQuestionOpen(false);
-  };
+const addExperienceSection = () => {
+  setExperienceSections([
+    ...experienceSections,
+    {id : experienceSections.length+1, selectedTag: "", selectedQuestion: ""},
+  ]);
+};
+const handleAddExperience = () => {
+  console.log (experienceSections);
+}
+  //   // 선택된 태그 이름에 맞는 질문 리스트 찾기
+  //   const tagData = tagAndQuestion.find((item) => item.tag_name === tagName);
+  //   if (tagData) {
+  //     setSelectedQuestionKeywordList(tagData.questions);
+  //   } else {
+  //     setSelectedQuestionKeywordList([]);
+  //   }
+  //   setIsTagOpen(false);
+  // };
+
+  // // 질문 선택 시
+  // const handleQuestionSelect = (question) => {
+  //   setSelectedQuestionKeyword(question);
+  //   setIsQuestionOpen(false);
+  // };
 
   return (
     <Div>
@@ -105,26 +122,29 @@ const WritingPage = () => {
         </FixedArea>
 
         {/* 태그별 질문 답변 영역 */}
-        <QuestionArea>
+        {experienceSections.map((section) => (
+          <QuestionArea key={section.id}>
           <SelectArea>
             <DropdownTag
               isOpen={isTagOpen}
               toggleDropdown={toggleTag}
               options={tagKeywords}
-              onSelect={handleTagSelect}
+              onSelect={(tagName) => handleTagSelectInSection(tagName, section.id)}
             />
             <DropdownQuestion
               isOpen={isQuestionOpen}
               toggleDropdown={toggleQuestion}
               options={selectedQuestionKeywordList}
-              onSelect={handleQuestionSelect}
+              onSelect={(question) => handleQuestionSelectInSection(question, section.id)}
             />
           </SelectArea>
           <TextAreaWidth height="168px" cols="100" rows="6" />
         </QuestionArea>
+        ))}
+        
 
         {/* 경험 추가 버튼 */}
-        <AddButton>+ 경험 추가</AddButton>
+        <AddButton onClick = {addExperienceSection}>+ 경험 추가</AddButton>
 
         {/* 하단 데이터 */}
         <Lower>
