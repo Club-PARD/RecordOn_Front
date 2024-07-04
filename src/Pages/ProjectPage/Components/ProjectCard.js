@@ -70,7 +70,7 @@ flex-direction:row;
 justify-content:space-between;
 align-items: center;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontStyles.TextS};
+font-style: ${(props) => props.theme.fontSizes.TextS};
 /* font-weight: 400; */
 `
 
@@ -93,7 +93,7 @@ width: 233px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontStyles.TextS};
+font-style: ${(props) => props.theme.fontSizes.TextS};
 /* font-weight: 400; */
 `
 
@@ -102,7 +102,7 @@ width: 193px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontStyles.TextS};
+font-style: ${(props) => props.theme.fontSizes.TextS};
 /* font-weight: 400; */
 `
 
@@ -111,7 +111,7 @@ width: 193px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontStyles.TextS};
+font-style: ${(props) => props.theme.fontSizes.TextS};
 /* font-weight: 400; */
 `
 
@@ -119,7 +119,7 @@ const CardTitle = styled.div`
 width: 323px;
 height: 94px;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontStyles.TitleS};
+font-style: ${(props) => props.theme.fontSizes.TitleS};
 margin-top: 6px;
 /* box-sizing: content-box; */
 `
@@ -140,7 +140,7 @@ background-color: black;
 /* border: 1px solid black; */
 border-radius: 25px;
 color: ${(props) => props.theme.colors.White};
-font-style: ${(props) => props.theme.fontStyles.TextS};
+font-style: ${(props) => props.theme.fontSizes.TextS};
 justify-content:center;
 margin-right: 10px;
 `

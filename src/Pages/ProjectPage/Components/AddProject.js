@@ -12,7 +12,7 @@ width: 228px;
 height: 50px;
 color: ${(props) => props.theme.colors.White};
 background-color: ${(props) => props.theme.colors.Green};
-font-style: ${(props) => props.theme.fontStyles.TextXL};
+font-style: ${(props) => props.theme.fontSizes.TextXL};
 justify-content:center;
 border-radius: 10px;
 `

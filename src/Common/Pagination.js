@@ -83,7 +83,7 @@ transition: background-color 0s ease-in-out;
   &[aria-current="page"] {
     background-color: ${(props) => props.theme.colors.Green};
     color: white;
-    font-style:${(props) => props.theme.fontStyles.TextS};
+    font-style:${(props) => props.theme.fontSizes.TextS};
   }
 `;
 

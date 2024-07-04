@@ -23,7 +23,7 @@ const ProjectTitleText = styled.div`
 width: 1056px;
 height: 62px;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontStyles.TitleL};
+font-style: ${(props) => props.theme.fontSizes.TitleL};
 justify-content: center;
 `
 

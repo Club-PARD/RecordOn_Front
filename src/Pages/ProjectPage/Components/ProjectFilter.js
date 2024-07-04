@@ -241,7 +241,7 @@ justify-content: start;
     width: 300px;
     align-items: center;
     justify-content: center;
-    font-style: ${(props) => props.theme.fontStyles.TextS};
+    font-style: ${(props) => props.theme.fontSizes.TextS};
     border-radius: 15px;
     
   }
@@ -262,7 +262,7 @@ justify-content: start;
     flex-direction: row;
     justify-content: space-between;
     font-family: "Pretendard";
-    font-style: ${(props) => props.theme.fontStyles.TextL};
+    font-style: ${(props) => props.theme.fontSizes.TextL};
     margin-top: 15px;
     margin-bottom: 15px;
     /* border: 1px solid black; */
