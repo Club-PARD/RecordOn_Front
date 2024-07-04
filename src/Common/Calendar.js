@@ -4,16 +4,16 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import { ko } from "date-fns/locale";
 
-const Calendar = () => {
+const Calendar = ({ calWidth }) => {
 
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
 
-
+  console.log(calWidth);
 
   return (
     <>
-      <ProjectDateWrapper>
+      <ProjectDateWrapper calWidth={calWidth}>
         <ProjectDateStart
           dateFormat='yyyy.MM.dd'
           shouldCloseOnSelect
@@ -32,9 +32,9 @@ const Calendar = () => {
 
 
 const ProjectDateWrapper = styled.div`
-width: 286px;
+width: ${(props) => props.calWidth}; 
 height: 40px;
-/* border: 1px solid black; */
+border: 1px solid black;
 flex-direction: row;
 justify-content: start;
 
