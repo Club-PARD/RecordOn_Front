@@ -7,12 +7,31 @@ import Calendar from "../../Common/Calendar";
 const WritingPage = () => {
   const [isTagOpen, setIsTagOpen] = useState(false);
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
-  const [selectedTagKeyword, setSelectedTagKeyword] = useState([]);
-  const [selectedQuestionKeyword, setSelectedQuestionKeyword] = useState([]);
-  const tagKeywords = ["성장", "갈등", "성공", "실패", "도전"];
+  // 당시 선택된 키워드
+  const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
+  const [selectedQuestionKeyword, setSelectedQuestionKeyword] = useState("");
 
+  // 서버에 전송할 키워드 배열
+  const [selectedTagKeywordList, setSelectedTagKeywordList] = useState([]);
+  const [selectedQuestionKeywordList, setSelectedQuestionKeywordList] =
+    useState([]);
+
+  const tagKeywords = ["성장", "갈등", "성공", "실패", "도전"];
+  const questionKeywords = ["A", "B", "C", "D"];
+
+  // 드롭다운 토글 상태 관리
   const toggleTag = () => setIsTagOpen(!isTagOpen);
-  const toggleQuestion = () => setIsQuestionOpen(!isQuestionOpen);
+  const toggleQuestion = () => {
+    setIsQuestionOpen(!isQuestionOpen);
+    console.log(isQuestionOpen);
+  };
+
+  // 선택된 키워드들을 배열에 추가
+  const addTagKeyword = (value) => () => {
+    setSelectedTagKeywordList([...selectedTagKeyword, value]);
+    setIsTagOpen(false);
+    console.log (selectedQuestionKeywordList);
+  };
 
   return (
     <Div>
@@ -38,9 +57,9 @@ const WritingPage = () => {
             />
           </UppderPart>
 
-          <UppderPart width={"239px"}>
+          <UppderPart width={"227px"}>
             <StyledLabel>경험한 날</StyledLabel>
-            <StyledCalendar />
+            <Calendar />
           </UppderPart>
         </Upper>
 
@@ -53,19 +72,44 @@ const WritingPage = () => {
         </FixedArea>
 
         {/* 태그별 질문 답변 영역 */}
-        <div>
+        <QuestionArea>
           <SelectArea>
-            <SelectExp>
-              <div>경험태그</div>
-              <DropdownArrow />
-            </SelectExp>
-            <SelectQuestion>
-              <div>질문 선택</div>
-              <DropdownArrow />
-            </SelectQuestion>
+            <ListContainer>
+              <SelectExp onClick={toggleTag}>
+                <div>경험태그</div>
+                <DropdownArrow />
+              </SelectExp>
+
+              {isTagOpen && (
+                <List>
+                  {tagKeywords.map((tagKeyword) => (
+                    <ListItem
+                      onClick={() => addTagKeyword(tagKeyword)}
+                      key={tagKeyword}
+                    >
+                      {tagKeyword}
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+            </ListContainer>
+
+            <ListContainer>
+              <SelectQuestion onClick={toggleQuestion}>
+                <div>질문 선택</div>
+                <DropdownArrow />
+              </SelectQuestion>
+              {isQuestionOpen && (
+                <List>
+                  {questionKeywords.map((questionKeyword) => (
+                    <ListItem key={questionKeyword}>{questionKeyword}</ListItem>
+                  ))}
+                </List>
+              )}
+            </ListContainer>
           </SelectArea>
           <TextAreaWidth2 />
-        </div>
+          </QuestionArea>
 
         {/* 경험 추가 버튼 */}
         <AddButton>+ 경험 추가</AddButton>
@@ -138,7 +182,7 @@ const ContentsArea = styled.div`
 const Upper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 
   margin-bottom: 51px;
 `;
@@ -150,8 +194,6 @@ const UppderPart = styled.div`
   justify-content: space-between;
 
   width: ${({ width }) => width};
-
-  background-color: aliceblue;
 `;
 
 const StyledLabel = styled.label`
@@ -160,12 +202,6 @@ const StyledLabel = styled.label`
   white-space: nowrap;
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
-`;
-
-const StyledCalendar = styled(Calendar)`
-  display: flex;
-  width: 145px;
-  height: 50px;
 `;
 
 const StyledInput = styled.input`
@@ -196,6 +232,8 @@ const FixedArea = styled.div`
   width: 840px;
 `;
 
+const QuestionArea = styled.div`
+`;
 const FixedAreaLabel = styled.label`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
@@ -249,6 +287,26 @@ const SelectExp = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   font-size: ${(props) => props.theme.fontSizes.TextL};
 
+  cursor: pointer;
+`;
+
+const ListContainer = styled.div`
+  display: inline-block;
+  position: relative;
+`;
+
+const List = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+`;
+
+const ListItem = styled.div`
   cursor: pointer;
 `;
 
