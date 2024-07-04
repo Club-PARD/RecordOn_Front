@@ -1,49 +1,63 @@
 
 import styled from "styled-components";
-import close from "../../Assets/close.svg";
+import { ReactComponent as Close } from "../../../Assets/close.svg";
+import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
+import { ReactComponent as Check } from "../../../Assets/Check.svg";
 
 
+const RegisterModal = () => {
   return (
 
       <OutContatiner>
-        <CloseDiv onClick={closeModal}>
-          <img src={close} alt="닫힘 아이콘"></img>
-        </CloseDiv>
-        <Container>
-          <RealTopDiv>
-            
-          </RealTopDiv>
-          <Title type="text" name="letterTitle" placeholder="제목" value={writings.letterTitle} onChange={handleWritingInput} ref={titlefocus} autoComplete="off"></Title>
-          <FreeContents name="letterContents" placeholder="오늘 하루 어땠는지, 가족에게 나누어 주세요! " value={writings.letterContents} onChange={handleWritingInput} autoComplete="off" ref={contentInput}></FreeContents>
-
-          <QuestionDiv> 
-            <QuestionRandomDiv>
-              <Qdiv>Q. {letter[0]}</Qdiv>
-              <AnswerDiv name="questionAnswer1" placeholder="답변을 작성해주세요..." value={writings.questionAnswer1} onChange={handleWritingInput} autoComplete="off" ref={questionAnswer1}></AnswerDiv>
-            </QuestionRandomDiv>
-            <QuestionRandomDiv>
-              <Qdiv>Q. {letter[1]}</Qdiv>
-              <AnswerDiv name="questionAnswer2" placeholder="답변을 작성해주세요..." value={writings.questionAnswer2} onChange={handleWritingInput} autoComplete="off" ref={questionAnswer2}></AnswerDiv>
-            </QuestionRandomDiv>
-          </QuestionDiv>
+        <StyledClose />
           
+        <Container>
+          <StyledProfile />
+          
+          <UserDiv> 
+            <UserDataDiv>
+              <NameDiv>이름</NameDiv>
+              <BoxDiv>
+              <AnswerDiv name="userName" placeholder="홍길동"></AnswerDiv>
+              </BoxDiv>
+            </UserDataDiv>
+            <UserDataDiv>
+              <NameDiv>희망직군</NameDiv>
+              <BoxDiv>
+              <JobListBtn>
+              </JobListBtn>
+              </BoxDiv>
+            </UserDataDiv>
+          </UserDiv>
+          
+
+          <PolicyDiv>
+            <PolicyDataDiv>
+              <PolicyLeftDiv>
+                <CheckboxDiv><StyledCheck/></CheckboxDiv>
+                <PolicyNameDiv>이용약관 (필수)</PolicyNameDiv>
+              </PolicyLeftDiv>
+              <PolicyRightDiv>자세히 보기</PolicyRightDiv>
+            </PolicyDataDiv>
+
+            <PolicyDataDiv>
+              <PolicyLeftDiv>
+                <CheckboxDiv><StyledCheck/></CheckboxDiv>
+                <PolicyNameDiv>개인정보 수집 및 이용 (필수)</PolicyNameDiv>
+              </PolicyLeftDiv>
+              <PolicyRightDiv>자세히 보기</PolicyRightDiv>
+            </PolicyDataDiv>
+
+          </PolicyDiv>
+
           <BtnContainer>
-            <AddButton >작성완료</AddButton>
+            <RegisterBtn>로그인</RegisterBtn>
           </BtnContainer>
         </Container>
       </OutContatiner>
-    </Background>
   );
 }
 
-const Background = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
 
 const OutContatiner =styled.div`
   
@@ -59,23 +73,17 @@ const OutContatiner =styled.div`
   height: 500px;
   flex-shrink: 0;
   border-radius: 16px;
+  border : 1px solid ${(props) => props.theme.colors.Black};
   background-color: ${(props) => props.theme.colors.White};
 `;
 
-const CloseDiv =styled.div`
-  justify-content: center;
-  align-items: center;
+const StyledClose =styled(Close)`
   position: absolute;
-  
-  transform: translate(-50%, -50%);
-  width: 64px;
-  height: 64px;
+  width: 20px;
+  height: 20px;
+  top: 25px;
+  left: 386px;
   flex-shrink: 0;
-  background-color: #fff;
-  max-width: 100%;
-  max-height: 90%;
-  overflow-y: auto;
-  border-radius: 50%;
   cursor: pointer;
 `;
 
@@ -84,177 +92,140 @@ const Container = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top: 40px;
+  position: absolute;
   left: 51px;
   width: 330px;
-  height: 412px;
+  height: 500px;
   flex-shrink: 0;
   max-width: 100%;
-  max-height: 90%;
+  max-height: 100%;
   overflow-y: auto;
+  border : 1px solid ${(props) => props.theme.colors.Black};
+  
 `;
 
-const RealTopDiv =styled.div`
-  display: flex;
-  margin-top: 34px;
-  align-items: start;
-  width: 870px;
-`;
-
-const EmotionDiv =styled.div`
-  display: inline-flex;
-  height: 27px;
-  padding: 0px 8px;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  background: var(--blueblack-1, #34334A);
-  height: 27px;
-  /* margin-left: 40px; */
-`;
-
-const Talkimg =styled.img`
-  width: 273px;
-  height: 27px;
-  margin-left: 10px;
-  position: relative;
-`;
-
-const Talk =styled.div`
+const StyledProfile =styled(Profile)`
   position: absolute;
-  color: var(--black, #161616);
-font-family: Pretendard;
-font-size: 11.896px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-letter-spacing: -0.036px;
-left: 18%;
-top: 6.6%;
-`;
-
-const TopDiv =styled.input`
-
-  margin-bottom: 37px;
-  margin-left: 391.91px;
-  color:  #161616;
-  text-align: right;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  /* margin-left: 768px; */
-  border: none;
-  background-color: #F8FFA6;
-  border: none;
-  width: 92px;
-  height: 19px;
-  outline: none;
-`;
-
-const Title = styled.input`
-  color: white;
-  font-size: 25px;
-  text-align: center;
-  margin-bottom: 16px;
-  width: 870px;
-  height: 48px;
+  width: 125px;
+  height: 125px;
+  top: 40px;
+  left: 103px;
   flex-shrink: 0;
-  text-align: start;
-  border: none;
-
-  background-color: #F8FFA6;
-  font-family: Pretendard;
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  color: black;
-  outline: none;
-
-  &::placeholder {
-    color: #B7BC88;
-  }
-
 `;
 
-
-const FreeContents =styled.textarea`
-  width: 870px;
-  height: 146px;
-  flex-shrink: 0;
-  color: #F8FFA6;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  resize: none;
-
-  background-color: #F8FFA6;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  color: #161616;
-  text-align: start;
-  border: none;
-  outline: none;
-
-  &::placeholder {
-    color: #B7BC88;
-  }
+const UserDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position : absolute;
+  top: 197px;
+  width: 330px;
+  height: 91px;
+  
 `;
 
-const QuestionDiv = styled.div`
+const UserDataDiv = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 16px;
-  justify-content: center;
+  justify-content: space-between;
+  width: 330px;
+  height: 35px;
+`;
+
+const NameDiv = styled.div`
+  display: flex;
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight : ${(props) => props.theme.fontWeights.TextM};
   align-items: center;
-  margin-top: 20px;
+  
 `;
 
-const QuestionRandomDiv =styled.div`
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  width: 427px;
-  height: 191px;
+const BoxDiv = styled.div`
+  width: 228px;
+  height: 35px;
   flex-shrink: 0;
-  border-radius: 20px;
-  background-color: #FDFED6;
+  border-radius: 8px;
+  border: 1px solid ${(props) => props.theme.colors.Black};
 `;
 
-const Qdiv = styled.div`
-  width: 395px;
-  margin-top: 16px;
-`;
-
-const AnswerDiv =styled.textarea`
-  width: 395px;
-  height: 128px;
+const AnswerDiv =styled.input`
+  display: flex;
+  width: 202px;
+  height: 19px;
+  margin-top: 8px;
   flex-shrink: 0;
-  color: #676767;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  background-color: #FDFED6;
-  margin-top: 12px;
+  overflow-y: auto;
   resize: none;
   border: none;
   outline: none;
-
+  max-width: 100%;
+  max-height: 100%;
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight : ${(props) => props.theme.fontWeights.TextM};
+  text-align: start;
   &::placeholder {
     color: #9D9D9D;
   }
+`;
+
+const JobListBtn = styled.button`
+`;
+
+const PolicyDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position : absolute;
+  top: 332px;
+  width: 330px;
+  height: 55px;
+  border: 1px solid ${(props) => props.theme.colors.Black};
+`;
+
+const PolicyDataDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 330px;
+  height: 20px;
+`;
+
+const PolicyLeftDiv = styled.div`
+  flex-direction: row;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+`;
+
+const CheckboxDiv = styled.div`
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  border: 0.8px solid ${(props) => props.theme.colors.Black};
+`;
+
+const StyledCheck =styled(Check)`
+  position: absolute;
+  width: 12px;
+  height: 9px;
+  top: 5px;
+  left: 6px;
+  flex-shrink: 0;
+`;
+
+const PolicyNameDiv = styled.div`
+  margin-left: 10px;
+  font-size: ${(props) => props.theme.fontSizes.TextS};
+  font-weight : ${(props) => props.theme.fontWeights.TextS};
+`;
+
+const PolicyRightDiv = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: ${(props) => props.theme.fontSizes.TextS};
+  font-weight : ${(props) => props.theme.fontWeights.TextS};
 `;
 
 const BtnContainer = styled.div`
@@ -263,28 +234,27 @@ const BtnContainer = styled.div`
   justify-content: center;
 `;
 
-const AddButton = styled.button`
+const RegisterBtn = styled.button`
   display: flex;
-  width: 220px;
-  height: 60px;
-  padding: 21px 75px 20px 75px;
+  width: 330px;
+  height: 40px;
+  bottom: 48px;
+  padding: 8px 120px 8px 120px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  margin: 20px 10px 20px 10px;
   border-radius: 8px;
-  background: var(--blueblack-1, #34334A);
+  background: ${(props) => props.theme.colors.Black};
+  border-radius: 10px;
 
-  color: #fff;
+  position: absolute;
+  top: 412px;
+  color: ${(props) => props.theme.colors.White};
   text-align: center;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight : ${(props) => props.theme.fontWeights.TextM};
   line-height: normal;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
-export default WritingModal;
+
+export default RegisterModal;
