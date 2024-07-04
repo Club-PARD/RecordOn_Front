@@ -3,6 +3,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import RegisterModal from "./Components/RegisterModal";
 
 
 const RegisterPage = () => {
@@ -42,9 +43,7 @@ const RegisterPage = () => {
 
     return (
         <Container>
-            안녕하세요
-            <LoginButton onClick={login}>로그인</LoginButton>
-            <LoginButton onClick={fetchData}>get</LoginButton>
+            <RegisterModal />
         </Container>
 
     )
