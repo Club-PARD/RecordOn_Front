@@ -9,12 +9,14 @@ const ProjectFilter = () => {
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
 
+  const [processState, setProcessState] = useState(false);
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState([]);
   const keywords = ['신뢰성', '전문성', '책임감', '열정', '실행력', '창의성', '성실성', '정직', '소통/협력'];
 
-  const processCheck = () => {
-
+  const processChange = () => {
+    setProcessState((prev) => !prev);
   }
 
   const toggling = () => setIsOpen(!isOpen);
@@ -29,18 +31,18 @@ const ProjectFilter = () => {
       );
     }
     setIsOpen(false);
-    console.log(value);
+    // console.log(value);
   };
 
   const deleteKeyword = value => () => {
     setSelectedKeyword(
       selectedKeyword.filter(keywords => keywords !== value)
     );
-    console.log(value);
+    // console.log(value);
 
   };
 
-  console.log(selectedKeyword);
+  // console.log(selectedKeyword);
 
   // console.log(selectedStartDate);
 
@@ -51,13 +53,25 @@ const ProjectFilter = () => {
           <ProjectProcess>
             <ProjectProcessText>
               진행현황
-            </ProjectProcessText>
-            <ProjectProcessOngoing>
-              진행중
-            </ProjectProcessOngoing>
-            <ProjectProcessDone>
-              진행완료
-            </ProjectProcessDone>
+            </ProjectProcessText>{processState == false ?
+              <ProjectProcessOnOff>
+                <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }}>
+                  진행중
+                </ProjectProcessOngoing>
+                <ProjectProcessDone style={{ backgroundColor: "white", border: "1px solid black" }} onClick={processChange}>
+                  진행완료
+                </ProjectProcessDone>
+              </ProjectProcessOnOff>
+              :
+              <ProjectProcessOnOff>
+                <ProjectProcessOngoing style={{ backgroundColor: "white", color: "black", border: "1px solid black" }} onClick={processChange}>
+                  진행중
+                </ProjectProcessOngoing>
+                <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }}>
+                  진행완료
+                </ProjectProcessDone></ProjectProcessOnOff>
+            }
+
           </ProjectProcess>
           <ProjectDate>
             <ProjectDateText>
@@ -171,6 +185,14 @@ height: 25px;
 align-items: start;
 justify-content: center;
 `
+
+const ProjectProcessOnOff = styled.div`
+flex-direction: row;
+width: 212px;
+height: 40px;
+/* border: 1px solid black; */
+`
+
 const ProjectProcessOngoing = styled.div`
 width: 98px;
 height: 40px;
@@ -178,7 +200,7 @@ height: 40px;
 justify-content: center;
 border-radius: 25px;
 color: ${(props) => props.theme.colors.White};
-background-color: ${(props) => props.theme.colors.Black};
+/* background-color: ${(props) => props.theme.colors.Black}; */
 `
 const ProjectProcessDone = styled.div`
 width: 98px;
@@ -219,7 +241,7 @@ justify-content: start;
     width: 300px;
     align-items: center;
     justify-content: center;
-    font-style: ${(props) => props.theme.fontStyles.TextS};
+    font-style: ${(props) => props.theme.fontSizes.TextS};
     border-radius: 15px;
     
   }
@@ -240,7 +262,7 @@ justify-content: start;
     flex-direction: row;
     justify-content: space-between;
     font-family: "Pretendard";
-    font-style: ${(props) => props.theme.fontStyles.TextL};
+    font-style: ${(props) => props.theme.fontSizes.TextL};
     margin-top: 15px;
     margin-bottom: 15px;
     /* border: 1px solid black; */
