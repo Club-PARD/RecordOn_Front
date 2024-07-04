@@ -5,7 +5,10 @@ import { ReactComponent as GoogleLogo } from "../../Assets/GoogleLogo.svg";
 const HomePage = () => {
   return (
     <Div>
-      <MainEx />
+      {/* 랜딩 페이지 예시 이미지 */}
+      <StyledMainEx />
+
+      {/* 로그인 버튼 컴포넌트 */}
       <LoginButton>
         <GoogleLogo />
         <div>구글 계정으로 로그인</div>
@@ -20,6 +23,10 @@ const Div = styled.div`
   gap: 60px;
 `;
 
+const StyledMainEx = styled(MainEx)`
+  width: 680px;
+  height: 254px;
+`;
 const LoginButton = styled.div`
   display: flex;
   flex-direction: row;

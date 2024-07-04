@@ -1,43 +1,79 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigator = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const navigate = useNavigate();
+
+  // 스크롤시 box shadow 나타나게 함
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const scrollThreshold = 100;
+      setIsScrolled(scrollTop > scrollThreshold);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const writeHandler = () => {
-    navigator("/WritingPage");
+    navigate("/WritingPage");
   };
 
   const myPageHandler = () => {
-    navigator("/MyPage");
+    navigate("/MyPage");
+  };
+
+  const loginHandler = () => {
+    navigate("/login");
   };
 
   return (
-    <Div>
-      {/* 로고 들어가는 자리. img 임포트 해서 변경 */}
-      <LogoDiv>logo</LogoDiv>
-      {/* 로그인 버튼. 로그인 한 경우 프로필 이미지로 변경 */}
-      {isLoggedIn ? (
-        <div>프로필 이미지</div>
-      ) : (
-        <LogInButton>로그인</LogInButton>
-      )}
-    </Div>
+    <HeaderContainer $scrolled={isScrolled}>
+      <Div>
+        <LogoDiv>logo</LogoDiv>
+        {isLoggedIn ? (
+          // 구글 로그인 구현시 프로필 사진 삽입 가능한 원형으로 수정
+
+          <div onClick={myPageHandler}>프로필 이미지</div>
+        ) : (
+          <LogInButton onClick={loginHandler}>로그인</LogInButton>
+        )}
+      </Div>
+    </HeaderContainer>
   );
 };
+
+const HeaderContainer = styled.header`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  width: 100%;
+  position: fixed;
+  top: 0;
+
+  z-index: 1000;
+  box-shadow: ${(props) =>
+    props.$scrolled ? "0px 1px 3px 0px #00000033" : "transparent"};
+  transition: box-shadow 0.3s ease;
+`;
 
 const Div = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  min-width: 1200px;
+
+  width: 1200px;
   height: 70px;
-  position: fixed;
-  top: 0;
-  z-index: 1000;
 
   background-color: #ffffff;
 `;
@@ -46,28 +82,27 @@ const LogoDiv = styled.div`
   justify-content: center;
   width: 153px;
   height: 40px;
-
   border-radius: 7.5px;
   background-color: #d9d9d9;
 `;
 
 const LogInButton = styled.div`
+  display: flex;
   justify-content: center;
+  align-items: center;
+
   width: 102px;
   height: 40px;
 
   border-radius: 25px;
-
-  // 나중에 props로 대체
-  background-color: #0bc35f;
-  font-family: Pretendard;
+  background-color: ${(props) => props.theme.colors.Green};
+  font-family: Pretendard, sans-serif;
   font-size: 20px;
   font-weight: 400;
   line-height: 26px;
   letter-spacing: -0.02em;
   text-align: center;
   color: white;
-
   cursor: pointer;
 `;
 
