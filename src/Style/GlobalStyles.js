@@ -39,7 +39,6 @@ ol[role='list'] {
 
 /* 핵심 body의 기본값을 설정합니다. */
 body {
-  font-family: 'Pretendard', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,12 +47,11 @@ body {
   font-family: "Pretendard";
   line-height: 130%;
   letter-spacing: -2%;
-  /* line-height: 1.5; */
 }
 
 
 /* 해당 태그들을 중앙정렬하고, 기본 css 속성 제거 */
-div, input, label, button, h1, h2, h3, h4{
+div, input, label, button, h1, h2, h3, h4, textarea{
     all: unset;
     display: flex;
     flex-direction: column;
