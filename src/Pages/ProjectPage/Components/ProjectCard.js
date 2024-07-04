@@ -51,6 +51,7 @@ align-items: start;
 const CardDate = styled.div`
 width: 193px;
 height: 18px;
+align-items: start;
 /* border: 1px solid black; */
 font-style: ${(props) => props.theme.fontStyles.TextS};
 /* font-weight: 400; */
