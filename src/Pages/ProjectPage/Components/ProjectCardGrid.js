@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ProjectCard from "./ProjectCard";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const ProjectCardGrid = () => {
 
@@ -8,6 +9,24 @@ const ProjectCardGrid = () => {
 
     const [visibleCardStart, setVisibleCardStart] = useState(0);
     const [visibleCardEnd, setVisibleCardEnd] = useState(6);
+
+    console.log(visibleCardStart, visibleCardEnd);
+
+    useEffect(() => {
+        sessionStorage.setItem('startNum', 0);
+        sessionStorage.setItem('endNum', 6)
+    }, [])
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const startNum = sessionStorage.getItem('startNum') || 0;
+            const endNum = sessionStorage.getItem('endNum') || 6;
+            setVisibleCardStart(Number(startNum));
+            setVisibleCardEnd(Number(endNum));
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+    }, [])
 
     const gotoProject = () => {
 
@@ -21,6 +40,7 @@ const ProjectCardGrid = () => {
             ))}
 
         </ProjectCardDiv>
+
     );
 };
 const ProjectCardDiv = styled.div`
@@ -28,7 +48,7 @@ display: grid;
 grid-template-columns: repeat(3, 1fr);
 grid-template-rows: repeat(2, 1fr);
 width: 1200px;
-height: 508px;
+height: 565px;
 /* border: 1px solid black; */
 margin-top: 55px;
 column-gap: 24px;

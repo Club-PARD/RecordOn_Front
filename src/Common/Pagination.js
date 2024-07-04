@@ -5,12 +5,41 @@ import {
     getVisibleResultsMax,
     getVisibleResultsMin,
 } from '@workday/canvas-kit-react/pagination';
+import { useState } from "react";
 
 const PaginationBar = () => {
 
     const resultCount = 10;
     const totalCount = 100;
     const lastPage = getLastPage(resultCount, totalCount);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+
+        let startNum = (pageNumber - 1) * 6;
+        let endNum = Math.min(startNum + 6, totalCount);
+
+        updateSessionStorage(startNum, endNum);
+    };
+
+    const updateSessionStorage = (startNum, endNum) => {
+        sessionStorage.setItem("startNum", startNum);
+        sessionStorage.setItem("endNum", endNum);
+        // storage 이벤트 트리거
+        window.dispatchEvent(new Event("storage"));
+    };
+
+
+    const prevCardNum = () => {
+        handlePageChange(currentPage - 1);
+
+    }
+
+    const nextCardNum = () => {
+        handlePageChange(currentPage + 1);
+    }
+
 
 
     return (
@@ -21,17 +50,17 @@ const PaginationBar = () => {
                 lastPage={lastPage}
             >
                 <Pagination.Controls style={{ flexDirection: "row" }}>
-                    <Pagination.StepToPreviousButton aria-label="Previous" />
+                    <Pagination.StepToPreviousButton aria-label="Previous" onClick={prevCardNum} />
                     <Pagination.PageList>
                         {({ state }) =>
                             state.range.map(pageNumber => (
-                                <Pagination.PageListItem key={pageNumber}>
+                                <Pagination.PageListItem key={pageNumber} onClick={() => handlePageChange(pageNumber)}>
                                     <CustomPageButton aria-label={`Page ${pageNumber}`} pageNumber={pageNumber} aria-current={state.currentPage === pageNumber ? 'page' : undefined} />
                                 </Pagination.PageListItem>
                             ))
                         }
                     </Pagination.PageList>
-                    <Pagination.StepToNextButton aria-label="Next" />
+                    <Pagination.StepToNextButton aria-label="Next" onClick={nextCardNum} />
                 </Pagination.Controls>
 
             </Pagination>
@@ -42,8 +71,8 @@ const PaginationBar = () => {
 const PaginationDiv = styled.div`
 flex-direction: row;
 /* border: 1px solid black; */
-margin-top: 99px;
-margin-bottom: 65px;
+margin-top: 101px;
+margin-bottom: 151px;
 
 `
 
@@ -55,7 +84,6 @@ transition: background-color 0s ease-in-out;
     background-color: ${(props) => props.theme.colors.Green};
     color: white;
     font-style:${(props) => props.theme.fontStyles.TextS};
-    color: white;
   }
 `;
 
