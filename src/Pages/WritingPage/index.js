@@ -1,9 +1,18 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as GoBackIcon } from "../../Assets/GoBackIcon.svg";
 import { ReactComponent as DropdownArrow } from "../../Assets/DropdownArrow.svg";
+import Calendar from "../../Common/Calendar";
 
 const WritingPage = () => {
-  const keywords = ["성장", "갈등", "성공", "실패", "도전"];
+  const [isTagOpen, setIsTagOpen] = useState(false);
+  const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+  const [selectedTagKeyword, setSelectedTagKeyword] = useState([]);
+  const [selectedQuestionKeyword, setSelectedQuestionKeyword] = useState([]);
+  const tagKeywords = ["성장", "갈등", "성공", "실패", "도전"];
+
+  const toggleTag = () => setIsTagOpen(!isTagOpen);
+  const toggleQuestion = () => setIsQuestionOpen(!isQuestionOpen);
 
   return (
     <Div>
@@ -29,9 +38,9 @@ const WritingPage = () => {
             />
           </UppderPart>
 
-          <UppderPart width={"249px"}>
+          <UppderPart width={"239px"}>
             <StyledLabel>경험한 날</StyledLabel>
-            <Temp></Temp>
+            <StyledCalendar />
           </UppderPart>
         </Upper>
 
@@ -141,20 +150,22 @@ const UppderPart = styled.div`
   justify-content: space-between;
 
   width: ${({ width }) => width};
+
+  background-color: aliceblue;
 `;
 
 const StyledLabel = styled.label`
   box-sizing: border-box;
+
+  white-space: nowrap;
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 `;
 
-const Temp = styled.div`
+const StyledCalendar = styled(Calendar)`
+  display: flex;
   width: 145px;
   height: 50px;
-
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.Gray};
 `;
 
 const StyledInput = styled.input`
