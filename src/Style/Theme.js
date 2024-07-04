@@ -1,62 +1,25 @@
 // 예시임
 export const Theme = {
-  fontStyles: {
-    TitleL: {
-      fontFamily: "pretendard-SemiBold",
-      lineHeight: "130%",
-      fontSize: "48px",
-      letterSpacing: "-2%",
-      fontWeight: "semibold",
-    },
-    TitleM: {
-      fontFamily: "pretendard-SemiBold",
-      lineHeight: "130%",
-      fontSize: "36px",
-      letterSpacing: "-2%",
-      fontWeight: "semibold",
-    },
-    TitleS: {
-      fontFamily: "pretendard-SemiBold",
-      lineHeight: "130%",
-      fontSize: "30px",
-      letterSpacing: "-2%",
-      fontWeight: "semibold",
-    },
-    TextXL: {
-      fontFamily: "pretendard-Medium",
-      lineHeight: "130%",
-      fontSize: "24px",
-      letterSpacing: "-2%",
-      fontWeight: "Medium",
-    },
-    TextL: {
-      fontFamily: "pretendard-Regular",
-      lineHeight: "130%",
-      fontSize: "20px",
-      letterSpacing: "-2%",
-      fontWeight: "Regular",
-    },
-    TextM: {
-      fontFamily: "pretendard-Regular",
-      lineHeight: "130%",
-      fontSize: "18px",
-      letterSpacing: "-2%",
-      fontWeight: "Regular",
-    },
-    TextS: {
-      fontFamily: "pretendard-Regular",
-      lineHeight: "130%",
-      fontSize: "14px",
-      letterSpacing: "-2%",
-      fontWeight: "Regular",
-    },
-    Caption: {
-      fontFamily: "pretendard-Regular",
-      lineHeight: "130%",
-      fontSize: "12px",
-      letterSpacing: "-2%",
-      fontWeight: "Regular",
-    },
+  fontSizes: {
+    TitleL: "48px",
+    TitleM: "36px",
+    TitleS: "30px",
+    TextXL: "24px",
+    TextL: "20px",
+    TextM: "18px",
+    TextS: "14px",
+    Caption: "12px",
+  },
+
+  fontWeights: {
+    TitleL: 600,
+    TitleM: 600,
+    TitleS: 600,
+    TextXL: 500,
+    TextL: 400,
+    TextM: 400,
+    TextS: 400,
+    Caption: 400,
   },
 
   colors: {
@@ -66,5 +29,6 @@ export const Theme = {
     Yellow: "rgba(241, 255, 186, 1)",
     White: "rgba(255, 255, 255, 1)",
     Gray: "rgba(200, 200, 200, 1)",
+    Charcoal: "rgba(127, 127, 127, 1)",
   },
 };

@@ -39,12 +39,15 @@ ol[role='list'] {
 
 /* 핵심 body의 기본값을 설정합니다. */
 body {
+  font-family: 'Pretendard', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   font-family: "Pretendard";
+  line-height: 130%;
+  letter-spacing: -2%;
   /* line-height: 1.5; */
 }
 
@@ -91,12 +94,12 @@ textarea:not([rows]) {
 
 // 웹폰트 적용 (내장 폰트를 적용할 경우 개발 환경에 따라 적용이 안되는 경우가 있음)
 @font-face {
-    font-family: 'Pretendard-Regular';
+    font-family: 'Pretendard';
     src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
     font-style: normal;
 }
 
-@font-face {
+/* @font-face {
     font-family: "Pretendard-SemiBold";
     font-weight: 600;
     src: url(pre/Pretendard-SemiBold.woff) format('woff');
@@ -106,7 +109,7 @@ textarea:not([rows]) {
     font-family: "Pretendard-Medium";
     font-weight: 500;
     src: url(pre/Pretendard-Medium.woff) format('woff');
-}
+} */
 
 /* @font-face {
   font-family: 'Pretendard';
