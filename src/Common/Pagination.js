@@ -73,7 +73,7 @@ flex-direction: row;
 /* border: 1px solid black; */
 margin-top: 101px;
 margin-bottom: 151px;
-
+justify-content: center;
 `
 
 const CustomPageButton = styled(Pagination.PageButton)`
