@@ -16,7 +16,7 @@ const QnaArea = () => {
 
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
 
-  const tagKeywords = ["성장", "갈등", "성공", "실패", "도전"];
+  const tagKeywords = ["도전경험", "어려움경험", "실패경험", "성공경험", "배움경험"];
 
   // 서버에서 태그와 질문을 받아오는 API
   useEffect(() => {
@@ -40,11 +40,13 @@ const QnaArea = () => {
         const selectedTag = tagAndQuestion.find(
           (tag) => tag.tag_name === tagName
         );
+        // 태그가 바뀔 때 선택된 질문 초기화
+        const selectedQuestion = selectedTag ? selectedTag.questions[0] : "";
         return {
           ...section,
           selectedTag: tagName,
           questionOptions: selectedTag ? selectedTag.questions : [],
-          selectedQuestion: "", // 태그가 바뀔 때 선택된 질문 초기화
+          selectedQuestion: "", 
         };
       }
       return section;
@@ -52,6 +54,7 @@ const QnaArea = () => {
 
     setExperienceSections(updatedSections);
   };
+
 
   // 질문 선택 핸들러
   const handleQuestionSelectInSection = (question, id) => {
@@ -94,6 +97,7 @@ const QnaArea = () => {
               onSelect={(question) =>
                 handleQuestionSelectInSection(question, section.id)
               }
+              tagName ={section.selectedTag}
             />
           </SelectArea>
           <TextAreaWidth height="168px" cols="100" rows="6" />
@@ -107,7 +111,6 @@ const QnaArea = () => {
 };
 
 const QuestionArea = styled.div`
-  margin-bottom: 29px;
 `;
 
 const TextAreaWidth = styled.textarea`
@@ -152,6 +155,8 @@ const AddButton = styled.button`
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 
   cursor: pointer;
+
+  margin-top: 29px;
 `;
 
 export default QnaArea;
