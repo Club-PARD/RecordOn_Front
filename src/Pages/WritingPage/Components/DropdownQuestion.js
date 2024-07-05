@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as DropdownArrow } from "../../../Assets/DropdownArrow.svg";
 
-const DropdownQuestion = ({ isOpen, toggleDropdown, options, onSelect }) => {
+const DropdownQuestion = ({ options, onSelect }) => {
+  const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsQuestionOpen(!isQuestionOpen);
+  };
+
   const handleSelect = (questionKeyword) => {
     onSelect(questionKeyword);
-    toggleDropdown(); // 옵션 선택 후 드롭다운 닫기
+    setIsQuestionOpen(false); // 옵션 선택 후 드롭다운 닫기
   };
 
   return (
@@ -14,13 +20,10 @@ const DropdownQuestion = ({ isOpen, toggleDropdown, options, onSelect }) => {
         <div>질문 선택</div>
         <DropdownArrow />
       </SelectQuestion>
-      {isOpen && (
+      {isQuestionOpen && (
         <List>
           {options.map((questionKeyword) => (
-            <ListItem
-              key={questionKeyword}
-              onClick={() => handleSelect(questionKeyword)}
-            >
+            <ListItem key={questionKeyword} onClick={() => handleSelect(questionKeyword)}>
               {questionKeyword}
             </ListItem>
           ))}
@@ -29,7 +32,6 @@ const DropdownQuestion = ({ isOpen, toggleDropdown, options, onSelect }) => {
     </DropdownContainer>
   );
 };
-
 const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
