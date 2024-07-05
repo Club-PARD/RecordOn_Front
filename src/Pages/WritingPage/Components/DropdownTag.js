@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { ReactComponent as DropdownArrow } from "../../../Assets/DropdownArrow.svg";
 
 const DropdownTag = ({ isOpen, toggleDropdown, options, onSelect }) => {
+  const handleSelect = (tagKeyword) => {
+    onSelect(tagKeyword);
+    toggleDropdown(); // 옵션 선택 후 드롭다운 닫기
+  };
   return (
     <DropdownContainer>
       <SelectExp onClick={toggleDropdown}>
@@ -12,7 +16,7 @@ const DropdownTag = ({ isOpen, toggleDropdown, options, onSelect }) => {
       {isOpen && (
         <List>
           {options.map((tagKeyword) => (
-            <ListItem key={tagKeyword} onClick={() => onSelect(tagKeyword)}>
+            <ListItem key={tagKeyword} onClick={() => handleSelect(tagKeyword)}>
               {tagKeyword}
             </ListItem>
           ))}
