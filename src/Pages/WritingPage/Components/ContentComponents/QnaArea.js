@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DropdownQuestion from "../DropdownQuestion";
 import DropdownTag from "../DropdownTag";
 import { getAllTagAndQuestionAPI } from "../../../../Axios/StoredTagInfoApi";
+import {TextAreaWidth} from "./LowerArea";
 
 const QnaArea = () => {
   const [experienceSections, setExperienceSections] = useState([
@@ -16,7 +17,13 @@ const QnaArea = () => {
 
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
 
-  const tagKeywords = ["도전경험", "어려움경험", "실패경험", "성공경험", "배움경험"];
+  const tagKeywords = [
+    "도전경험",
+    "어려움경험",
+    "실패경험",
+    "성공경험",
+    "배움경험",
+  ];
 
   // 서버에서 태그와 질문을 받아오는 API
   useEffect(() => {
@@ -46,7 +53,7 @@ const QnaArea = () => {
           ...section,
           selectedTag: tagName,
           questionOptions: selectedTag ? selectedTag.questions : [],
-          selectedQuestion: "", 
+          selectedQuestion: "",
         };
       }
       return section;
@@ -54,7 +61,6 @@ const QnaArea = () => {
 
     setExperienceSections(updatedSections);
   };
-
 
   // 질문 선택 핸들러
   const handleQuestionSelectInSection = (question, id) => {
@@ -97,10 +103,10 @@ const QnaArea = () => {
               onSelect={(question) =>
                 handleQuestionSelectInSection(question, section.id)
               }
-              tagName ={section.selectedTag}
+              tagName={section.selectedTag}
             />
           </SelectArea>
-          <TextAreaWidth height="168px" cols="100" rows="6" />
+          <TextAreaWidth height="200px"/>
         </QuestionArea>
       ))}
 
@@ -110,26 +116,7 @@ const QnaArea = () => {
   );
 };
 
-const QuestionArea = styled.div`
-`;
-
-const TextAreaWidth = styled.textarea`
-  box-sizing: border-box;
-  width: 840px;
-
-  border: 1px solid;
-  border-radius: 10px;
-
-  padding: 22px 24px 31px 24px;
-
-  font-size: ${(props) => props.theme.fontSizes.TextM};
-  font-weight: ${(props) => props.theme.fontWeights.TextM};
-
-  resize: none;
-  overflow-y: auto;
-
-  line-height: 1.5;
-`;
+const QuestionArea = styled.div``;
 
 const SelectArea = styled.div`
   display: flex;

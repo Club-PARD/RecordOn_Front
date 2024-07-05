@@ -6,11 +6,11 @@ const LowerArea = () => {
       <Lower>
         <FixArea>
           <FixAreaLabel>자유란</FixAreaLabel>
-          <TextAreaWidth cols="100" rows="6" />
+          <TextAreaWidth placeholder="질문을 통해 다 작성하지 못한 내용을 자유란에 작성해보세요." height="168px"/>
         </FixArea>
         <FixArea>
           <FixAreaLabel>관련 자료 링크</FixAreaLabel>
-          <TextAreaWidth cols="100" rows="1" />
+          <TextAreaWidth placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요." height="86px"/>
         </FixArea>
         <AddButtonWrapper>
           <AddButton>+ 관련 자료 추가</AddButton>
@@ -45,6 +45,7 @@ const FixAreaLabel = styled.label`
 const TextAreaWidth = styled.textarea`
   box-sizing: border-box;
   width: 840px;
+  height: ${({ height }) => height};
 
   border: 1px solid;
   border-radius: 10px;
@@ -58,6 +59,10 @@ const TextAreaWidth = styled.textarea`
   overflow-y: auto;
 
   line-height: 1.5;
+
+  &::placeholder {
+    color: ${(props)=>props.theme.colors.Gray};
+  }
 `;
 
 const AddButtonWrapper = styled.div`
