@@ -6,13 +6,15 @@ import DropdownTag from "./DropdownTag";
 import { getAllTagAndQuestionAPI } from "../../../Axios/StoredTagInfoApi";
 
 const ContentsArea = () => {
-  const [isTagOpen, setIsTagOpen] = useState(false);
-  const [isQuestionOpen, setIsQuestionOpen] = useState(false);
   const [experienceSections, setExperienceSections] = useState([
-    { id: 1, selectedTag: "", selectedQuestion: "" },
+    {
+      id: 1,
+      selectedTag: "",
+      selectedQuestion: "",
+      questionOptions: [],
+    },
   ]);
-  const [selectedQuestionKeywordList, setSelectedQuestionKeywordList] =
-    useState([]);
+
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
 
   const tagKeywords = ["성장", "갈등", "성공", "실패", "도전"];
@@ -30,46 +32,40 @@ const ContentsArea = () => {
     fetchData();
   }, []);
 
-  // 드롭다운 토글 상태 관리
-  const toggleTag = () => setIsTagOpen(!isTagOpen);
-  const toggleQuestion = () => {
-    setIsQuestionOpen(!isQuestionOpen);
-  };
-
   // 태그 선택 핸들러
   const handleTagSelectInSection = (tagName, id) => {
     console.log(`Tag selected: ${tagName} for section id: ${id}`);
 
-    // 선택된 태그에 따라 experienceSections 상태를 업데이트합니다.
-    const updatedSections = experienceSections.map((section) =>
-      section.id === id ? { ...section, selectedTag: tagName } : section
-    );
+    const updatedSections = experienceSections.map((section) => {
+      if (section.id === id) {
+        const selectedTag = tagAndQuestion.find(
+          (tag) => tag.tag_name === tagName
+        );
+        return {
+          ...section,
+          selectedTag: tagName,
+          questionOptions: selectedTag ? selectedTag.questions : [],
+          selectedQuestion: "", // 태그가 바뀔 때 선택된 질문 초기화
+        };
+      }
+      return section;
+    });
 
     setExperienceSections(updatedSections);
-
-    // 선택된 태그와 일치하는 질문 목록을 찾습니다.
-    const selectedTag = tagAndQuestion.find((tag) => tag.tag_name === tagName);
-    if (selectedTag) {
-      // 해당 태그에 일치하는 질문들을 설정합니다.
-      setSelectedQuestionKeywordList(selectedTag.questions);
-    } else {
-      // 해당 태그가 없으면 빈 질문 목록을 설정합니다.
-      setSelectedQuestionKeywordList([]);
-    }
   };
 
-  //질문 선택 핸들러
+  // 질문 선택 핸들러
   const handleQuestionSelectInSection = (question, id) => {
     console.log(`Question selected: ${question} for section id: ${id}`);
-
-    // 선택된 질문에 따라 experienceSections 상태를 업데이트합니다.
     const updatedSections = experienceSections.map((section) =>
-      section.id === id ? { ...section, selectedQuestion: question } : section
+      section.id === id
+        ? { ...section, selectedQuestion: question, isQuestionOpen: false }
+        : section
     );
-
     setExperienceSections(updatedSections);
   };
 
+  // 경험 섹션 추가
   const addExperienceSection = () => {
     setExperienceSections([
       ...experienceSections,
@@ -77,6 +73,9 @@ const ContentsArea = () => {
         id: experienceSections.length + 1,
         selectedTag: "",
         selectedQuestion: "",
+        questionOptions: [],
+        isTagOpen: false,
+        isQuestionOpen: false,
       },
     ]);
   };
@@ -115,17 +114,13 @@ const ContentsArea = () => {
           <QuestionArea key={section.id}>
             <SelectArea>
               <DropdownTag
-                isOpen={isTagOpen}
-                toggleDropdown={toggleTag}
                 options={tagKeywords}
                 onSelect={(tagName) =>
                   handleTagSelectInSection(tagName, section.id)
                 }
               />
               <DropdownQuestion
-                isOpen={isQuestionOpen}
-                toggleDropdown={toggleQuestion}
-                options={selectedQuestionKeywordList}
+                options={section.questionOptions}
                 onSelect={(question) =>
                   handleQuestionSelectInSection(question, section.id)
                 }

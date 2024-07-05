@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as DropdownArrow } from "../../../Assets/DropdownArrow.svg";
 
-const DropdownTag = ({ isOpen, toggleDropdown, options, onSelect }) => {
+const DropdownTag = ({ options, onSelect }) => {
+  const [isTagOpen, setIsTagOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsTagOpen(!isTagOpen);
+  };
+
   const handleSelect = (tagKeyword) => {
     onSelect(tagKeyword);
-    toggleDropdown(); // 옵션 선택 후 드롭다운 닫기
+    setIsTagOpen(false); // 옵션 선택 후 드롭다운 닫기
   };
+
   return (
     <DropdownContainer>
       <SelectExp onClick={toggleDropdown}>
         <div>경험태그</div>
         <DropdownArrow />
       </SelectExp>
-      {isOpen && (
+      {isTagOpen && (
         <List>
           {options.map((tagKeyword) => (
             <ListItem key={tagKeyword} onClick={() => handleSelect(tagKeyword)}>
@@ -25,7 +32,6 @@ const DropdownTag = ({ isOpen, toggleDropdown, options, onSelect }) => {
     </DropdownContainer>
   );
 };
-
 const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
