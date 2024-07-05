@@ -27,7 +27,8 @@ const Upper = styled.div`
   flex-direction: column;
   gap: 30px;
 
-  margin-bottom: 51px;
+  margin-top: 153px;
+  margin-bottom: 70px;
 `;
 
 const UppderPart = styled.div`

@@ -30,8 +30,6 @@ const ContentsArea = () => {
 const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
-
-  margin-top: 153px;
 `;
 
 export default ContentsArea;
