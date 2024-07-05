@@ -1,28 +1,9 @@
-import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ReactComponent as GoBackIcon } from "../../Assets/GoBackIcon.svg";
-import { ReactComponent as DropdownArrow } from "../../Assets/DropdownArrow.svg";
 
 import ContentArea from "./Components/ContentsArea";
 
 const WritingPage = () => {
-
-  //   // 선택된 태그 이름에 맞는 질문 리스트 찾기
-  //   const tagData = tagAndQuestion.find((item) => item.tag_name === tagName);
-  //   if (tagData) {
-  //     setSelectedQuestionKeywordList(tagData.questions);
-  //   } else {
-  //     setSelectedQuestionKeywordList([]);
-  //   }
-  //   setIsTagOpen(false);
-  // };
-
-  // // 질문 선택 시
-  // const handleQuestionSelect = (question) => {
-  //   setSelectedQuestionKeyword(question);
-  //   setIsQuestionOpen(false);
-  // };
-
   return (
     <Div>
       {/* 뒤로 가기 */}
@@ -34,8 +15,10 @@ const WritingPage = () => {
         </GoBackDiv>
         <MarginBottomForGoBackDiv />
       </GoBackArea>
+
       {/* 내용 작성 영역 */}
       <ContentArea />
+
       {/* 버튼 */}
       <ConfirmButton>경험기록 작성완료</ConfirmButton>
     </Div>
