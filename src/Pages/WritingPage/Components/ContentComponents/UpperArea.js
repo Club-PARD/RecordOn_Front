@@ -1,6 +1,44 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Calendar from "../../../../Common/Calendar";
+import {
+  ProjectDateWrapper,
+  ProjectDateStart,
+} from "../../../../Common/Calendar";
+import { ko } from "date-fns/locale";
+import { useRecoilState } from "recoil";
+import {
+  experienceState,
+  handleExpRecordSubmit,
+} from "../../../../Atom/ExpRecordAtom";
+
 const UppderArea = () => {
+  const [experience, setExperience] = useRecoilState(experienceState);
+  const [expDate, setExpDate] = useState(new Date());
+  const [expTitle, setExpTitle] = useState("");
+
+  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
+    handleExpRecordSubmit
+  );
+
+  // 입력 내용을 임시 변수에 관리
+  const handleDateChange = (date) => {
+    setExpDate(date);
+  };
+  const handleTitleChange = (e) => {
+    setExpTitle(e.target.value);
+  };
+
+  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
+  useEffect(() => {
+    if (isExpRecordSubmitted) {
+      setExperience((prev) => ({
+        ...prev,
+        exp_date: expDate,
+        exp_title: expTitle,
+      }));
+    }
+  }, [isExpRecordSubmitted]);
+
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}
@@ -10,12 +48,24 @@ const UppderArea = () => {
           <StyledInput
             type="text"
             placeholder="오늘의 프로젝트 경험은 어땠나요~?"
+            onChange={handleTitleChange}
           />
         </UppderPart>
 
         <UppderPart width={"227px"}>
           <StyledLabel>경험한 날</StyledLabel>
-          <Calendar />
+          <ProjectDateWrapper>
+            <ProjectDateStart
+              dateFormat="yyyy.MM.dd"
+              shouldCloseOnSelect
+              disabledKeyboardNavigation
+              minDate={new Date("1980-01-01")}
+              maxDate={new Date("2100-12-31")}
+              locale={ko}
+              selected={expDate}
+              onChange={handleDateChange}
+            />
+          </ProjectDateWrapper>
         </UppderPart>
       </Upper>
     </>

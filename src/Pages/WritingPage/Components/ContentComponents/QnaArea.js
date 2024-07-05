@@ -4,8 +4,15 @@ import DropdownQuestion from "../DropdownQuestion";
 import DropdownTag from "../DropdownTag";
 import { getAllTagAndQuestionAPI } from "../../../../Axios/StoredTagInfoApi";
 import {TextAreaWidth} from "./LowerArea";
+import { useRecoilState } from "recoil";
+import { experienceState,handleExpRecordSubmit } from "../../../../Atom/ExpRecordAtom";
 
 const QnaArea = () => {
+  const [experience, setExperience] = useRecoilState(experienceState);
+  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
+    handleExpRecordSubmit
+  );
+
   const [experienceSections, setExperienceSections] = useState([
     {
       id: 1,

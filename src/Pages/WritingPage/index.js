@@ -1,9 +1,18 @@
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { handleExpRecordSubmit } from "../../Atom/ExpRecordAtom";
 import { ReactComponent as GoBackIcon } from "../../Assets/GoBackIcon.svg";
-
 import ContentArea from "./Components/ContentsArea";
 
 const WritingPage = () => {
+  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
+    handleExpRecordSubmit
+  );
+
+  const handleSubmit = () => {
+    setIsExpRecordSubmitted(true);
+  };
+
   return (
     <Div>
       {/* 뒤로 가기 */}
@@ -20,7 +29,7 @@ const WritingPage = () => {
       <ContentArea />
 
       {/* 버튼 */}
-      <ConfirmButton>경험기록 작성완료</ConfirmButton>
+      <ConfirmButton onClick={handleSubmit}>경험기록 작성완료</ConfirmButton>
     </Div>
   );
 };
