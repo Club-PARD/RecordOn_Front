@@ -3,9 +3,12 @@ import styled from "styled-components";
 import { ReactComponent as Close } from "../../../Assets/close.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
 import { ReactComponent as Check } from "../../../Assets/Check.svg";
+import DropdownTag from "./DropdownTag";
 
 
 function RegisterModal ({ show, onClose}) {
+  const [isTagOpen, setIsTagOpen] = useState(false);
+  const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
 
   useEffect(() => {
     if(show) {
@@ -16,11 +19,20 @@ function RegisterModal ({ show, onClose}) {
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [show]);
+  }, [show]);  
 
-  if(!show) {
-    return null;
-  }
+  const tagKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD","개발·데이터"];
+
+  const toggleTag = () => setIsTagOpen(!isTagOpen);
+
+  const handleTagSelect = (tagName) => {
+    setSelectedTagKeyword(tagName);
+};
+
+
+if(!show) {
+  return null;
+}
 
   return (
     <Background>
@@ -40,8 +52,12 @@ function RegisterModal ({ show, onClose}) {
             <UserDataDiv>
               <NameDiv>희망직군</NameDiv>
               <BoxDiv>
-              <JobListBtn>
-              </JobListBtn>
+              <DropdownTag
+                isOpen={isTagOpen}
+                toggleDropdown={toggleTag}
+                options={tagKeywords}
+                onSelect={handleTagSelect}
+              />
               </BoxDiv>
             </UserDataDiv>
           </UserDiv>
@@ -79,7 +95,7 @@ const Background = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1100;
+  z-index: 100000;
 `;
 
 const OutContatiner =styled.div`
@@ -96,7 +112,6 @@ const OutContatiner =styled.div`
   height: 500px;
   flex-shrink: 0;
   border-radius: 16px;
-  border : 1px solid ${(props) => props.theme.colors.Black};
   background-color: ${(props) => props.theme.colors.White};
 `;
 
@@ -186,7 +201,7 @@ const AnswerDiv =styled.input`
   font-weight : ${(props) => props.theme.fontWeights.TextM};
   text-align: start;
   &::placeholder {
-    color: #9D9D9D;
+    color: ${(props) => props.theme.colors.Gray};
   }
 `;
 
