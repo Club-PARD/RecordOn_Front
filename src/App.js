@@ -13,7 +13,7 @@ function App() {
         <BrowserRouter>
           <ThemeProvider theme={Theme}>
             <GlobalStyles />
-              <Router />
+            <Router />
           </ThemeProvider>
         </BrowserRouter>
       </GoogleOAuthProvider>
