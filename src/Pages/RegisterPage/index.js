@@ -2,11 +2,17 @@ import styled from "styled-components"
 import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RegisterModal from "./Components/RegisterModal";
 
 
 const RegisterPage = () => {
+    const [showModal, setShowModal] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const handleLoginClick = () => {
+        setIsLoggedIn(true);
+        setShowModal(true);
+      };
 
     // const navigate = useNavigate();
 
@@ -43,7 +49,8 @@ const RegisterPage = () => {
 
     return (
         <Container>
-            <RegisterModal />
+            <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
+            <RegisterModal  show={showModal} onClose={() => setShowModal(false)} />
         </Container>
 
     )
@@ -54,20 +61,24 @@ const RegisterPage = () => {
 const Container = styled.div`
 `
 
-const LoginButton = styled.button`
+const LoginButton = styled.div`
   display: flex;
-  padding: 8px 20px;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  border-radius: 300px;
-  background: var(--White, #fff);
-  width: 82px;
-  height: 35px;
-  border: none;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+  gap: 5.31px;
+
+  width: 228px;
+  height: 45px;
+
+  background-color: ${(props) => props.theme.colors.Black};
+  border-radius: 7.5px;
+  color: white;
+
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight : ${(props) => props.theme.fontWeights.TextM};
+
+  white-space: nowrap;
   cursor: pointer;
 `;
 
