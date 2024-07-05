@@ -34,7 +34,6 @@ const Calendar = ({ calWidth }) => {
 const ProjectDateWrapper = styled.div`
 width: ${(props) => props.calWidth}; 
 height: 40px;
-border: 1px solid black;
 flex-direction: row;
 justify-content: start;
 
