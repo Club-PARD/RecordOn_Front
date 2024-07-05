@@ -1,15 +1,31 @@
-
+import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../Assets/close.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
 import { ReactComponent as Check } from "../../../Assets/Check.svg";
 
 
-const RegisterModal = () => {
-  return (
+function RegisterModal ({ show, onClose}) {
 
+  useEffect(() => {
+    if(show) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [show]);
+
+  if(!show) {
+    return null;
+  }
+
+  return (
+    <Background>
       <OutContatiner>
-        <StyledClose />
+        <StyledClose onClick={onClose}/>
           
         <Container>
           <StyledProfile />
@@ -50,14 +66,21 @@ const RegisterModal = () => {
 
           </PolicyDiv>
 
-          <BtnContainer>
-            <RegisterBtn>로그인</RegisterBtn>
-          </BtnContainer>
+            <RegisterBtn>회원가입</RegisterBtn>
         </Container>
       </OutContatiner>
+      </Background>
   );
 }
-
+const Background = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1100;
+`;
 
 const OutContatiner =styled.div`
   
@@ -100,7 +123,6 @@ const Container = styled.form`
   max-width: 100%;
   max-height: 100%;
   overflow-y: auto;
-  border : 1px solid ${(props) => props.theme.colors.Black};
   
 `;
 
@@ -179,7 +201,6 @@ const PolicyDiv = styled.div`
   top: 332px;
   width: 330px;
   height: 55px;
-  border: 1px solid ${(props) => props.theme.colors.Black};
 `;
 
 const PolicyDataDiv = styled.div`
@@ -211,8 +232,8 @@ const StyledCheck =styled(Check)`
   width: 12px;
   height: 9px;
   top: 5px;
-  left: 6px;
-  flex-shrink: 0;
+  left: 4px;
+  flex-shrink: 0;8
 `;
 
 const PolicyNameDiv = styled.div`
@@ -226,24 +247,17 @@ const PolicyRightDiv = styled.div`
   align-items: center;
   font-size: ${(props) => props.theme.fontSizes.TextS};
   font-weight : ${(props) => props.theme.fontWeights.TextS};
+  color: ${(props) => props.theme.colors.Gray};;
 `;
 
-const BtnContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
 
 const RegisterBtn = styled.button`
   display: flex;
   width: 330px;
   height: 40px;
-  bottom: 48px;
-  padding: 8px 120px 8px 120px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: 8px;
   background: ${(props) => props.theme.colors.Black};
   border-radius: 10px;
 

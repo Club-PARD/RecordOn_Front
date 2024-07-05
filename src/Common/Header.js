@@ -60,7 +60,7 @@ const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
 
-  z-index: 1000;
+  z-index: 99999;
   box-shadow: ${(props) =>
     props.$scrolled ? "0px 1px 3px 0px #00000033" : "transparent"};
   transition: box-shadow 0.3s ease;

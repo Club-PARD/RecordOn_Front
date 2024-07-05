@@ -1,9 +1,87 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ReactComponent as GoBackIcon } from "../../Assets/GoBackIcon.svg";
 import { ReactComponent as DropdownArrow } from "../../Assets/DropdownArrow.svg";
+import Calendar from "../../Common/Calendar";
+import { getAllTagAndQuestionAPI } from "../../Axios/StoredTagInfoApi";
+import DropdownQuestion from "./Components/DropdownQuestion";
+import DropdownTag from "./Components/DropdownTag";
 
 const WritingPage = () => {
-  const keywords = ["성장", "갈등", "성공", "실패", "도전"];
+  const [isTagOpen, setIsTagOpen] = useState(false);
+  const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+  // 당시 선택된 키워드
+  const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
+  const [selectedQuestionKeyword, setSelectedQuestionKeyword] = useState("");
+
+  // 서버에 전송할 키워드 배열
+  const [selectedTagKeywordList, setSelectedTagKeywordList] = useState([]);
+  const [selectedQuestionKeywordList, setSelectedQuestionKeywordList] =
+    useState([]);
+
+  // 서버에서 받아올 태그답변 JSON
+  const [tagAndQuestion, setTagAndQuestion] = useState([]);
+  const [experienceSections, setExperienceSections] = useState([
+    {id: 1, selectedTag: "", selectedQuestion: ""},
+  ]);
+  const tagKeywords = ["성장", "갈등", "성공", "실패", "도전"];
+
+  // 드롭다운 토글 상태 관리
+  const toggleTag = () => setIsTagOpen(!isTagOpen);
+  const toggleQuestion = () => {
+    setIsQuestionOpen(!isQuestionOpen);
+  };
+
+  // 서버에서 태그와 질문을 받아오는 API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllTagAndQuestionAPI();
+        setTagAndQuestion(response);
+        console.log(tagAndQuestion);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleTagSelectInSection = (tagName, id) => {
+    const updatedSections = experienceSections.map((section) =>
+    section.id === id ? { ...section, selectedTag: tagName } : section);
+
+    setExperienceSections(updatedSections);
+};
+const handleQuestionSelectInSection = (question, id) => {
+  const updatedSections = experienceSections.map((section) =>
+  section.id === id ? { ...section, selectedQuestion: question } : section);
+  setExperienceSections(updatedSections);
+};
+
+const addExperienceSection = () => {
+  setExperienceSections([
+    ...experienceSections,
+    {id : experienceSections.length+1, selectedTag: "", selectedQuestion: ""},
+  ]);
+};
+const handleAddExperience = () => {
+  console.log (experienceSections);
+}
+  //   // 선택된 태그 이름에 맞는 질문 리스트 찾기
+  //   const tagData = tagAndQuestion.find((item) => item.tag_name === tagName);
+  //   if (tagData) {
+  //     setSelectedQuestionKeywordList(tagData.questions);
+  //   } else {
+  //     setSelectedQuestionKeywordList([]);
+  //   }
+  //   setIsTagOpen(false);
+  // };
+
+  // // 질문 선택 시
+  // const handleQuestionSelect = (question) => {
+  //   setSelectedQuestionKeyword(question);
+  //   setIsQuestionOpen(false);
+  // };
 
   return (
     <Div>
@@ -29,9 +107,9 @@ const WritingPage = () => {
             />
           </UppderPart>
 
-          <UppderPart width={"249px"}>
+          <UppderPart width={"227px"}>
             <StyledLabel>경험한 날</StyledLabel>
-            <Temp></Temp>
+            <Calendar />
           </UppderPart>
         </Upper>
 
@@ -40,38 +118,47 @@ const WritingPage = () => {
           <FixedAreaLabel>
             Q. 자자자 고정질문입니다 당신을 잘 돌아봐보시오 생각해봐라~~
           </FixedAreaLabel>
-          <TextAreaWidth />
+          <TextAreaWidth cols="100" rows="5.8" />
         </FixedArea>
 
         {/* 태그별 질문 답변 영역 */}
-        <div>
+        {experienceSections.map((section) => (
+          <QuestionArea key={section.id}>
           <SelectArea>
-            <SelectExp>
-              <div>경험태그</div>
-              <DropdownArrow />
-            </SelectExp>
-            <SelectQuestion>
-              <div>질문 선택</div>
-              <DropdownArrow />
-            </SelectQuestion>
+            <DropdownTag
+              isOpen={isTagOpen}
+              toggleDropdown={toggleTag}
+              options={tagKeywords}
+              onSelect={(tagName) => handleTagSelectInSection(tagName, section.id)}
+            />
+            <DropdownQuestion
+              isOpen={isQuestionOpen}
+              toggleDropdown={toggleQuestion}
+              options={selectedQuestionKeywordList}
+              onSelect={(question) => handleQuestionSelectInSection(question, section.id)}
+            />
           </SelectArea>
-          <TextAreaWidth2 />
-        </div>
+          <TextAreaWidth height="168px" cols="100" rows="6" />
+        </QuestionArea>
+        ))}
+        
 
         {/* 경험 추가 버튼 */}
-        <AddButton>+ 경험 추가</AddButton>
+        <AddButton onClick = {addExperienceSection}>+ 경험 추가</AddButton>
 
         {/* 하단 데이터 */}
         <Lower>
           <FixedArea>
             <FixedAreaLabel>자유란</FixedAreaLabel>
-            <TextAreaWidth />
+            <TextAreaWidth cols="100" rows="6" />
           </FixedArea>
           <FixedArea>
             <FixedAreaLabel>관련 자료 링크</FixedAreaLabel>
-            <TextAreaWidth3 />
+            <TextAreaWidth cols="100" rows="1" />
           </FixedArea>
-          <AddButton>+ 경험 추가</AddButton>
+          <AddButtonWrapper>
+            <AddButton>+ 관련 자료 추가</AddButton>
+          </AddButtonWrapper>
         </Lower>
       </ContentsArea>
 
@@ -89,18 +176,24 @@ const Div = styled.div`
 const GoBackArea = styled.div`
   position: fixed;
   top: 70;
+
+  z-index: 9999;
   background-color: ${(props) => props.theme.colors.White};
 `;
 
 const MarginTopForGoBackDiv = styled.div`
   height: 46px;
   width: 1200px;
+
+  background-color: ${(props) => props.theme.colors.White};
 `;
 
 const GoBackDiv = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10.21px;
+
+  background-color: ${(props) => props.theme.colors.White};
 
   margin-left: -1000px;
 
@@ -129,7 +222,7 @@ const ContentsArea = styled.div`
 const Upper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 
   margin-bottom: 51px;
 `;
@@ -145,16 +238,10 @@ const UppderPart = styled.div`
 
 const StyledLabel = styled.label`
   box-sizing: border-box;
+
+  white-space: nowrap;
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
-`;
-
-const Temp = styled.div`
-  width: 145px;
-  height: 50px;
-
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.Gray};
 `;
 
 const StyledInput = styled.input`
@@ -185,6 +272,10 @@ const FixedArea = styled.div`
   width: 840px;
 `;
 
+const QuestionArea = styled.div`
+  margin-bottom: 29px;
+`;
+
 const FixedAreaLabel = styled.label`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
@@ -193,16 +284,15 @@ const FixedAreaLabel = styled.label`
 const TextAreaWidth = styled.textarea`
   box-sizing: border-box;
   width: 840px;
-  height: 168px;
 
   border: 1px solid;
   border-radius: 10px;
 
-  padding-top: 22px;
-  padding-left: 24px;
+  padding: 22px 24px 31px 24px;
 
   font-size: ${(props) => props.theme.fontSizes.TextM};
-  line-height: ${(props) => props.theme.fontWeights.TextM};
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
+
   resize: none;
   overflow-y: auto;
 
@@ -221,86 +311,17 @@ const SelectArea = styled.div`
   margin-bottom: 9px;
 `;
 
-const SelectExp = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-
-  width: 126px;
-  height: 50px;
-
-  border: 1px solid;
-  border-radius: 25px;
-
-  line-height: 50px;
-  font-weight: ${(props) => props.theme.fontWeights.TextL};
-  font-size: ${(props) => props.theme.fontSizes.TextL};
-
-  cursor: pointer;
-`;
-
-const SelectQuestion = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  width: 704px;
-  height: 50px;
-
-  border: 1px solid;
-  border-radius: 5px;
-  font-weight: ${(props) => props.theme.fontWeights.TextL};
-  font-size: ${(props) => props.theme.fontSizes.TextL};
-
-  cursor: pointer;
-`;
-
-const TextAreaWidth2 = styled.textarea`
-  box-sizing: border-box;
-  width: 840px;
-  height: 200px;
-
-  border: 1px solid;
-  border-radius: 10px;
-
-  padding-top: 22px;
-  padding-left: 24px;
-
-  font-size: ${(props) => props.theme.fontSizes.TextM};
-  line-height: ${(props) => props.theme.fontWeights.TextM};
-
-  resize: none;
-  overflow-y: auto;
-
-  line-height: 1.5;
-`;
-
-const TextAreaWidth3 = styled.textarea`
-  box-sizing: border-box;
-  width: 840px;
-  height: 86px;
-
-  border: 1px solid;
-  border-radius: 10px;
-
-  padding-top: 22px;
-  padding-left: 24px;
-
-  font-size: ${(props) => props.theme.fontSizes.TextM};
-  line-height: ${(props) => props.theme.fontWeights.TextM};
-  resize: none;
-  overflow-y: auto;
-
-  line-height: 1.5;
-`;
 const Lower = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  margin-top: 44px;
+`;
+
+const AddButtonWrapper = styled.div`
+  margin-top: 29px;
+  margin-bottom: 49px;
 `;
 
 const AddButton = styled.button`
@@ -313,9 +334,6 @@ const AddButton = styled.button`
 
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
-
-  margin-top: 29px;
-  margin-bottom: 44px;
 
   cursor: pointer;
 `;
@@ -333,7 +351,6 @@ const ConfirmButton = styled.button`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 
-  /* margin-top: 50px; */
   margin-bottom: 136px;
 
   cursor: pointer;
