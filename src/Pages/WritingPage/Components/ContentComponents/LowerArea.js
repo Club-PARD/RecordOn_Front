@@ -19,6 +19,13 @@ const LowerArea = () => {
   const [referenceLinks, setReferenceLinks] = useState([]);
   const [url, setUrl] = useState("");
 
+  const [linkArea, setLinkArea] = useState([
+    {
+      id: 1,
+      linkUrl: "",
+    },
+  ]);
+
   const handlePaste = (event) => {
     const paste = (event.clipboardData || window.clipboardData).getData("text");
     if (paste.startsWith("http")) {
@@ -26,7 +33,25 @@ const LowerArea = () => {
     }
   };
 
-  //자유란 변경 상태 관리
+  // 링크 입력 영역 추가
+  const addLinkArea = () => {
+    setLinkArea([
+      ...linkArea,
+      {
+        id: linkArea.length + 1,
+        linkUrl: "",
+      },
+    ]);
+  };
+
+  // 링크 입력 값 변경 핸들러
+  const handleLinkChange = (index, value) => {
+    const updatedLinks = [...linkArea];
+    updatedLinks[index].linkUrl = value;
+    setLinkArea(updatedLinks);
+  };
+
+  // 자유란 변경 상태 관리
   const handleFreeChange = (e) => {
     setFreeContent(e.target.value);
   };
@@ -34,12 +59,14 @@ const LowerArea = () => {
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
     if (isExpRecordSubmitted) {
+      const links = linkArea.map((link) => link.linkUrl).filter(Boolean);
       setExperience((prev) => ({
         ...prev,
         free_content: freeContent,
+        reference_links: links,
       }));
     }
-  }, [isExpRecordSubmitted]);
+  }, [isExpRecordSubmitted, freeContent, linkArea]);
 
   return (
     <>
@@ -58,16 +85,21 @@ const LowerArea = () => {
         <div>
           <FixArea>
             <FixAreaLabel>관련 자료 링크</FixAreaLabel>
-            <div>
-              <StyledUrlInput
-                placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
-                onPaste={handlePaste}
-              />
-              {/* <Bookmark url={url} /> */}
-            </div>
+            {linkArea.map((link, index) => (
+              <div key={link.id}>
+                <StyledUrlInput
+                  type="url"
+                  placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
+                  value={link.linkUrl}
+                  onChange={(e) => handleLinkChange(index, e.target.value)}
+                />
+              </div>
+            ))}
+
+            {/* <Bookmark url={url} /> */}
           </FixArea>
           <AddButtonWrapper>
-            <AddButton>+ 관련 자료 추가</AddButton>
+            <AddButton onClick={addLinkArea}>+ 관련 자료 추가</AddButton>
           </AddButtonWrapper>
         </div>
       </Lower>
