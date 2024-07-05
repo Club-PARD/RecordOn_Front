@@ -24,6 +24,7 @@ const DropdownTag = ({ options, onSelect }) => {
         <List>
           {options.map((tagKeyword) => (
             <ListItem key={tagKeyword} onClick={() => handleSelect(tagKeyword)}>
+            <ListItem key={tagKeyword} onClick={() => handleSelect(tagKeyword)}>
               {tagKeyword}
             </ListItem>
           ))}
