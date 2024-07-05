@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import AddProject from "./AddProject";
-
+import { useState } from "react";
 const ProjectTitle = () => {
+
+
+
     return (
         <ProjectTitleDiv>
             <ProjectTitleText>
@@ -23,7 +26,8 @@ const ProjectTitleText = styled.div`
 width: 1056px;
 height: 62px;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontSizes.TitleL};
+font-size: ${(props) => props.theme.fontSizes.TitleL};
+font-weight: ${(props) => props.theme.fontWeights.TitleL};
 justify-content: center;
 `
 

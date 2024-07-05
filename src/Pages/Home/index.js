@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as MainEx } from "../../Assets/MainEx.svg";
-import { ReactComponent as GoogleLogo } from "../../Assets/GoogleLogo.svg";
+import LoginButton from "./Components/LoginButton";
 
 const HomePage = () => {
   return (
@@ -9,10 +9,7 @@ const HomePage = () => {
       <StyledMainEx />
 
       {/* 로그인 버튼 컴포넌트 */}
-      <LoginButton>
-        <GoogleLogo />
-        <div>구글 계정으로 로그인</div>
-      </LoginButton>
+      <LoginButton />
     </Div>
   );
 };
@@ -27,23 +24,5 @@ const StyledMainEx = styled(MainEx)`
   width: 680px;
   height: 254px;
 `;
-const LoginButton = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 5.31px;
 
-  width: 228px;
-  height: 45px;
-
-  background-color: ${(props) => props.theme.colors.Black};
-  border-radius: 7.5px;
-  color: white;
-
-  font-style: ${(props) => props.theme.fontStyles.TextS};
-
-  white-space: nowrap;
-  cursor: pointer;
-`;
 export default HomePage;

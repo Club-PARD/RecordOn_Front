@@ -3,20 +3,53 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import { ko } from "date-fns/locale";
+import { useRecoilState } from "recoil";
+import { recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
 
 const ProjectFilter = () => {
 
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
 
-  const [processState, setProcessState] = useState(false);
+  const [processState, setProcessState] = useState(2);
+  const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState([]);
   const keywords = ['신뢰성', '전문성', '책임감', '열정', '실행력', '창의성', '성실성', '정직', '소통/협력'];
 
-  const processChange = () => {
-    setProcessState((prev) => !prev);
+  // console.log(projectFilter.processState);
+
+  const processOnChange = () => {
+
+    if (projectFilter.processState == 2) {
+      setProjectFilter({
+        ...projectFilter,
+        processState: 1,
+      })
+    }
+    else if (projectFilter.processState == 1) {
+      setProjectFilter({
+        ...projectFilter,
+        processState: 2,
+      })
+    }
+
+  }
+
+  const processOffChange = () => {
+    if (projectFilter.processState == 2) {
+      setProjectFilter({
+        ...projectFilter,
+        processState: 0,
+      })
+    }
+    else if (projectFilter.processState == 0) {
+      setProjectFilter({
+        ...projectFilter,
+        processState: 2,
+      })
+    }
   }
 
   const toggling = () => setIsOpen(!isOpen);
@@ -53,25 +86,39 @@ const ProjectFilter = () => {
           <ProjectProcess>
             <ProjectProcessText>
               진행현황
-            </ProjectProcessText>{processState == false ?
-              <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }}>
-                  진행중
-                </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "white", border: "1px solid black" }} onClick={processChange}>
-                  진행완료
-                </ProjectProcessDone>
-              </ProjectProcessOnOff>
-              :
-              <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "white", color: "black", border: "1px solid black" }} onClick={processChange}>
-                  진행중
-                </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }}>
-                  진행완료
-                </ProjectProcessDone></ProjectProcessOnOff>
-            }
-
+            </ProjectProcessText>
+            {{
+              0: (
+                <ProjectProcessOnOff>
+                  <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }} onClick={processOnChange}>
+                    진행중
+                  </ProjectProcessOngoing>
+                  <ProjectProcessDone style={{ backgroundColor: "white", border: "1px solid black" }} onClick={processOffChange}>
+                    진행완료
+                  </ProjectProcessDone>
+                </ProjectProcessOnOff>
+              ),
+              1: (
+                <ProjectProcessOnOff>
+                  <ProjectProcessOngoing style={{ backgroundColor: "white", color: "black", border: "1px solid black" }} onClick={processOnChange}>
+                    진행중
+                  </ProjectProcessOngoing>
+                  <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }} onClick={processOffChange}>
+                    진행완료
+                  </ProjectProcessDone>
+                </ProjectProcessOnOff>
+              ),
+              2: (
+                <ProjectProcessOnOff>
+                  <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }} onClick={processOnChange}>
+                    진행중
+                  </ProjectProcessOngoing>
+                  <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }} onClick={processOffChange}>
+                    진행완료
+                  </ProjectProcessDone>
+                </ProjectProcessOnOff>
+              )
+            }[projectFilter.processState]}
           </ProjectProcess>
           <ProjectDate>
             <ProjectDateText>

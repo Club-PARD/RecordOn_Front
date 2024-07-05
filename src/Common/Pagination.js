@@ -6,13 +6,17 @@ import {
     getVisibleResultsMin,
 } from '@workday/canvas-kit-react/pagination';
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { recoilUserProjectNum } from "../Atom/UserDataAtom";
 
 const PaginationBar = () => {
 
-    const resultCount = 10;
-    const totalCount = 100;
+    const resultCount = 6;
+    const [totalCount, setTotalCount] = useRecoilState(recoilUserProjectNum);
     const lastPage = getLastPage(resultCount, totalCount);
     const [currentPage, setCurrentPage] = useState(1);
+
+
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
