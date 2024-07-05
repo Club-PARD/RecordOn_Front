@@ -13,7 +13,7 @@ const DeleteModal = ({
   onKeep,
   onDelete,
 }) => {
-  if (!isOpen) return null;
+  if (isOpen) return null;
 
   //오버레이 영역 선택하면 모달 닫힘
   const handleOverlayClick = (e) => {

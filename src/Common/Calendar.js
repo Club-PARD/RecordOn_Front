@@ -4,12 +4,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import { ko } from "date-fns/locale";
 
-const Calendar = ({ calWidth }) => {
+const Calendar = ({ calWidth, setSelectedDate }) => {
 
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
 
-  console.log(calWidth);
+  // console.log(selectedDate);
 
   return (
     <>
@@ -22,7 +22,7 @@ const Calendar = ({ calWidth }) => {
           maxDate={new Date('2100-12-31')}
           locale={ko}
           selected={selectedStartDate}
-          onChange={(date) => setSelectedStartDate(date)}
+          onChange={(date) => { setSelectedStartDate(date); setSelectedDate(date) }}
         />
       </ProjectDateWrapper>
 
@@ -36,6 +36,7 @@ width: ${(props) => props.calWidth};
 height: 40px;
 flex-direction: row;
 justify-content: start;
+cursor: pointer;
 
 /* DatePicker에 직접 하면 적용이 안된다.. */
 .react-datepicker {

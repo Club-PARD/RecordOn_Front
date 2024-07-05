@@ -1,21 +1,26 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { recoilProjectModal } from "../../../Atom/UserDataAtom";
+import AddProjectModal from "./AddProjectModal";
+import { useState } from "react";
 
 
 const AddProject = () => {
 
-    const [modalOn, setModalOn] = useRecoilState(recoilProjectModal);
+    const [modalOn, setModalOn] = useState(false);
 
     const handleAddProjectModal = () => {
-        setModalOn(true);
+        setModalOn((prev) => (!prev));
     }
 
     console.log(modalOn);
     return (
-        <AddProjectButton onClick={handleAddProjectModal}>
-            + 프로젝트 추가
-        </AddProjectButton>
+        <>
+            <AddProjectButton onClick={() => setModalOn(true)}>
+                + 프로젝트 추가
+            </AddProjectButton>
+            {modalOn && <AddProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} />}
+        </>
     );
 };
 
