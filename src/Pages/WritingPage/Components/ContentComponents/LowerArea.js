@@ -122,7 +122,7 @@ const FixArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 15px;
+  gap: 16px;
 
   width: 840px;
 `;
@@ -137,13 +137,14 @@ const TextAreaWidth = styled.textarea`
   width: 840px;
   height: ${({ height }) => height};
 
-  border: 1px solid;
   border-radius: 10px;
 
   padding: 22px 24px 31px 24px;
 
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  background-color: ${(props) => props.theme.colors.BoxGray};
 
   resize: none;
   overflow-y: auto;
