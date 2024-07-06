@@ -21,10 +21,11 @@ export const recoilUserProjectNum = atom({
 export const recoilUserProjectFilter = atom({
     key: "projectFilter",
     default: {
-        processState: 2,
-        startDate: "",
-        endDate: "",
-        tagList: [],
+        user_id: "ec87b339-7242-4141-ac09-dfea517ba54b",
+        competency_tag_name: [],
+        start_date: "",
+        finish_date: "",
+        is_finished: 2,
     },
     // effects_UNSTABLE: [persistAtom],
 });

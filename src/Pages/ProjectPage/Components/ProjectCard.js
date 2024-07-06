@@ -7,48 +7,68 @@ const ProjectCard = ({ projectData }) => {
 
     const [userImg, setUserImg] = useState("");
 
+    const keyword = [...new Set(projectData.competency_tag_name)];
+
 
     // console.log(key);
     console.log(projectData);
+    // console.log(keyword);
 
     return (
 
         <Container>
-            <CardContent>
-                <CardTopDiv>
-                    <CardImageDiv>
-                        <CardImage src={userImg == "" ? DefaultCardImg : DefaultCardImg} />
-                    </CardImageDiv>
-                    <CardDateDiv>
-                        <CardDateText>
-                            프로젝트 진행 기간
-                        </CardDateText>
-                        <CardDate>
-                            {projectData.start_date.substring(0, 10)} ~ {projectData.finish_date.substring(0, 10)}
-                        </CardDate>
+            {projectData.is_finished == 1 ?
+                <CardContent>
+                    <CardTopDiv>
+                        <CardImageDiv>
+                            <CardImage src={userImg == "" ? DefaultCardImg : DefaultCardImg} />
+                        </CardImageDiv>
+                        <CardDateDiv>
+                            <CardDateText>
+                                프로젝트 진행 기간
+                            </CardDateText>
+                            <CardDate>
+                                {projectData.start_date.substring(0, 10)} ~ {projectData.finish_date.substring(0, 10)}
+                            </CardDate>
 
-                    </CardDateDiv>
-                </CardTopDiv>
-                <CardTitle>
-                    {projectData.project_name}
-                </CardTitle>
-                <ProjectKeywordDiv>
-                    {projectData.competency_tag_name.map(tag => (
-                        <ProjectKeyword>
-                            {tag}
-                        </ProjectKeyword>
-                    ))}
-                    {/* <ProjectKeyword>
-                        신뢰성
-                    </ProjectKeyword>
-                    <ProjectKeyword>
-                        신뢰성
-                    </ProjectKeyword>
-                    <ProjectKeyword>
-                        신뢰성
-                    </ProjectKeyword> */}
-                </ProjectKeywordDiv>
-            </CardContent>
+                        </CardDateDiv>
+                    </CardTopDiv>
+                    <CardTitle>
+                        {projectData.project_name}
+                    </CardTitle>
+                    <ProjectKeywordDiv>
+                        {keyword.slice(0, 3).map(tag => (
+                            <ProjectKeyword>
+                                {tag}
+                            </ProjectKeyword>
+                        ))}
+                    </ProjectKeywordDiv>
+                </CardContent>
+                :
+                <CardContent>
+                    <CardTopDiv>
+                        <CardImageDiv>
+                            <CardImage src={userImg == "" ? DefaultCardImg : DefaultCardImg} />
+                        </CardImageDiv>
+                        <CardDateDiv>
+                            <CardDateText>
+                                프로젝트 진행 기간
+                            </CardDateText>
+                            <CardDate>
+                                {projectData.start_date.substring(0, 10)} ~ {projectData.finish_date.substring(0, 10)}
+                            </CardDate>
+
+                        </CardDateDiv>
+                    </CardTopDiv>
+                    <CardTitle>
+                        {projectData.project_name}
+                    </CardTitle>
+                    <ProjectKeywordDiv2>
+                        # 당신의 멋진 프로젝트가 기록되는 중입니다!
+                    </ProjectKeywordDiv2>
+                </CardContent>
+            }
+
 
         </Container>
     )
@@ -79,7 +99,6 @@ justify-content:space-between;
 align-items: center;
 /* border: 1px solid black; */
 font-size: ${(props) => props.theme.fontSizes.TextS};
-/* font-weight: 400; */
 `
 
 const CardImageDiv = styled.div`
@@ -110,27 +129,29 @@ width: 193px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-size: ${(props) => props.theme.fontSizes.TextS};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 /* font-weight: 400; */
 `
 
 const CardDate = styled.div`
-width: 193px;
+width: 233px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-size: ${(props) => props.theme.fontSizes.TextS};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 /* font-weight: 400; */
 `
 
 const CardTitle = styled.div`
-width: 323px;
-height: 94px;
+width: 327px;
+height: 85px;
 /* border: 1px solid black; */
 font-size: ${(props) => props.theme.fontSizes.TitleM};
 font-weight: ${(props) => props.theme.fontWeights.TitleM};
 line-height: 130%;
-margin-top: 6px;
+margin-top: 14px;
 align-items: start;
 `
 
@@ -142,9 +163,19 @@ grid-template-columns: repeat(3, 1fr);
 grid-template-rows: repeat(1, 1fr);
 column-gap: 10px;
 /* border: 1px solid black; */
-margin-top: 24px;
+margin-top: 29px;
 flex-direction:row;
 align-items: start;
+`
+
+const ProjectKeywordDiv2 = styled.div`
+width: 284px;
+height: 40px;
+/* border: 1px solid black; */
+margin-top: 29px;
+flex-direction:row;
+align-items: start;
+font-size: ${(props) => props.theme.fontSizes.TextS};
 `
 
 const ProjectKeyword = styled.div`
