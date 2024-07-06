@@ -86,7 +86,7 @@ const LowerArea = () => {
                   value={link.linkUrl}
                   onChange={(e) => handleLinkChange(index, e.target.value)}
                 />
-                {/* <Bookmark url={link.linkUrl} /> */}
+                <Bookmark url={link.linkUrl} />
               </div>
             ))}
           </FixArea>
