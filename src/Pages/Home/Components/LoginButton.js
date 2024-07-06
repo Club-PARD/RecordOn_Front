@@ -3,15 +3,20 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as GoogleLogo } from "../../../Assets/GoogleLogo.svg"
 import axios from 'axios'
+import { useRecoilState } from "recoil";
+import { recoilUserId } from "../../../Atom/UserDataAtom";
+import { useState, useEffect } from "react";
 
 
 const LoginButton = () => {
 
-    // const navigate = useNavigate();
+    const [userId, setUserId] = useRecoilState(recoilUserId);
+    const [isNewUser, setIsNewUser] = useState(null);
+    const navigate = useNavigate();
+
 
     const googleLogin = useGoogleLogin({
         // 구글 로그인 실행
-        // scope: "email profile",
         onSuccess: (res) => {
             console.log(res);
             console.log(res.access_token);
@@ -23,7 +28,6 @@ const LoginButton = () => {
             alert("구글 로그인에 실패하였습니다.");
             // navigate("/");
         },
-        // flow: "auth-code",
 
     })
 
@@ -78,18 +82,25 @@ const LoginButton = () => {
                     },
                 }
             );
-            console.log("서버 응답2:", response.data); //response.data = 유저 아이디.
-            // setUserID(response.data.userId);
-            // localStorage.setItem("userID", response.data.userId);
-            // localStorage.setItem("nickname", response.data.nickname);
-            // setNickname(localStorage.getItem("nickname"));
-            // setIsFirstLoggedin(response.data.firstLogin);
+            console.log("서버 응답2:", response.data);
+            setIsNewUser(response.data.is_new_user);
+            setUserId(response.data.user_id);
+
         } catch (error) {
             console.error("서버 요청 에러2:", error);
             alert("유저 정보 저장에 실패하였습니다.");
             // navigate("/");
         }
     };
+
+    useEffect(() => {
+        if (isNewUser == true) {
+            console.log("New User");
+        }
+        else if (isNewUser == false) {
+            navigate("/project")
+        }
+    }, [isNewUser])
 
 
 
