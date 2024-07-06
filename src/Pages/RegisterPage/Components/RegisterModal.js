@@ -1,14 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { handleRegisterDataSubmit } from "../../../Atom/RegisterDataAtom.js";
 import { ReactComponent as Close } from "../../../Assets/close.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
-import { ReactComponent as Check } from "../../../Assets/Check.svg";
 import DropdownTag from "./DropdownTag";
-import { Checkbox } from './CheckBox';
+import CheckBox from './CheckBox';
 
 
 function RegisterModal ({ show, onClose}) {
-  const [isTagOpen, setIsTagOpen] = useState(false);
+  const [isRegisterDataSubmitted, setIsRegisterDataSubmitted] = useRecoilState(
+    handleRegisterDataSubmit
+  );
+
+  const handleSubmit = () => {
+    setIsRegisterDataSubmitted(true);
+    console.log(`Tag selected: ${tagName}`);
+  };
+
   const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
 
   useEffect(() => {
@@ -24,10 +33,10 @@ function RegisterModal ({ show, onClose}) {
 
   const tagKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD","개발·데이터","디자인" ,"물류·무역" ,"영업" ,"식·음료", "엔지니어링·설계", "제조·생산", "교육", "건축·시설","의료·바이오"];
 
-  const toggleTag = () => setIsTagOpen(!isTagOpen);
 
   const handleTagSelect = (tagName) => {
     setSelectedTagKeyword(tagName);
+    console.log(`Tag selected: ${tagName}`);
 };
 
 
@@ -54,10 +63,10 @@ if(!show) {
               <NameDiv>희망직군</NameDiv>
               <BoxDiv>
               <DropdownTag
-                isOpen={isTagOpen}
-                toggleDropdown={toggleTag}
                 options={tagKeywords}
-                onSelect={handleTagSelect}
+                onSelect={(tagName) =>
+                  handleTagSelect(tagName)
+              }
               />
               </BoxDiv>
             </UserDataDiv>
@@ -67,7 +76,7 @@ if(!show) {
           <PolicyDiv>
             <PolicyDataDiv>
               <PolicyLeftDiv>
-                <Checkbox/>
+                <CheckBox name="termsOfService" />
                 <PolicyNameDiv>이용약관 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
               <PolicyRightDiv>자세히 보기</PolicyRightDiv>
@@ -75,7 +84,7 @@ if(!show) {
 
             <PolicyDataDiv>
               <PolicyLeftDiv>
-                <Checkbox />
+              <CheckBox name="privacyPolicy" />
                 <PolicyNameDiv>개인정보 수집 및 이용 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
               <PolicyRightDiv>자세히 보기</PolicyRightDiv>
@@ -83,12 +92,12 @@ if(!show) {
 
           </PolicyDiv>
 
-            <RegisterBtn>회원가입</RegisterBtn>
+            <RegisterBtn onClick={handleSubmit}>회원가입</RegisterBtn>
         </Container>
       </OutContatiner>
       </Background>
   );
-}
+};
 const Background = styled.div`
   position: fixed;
   top: 0;
@@ -206,9 +215,6 @@ const AnswerDiv =styled.input`
   }
 `;
 
-const JobListBtn = styled.button`
-`;
-
 const PolicyDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -232,24 +238,6 @@ const PolicyLeftDiv = styled.div`
   justify-content: space-between;
   display: flex;
   align-items: center;
-`;
-
-const CheckboxDiv = styled.div`
-  position: relative;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  border-radius: 2px;
-  border: 0.8px solid ${(props) => props.theme.colors.Black};
-`;
-
-const StyledCheck =styled(Check)`
-  position: absolute;
-  width: 12px;
-  height: 9px;
-  top: 5px;
-  left: 4px;
-  flex-shrink: 0;8
 `;
 
 const PolicyNameDiv = styled.div`
