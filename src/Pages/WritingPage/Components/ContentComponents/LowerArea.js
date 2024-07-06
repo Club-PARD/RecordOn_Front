@@ -14,12 +14,13 @@ const LowerArea = () => {
   );
 
   const [freeContent, setFreeContent] = useState("");
-  
+
   // 링크 입력 영역
   const [linkArea, setLinkArea] = useState([
     {
       id: 1,
       linkUrl: "",
+      isSubmitted: false,
     },
   ]);
 
@@ -30,6 +31,7 @@ const LowerArea = () => {
       {
         id: linkArea.length + 1,
         linkUrl: "",
+        isSubmitted: false,
       },
     ]);
   };
@@ -39,7 +41,6 @@ const LowerArea = () => {
     const updatedLinks = [...linkArea];
     updatedLinks[index].linkUrl = value;
     setLinkArea(updatedLinks);
-    console.log(value, typeof value);
   };
 
   // 자유란 변경 상태 관리
@@ -47,16 +48,20 @@ const LowerArea = () => {
     setFreeContent(e.target.value);
   };
 
-   // 엔터에 반응하는 핸들러
-   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleEnterKeyPress();
+  // 엔터에 반응하는 핸들러
+  const handleKeyPress = (event, index) => {
+    if (event.key === "Enter") {
+      handleEnterKeyPress(index);
     }
   };
 
   // 엔터가 눌리면 호출될 함수
-  const handleEnterKeyPress = () => {
-  
+  const handleEnterKeyPress = (index) => {
+    const updatedLinks = [...linkArea];
+    if (updatedLinks[index].linkUrl) {
+      updatedLinks[index].isSubmitted = true;
+      setLinkArea(updatedLinks);
+    }
   };
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
@@ -69,35 +74,43 @@ const LowerArea = () => {
         reference_links: links,
       }));
     }
-  }, [isExpRecordSubmitted, freeContent, linkArea]);
+  }, [isExpRecordSubmitted]);
 
   return (
     <>
       {/* 하단 영역 : 자유란과 관련 자료 링크 */}
       <Lower>
+        <StyledHr />
+
         <FixArea>
           <FixAreaLabel>자유란</FixAreaLabel>
           <TextAreaWidth
             placeholder="질문을 통해 다 작성하지 못한 내용을 자유란에 작성해보세요. 자유란만 작성하는 것은 불가능해요."
-            height="168px"
+            height="150px"
             value={freeContent}
             onChange={handleFreeChange}
           />
+          <DivForMargin height={"60px"} />
         </FixArea>
+
+        <StyledHr />
 
         <div>
           <FixArea>
             <FixAreaLabel>관련 자료 링크</FixAreaLabel>
             {linkArea.map((link, index) => (
               <div key={link.id}>
-                <StyledUrlInput
-                  type="url"
-                  placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
-                  value={link.linkUrl}
-                  onChange={(e) => handleLinkChange(index, e.target.value)}
-                  onKeyPress={handleKeyPress}
-                />
-                <Bookmark url={link.linkUrl} />
+                {link.isSubmitted ? (
+                  <Bookmark url={link.linkUrl} />
+                ) : (
+                  <StyledUrlInput
+                    type="url"
+                    placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
+                    value={link.linkUrl}
+                    onChange={(e) => handleLinkChange(index, e.target.value)}
+                    onKeyPress={(e) => handleKeyPress(e, index)}
+                  />
+                )}
               </div>
             ))}
           </FixArea>
@@ -113,11 +126,18 @@ const LowerArea = () => {
 const Lower = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 50px;
 
-  margin-top: 44px;
+  margin-top: 50px;
 `;
 
+const StyledHr = styled.hr`
+  border: 0;
+  width: 840px;
+  height: 1px;
+  background-color: #d9d9d9;
+
+  margin-bottom: 46px;
+`;
 const FixArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -132,6 +152,9 @@ const FixAreaLabel = styled.label`
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 `;
 
+const DivForMargin = styled.div`
+  height: ${({ height }) => height};
+`;
 const TextAreaWidth = styled.textarea`
   box-sizing: border-box;
   width: 840px;
@@ -157,8 +180,8 @@ const TextAreaWidth = styled.textarea`
 `;
 
 const AddButtonWrapper = styled.div`
-  margin-top: 29px;
-  margin-bottom: 49px;
+  margin-top: 9px;
+  margin-bottom: 105px;
 `;
 
 const AddButton = styled.button`
@@ -166,9 +189,9 @@ const AddButton = styled.button`
   width: 840px;
   height: 50px;
 
-  border: 1px solid;
   border-radius: 10px;
 
+  background-color: ${(props) => props.theme.colors.BoxGray};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 

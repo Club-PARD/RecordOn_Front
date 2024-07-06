@@ -14,7 +14,7 @@ const Bookmark = ({ url }) => {
     getMetaData(url);
   }, [url]);
 
-  if (!metaData) return <div>Loading...</div>;
+  if (!metaData) return <div></div>;
 
   return (
     <StyledBookmark>
@@ -57,6 +57,8 @@ const StyledA = styled.a`
 `;
 
 const XWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   width: 30px;
   height: 30px;
   z-index: 2;

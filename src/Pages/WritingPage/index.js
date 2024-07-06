@@ -86,13 +86,13 @@ const ConfirmButton = styled.button`
   height: 50px;
 
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.Black};
+  background-color: ${(props) => props.theme.colors.Charcoal};
 
   color: ${(props) => props.theme.colors.White};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 
-  margin-bottom: 136px;
+  margin-bottom: 79px;
 
   cursor: pointer;
 `;
