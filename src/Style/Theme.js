@@ -30,5 +30,6 @@ export const Theme = {
     Gray: "rgba(200, 200, 200, 1)",
     Charcoal: "rgba(127, 127, 127, 1)",
     GreenMain: "rgba(57, 130, 90, 1)",
+    BoxGray: "#F5F5F5",
   },
 };

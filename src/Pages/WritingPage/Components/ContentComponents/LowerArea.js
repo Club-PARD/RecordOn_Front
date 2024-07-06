@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import getUrlMetaData from "../../../../Axios/ReferenceApi";
 import Bookmark from "./Bookmark";
-import TiptapEditor from "./TiptapEditor";
 import { useRecoilState } from "recoil";
 import {
   experienceState,
@@ -49,6 +47,18 @@ const LowerArea = () => {
     setFreeContent(e.target.value);
   };
 
+   // 엔터에 반응하는 핸들러
+   const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleEnterKeyPress();
+    }
+  };
+
+  // 엔터가 눌리면 호출될 함수
+  const handleEnterKeyPress = () => {
+  
+  };
+
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
     if (isExpRecordSubmitted) {
@@ -85,6 +95,7 @@ const LowerArea = () => {
                   placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
                   value={link.linkUrl}
                   onChange={(e) => handleLinkChange(index, e.target.value)}
+                  onKeyPress={handleKeyPress}
                 />
                 <Bookmark url={link.linkUrl} />
               </div>
@@ -164,24 +175,20 @@ const AddButton = styled.button`
 `;
 
 const StyledUrlInput = styled.input`
-  display: flex;
-  align-items: flex-start;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0 24px 0 24px;
   width: 840px;
-  height: 86px;
+  height: 50px;
 
-  border: 1px solid black;
   border-radius: 10px;
-
-  padding: 22px 24px 31px 24px;
+  background-color: ${(props) => props.theme.colors.BoxGray};
 
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
-
-  resize: none;
-  overflow-y: auto;
-
-  line-height: 1.5;
 
   &::placeholder {
     color: ${(props) => props.theme.colors.Gray};
