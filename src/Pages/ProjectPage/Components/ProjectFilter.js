@@ -5,51 +5,52 @@ import { useState } from "react";
 import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import { recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
+import ResetIcon from "../../../Assets/ResetIcon.svg"
+import { useEffect } from "react";
+import { getUserProjectDataFilteredAPI } from "../../../Axios/ProjectDataApi";
 
 const ProjectFilter = () => {
 
-  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+  const [selectedStartDate, setSelectedStartDate] = useState("");
+  const [selectedEndDate, setSelectedEndDate] = useState("");
 
-  const [processState, setProcessState] = useState(2);
   const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState([]);
   const keywords = ['신뢰성', '전문성', '책임감', '열정', '실행력', '창의성', '성실성', '정직', '소통/협력'];
 
-  // console.log(projectFilter.processState);
 
   const processOnChange = () => {
 
-    if (projectFilter.processState == 2) {
+    if (projectFilter.is_finished == 2) {
       setProjectFilter({
         ...projectFilter,
-        processState: 1,
+        is_finished: 1,
       })
     }
-    else if (projectFilter.processState == 1) {
+    else if (projectFilter.is_finished == 1) {
       setProjectFilter({
         ...projectFilter,
-        processState: 2,
+        is_finished: 2,
       })
     }
-
   }
 
   const processOffChange = () => {
-    if (projectFilter.processState == 2) {
+    if (projectFilter.is_finished == 2) {
       setProjectFilter({
         ...projectFilter,
-        processState: 0,
+        is_finished: 0,
       })
     }
-    else if (projectFilter.processState == 0) {
+    else if (projectFilter.is_finished == 0) {
       setProjectFilter({
         ...projectFilter,
-        processState: 2,
+        is_finished: 2,
       })
     }
+    // applyFilter();
   }
 
   const toggling = () => setIsOpen(!isOpen);
@@ -62,8 +63,16 @@ const ProjectFilter = () => {
           value,
         ]
       );
+      setProjectFilter({
+        ...projectFilter,
+        competency_tag_name: [
+          ...selectedKeyword,
+          value,
+        ],
+      })
     }
     setIsOpen(false);
+    // applyFilter();
     // console.log(value);
   };
 
@@ -71,13 +80,27 @@ const ProjectFilter = () => {
     setSelectedKeyword(
       selectedKeyword.filter(keywords => keywords !== value)
     );
+    setProjectFilter({
+      ...projectFilter,
+      competency_tag_name: selectedKeyword.filter(keywords => keywords !== value),
+    })
     // console.log(value);
 
   };
 
-  // console.log(selectedKeyword);
 
-  // console.log(selectedStartDate);
+  const resetDate = () => {
+    setProjectFilter({
+      ...projectFilter,
+      start_date: "",
+      finish_date: "",
+    })
+    setSelectedStartDate("");
+    setSelectedEndDate("");
+
+  }
+
+  console.log(projectFilter);
 
   return (
     <>
@@ -118,7 +141,7 @@ const ProjectFilter = () => {
                   </ProjectProcessDone>
                 </ProjectProcessOnOff>
               )
-            }[projectFilter.processState]}
+            }[projectFilter.is_finished]}
           </ProjectProcess>
           <ProjectDate>
             <ProjectDateText>
@@ -129,11 +152,18 @@ const ProjectFilter = () => {
                 dateFormat='yyyy.MM.dd'
                 shouldCloseOnSelect
                 disabledKeyboardNavigation
+                placeholderText="시작 날짜"
                 minDate={new Date('1980-01-01')}
                 maxDate={new Date('2100-12-31')}
                 locale={ko}
                 selected={selectedStartDate}
-                onChange={(date) => setSelectedStartDate(date)}
+                onChange={(date) => {
+                  setSelectedStartDate(date);
+                  setProjectFilter({
+                    ...projectFilter,
+                    start_date: date,
+                  })
+                }}
               />
               <ProjectDateTo>
                 ~
@@ -142,15 +172,22 @@ const ProjectFilter = () => {
                 dateFormat='yyyy.MM.dd'
                 shouldCloseOnSelect
                 disabledKeyboardNavigation
+                placeholderText="마무리 날짜"
                 minDate={new Date('1980-01-01')}
                 maxDate={new Date('2100-12-31')}
                 locale={ko}
                 selected={selectedEndDate}
-                onChange={(date) => setSelectedEndDate(date)}
+                onChange={(date) => {
+                  setSelectedEndDate(date);
+                  setProjectFilter({
+                    ...projectFilter,
+                    finish_date: date,
+                  })
+                }}
               />
             </ProjectDateWrapper>
-            <ProjectDateApply>
-              확인
+            <ProjectDateApply onClick={resetDate}>
+              <ResetButton src={ResetIcon}></ResetButton>
             </ProjectDateApply>
           </ProjectDate>
         </FilterLeft>
@@ -411,7 +448,7 @@ text-align: center;
 `
 
 const ProjectDateApply = styled.div`
-width: 50px;
+width: 40px;
 height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
@@ -419,6 +456,13 @@ align-items: center;
 justify-content: center;
 background-color: ${(props) => props.theme.colors.Gray};
 margin-left: 6px;
+`
+
+const ResetButton = styled.img`
+width: 20px;
+height: 20px;
+/* border: 1px solid black; */
+cursor: pointer;
 `
 
 const ProjectKeyword = styled.div`
