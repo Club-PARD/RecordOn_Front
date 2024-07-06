@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {ReactComponent as Logo} from "../Assets/Logo.svg"
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -78,12 +79,10 @@ const Div = styled.div`
   background-color: #ffffff;
 `;
 
-const LogoDiv = styled.div`
+const LogoDiv = styled(Logo)`
   justify-content: center;
-  width: 153px;
-  height: 40px;
-  border-radius: 7.5px;
-  background-color: #d9d9d9;
+  width: 166.64px;
+  height: 50px;
 `;
 
 const LogInButton = styled.div`
@@ -95,7 +94,7 @@ const LogInButton = styled.div`
   height: 40px;
 
   border-radius: 25px;
-  background-color: ${(props) => props.theme.colors.Green};
+  background-color: ${(props) => props.theme.colors.GreenMain};
   font-family: Pretendard, sans-serif;
   font-size: 20px;
   font-weight: 400;
