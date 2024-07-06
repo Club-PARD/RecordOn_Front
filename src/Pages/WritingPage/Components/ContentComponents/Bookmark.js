@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { getUrlMetaData } from "../../../../Axios/ReferenceApi";
 
 const Bookmark = ({ url }) => {
@@ -21,13 +22,19 @@ const Bookmark = ({ url }) => {
   if (!metaData) return <div>Loading...</div>;
 
   return (
-    <div className="bookmark">
+    <StyledBookmark>
       <a href={url} target="_blank" rel="noopener noreferrer">
         <img src={metaData.imageUrl} alt={metaData.title} />
         <div>{metaData.title}</div>
       </a>
-    </div>
+    </StyledBookmark>
   );
 };
+
+const StyledBookmark = styled.div`
+width: 840px;
+height: 50px;
+border-radius: 10px;
+`;
 
 export default Bookmark;
