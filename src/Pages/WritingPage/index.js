@@ -86,7 +86,7 @@ const ConfirmButton = styled.button`
   height: 50px;
 
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.Charcoal};
+  background-color: ${(props) => props.theme.colors.GreenMain};
 
   color: ${(props) => props.theme.colors.White};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};

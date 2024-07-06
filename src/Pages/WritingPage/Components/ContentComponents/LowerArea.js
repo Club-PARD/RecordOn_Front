@@ -6,6 +6,7 @@ import {
   experienceState,
   handleExpRecordSubmit,
 } from "../../../../Atom/ExpRecordAtom";
+import { ReactComponent as CloseIcon } from "../../../../Assets/close.svg";
 
 const LowerArea = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
@@ -14,6 +15,13 @@ const LowerArea = () => {
   );
 
   const [freeContent, setFreeContent] = useState("");
+
+  // 링크 삭제 핸들러
+  const handleDeleteLink = (index) => {
+    const updatedLinks = [...linkArea];
+    updatedLinks.splice(index, 1);
+    setLinkArea(updatedLinks);
+  };
 
   // 링크 입력 영역
   const [linkArea, setLinkArea] = useState([
@@ -48,15 +56,17 @@ const LowerArea = () => {
     setFreeContent(e.target.value);
   };
 
-  // 엔터에 반응하는 핸들러
-  const handleKeyPress = (event, index) => {
-    if (event.key === "Enter") {
-      handleEnterKeyPress(index);
+  // 붙여넣기 이벤트 핸들러
+  const handlePaste = (event, index) => {
+    const paste = (event.clipboardData || window.clipboardData).getData("text");
+    if (paste) {
+      handleLinkChange(index, paste);
+      handlePasteComplete(index);
     }
   };
 
-  // 엔터가 눌리면 호출될 함수
-  const handleEnterKeyPress = (index) => {
+  // 붙여넣기가 완료되면 호출될 함수
+  const handlePasteComplete = (index) => {
     const updatedLinks = [...linkArea];
     if (updatedLinks[index].linkUrl) {
       updatedLinks[index].isSubmitted = true;
@@ -101,14 +111,20 @@ const LowerArea = () => {
             {linkArea.map((link, index) => (
               <div key={link.id}>
                 {link.isSubmitted ? (
-                  <Bookmark url={link.linkUrl} />
+                  <BookmarkComponent>
+                    <Bookmark url={link.linkUrl} />
+
+                    <XWrapper onClick={() => handleDeleteLink(index)}>
+                      <CloseIcon alt="링크 삭제" />
+                    </XWrapper>
+                  </BookmarkComponent>
                 ) : (
                   <StyledUrlInput
                     type="url"
                     placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
                     value={link.linkUrl}
                     onChange={(e) => handleLinkChange(index, e.target.value)}
-                    onKeyPress={(e) => handleKeyPress(e, index)}
+                    onPaste={(e) => handlePaste(e, index)}
                   />
                 )}
               </div>
@@ -123,6 +139,14 @@ const LowerArea = () => {
   );
 };
 
+const XWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  z-index: 2;
+  cursor: default;
+`;
 const Lower = styled.div`
   display: flex;
   flex-direction: column;
@@ -150,6 +174,32 @@ const FixArea = styled.div`
 const FixAreaLabel = styled.label`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
+`;
+
+const LinkField = styled.div`
+display: flex;
+flex-direction: column;
+gap: 9px;
+`;
+const BookmarkComponent = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0 24px 0 24px;
+  width: 840px;
+  height: 50px;
+
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.colors.BoxGray};
+
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  margin-bottom: -10px;
+
+  cursor: pointer;
 `;
 
 const DivForMargin = styled.div`
@@ -180,7 +230,7 @@ const TextAreaWidth = styled.textarea`
 `;
 
 const AddButtonWrapper = styled.div`
-  margin-top: 9px;
+  margin-top: 19px;
   margin-bottom: 105px;
 `;
 
@@ -217,6 +267,8 @@ const StyledUrlInput = styled.input`
   &::placeholder {
     color: ${(props) => props.theme.colors.Gray};
   }
+
+  margin-bottom: -10px;
 `;
 
 export default LowerArea;
