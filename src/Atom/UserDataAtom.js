@@ -8,6 +8,11 @@ export const isLogined = atom({
     default: false,
     // effects_UNSTABLE: [persistAtom],
 });
+export const recoilUserId = atom({
+    key: "user_id",
+    default: "ec87b339-7242-4141-ac09-dfea517ba54b",
+    // effects_UNSTABLE: [persistAtom],
+});
 export const recoilUserProjectNum = atom({
     key: "projectNum",
     default: 0,
@@ -16,10 +21,11 @@ export const recoilUserProjectNum = atom({
 export const recoilUserProjectFilter = atom({
     key: "projectFilter",
     default: {
-        processState: 2,
-        startDate: "",
-        endDate: "",
-        tagList: [],
+        user_id: "ec87b339-7242-4141-ac09-dfea517ba54b",
+        competency_tag_name: [],
+        start_date: "",
+        finish_date: "",
+        is_finished: 2,
     },
     // effects_UNSTABLE: [persistAtom],
 });

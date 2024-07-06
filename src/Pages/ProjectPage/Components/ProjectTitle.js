@@ -1,14 +1,32 @@
 import styled from "styled-components";
 import AddProject from "./AddProject";
 import { useState } from "react";
+import { getUserProjectDataAPI } from "../../../Axios/ProjectDataApi";
+import { useRecoilState } from "recoil";
+import { recoilUserId, recoilUserProjectNum } from "../../../Atom/UserDataAtom";
+import { useEffect } from "react";
+
+
 const ProjectTitle = () => {
 
+    const [userId, setUserId] = useRecoilState(recoilUserId);
+    const [userName, setUserName] = useState("");
+
+    useEffect(() => {
+        const getData = async () => {
+            const response = await getUserProjectDataAPI(userId);
+            // console.log(response.user_name);
+            setUserName(response.user_name);
+        }
+        getData();
+
+    }, [])
 
 
     return (
         <ProjectTitleDiv>
             <ProjectTitleText>
-                OOO님이 해낸 프로젝트예요!
+                {userName}님이 해낸 프로젝트예요!
             </ProjectTitleText>
             <AddProject />
         </ProjectTitleDiv>

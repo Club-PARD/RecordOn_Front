@@ -70,7 +70,7 @@ const LoginButton = () => {
             console.log(`${process.env.REACT_APP_DEV_URL}auth/login`);
             console.log(jsonUserData);
             const response = await axios.post(
-                `${process.env.REACT_APP_DEV_URL}/auth/login`,
+                `${process.env.REACT_APP_DEV_URL}auth/login`,
                 jsonUserData,
                 {
                     headers: {
