@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { FixArea, FixAreaLabel, TextAreaWidth } from "./LowerArea";
 import { useRecoilState } from "recoil";
-import { experienceState, handleExpRecordSubmit } from "../../../../Atom/ExpRecordAtom";
+import {
+  experienceState,
+  handleExpRecordSubmit,
+} from "../../../../Atom/ExpRecordAtom";
 
 const FixedArea = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
@@ -28,14 +31,15 @@ const FixedArea = () => {
 
   return (
     <>
-    {console.log (experience)}
+      {console.log(experience)}
       {/* 고정 질문 영역 */}
       <FixArea>
         <FixAreaLabel>
-          Q. 자자자 고정질문입니다 당신을 잘 돌아봐보시오 생각해봐라~~
+          Q. 오늘 있었던 경험을 떠올리며, 연상되는 다섯 가지 단어를 적어보세요!
         </FixAreaLabel>
         <TextAreaWidth
-          height="168px"
+        placeholder="예시) 고객 관리, 팀프로젝트 회의, 매출 향상, 갈등 이슈, 현직자 멘토링"
+          height="88px"
           value={commonQuestionAnswer}
           onChange={handleChange}
         />
