@@ -43,7 +43,7 @@ const TitleButton = styled.div`
 
   font-size: ${(props) => props.theme.fontSizes.TextXL};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
-  color: ${(props) => props.theme.colors.Black};
+  color: ${(props) => props.theme.color.black};
 `;
 
 const Buttons = styled.div`
@@ -59,7 +59,7 @@ const StyledButton = styled.button`
   height: 50px;
 
   border: 1.5px solid;
-  border-color: ${(props) => props.theme.colors.Black};
+  border-color: ${(props) => props.theme.color.black};
   border-radius: 25px;
 
   font-size: ${(props) => props.theme.fontSizes.TextL};

@@ -45,14 +45,14 @@ const GoBackArea = styled.div`
   top: 70;
 
   z-index: 9999;
-  background-color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.white};
 `;
 
 const MarginTopForGoBackDiv = styled.div`
   height: 46px;
   width: 1200px;
 
-  background-color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.white};
 `;
 
 const GoBackDiv = styled.div`
@@ -60,7 +60,7 @@ const GoBackDiv = styled.div`
   flex-direction: row;
   gap: 10.21px;
 
-  background-color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.white};
 
   margin-left: -1000px;
 
@@ -69,14 +69,14 @@ const GoBackDiv = styled.div`
   div {
     font-weight: ${(props) => props.theme.fontWeights.TextM};
     font-size: ${(props) => props.theme.fontSizes.TextM};
-    color: ${(props) => props.theme.colors.Charcoal};
+    color: ${(props) => props.theme.color.base6};
   }
 `;
 
 const MarginBottomForGoBackDiv = styled.div`
   height: 42px;
   width: 1200px;
-  background-color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.white};
 `;
 
 const ConfirmButton = styled.button`
@@ -86,9 +86,9 @@ const ConfirmButton = styled.button`
   height: 50px;
 
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.GreenMain};
+  background-color: ${(props) => props.theme.color.main};
 
-  color: ${(props) => props.theme.colors.White};
+  color: ${(props) => props.theme.color.white};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 

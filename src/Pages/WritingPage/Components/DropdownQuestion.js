@@ -76,7 +76,7 @@ const SelectQuestion = styled.div`
 
   border: 1px solid;
   border-radius: 5px;
-  border-color: ${(props) => props.theme.colors.LightGray};
+  border-color: ${(props) => props.theme.color.base3};
 
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   font-size: ${(props) => props.theme.fontSizes.TextL};
@@ -87,7 +87,7 @@ const SelectQuestion = styled.div`
 `;
 
 const PreQuestion = styled.div`
-  color: ${(props) => props.theme.colors.LightGray};
+  color: ${(props) => props.theme.color.base3};
 
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};

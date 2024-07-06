@@ -164,7 +164,7 @@ const Guide = styled.div`
 
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
-  color: ${(props) => props.theme.colors.GreenMain};
+  color: ${(props) => props.theme.color.main};
 
   margin-top: 80px;
   margin-bottom: 16px;
@@ -195,7 +195,7 @@ const TextAreaWidth = styled.textarea`
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 
-  background-color: ${(props) => props.theme.colors.WhiteGray};
+  background-color: ${(props) => props.theme.color.base1};
 
   resize: none;
   overflow-y: auto;
@@ -203,7 +203,7 @@ const TextAreaWidth = styled.textarea`
   line-height: 1.5;
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.Gray};
+    color: ${(props) => props.theme.color.base6};
   }
 `;
 const AddButton = styled.button`
