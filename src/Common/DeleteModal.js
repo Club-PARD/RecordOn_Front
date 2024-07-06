@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { ReactComponent as CloseIcon } from "../Assets/close.svg";
+import { ReactComponent as GoldenBell } from "../Assets/GoldenBell.svg";
 
 const DeleteModal = ({
   isOpen,
@@ -13,7 +14,7 @@ const DeleteModal = ({
   onKeep,
   onDelete,
 }) => {
-  if (!isOpen) return null;
+  if (isOpen) return null;
 
   //오버레이 영역 선택하면 모달 닫힘
   const handleOverlayClick = (e) => {
@@ -34,7 +35,9 @@ const DeleteModal = ({
 
         <div>
           {/* 뭔가 디자인 요소 들어감 */}
-          <DesignArea></DesignArea>
+          <DesignArea>
+            <GoldenBell />
+          </DesignArea>
           <BigAlert>
             {bigAlertText1}
             <br />
@@ -91,7 +94,6 @@ const Upper = styled.div`
 const DesignArea = styled.div`
   width: 65px;
   height: 55px;
-  background-color: ${(props) => props.theme.colors.Gray};
 
   margin-top: 16px;
 `;
