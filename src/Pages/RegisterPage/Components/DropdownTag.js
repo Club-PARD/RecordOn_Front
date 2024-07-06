@@ -48,16 +48,17 @@ const List = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
+  text-align: start;
   position: absolute;
   top: 160%;
   left: -13px;
   width: 228px;
-  height: 100px;
+  height: 160px;
+  flex-shrink: 0;
   z-index: 1000;
   overflow-y: auto;
   border-radius: 5px;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 4px 0px ${(props) => props.theme.colors.Black};
 
   background-color: ${(props) => props.theme.colors.White};
   font-size: ${(props) => props.theme.fontSizes.TextM};
@@ -65,7 +66,7 @@ const List = styled.div`
 `;
 
 const ListItem = styled.div`
-  text-align: st;
+  
   padding: 5px;
   cursor: pointer;
 `;

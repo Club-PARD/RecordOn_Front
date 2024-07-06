@@ -4,6 +4,7 @@ import { ReactComponent as Close } from "../../../Assets/close.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
 import { ReactComponent as Check } from "../../../Assets/Check.svg";
 import DropdownTag from "./DropdownTag";
+import { Checkbox } from './CheckBox';
 
 
 function RegisterModal ({ show, onClose}) {
@@ -21,7 +22,7 @@ function RegisterModal ({ show, onClose}) {
     };
   }, [show]);  
 
-  const tagKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD","개발·데이터"];
+  const tagKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD","개발·데이터","디자인" ,"물류·무역" ,"영업" ,"식·음료", "엔지니어링·설계", "제조·생산", "교육", "건축·시설","의료·바이오"];
 
   const toggleTag = () => setIsTagOpen(!isTagOpen);
 
@@ -66,7 +67,7 @@ if(!show) {
           <PolicyDiv>
             <PolicyDataDiv>
               <PolicyLeftDiv>
-                <CheckboxDiv><StyledCheck/></CheckboxDiv>
+                <Checkbox/>
                 <PolicyNameDiv>이용약관 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
               <PolicyRightDiv>자세히 보기</PolicyRightDiv>
@@ -74,7 +75,7 @@ if(!show) {
 
             <PolicyDataDiv>
               <PolicyLeftDiv>
-                <CheckboxDiv><StyledCheck/></CheckboxDiv>
+                <Checkbox />
                 <PolicyNameDiv>개인정보 수집 및 이용 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
               <PolicyRightDiv>자세히 보기</PolicyRightDiv>
