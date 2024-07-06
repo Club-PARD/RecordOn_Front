@@ -167,3 +167,4 @@ text-align: center;
 `
 
 export default Calendar;
+export {ProjectDateWrapper, ProjectDateStart};
