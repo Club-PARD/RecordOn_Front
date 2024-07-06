@@ -174,7 +174,7 @@ const QuestionArea = styled.div``;
 const SelectArea = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 17px;
   /* 
   justify-content: space-between; */
   width: 840px;
@@ -203,7 +203,7 @@ const TextAreaWidth = styled.textarea`
   line-height: 1.5;
 
   &::placeholder {
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base3};
   }
 `;
 const AddButton = styled.button`

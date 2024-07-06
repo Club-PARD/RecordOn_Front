@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 
+// 제출 내용 관리
 export const experienceState = atom({
   key: "experienceState",
   default: {
@@ -15,7 +16,17 @@ export const experienceState = atom({
   },
 });
 
+// 제출 동작 관리
 export const handleExpRecordSubmit = atom({
   key: "handleExpRecordSubmit",
   default: false,
+});
+
+// 경험 태그 선택 상태 관리
+export const expTagSelectState = atom({
+  key: "expTagSelectState",
+  default: {
+    isTagClicked: false,
+    selectedTagId: null,
+  },
 });
