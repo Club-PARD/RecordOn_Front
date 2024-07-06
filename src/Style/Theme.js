@@ -31,5 +31,7 @@ export const Theme = {
     Charcoal: "rgba(127, 127, 127, 1)",
     GreenMain: "rgba(57, 130, 90, 1)",
     BoxGray: "#F5F5F5",
+    LightGray: "#ECECEC",
+    WhiteGray: "#FBFBFB",
   },
 };
