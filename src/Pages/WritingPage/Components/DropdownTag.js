@@ -1,18 +1,47 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { keyframes } from "styled-components";
 import { ReactComponent as DropdownArrow } from "../../../Assets/DropdownArrow.svg";
 
-const DropdownTag = ({ isOpen, toggleDropdown, options, onSelect }) => {
+const DropdownTag = ({ options, onSelect }) => {
+  // 드롭다운 열림 상태
+  const [isTagOpen, setIsTagOpen] = useState(false);
+
+  // 선택딘 태그를 저장하는 상태
+  const [selectedTag, setSelectedTag] = useState("");
+
+  const toggleDropdown = () => {
+    setIsTagOpen(!isTagOpen);
+  };
+
+  const handleSelect = (tagKeyword) => {
+    setSelectedTag(tagKeyword);
+    onSelect(tagKeyword);
+    setIsTagOpen(false); // 옵션 선택 후 드롭다운 닫기
+  };
+
   return (
     <DropdownContainer>
       <SelectExp onClick={toggleDropdown}>
-        <div>경험태그</div>
-        <DropdownArrow />
+        {selectedTag ? (
+          <>
+            <div>{selectedTag}</div>
+            <StyledDropdownArrow isOpen={isTagOpen} />
+          </>
+        ) : (
+          <>
+            <div>경험태그</div>
+            <StyledDropdownArrow isOpen={isTagOpen} />
+          </>
+        )}
       </SelectExp>
-      {isOpen && (
+      {isTagOpen && (
         <List>
           {options.map((tagKeyword) => (
-            <ListItem key={tagKeyword} onClick={() => onSelect(tagKeyword)}>
+            <ListItem
+              alignItems={"center"}
+              key={tagKeyword}
+              onClick={() => handleSelect(tagKeyword)}
+            >
               {tagKeyword}
             </ListItem>
           ))}
@@ -47,16 +76,37 @@ const SelectExp = styled.div`
   cursor: pointer;
 `;
 
+const StyledDropdownArrow = styled(DropdownArrow)`
+  transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+  transition: transform 0.3s;
+`;
+
+const slideDown = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const List = styled.div`
-  display: flex;
+  box-sizing: border-box;
+  display: inline-block;
   flex-direction: column;
-  justify-content: space-around;
+  align-items: flex-start;
+  gap: 5px;
+  padding: 17px 9px 17px 9px;
+
+  overflow-y: auto;
+  max-height: 190px;
 
   position: absolute;
   top: 115%;
   left: 0;
   width: 100%;
-  height: 190px;
   z-index: 1000;
 
   border-radius: 5px;
@@ -65,10 +115,16 @@ const List = styled.div`
   background-color: ${(props) => props.theme.colors.White};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  animation: ${slideDown} 0.3s ease-out forwards;
 `;
 
 const ListItem = styled.div`
+  display: flex;
+  align-items: ${({ alignItems }) => alignItems || "flex-start"};
+  height: 28px;
   cursor: pointer;
 `;
 
 export default DropdownTag;
+export { DropdownContainer, List, ListItem, StyledDropdownArrow };

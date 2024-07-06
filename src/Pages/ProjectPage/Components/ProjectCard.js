@@ -3,9 +3,13 @@ import DefaultCardImg from "../../../Assets/Project_Default.png"
 import { useState } from "react";
 
 
-const ProjectCard = () => {
+const ProjectCard = ({ projectData }) => {
 
     const [userImg, setUserImg] = useState("");
+
+
+    // console.log(key);
+    console.log(projectData);
 
     return (
 
@@ -20,17 +24,21 @@ const ProjectCard = () => {
                             프로젝트 진행 기간
                         </CardDateText>
                         <CardDate>
-                            2024.00.00 ~ 2025.00.00
+                            {projectData.start_date.substring(0, 10)} ~ {projectData.finish_date.substring(0, 10)}
                         </CardDate>
 
                     </CardDateDiv>
                 </CardTopDiv>
                 <CardTitle>
-                    한동대 해커톤이라고요
-                    레코드온의 경험기록임
+                    {projectData.project_name}
                 </CardTitle>
                 <ProjectKeywordDiv>
-                    <ProjectKeyword>
+                    {projectData.competency_tag_name.map(tag => (
+                        <ProjectKeyword>
+                            {tag}
+                        </ProjectKeyword>
+                    ))}
+                    {/* <ProjectKeyword>
                         신뢰성
                     </ProjectKeyword>
                     <ProjectKeyword>
@@ -38,7 +46,7 @@ const ProjectCard = () => {
                     </ProjectKeyword>
                     <ProjectKeyword>
                         신뢰성
-                    </ProjectKeyword>
+                    </ProjectKeyword> */}
                 </ProjectKeywordDiv>
             </CardContent>
 
@@ -70,7 +78,7 @@ flex-direction:row;
 justify-content:space-between;
 align-items: center;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontSizes.TextS};
+font-size: ${(props) => props.theme.fontSizes.TextS};
 /* font-weight: 400; */
 `
 
@@ -93,7 +101,7 @@ width: 233px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontSizes.TextS};
+font-size: ${(props) => props.theme.fontSizes.TextS};
 /* font-weight: 400; */
 `
 
@@ -102,7 +110,7 @@ width: 193px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontSizes.TextS};
+font-size: ${(props) => props.theme.fontSizes.TextS};
 /* font-weight: 400; */
 `
 
@@ -111,7 +119,7 @@ width: 193px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontSizes.TextS};
+font-size: ${(props) => props.theme.fontSizes.TextS};
 /* font-weight: 400; */
 `
 
@@ -119,14 +127,20 @@ const CardTitle = styled.div`
 width: 323px;
 height: 94px;
 /* border: 1px solid black; */
-font-style: ${(props) => props.theme.fontSizes.TitleS};
+font-size: ${(props) => props.theme.fontSizes.TitleM};
+font-weight: ${(props) => props.theme.fontWeights.TitleM};
+line-height: 130%;
 margin-top: 6px;
-/* box-sizing: content-box; */
+align-items: start;
 `
 
 const ProjectKeywordDiv = styled.div`
-width: 323px;
+width: 254px;
 height: 30px;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-template-rows: repeat(1, 1fr);
+column-gap: 10px;
 /* border: 1px solid black; */
 margin-top: 24px;
 flex-direction:row;
@@ -140,9 +154,9 @@ background-color: black;
 /* border: 1px solid black; */
 border-radius: 25px;
 color: ${(props) => props.theme.colors.White};
-font-style: ${(props) => props.theme.fontSizes.TextS};
+font-size: ${(props) => props.theme.fontSizes.TextS};
 justify-content:center;
-margin-right: 10px;
+/* margin-right: 10px; */
 `
 
 export default ProjectCard;
