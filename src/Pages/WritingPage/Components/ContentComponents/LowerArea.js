@@ -16,22 +16,14 @@ const LowerArea = () => {
   );
 
   const [freeContent, setFreeContent] = useState("");
-  const [referenceLinks, setReferenceLinks] = useState([]);
-  const [url, setUrl] = useState("");
-
+  
+  // 링크 입력 영역
   const [linkArea, setLinkArea] = useState([
     {
       id: 1,
       linkUrl: "",
     },
   ]);
-
-  const handlePaste = (event) => {
-    const paste = (event.clipboardData || window.clipboardData).getData("text");
-    if (paste.startsWith("http")) {
-      setUrl(paste);
-    }
-  };
 
   // 링크 입력 영역 추가
   const addLinkArea = () => {
@@ -49,6 +41,7 @@ const LowerArea = () => {
     const updatedLinks = [...linkArea];
     updatedLinks[index].linkUrl = value;
     setLinkArea(updatedLinks);
+    console.log(value, typeof value);
   };
 
   // 자유란 변경 상태 관리
@@ -93,10 +86,9 @@ const LowerArea = () => {
                   value={link.linkUrl}
                   onChange={(e) => handleLinkChange(index, e.target.value)}
                 />
+                {/* <Bookmark url={link.linkUrl} /> */}
               </div>
             ))}
-
-            {/* <Bookmark url={url} /> */}
           </FixArea>
           <AddButtonWrapper>
             <AddButton onClick={addLinkArea}>+ 관련 자료 추가</AddButton>

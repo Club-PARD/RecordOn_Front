@@ -13,12 +13,14 @@ const QnaArea = () => {
     handleExpRecordSubmit
   );
 
+  // 경험 입력 영역
   const [experienceSections, setExperienceSections] = useState([
     {
       id: 1,
       selectedTag: "",
       selectedQuestion: "",
       questionOptions: [],
+      text: "",
     },
   ]);
 
@@ -89,11 +91,31 @@ const QnaArea = () => {
         selectedTag: "",
         selectedQuestion: "",
         questionOptions: [],
-        isTagOpen: false,
-        isQuestionOpen: false,
+        text: "",
       },
     ]);
   };
+
+  // 텍스트 변경 핸들러
+  const handleTextChangeInSection = (text, id) => {
+    const updatedSections = experienceSections.map((section) =>
+      section.id === id ? { ...section, text } : section
+    );
+    setExperienceSections(updatedSections);
+  };
+
+  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
+  useEffect(() => {
+    if (isExpRecordSubmitted) {
+      setExperience((prev) => ({
+        ...prev,
+        question_answers: experienceSections.map(section => section.text),
+        tag_ids: experienceSections.map(section => section.selectedTag),
+        question_ids: experienceSections.map(section => section.selectedQuestion)
+      }));
+    }
+  }, [isExpRecordSubmitted]);
+
   return (
     <>
       {experienceSections.map((section) => (
@@ -113,7 +135,9 @@ const QnaArea = () => {
               tagName={section.selectedTag}
             />
           </SelectArea>
-          <TextAreaWidth height="200px"/>
+          <TextAreaWidth height="200px"
+            value={section.text}
+            onChange={(e) => handleTextChangeInSection(e.target.value, section.id)}/>
         </QuestionArea>
       ))}
 

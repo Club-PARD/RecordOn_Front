@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { getUrlMetaData } from '../../../../Axios/ReferenceApi';
+import React, { useState, useEffect } from "react";
+import { getUrlMetaData } from "../../../../Axios/ReferenceApi";
 
 const Bookmark = ({ url }) => {
   const [metaData, setMetaData] = useState(null);
 
   useEffect(() => {
-    const getMetaData = async () => {
+    // URL을 인코딩합니다.
+    // const encodedUrl = encodeURIComponent(url);
+    // console.log(encodedUrl);
+    {
+      console.log(url);
+    }
+    const getMetaData = async (url) => {
       const data = await getUrlMetaData(url);
       setMetaData(data);
-      console.log (url);
     };
-    getMetaData();
+    getMetaData(url);
   }, [url]);
 
   if (!metaData) return <div>Loading...</div>;
