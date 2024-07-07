@@ -6,7 +6,7 @@ const { persistAtom } = recoilPersist();
 export const isLogined = atom({
     key: "isLogined",
     default: false,
-    effects_UNSTABLE: [persistAtom],
+    // effects_UNSTABLE: [persistAtom],
 });
 export const recoilUserData = atom({
     key: "UserData",
@@ -15,12 +15,13 @@ export const recoilUserData = atom({
         project_id: 0,
         id: 0, // experience id
     },
-    effects_UNSTABLE: [persistAtom],
+    // effects_UNSTABLE: [persistAtom],
 });
+
 export const recoilUserProjectNum = atom({
     key: "projectNum",
     default: 0,
-    effects_UNSTABLE: [persistAtom],
+    // effects_UNSTABLE: [persistAtom],
 });
 export const recoilUserProjectFilter = atom({
     key: "projectFilter",
@@ -31,17 +32,17 @@ export const recoilUserProjectFilter = atom({
         finish_date: "",
         is_finished: 2,
     },
-    effects_UNSTABLE: [persistAtom],
+    // effects_UNSTABLE: [persistAtom],
 });
 export const recoilProjectModal = atom({
     key: "ProjectModal",
     default: false,
-    effects_UNSTABLE: [persistAtom],
+    // effects_UNSTABLE: [persistAtom],
 });
 export const recoilUserExperienceNum = atom({
     key: "experienceNum",
     default: 0,
-    effects_UNSTABLE: [persistAtom],
+    // effects_UNSTABLE: [persistAtom],
 });
 export const recoilUserExperienceFilter = atom({
     key: "experienceFilter",
@@ -53,5 +54,5 @@ export const recoilUserExperienceFilter = atom({
         finish_date: "",
         search_text: "",
     },
-    effects_UNSTABLE: [persistAtom],
+    // effects_UNSTABLE: [persistAtom],
 });

@@ -1,11 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import { recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
 import ResetIcon from "../../../Assets/ResetIcon.svg"
+import DropdownArrow from "../../../Assets/DropdownArrow.svg"
+import XWhite from "../../../Assets/XWhite.svg"
 import { useEffect } from "react";
 import { getUserProjectDataFilteredAPI } from "../../../Axios/ProjectDataApi";
 
@@ -100,7 +102,24 @@ const ProjectFilter = () => {
 
   }
 
-  console.log(projectFilter);
+  console.log("프로젝트 필터 ", projectFilter);
+
+  // 드롭다운 외부 클릭시 안보이게 하는 부분들
+  const dropdownRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  // 드롭다운 외부 클릭 이벤트 리스너
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <FilterDiv>
@@ -112,30 +131,30 @@ const ProjectFilter = () => {
           {{
             0: (
               <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }} onClick={processOnChange}>
+                <ProjectProcessOngoing style={{ backgroundColor: "#303030", color: "white" }} onClick={processOnChange}>
                   진행중
                 </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "white", border: "1px solid black" }} onClick={processOffChange}>
+                <ProjectProcessDone style={{ backgroundColor: "white", color: "#303030" }} onClick={processOffChange}>
                   진행완료
                 </ProjectProcessDone>
               </ProjectProcessOnOff>
             ),
             1: (
               <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "white", color: "black", border: "1px solid black" }} onClick={processOnChange}>
+                <ProjectProcessOngoing style={{ backgroundColor: "white", color: "#303030" }} onClick={processOnChange}>
                   진행중
                 </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }} onClick={processOffChange}>
+                <ProjectProcessDone style={{ backgroundColor: "#303030", color: "white" }} onClick={processOffChange}>
                   진행완료
                 </ProjectProcessDone>
               </ProjectProcessOnOff>
             ),
             2: (
               <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }} onClick={processOnChange}>
+                <ProjectProcessOngoing style={{ backgroundColor: "#303030", color: "white" }} onClick={processOnChange}>
                   진행중
                 </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }} onClick={processOffChange}>
+                <ProjectProcessDone style={{ backgroundColor: "#303030", color: "white" }} onClick={processOffChange}>
                   진행완료
                 </ProjectProcessDone>
               </ProjectProcessOnOff>
@@ -200,10 +219,11 @@ const ProjectFilter = () => {
               <ProjectKeywordFilterDropdownContainer>
                 <ProjectKeywordFilterDropdownHeader onClick={toggling}>
                   핵심역량선택
+                  <ArrowImage src={DropdownArrow} isRotated={isOpen} />
                 </ProjectKeywordFilterDropdownHeader>
                 {isOpen && (
                   <ProjectKeywordFilterDropdownListContainer>
-                    <ProjectKeywordFilterDropdownList>
+                    <ProjectKeywordFilterDropdownList ref={dropdownRef}>
                       {keywords.map(keyword => (
                         <ProjectKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
                           {keyword}
@@ -218,7 +238,9 @@ const ProjectFilter = () => {
           <ProjectKeywordList>
             {selectedKeyword.map(keyword => (
               <ProjectKeywordSelected key={keyword} onClick={deleteKeyword(keyword)}>
-                {keyword}
+                <ProjectKeywordFilterButtonContent>
+                  {keyword} <img src={XWhite} />
+                </ProjectKeywordFilterButtonContent>
               </ProjectKeywordSelected>
             ))}
           </ProjectKeywordList>
@@ -231,8 +253,8 @@ const ProjectFilter = () => {
 const FilterDiv = styled.div`
 width: 1200px;
 height: 143px;
-border: 1px solid black;
-margin-top: 88px;
+/* border: 1px solid black; */
+margin-top: 62px;
 flex-direction: row;
 align-items: start;
 justify-content: space-between;
@@ -282,6 +304,7 @@ justify-content: center;
 border-radius: 25px;
 color: ${(props) => props.theme.colors.White};
 /* background-color: ${(props) => props.theme.colors.Black}; */
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 `
 const ProjectProcessDone = styled.div`
 width: 98px;
@@ -290,7 +313,8 @@ height: 40px;
 justify-content: center;
 border-radius: 25px;
 color: ${(props) => props.theme.colors.Black};
-background-color: ${(props) => props.theme.colors.Gray};
+background-color: ${(props) => props.theme.color.Gray};
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 margin-left: 16px;
 `
 
@@ -318,7 +342,7 @@ justify-content: start;
 
 /* DatePicker에 직접 하면 적용이 안된다.. */
 .react-datepicker {
-    background-color: ${(props) => props.theme.colors.White}; 
+    background-color: ${(props) => props.theme.colors.white}; 
     width: 300px;
     align-items: center;
     justify-content: center;
@@ -328,7 +352,7 @@ justify-content: start;
   }
   
   .react-datepicker__header {
-    background-color: ${(props) => props.theme.colors.White}; 
+    background-color: ${(props) => props.theme.color.white}; 
     width: 250px;
     font-size: 15px;
     font-family: "Pretendard";
@@ -401,7 +425,7 @@ justify-content: start;
   }
 
   .react-datepicker__day--selected {
-    background-color: ${(props) => props.theme.colors.Green}; 
+    background-color: ${(props) => props.theme.color.main}; 
     border-radius: 15px;
     color: white;
   }
@@ -423,8 +447,9 @@ height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
 align-items: center;
-background-color: ${(props) => props.theme.colors.Gray};
+background-color: ${(props) => props.theme.color.white};
 text-align: center;
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 `
 
 
@@ -440,8 +465,9 @@ height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
 align-items: center;
-background-color: ${(props) => props.theme.colors.Gray};
+background-color: ${(props) => props.theme.color.white};
 text-align: center;
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 `
 
 const ProjectDateApply = styled.div`
@@ -451,8 +477,9 @@ height: 40px;
 border-radius: 10px;
 align-items: center;
 justify-content: center;
-background-color: ${(props) => props.theme.colors.Gray};
+background-color: ${(props) => props.theme.color.white};
 margin-left: 6px;
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 `
 
 const ResetButton = styled.img`
@@ -490,23 +517,37 @@ height: 40px;
 /* border: 1px solid black; */
 `
 
+
+
+
 const ProjectKeywordFilterDropdownContainer = styled.div`
   position: relative;
   width: 164px;
-  background-color: ${(props) => props.theme.colors.Gray};
   border-radius: 25px;
 `;
 
 const ProjectKeywordFilterDropdownHeader = styled.div`
-  /* padding: 10px; */
   width: 164px;
   height:40px;
+  flex-direction: row;
   justify-content:center;
-  background-color: ${(props) => props.theme.colors.Gray};
+  background-color: ${(props) => props.theme.color.white};
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
   /* border: 1px solid #ccc; */
   border-radius: 25px;
   cursor: pointer;
 `;
+
+const ArrowImage = styled.img`
+  margin-left: 7px;
+  transition: transform 0.3s ease-in-out;
+  ${({ isRotated }) =>
+    isRotated &&
+    css`
+      transform: rotate(-180deg);
+    `}
+
+`
 
 const ProjectKeywordFilterDropdownListContainer = styled.div`
   position: absolute;
@@ -515,23 +556,46 @@ const ProjectKeywordFilterDropdownListContainer = styled.div`
 `;
 
 const ProjectKeywordFilterDropdownList = styled.ul`
-  width: 164px;
-  padding: 0;
-  margin: 45px;
-  list-style: none;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  /* border-top: none; */
+width: 164px;
+max-height: 169px;
+padding: 0;
+margin: 45px;
+list-style: none;
+background: #fff;
+border-radius: 5px;
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+padding: 8px 12px 8px 6px;
+overflow-x: hidden;
+overflow-y: auto;
+position: absolute;
+  /* 스크롤바 스타일 (웹킷 브라우저용) */
+  &::-webkit-scrollbar {
+    width: 5px;
+    /* height: 55px; */
+    margin-right: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.color.base4}; /* 스크롤바 색상 */
+    border-radius: 4px;
+  }
+
 `;
 
 const ProjectKeywordFilterListItem = styled.li`
-  padding: 10px;
-  padding-left: 20px;
+  width: 146px;
+  height: 30px;
+  padding-left: 15px;
+  /* border: 1px solid black; */
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   &:hover {
-    color: #ffffff;
-    background: ${(props) => props.theme.colors.Green};
+    background: ${(props) => props.theme.color.base3};
+  }
+   ::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.color.base4}; /* 스크롤바 색상 */
   }
 `;
 
@@ -551,10 +615,17 @@ width: 122px;
 height: 40px;
 /* border: 1px solid black; */
 justify-content: center;
-background-color: ${(props) => props.theme.colors.Gray};
+color: ${(props) => props.theme.color.white};
+background-color: ${(props) => props.theme.color.base7};
 border-radius: 25px;
 `
-
+const ProjectKeywordFilterButtonContent = styled.div`
+width: 80px;
+height: 40px;
+/* border: 1px solid black; */
+flex-direction: row;
+justify-content: space-between;
+`
 
 
 export default ProjectFilter;

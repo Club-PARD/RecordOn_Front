@@ -7,7 +7,7 @@ const ProjectBody = () => {
 
 
     return (
-        <Container>
+        <Container style={{ backgroundColor: "#EAF5F0" }}>
             <ProjectFilter />
             <ProjectCardGrid />
             <Pagination backgroundColor="#DCDCDC" />
@@ -18,8 +18,8 @@ const ProjectBody = () => {
 const Container = styled.div`
 width: 100%;
 height: 1024px;
-justify-content: center;
-background-color: ${(pros) => pros.theme.color.sub};
+justify-content: start;
+background-color: ${(props) => props.theme.color.main}; 
 /* border: 1px solid black; */
 border-radius: 50px 50px 0px 0px;
 background: var(--base2, #F5F5F5);

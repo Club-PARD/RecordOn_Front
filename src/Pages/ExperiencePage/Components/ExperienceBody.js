@@ -18,8 +18,8 @@ const ExperienceBody = () => {
 const Container = styled.div`
 width: 100%;
 height: 1024px;
-justify-content: center;
-background-color: ${(pros) => pros.theme.color.base2};
+justify-content: start;
+background-color: ${(props) => props.theme.color.base2};
 /* border: 1px solid black; */
 border-radius: 50px 50px 0px 0px;
 background: var(--base2, #F5F5F5);

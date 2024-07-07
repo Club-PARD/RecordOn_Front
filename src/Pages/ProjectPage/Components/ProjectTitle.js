@@ -13,22 +13,22 @@ const ProjectTitle = () => {
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [userName, setUserName] = useState("");
 
-    console.log(userData);
+    // console.log(userData);
 
-    // useEffect(() => {
-    //     if (userData.user_id == null) {
+    useEffect(() => {
+        if (userData.user_id == null) {
 
-    //     }
-    //     console.log(userData);
-    //     console.log(userData.user_id);
-    //     const getData = async () => {
-    //         const response = await getUserProjectDataAPI(userData.user_id);
-    //         // console.log(response.user_name);
-    //         setUserName(response?.user_name);
-    //     }
-    //     getData();
+        }
+        // console.log(userData);
+        // console.log(userData.user_id);
+        const getData = async () => {
+            const response = await getUserProjectDataAPI(userData.user_id);
+            // console.log(response.user_name);
+            setUserName(response?.user_name);
+        }
+        getData();
 
-    // }, [])
+    }, [])
 
 
     return (
