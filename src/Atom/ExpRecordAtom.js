@@ -4,9 +4,10 @@ import { atom } from "recoil";
 export const experienceState = atom({
   key: "experienceState",
   default: {
-    user_id: "",
+    user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+    projects_id: 5,
     exp_date: "",
-    exp_title: "",
+    title: "",
     tag_ids: [],
     free_content: "",
     question_ids: [],

@@ -1,16 +1,44 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { handleExpRecordSubmit } from "../../Atom/ExpRecordAtom";
+import {
+  handleExpRecordSubmit,
+  experienceState,
+} from "../../Atom/ExpRecordAtom";
 import { ReactComponent as GoBackIcon } from "../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
+import { postExperienceAPI } from "../../Axios/ExperienceApi";
 
 const WritingPage = () => {
+  const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
+
+    try {
+      await postExperienceAPI(experience);
+      refreshRecoil();
+    } catch (error) {
+      console.error("경험 데이터 제출 중 오류가 발생했습니다:", error);
+      setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
+    }
+  };
+
+  const refreshRecoil = () => {
+    setIsExpRecordSubmitted(false);
+    setExperience({
+      user_id: "",
+      exp_date: "",
+      exp_title: "",
+      tag_ids: [],
+      free_content: "",
+      question_ids: [],
+      question_answers: [],
+      reference_links: [],
+      common_question_answer: "",
+    });
   };
 
   return (

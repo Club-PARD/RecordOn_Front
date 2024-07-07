@@ -33,8 +33,8 @@ const UppderArea = () => {
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        exp_date: expDate,
-        exp_title: expTitle,
+        exp_date: expDate.toISOString(),
+        title: expTitle,
       }));
     }
   }, [isExpRecordSubmitted]);
