@@ -244,7 +244,7 @@ const FilterDiv = styled.div`
 width: 1200px;
 height: 90px;
 /* border: 1px solid black; */
-margin-top: 88px;
+margin-top: 62px;
 flex-direction: row;
 align-items: start;
 justify-content: space-between;

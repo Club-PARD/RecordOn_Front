@@ -269,7 +269,7 @@ justify-content: center;
 const ExperienceButtonsDivDone = styled.div`
 width: 465px;
 height: 50px;
-border: 1px solid black;
+/* border: 1px solid black; */
 flex-direction: row;
 justify-content: center;
 `
@@ -277,7 +277,7 @@ justify-content: center;
 const ExperienceButtonsDiv = styled.div`
 width: 465px;
 height: 50px;
-border: 1px solid black;
+/* border: 1px solid black; */
 flex-direction: row;
 justify-content: space-between;
 `

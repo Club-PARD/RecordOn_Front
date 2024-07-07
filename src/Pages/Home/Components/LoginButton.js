@@ -10,10 +10,10 @@ import { useState, useEffect } from "react";
 
 const LoginButton = () => {
 
-    const [userData, setUserData] = useRecoilState(recoilUserData);
+    const [userData1, setUserData] = useRecoilState(recoilUserData);
     const [isNewUser, setIsNewUser] = useState(null);
     const navigate = useNavigate();
-
+    console.log(userData1);
 
     const googleLogin = useGoogleLogin({
         // 구글 로그인 실행
@@ -47,11 +47,6 @@ const LoginButton = () => {
                 }
             );
             console.log("서버 응답:", response.data);
-            //   setUserData({
-            //     name: response.data.name,
-            //     email: response.data.email,
-            //     picture: response.data.picture,
-            // //   });
 
             // 빋은 데이터를 서버로 보내서 디비에 저장
             sendUserDataToServer({
@@ -84,7 +79,12 @@ const LoginButton = () => {
             );
             console.log("서버 응답2:", response.data);
             setIsNewUser(response.data.is_new_user);
-            setUserData(response.data.user_id);
+            console.log(userData1);
+            setUserData({
+                ...userData1,
+                user_id: response.data.user_id
+            });
+
 
         } catch (error) {
             console.error("서버 요청 에러2:", error);
