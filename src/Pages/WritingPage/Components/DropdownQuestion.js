@@ -5,7 +5,12 @@ import { DropdownContainer } from "./DropdownTag";
 import { ReactComponent as QArrow } from "../../../Assets/QdropdownArrow.svg";
 import { ReactComponent as BigCheck } from "../../../Assets/BigCheck.svg";
 
-const DropdownQuestion = ({ isTagSelected, options, onSelect }) => {
+const DropdownQuestion = ({
+  selectedTag,
+  isTagSelected,
+  options,
+  onSelect,
+}) => {
   // 드롭다운 열림 상태
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
@@ -16,13 +21,12 @@ const DropdownQuestion = ({ isTagSelected, options, onSelect }) => {
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const toggleDropdown = () => {
-    if (isTagSelected)
-    setIsQuestionOpen(!isQuestionOpen);
+    if (isTagSelected) setIsQuestionOpen(!isQuestionOpen);
   };
 
   const handleSelect = (question, index) => {
+    console.log("handleSelect" + index);
     setSelectedQuestion(question);
-    console.log (question)
     onSelect(index);
     setIsQuestionOpen(false); // 옵션 선택 후 드롭다운 닫기
   };
@@ -30,29 +34,35 @@ const DropdownQuestion = ({ isTagSelected, options, onSelect }) => {
   useEffect(() => {
     setIsQuestionOpen(false);
     setSelectedQuestion("");
-  }, [isTagSelected]);
+  }, [isTagSelected, selectedTag]);
 
   return (
     <DropdownContainer>
-      {console.log (isTagSelected)}
+      {console.log(isTagSelected)}
       <SelectQuestion onClick={toggleDropdown} isTagSelected={isTagSelected}>
         {selectedQuestion ? (
           <>
             <SelectedQuestion>{selectedQuestion}</SelectedQuestion>
-            <StyledQArrow isTagSelected={isTagSelected} isOpen={isQuestionOpen} />
+            <StyledQArrow
+              isTagSelected={isTagSelected}
+              isOpen={isQuestionOpen}
+            />
           </>
         ) : (
           <>
             <PreQuestion isTagSelected={isTagSelected}>
               Q. 질문을 선택해 주세요.
             </PreQuestion>
-            <StyledQArrow isTagSelected={isTagSelected} isOpen={isQuestionOpen} />
+            <StyledQArrow
+              isTagSelected={isTagSelected}
+              isOpen={isQuestionOpen}
+            />
           </>
         )}
       </SelectQuestion>
       {isQuestionOpen && (
         <List>
-          {console.log (options)}
+          {console.log(options)}
           {options.map((question, index) => (
             <ListItemWrapper
               key={index}
@@ -88,11 +98,13 @@ const SelectQuestion = styled.div`
 
   border: 1px solid;
   border-radius: 5px;
-  border-color: ${(props) => (props.isTagSelected ? "none" : props.theme.color.base3)};
+  border-color: ${(props) =>
+    props.isTagSelected ? "none" : props.theme.color.base3};
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   font-size: ${(props) => props.theme.fontSizes.TextL};
 
-  box-shadow: ${(props) => (props.isTagSelected ? "1px 1px 3px 0px #00000033" : "none")};
+  box-shadow: ${(props) =>
+    props.isTagSelected ? "1px 1px 3px 0px #00000033" : "none"};
 
   margin-bottom: 20px;
 
@@ -102,18 +114,19 @@ const SelectQuestion = styled.div`
 const SelectedQuestion = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
-  color: ${(props) => ( props.theme.color.black)};
+  color: ${(props) => props.theme.color.black};
   line-height: 31.2px;
-
 `;
 const PreQuestion = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
-  color: ${(props) => (props.isTagSelected ? props.theme.color.black : props.theme.color.base3)};
+  color: ${(props) =>
+    props.isTagSelected ? props.theme.color.black : props.theme.color.base3};
 `;
 
 const StyledQArrow = styled(QArrow)`
-  stroke: ${(props) => (props.isTagSelected ? props.theme.color.black : props.theme.color.base3)};
+  stroke: ${(props) =>
+    props.isTagSelected ? props.theme.color.black : props.theme.color.base3};
   transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
   transition: transform 0.3s;
 `;

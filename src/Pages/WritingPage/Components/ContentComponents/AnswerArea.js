@@ -35,7 +35,6 @@ const AnswerArea = () => {
       questionOptions: [],
       text: "",
       isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
-      isQuestionOpen: false, // true일 경우, 질문 드롭다운이 내려옴
       isQuestionSelected: false, // true일 경우, textarea 배경색이 달라짐.
     },
   ]);
@@ -67,7 +66,6 @@ const AnswerArea = () => {
         questionOptions: [],
         text: "",
         isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
-        isQuestionOpen: false, // true일 경우, 질문 드롭다운이 내려옴
         isQuestionSelected: false, // true일 경우, textarea 배경색이 달라짐.
       },
     ]);
@@ -95,16 +93,22 @@ const AnswerArea = () => {
             questionOptions: [],
             selectedQuestion: null,
             isTagSelected: false,
+            isQuestionSelected: false,
           };
         }
 
         // 새로운 태그를 선택한 경우
+        const newQuestionOptions = tagAndQuestion[tagId]
+          ? tagAndQuestion[tagId].questions
+          : [];
+
         return {
           ...section,
           selectedTag: tagId,
-          questionOptions: tagId ? tagAndQuestion[tagId].questions : [],
+          questionOptions: newQuestionOptions,
           selectedQuestion: null,
           isTagSelected: true,
+          isQuestionSelected: false,
         };
       }
 
@@ -119,7 +123,11 @@ const AnswerArea = () => {
     console.log(`QuestionId selected: ${questionId} for section id: ${id}`);
     const updatedSections = experienceSections.map((section) =>
       section.id === id
-        ? { ...section, selectedQuestion: questionId, isQuestionOpen: false }
+        ? {
+            ...section,
+            selectedQuestion: questionId,
+            isQuestionSelected: true,
+          }
         : section
     );
     setExperienceSections(updatedSections);
@@ -152,12 +160,11 @@ const AnswerArea = () => {
               onSelect={(questionId) =>
                 handleQuestionSelectInSection(questionId, section.id)
               }
+              selectedTag={section.selectedTag}
             />
           </SelectArea>
           {/* 답변란 */}
-          <TextAreaWidth
-            isQuestionClicked={questionState.isQuestionClicked}
-          />{" "}
+          <TextAreaWidth isQuestionSelected={section.isQuestionSelected} />{" "}
         </SectionWrapper>
       ))}
 
@@ -198,8 +205,8 @@ const TextAreaWidth = styled.textarea`
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 
-  background-color: ${({ isQuestionClicked, theme }) =>
-    isQuestionClicked ? theme.color.base2 : theme.color.base1};
+  background-color: ${({ isQuestionSelected, theme }) =>
+    isQuestionSelected ? theme.color.base2 : theme.color.base1};
   resize: none;
   overflow-y: auto;
 
