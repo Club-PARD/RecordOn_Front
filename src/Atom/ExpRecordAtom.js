@@ -21,21 +21,3 @@ export const handleExpRecordSubmit = atom({
   key: "handleExpRecordSubmit",
   default: false,
 });
-
-// 경험 태그 선택 상태 관리
-export const expTagSelectState = atom({
-  key: "expTagSelectState",
-  default: {
-    isTagClicked: false,
-    selectedTagId: null,
-  },
-});
-
-// 질문 선택 상태 관리
-export const questionSelectState = atom({
-  key: "questionSelectState",
-  default: {
-    isQuestionClicked: false,
-    selectedQuestionId: null,
-  },
-});

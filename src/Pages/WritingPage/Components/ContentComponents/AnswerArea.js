@@ -14,8 +14,6 @@ import { useRecoilState } from "recoil";
 import {
   experienceState,
   handleExpRecordSubmit,
-  expTagSelectState,
-  questionSelectState,
 } from "../../../../Atom/ExpRecordAtom";
 
 const AnswerArea = () => {
@@ -24,7 +22,35 @@ const AnswerArea = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
-  const [questionState, setQuestionState] = useRecoilState(questionSelectState);
+
+  //임시 변수들
+  // 별도의 배열로 관리하는 상태
+  const [tagIds, setTagIds] = useState([null]);
+  const [questionIds, setQuestionIds] = useState([null]);
+  const [questionAnswers, setQuestionAnswers] = useState([""]);
+
+    // // 선택된 태그, 질문, 텍스트의 배열 생성
+    // const getSelectedData = () => {
+    //   return experienceSections.map((section) => ({
+    //     tag_ids: section.tagIds,
+    //     question_ids: section.questionIds,
+    //     question_answers: section.questionAnswers,
+    //   }));
+    // };
+  
+  
+  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
+  useEffect(() => {
+    if (isExpRecordSubmitted) {
+     setExperience((prev) =>({
+      ...prev,
+      tag_ids: tagIds,
+      question_ids: questionIds,
+      question_answers: questionAnswers,
+     }))
+    }
+  }, [isExpRecordSubmitted, setExperience]);
+
 
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
   const [experienceSections, setExperienceSections] = useState([
@@ -38,6 +64,7 @@ const AnswerArea = () => {
       isQuestionSelected: false, // true일 경우, textarea 배경색이 달라짐.
     },
   ]);
+
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
 
@@ -69,12 +96,26 @@ const AnswerArea = () => {
         isQuestionSelected: false, // true일 경우, textarea 배경색이 달라짐.
       },
     ]);
+
+    setTagIds((prevTags) => [...prevTags, null]);
+    setQuestionIds((prevQuestions) => [...prevQuestions, null]);
+    setQuestionAnswers((prevTexts) => [...prevTexts, ""]);
   };
 
   // 경험 섹션 삭제
   const removeExperienceSection = (id) => {
     setExperienceSections((prevSections) =>
       prevSections.filter((section) => section.id !== id)
+    );
+
+    setTagIds((prevTags) => prevTags.filter((_, index) => index !== id));
+
+    setQuestionIds((prevQuestions) =>
+      prevQuestions.filter((_, index) => index !== id)
+    );
+
+    setQuestionAnswers((prevTexts) =>
+      prevTexts.filter((_, index) => index !== id)
     );
   };
 
@@ -116,6 +157,14 @@ const AnswerArea = () => {
     });
 
     setExperienceSections(updatedSections);
+
+    // 배열 업데이트
+    setTagIds((prevTags) =>
+      prevTags.map((tag, index) => (index === id ? tagId : tag))
+    );
+    setQuestionIds((prevQuestions) =>
+      prevQuestions.map((question, index) => (index === id ? null : question))
+    );
   };
 
   // 질문 선택 핸들러
@@ -131,7 +180,35 @@ const AnswerArea = () => {
         : section
     );
     setExperienceSections(updatedSections);
+
+    // 별도의 배열 업데이트
+    setQuestionIds((prevQuestions) =>
+      prevQuestions.map((question, index) =>
+        index === id ? questionId : question
+      )
+    );
   };
+
+  // 텍스트 변경 핸들러
+  const handleTextChangeInSection = (text, id) => {
+    const updatedSections = experienceSections.map((section) =>
+      section.id === id ? { ...section, text } : section
+    );
+    setExperienceSections(updatedSections);
+
+    // 별도의 배열 업데이트
+    setQuestionAnswers((prevTexts) =>
+      prevTexts.map((t, index) => (index === id ? text : t))
+    );
+  };
+
+  useEffect(() => {
+    console.log({
+      tagIds,
+      questionIds,
+      questionAnswers,
+    });
+  }, [tagIds, questionIds, questionAnswers]);
 
   return (
     <>
@@ -164,7 +241,13 @@ const AnswerArea = () => {
             />
           </SelectArea>
           {/* 답변란 */}
-          <TextAreaWidth isQuestionSelected={section.isQuestionSelected} />{" "}
+          <TextAreaWidth
+            isQuestionSelected={section.isQuestionSelected}
+            value={section.text}
+            onChange={(e) =>
+              handleTextChangeInSection(e.target.value, section.id)
+            }
+          />{" "}
         </SectionWrapper>
       ))}
 

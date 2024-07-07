@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { css, keyframes } from "styled-components";
 
-import { DropdownContainer } from "./DropdownTag";
 import { ReactComponent as QArrow } from "../../../Assets/QdropdownArrow.svg";
 import { ReactComponent as BigCheck } from "../../../Assets/BigCheck.svg";
 
@@ -81,6 +80,11 @@ const DropdownQuestion = ({
     </DropdownContainer>
   );
 };
+
+const DropdownContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
 
 const SelectQuestion = styled.div`
   box-sizing: border-box;
