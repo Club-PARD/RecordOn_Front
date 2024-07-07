@@ -5,12 +5,13 @@ import GlobalStyles from "./Style/GlobalStyles";
 import { ThemeProvider } from "styled-components";
 import { Theme } from "./Style/Theme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-
+import ScrollToTop from "../src/ScrollToTop";
 function App() {
   return (
     <RecoilRoot>
       <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
         <BrowserRouter>
+        <ScrollToTop />
           <ThemeProvider theme={Theme}>
             <GlobalStyles />
             <Router />
