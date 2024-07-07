@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { ReactComponent as CloseIcon } from "../Assets/close.svg";
 import { ReactComponent as GoldenBell } from "../Assets/GoldenBell.svg";
 
 const DeleteModal = ({
@@ -26,13 +25,6 @@ const DeleteModal = ({
   return (
     <Overlay onClick={handleOverlayClick}>
       <Modal>
-        {/* 닫기 버튼 있는 상위 영역 */}
-        <Upper>
-          <CloseIcon onClick={onClose} />
-        </Upper>
-
-        {/* 중간 영역 */}
-
         <div>
           {/* 뭔가 디자인 요소 들어감 */}
           <DesignArea>
@@ -142,8 +134,8 @@ const KeepButton = styled.button`
   height: 40px;
   border-radius: 10px;
 
-  background-color: ${(props) => props.theme.colors.Black};
-  color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.main};
+  color: ${(props) => props.theme.color.white};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 `;
@@ -156,8 +148,8 @@ const DeleteButton = styled.button`
   height: 40px;
   border-radius: 10px;
 
-  background-color: ${(props) => props.theme.colors.Gray};
-  color: ${(props) => props.theme.colors.Black};
+  background-color: ${(props) => props.theme.color.base3};
+  color: ${(props) => props.theme.color.base6};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 `;
