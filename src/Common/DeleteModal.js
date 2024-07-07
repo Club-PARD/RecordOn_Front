@@ -136,6 +136,8 @@ const KeepButton = styled.button`
   color: ${(props) => props.theme.color.white};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  cursor: pointer;
 `;
 
 const DeleteButton = styled.button`
@@ -150,6 +152,8 @@ const DeleteButton = styled.button`
   color: ${(props) => props.theme.color.base6};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  cursor: pointer;
 `;
 
 export default DeleteModal;

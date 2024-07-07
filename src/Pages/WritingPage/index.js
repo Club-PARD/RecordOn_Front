@@ -1,4 +1,5 @@
-import {useState} from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import {
@@ -16,6 +17,7 @@ const WritingPage = () => {
     handleExpRecordSubmit
   );
 
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async () => {
@@ -24,6 +26,8 @@ const WritingPage = () => {
     try {
       await postExperienceAPI(experience);
       refreshRecoil();
+      navigate("/experience");
+
     } catch (error) {
       console.error("경험 데이터 제출 중 오류가 발생했습니다:", error);
       setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
@@ -80,7 +84,7 @@ const WritingPage = () => {
         smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
         keepButtonText="남아서 기록하기"
         deleteButtonText="나가기"
-        keepButtonWidth ="151px"
+        keepButtonWidth="151px"
         onKeep={() => {
           // '계속 작성' 버튼 클릭 시 처리 로직
           console.log("계속 작성");
@@ -89,11 +93,11 @@ const WritingPage = () => {
         onDelete={() => {
           // '나가기' 버튼 클릭 시 처리 로직
           console.log("나가기");
+          refreshRecoil();
           closeModal(); // 모달 닫기
-          // 추가적인 처리 로직을 추가할 수 있습니다.
+          navigate("/experience");
         }}
       />
-
     </Div>
   );
 };
