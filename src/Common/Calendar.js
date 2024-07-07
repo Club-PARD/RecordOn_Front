@@ -13,8 +13,8 @@ const Calendar = ({ calWidth, setSelectedDate }) => {
 
   return (
     <>
-      <ProjectDateWrapper calWidth={calWidth}>
-        <ProjectDateStart
+      <ProjectDateWrapper>
+        <ProjectDateStart calWidth={"126px"}
           dateFormat='yyyy.MM.dd'
           shouldCloseOnSelect
           disabledKeyboardNavigation
@@ -32,12 +32,11 @@ const Calendar = ({ calWidth, setSelectedDate }) => {
 
 
 const ProjectDateWrapper = styled.div`
-width: ${(props) => props.calWidth}; 
+width: ${(props) => props.calWidth};
 height: 40px;
 flex-direction: row;
 justify-content: start;
 cursor: pointer;
-
 /* DatePicker에 직접 하면 적용이 안된다.. */
 .react-datepicker {
     background-color: ${(props) => props.theme.colors.White}; 
@@ -140,12 +139,12 @@ cursor: pointer;
 `
 
 const ProjectDateStart = styled(DatePicker)`
-width: 126px;
+width: ${(props) => props.calWidth};
 height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
 align-items: center;
-background-color: ${(props) => props.theme.colors.Gray};
+background-color: ${(props) => props.theme.colors.BoxGray};
 text-align: center;
 `
 

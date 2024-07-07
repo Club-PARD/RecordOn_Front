@@ -6,6 +6,7 @@ import {
   List,
   ListItem,
 } from "./DropdownTag";
+import {ReactComponent as QArrow} from "../../../Assets/QdropdownArrow.svg";
 
 const DropdownQuestion = ({ options, onSelect, tagName }) => {
   // 드롭다운 열림 상태
@@ -38,8 +39,8 @@ const DropdownQuestion = ({ options, onSelect, tagName }) => {
           </>
         ) : (
           <>
-            <div>질문 선택</div>
-            <StyledDropdownArrow isOpen={isQuestionOpen} />
+            <PreQuestion>Q. 질문을 선택해 주세요.</PreQuestion>
+            <QArrow isOpen={isQuestionOpen} />
           </>
         )}
       </SelectQuestion>
@@ -70,15 +71,26 @@ const SelectQuestion = styled.div`
   padding-left: 24px;
   padding-right: 24px;
 
-  width: 704px;
-  height: 50px;
+  width: 840px;
+  height: 88px;
 
   border: 1px solid;
   border-radius: 5px;
+  border-color: ${(props) => props.theme.colors.LightGray};
+
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   font-size: ${(props) => props.theme.fontSizes.TextL};
 
+  margin-bottom: 20px;
+
   cursor: pointer;
+`;
+
+const PreQuestion = styled.div`
+  color: ${(props) => props.theme.colors.LightGray};
+
+  font-weight: ${(props) => props.theme.fontWeights.TextXL};
+  font-size: ${(props) => props.theme.fontSizes.TextXL};
 `;
 
 export default DropdownQuestion;
