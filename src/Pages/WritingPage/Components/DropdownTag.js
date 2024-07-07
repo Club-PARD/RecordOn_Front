@@ -112,7 +112,7 @@ const List = styled.div`
   border-radius: 5px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
 
-  background-color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.colors.White};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 
