@@ -1,29 +1,22 @@
 import styled from "styled-components";
-import ProjectCardGrid from "./Components/ProjectCardGrid";
-import ProjectFilter from "./Components/ProjectFilter";
 import ProjectTitle from "./Components/ProjectTitle";
-import Pagination from "../../Common/Pagination";
-import Dropdown from "../../Common/Dropdown";
-import Calendar from "../../Common/Calendar";
-import { useState } from "react";
-import AddProjectModal from "./Components/AddProjectModal";
-import { useRecoilState } from "recoil";
-import { recoilProjectModal } from "../../Atom/UserDataAtom";
+import ProjectBody from "./Components/ProjectBody";
+import { useWindowSize } from "@workday/canvas-kit-react";
 
 const ProjectPage = () => {
 
+  const { width } = useWindowSize();
 
   return (
-    <Container>
+    <Container width={width}>
       <ProjectTitle />
-      <ProjectFilter />
-      <ProjectCardGrid />
-      <Pagination backgroundColor="#FBFBFB" />
+      <ProjectBody />
     </Container>
   );
 };
 
 const Container = styled.div`
+width: ${props => props.width}px;
 justify-content: center;
 `
 

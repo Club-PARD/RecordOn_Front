@@ -103,138 +103,135 @@ const ProjectFilter = () => {
   console.log(projectFilter);
 
   return (
-    <>
-      <FilterDiv>
-        <FilterLeft>
-          <ProjectProcess>
-            <ProjectProcessText>
-              진행현황
-            </ProjectProcessText>
-            {{
-              0: (
-                <ProjectProcessOnOff>
-                  <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }} onClick={processOnChange}>
-                    진행중
-                  </ProjectProcessOngoing>
-                  <ProjectProcessDone style={{ backgroundColor: "white", border: "1px solid black" }} onClick={processOffChange}>
-                    진행완료
-                  </ProjectProcessDone>
-                </ProjectProcessOnOff>
-              ),
-              1: (
-                <ProjectProcessOnOff>
-                  <ProjectProcessOngoing style={{ backgroundColor: "white", color: "black", border: "1px solid black" }} onClick={processOnChange}>
-                    진행중
-                  </ProjectProcessOngoing>
-                  <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }} onClick={processOffChange}>
-                    진행완료
-                  </ProjectProcessDone>
-                </ProjectProcessOnOff>
-              ),
-              2: (
-                <ProjectProcessOnOff>
-                  <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }} onClick={processOnChange}>
-                    진행중
-                  </ProjectProcessOngoing>
-                  <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }} onClick={processOffChange}>
-                    진행완료
-                  </ProjectProcessDone>
-                </ProjectProcessOnOff>
-              )
-            }[projectFilter.is_finished]}
-          </ProjectProcess>
-          <ProjectDate>
-            <ProjectDateText>
-              기간설정
-            </ProjectDateText>
-            <ProjectDateWrapper>
-              <ProjectDateStart
-                dateFormat='yyyy.MM.dd'
-                shouldCloseOnSelect
-                disabledKeyboardNavigation
-                placeholderText="시작 날짜"
-                minDate={new Date('1980-01-01')}
-                maxDate={new Date('2100-12-31')}
-                locale={ko}
-                selected={selectedStartDate}
-                onChange={(date) => {
-                  setSelectedStartDate(date);
-                  setProjectFilter({
-                    ...projectFilter,
-                    start_date: date,
-                  })
-                }}
-              />
-              <ProjectDateTo>
-                ~
-              </ProjectDateTo>
-              <ProjectDateEnd
-                dateFormat='yyyy.MM.dd'
-                shouldCloseOnSelect
-                disabledKeyboardNavigation
-                placeholderText="마무리 날짜"
-                minDate={new Date('1980-01-01')}
-                maxDate={new Date('2100-12-31')}
-                locale={ko}
-                selected={selectedEndDate}
-                onChange={(date) => {
-                  setSelectedEndDate(date);
-                  setProjectFilter({
-                    ...projectFilter,
-                    finish_date: date,
-                  })
-                }}
-              />
-            </ProjectDateWrapper>
-            <ProjectDateApply onClick={resetDate}>
-              <ResetButton src={ResetIcon}></ResetButton>
-            </ProjectDateApply>
-          </ProjectDate>
-        </FilterLeft>
-        <FilterRight>
-          <ProjectKeyword>
-            <ProjectKeywordFilter>
-              <ProjectKeywordFilterText>
-                핵심역량필터
-              </ProjectKeywordFilterText>
-              <ProjectKeywordFilterButton>
-                <ProjectKeywordFilterDropdownContainer>
-                  <ProjectKeywordFilterDropdownHeader onClick={toggling}>
-                    핵심역량선택
-                  </ProjectKeywordFilterDropdownHeader>
-                  {isOpen && (
-                    <ProjectKeywordFilterDropdownListContainer>
-                      <ProjectKeywordFilterDropdownList>
-                        {keywords.map(keyword => (
-                          <ProjectKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
-                            {keyword}
-                          </ProjectKeywordFilterListItem>
-                        ))}
-                      </ProjectKeywordFilterDropdownList>
-                    </ProjectKeywordFilterDropdownListContainer>
-                  )}
-                </ProjectKeywordFilterDropdownContainer>
-              </ProjectKeywordFilterButton>
-            </ProjectKeywordFilter>
-            <ProjectKeywordList>
-              {selectedKeyword.map(keyword => (
-                <ProjectKeywordSelected key={keyword} onClick={deleteKeyword(keyword)}>
-                  {keyword}
-                </ProjectKeywordSelected>
-              ))}
-            </ProjectKeywordList>
-          </ProjectKeyword>
-        </FilterRight>
-      </FilterDiv>
-
-    </>
+    <FilterDiv>
+      <FilterLeft>
+        <ProjectProcess>
+          <ProjectProcessText>
+            진행현황
+          </ProjectProcessText>
+          {{
+            0: (
+              <ProjectProcessOnOff>
+                <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }} onClick={processOnChange}>
+                  진행중
+                </ProjectProcessOngoing>
+                <ProjectProcessDone style={{ backgroundColor: "white", border: "1px solid black" }} onClick={processOffChange}>
+                  진행완료
+                </ProjectProcessDone>
+              </ProjectProcessOnOff>
+            ),
+            1: (
+              <ProjectProcessOnOff>
+                <ProjectProcessOngoing style={{ backgroundColor: "white", color: "black", border: "1px solid black" }} onClick={processOnChange}>
+                  진행중
+                </ProjectProcessOngoing>
+                <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }} onClick={processOffChange}>
+                  진행완료
+                </ProjectProcessDone>
+              </ProjectProcessOnOff>
+            ),
+            2: (
+              <ProjectProcessOnOff>
+                <ProjectProcessOngoing style={{ backgroundColor: "rgba(18,18,18,1)" }} onClick={processOnChange}>
+                  진행중
+                </ProjectProcessOngoing>
+                <ProjectProcessDone style={{ backgroundColor: "rgba(18,18,18,1)", color: "white" }} onClick={processOffChange}>
+                  진행완료
+                </ProjectProcessDone>
+              </ProjectProcessOnOff>
+            )
+          }[projectFilter.is_finished]}
+        </ProjectProcess>
+        <ProjectDate>
+          <ProjectDateText>
+            기간설정
+          </ProjectDateText>
+          <ProjectDateWrapper>
+            <ProjectDateStart
+              dateFormat='yyyy.MM.dd'
+              shouldCloseOnSelect
+              disabledKeyboardNavigation
+              placeholderText="시작 날짜"
+              minDate={new Date('1980-01-01')}
+              maxDate={new Date('2100-12-31')}
+              locale={ko}
+              selected={selectedStartDate}
+              onChange={(date) => {
+                setSelectedStartDate(date);
+                setProjectFilter({
+                  ...projectFilter,
+                  start_date: date,
+                })
+              }}
+            />
+            <ProjectDateTo>
+              ~
+            </ProjectDateTo>
+            <ProjectDateEnd
+              dateFormat='yyyy.MM.dd'
+              shouldCloseOnSelect
+              disabledKeyboardNavigation
+              placeholderText="마무리 날짜"
+              minDate={new Date('1980-01-01')}
+              maxDate={new Date('2100-12-31')}
+              locale={ko}
+              selected={selectedEndDate}
+              onChange={(date) => {
+                setSelectedEndDate(date);
+                setProjectFilter({
+                  ...projectFilter,
+                  finish_date: date,
+                })
+              }}
+            />
+          </ProjectDateWrapper>
+          <ProjectDateApply onClick={resetDate}>
+            <ResetButton src={ResetIcon}></ResetButton>
+          </ProjectDateApply>
+        </ProjectDate>
+      </FilterLeft>
+      <FilterRight>
+        <ProjectKeyword>
+          <ProjectKeywordFilter>
+            <ProjectKeywordFilterText>
+              핵심역량필터
+            </ProjectKeywordFilterText>
+            <ProjectKeywordFilterButton>
+              <ProjectKeywordFilterDropdownContainer>
+                <ProjectKeywordFilterDropdownHeader onClick={toggling}>
+                  핵심역량선택
+                </ProjectKeywordFilterDropdownHeader>
+                {isOpen && (
+                  <ProjectKeywordFilterDropdownListContainer>
+                    <ProjectKeywordFilterDropdownList>
+                      {keywords.map(keyword => (
+                        <ProjectKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
+                          {keyword}
+                        </ProjectKeywordFilterListItem>
+                      ))}
+                    </ProjectKeywordFilterDropdownList>
+                  </ProjectKeywordFilterDropdownListContainer>
+                )}
+              </ProjectKeywordFilterDropdownContainer>
+            </ProjectKeywordFilterButton>
+          </ProjectKeywordFilter>
+          <ProjectKeywordList>
+            {selectedKeyword.map(keyword => (
+              <ProjectKeywordSelected key={keyword} onClick={deleteKeyword(keyword)}>
+                {keyword}
+              </ProjectKeywordSelected>
+            ))}
+          </ProjectKeywordList>
+        </ProjectKeyword>
+      </FilterRight>
+    </FilterDiv>
   );
 };
 
 const FilterDiv = styled.div`
 width: 1200px;
 height: 143px;
-/* border: 1px solid black; */
+border: 1px solid black;
 margin-top: 88px;
 flex-direction: row;
 align-items: start;
