@@ -1,3 +1,4 @@
+import {useState} from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import {
@@ -7,12 +8,15 @@ import {
 import { ReactComponent as GoBackIcon } from "../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
 import { postExperienceAPI } from "../../Axios/ExperienceApi";
+import DeleteModal from "../../Common/DeleteModal";
 
 const WritingPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
@@ -41,12 +45,20 @@ const WritingPage = () => {
     });
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Div>
       {/* 뒤로 가기 */}
       <GoBackArea>
         <MarginTopForGoBackDiv />
-        <GoBackDiv>
+        <GoBackDiv onClick={openModal}>
           <GoBackIcon />
           <div>경험 기록 페이지 나가기</div>
         </GoBackDiv>
@@ -58,6 +70,29 @@ const WritingPage = () => {
 
       {/* 버튼 */}
       <ConfirmButton onClick={handleSubmit}>경험기록 작성완료</ConfirmButton>
+
+      {/* 모달 컴포넌트 */}
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={closeModal} // 모달 닫기 함수 설정
+        bigAlertText1="중단하신 기록은"
+        bigAlertText2="저장되지 않습니다."
+        smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
+        keepButtonText="남아서 기록하기"
+        deleteButtonText="나가기"
+        onKeep={() => {
+          // '계속 작성' 버튼 클릭 시 처리 로직
+          console.log("계속 작성");
+          closeModal(); // 모달 닫기
+        }}
+        onDelete={() => {
+          // '나가기' 버튼 클릭 시 처리 로직
+          console.log("나가기");
+          closeModal(); // 모달 닫기
+          // 추가적인 처리 로직을 추가할 수 있습니다.
+        }}
+      />
+
     </Div>
   );
 };
