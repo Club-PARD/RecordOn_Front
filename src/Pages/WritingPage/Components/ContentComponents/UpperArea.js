@@ -33,8 +33,8 @@ const UppderArea = () => {
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        exp_date: expDate,
-        exp_title: expTitle,
+        exp_date: expDate.toISOString(),
+        title: expTitle,
       }));
     }
   }, [isExpRecordSubmitted]);
@@ -105,7 +105,7 @@ const StyledInput = styled.input`
   width: 740px;
   height: 50px;
 
-  background-color: ${(props) => props.theme.colors.BoxGray};
+  background-color: ${(props) => props.theme.color.base2};
   border-radius: 5px;
 
   font-weight: ${(props) => props.theme.fontWeights.TextL};
@@ -113,7 +113,7 @@ const StyledInput = styled.input`
   &::placeholder {
     font-weight: ${(props) => props.theme.fontWeights.TextL};
     font-size: ${(props) => props.theme.fontSizes.TextL};
-    color: ${(props) => props.theme.colors.Charcoal};
+    color: ${(props) => props.theme.color.base6};
   }
 `;
 
