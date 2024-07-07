@@ -1,16 +1,44 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { handleExpRecordSubmit } from "../../Atom/ExpRecordAtom";
+import {
+  handleExpRecordSubmit,
+  experienceState,
+} from "../../Atom/ExpRecordAtom";
 import { ReactComponent as GoBackIcon } from "../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
+import { postExperienceAPI } from "../../Axios/ExperienceApi";
 
 const WritingPage = () => {
+  const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
+
+    try {
+      await postExperienceAPI(experience);
+      refreshRecoil();
+    } catch (error) {
+      console.error("경험 데이터 제출 중 오류가 발생했습니다:", error);
+      setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
+    }
+  };
+
+  const refreshRecoil = () => {
+    setIsExpRecordSubmitted(false);
+    setExperience({
+      user_id: "",
+      exp_date: "",
+      exp_title: "",
+      tag_ids: [],
+      free_content: "",
+      question_ids: [],
+      question_answers: [],
+      reference_links: [],
+      common_question_answer: "",
+    });
   };
 
   return (
@@ -45,14 +73,14 @@ const GoBackArea = styled.div`
   top: 70;
 
   z-index: 9999;
-  background-color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.white};
 `;
 
 const MarginTopForGoBackDiv = styled.div`
   height: 46px;
   width: 1200px;
 
-  background-color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.white};
 `;
 
 const GoBackDiv = styled.div`
@@ -60,7 +88,7 @@ const GoBackDiv = styled.div`
   flex-direction: row;
   gap: 10.21px;
 
-  background-color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.white};
 
   margin-left: -1000px;
 
@@ -69,14 +97,14 @@ const GoBackDiv = styled.div`
   div {
     font-weight: ${(props) => props.theme.fontWeights.TextM};
     font-size: ${(props) => props.theme.fontSizes.TextM};
-    color: ${(props) => props.theme.colors.Charcoal};
+    color: ${(props) => props.theme.color.base6};
   }
 `;
 
 const MarginBottomForGoBackDiv = styled.div`
   height: 42px;
   width: 1200px;
-  background-color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.color.white};
 `;
 
 const ConfirmButton = styled.button`
@@ -86,9 +114,9 @@ const ConfirmButton = styled.button`
   height: 50px;
 
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.GreenMain};
+  background-color: ${(props) => props.theme.color.main};
 
-  color: ${(props) => props.theme.colors.White};
+  color: ${(props) => props.theme.color.white};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 

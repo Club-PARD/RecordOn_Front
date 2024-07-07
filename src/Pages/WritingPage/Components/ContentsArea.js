@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import UppderArea from "../Components/ContentComponents/UpperArea";
 import FixedArea from "../Components/ContentComponents/FixedArea";
-import QnaArea from "../Components/ContentComponents/QnaArea";
+import AnswerArea from "../Components/ContentComponents/AnswerArea";
 import LowerArea from "../Components/ContentComponents/LowerArea";
 
 const ContentsArea = () => {
@@ -17,11 +17,10 @@ const ContentsArea = () => {
         <FixedArea />
 
         {/* 태그별 질문 답변 영역 */}
-        <QnaArea />
+        <AnswerArea />
 
         {/* 하단 영역 : 자유란과 관련 자료 링크 */}
         <LowerArea />
-
       </ContentArea>
     </>
   );
