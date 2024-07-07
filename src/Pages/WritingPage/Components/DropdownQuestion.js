@@ -27,9 +27,15 @@ const DropdownQuestion = ({ options, onSelect }) => {
     setIsQuestionOpen(!isQuestionOpen);
   };
 
-  const handleSelect = (questionKeyword) => {
-    setSelectedQuestion(questionKeyword);
-    onSelect(questionKeyword);
+  const handleSelect = (question, index) => {
+    setQuestionState({
+      ...questionState,
+      isQuestionClicked: true,
+      selectedQuestionId: index,
+    })
+    setSelectedQuestion(question);
+    console.log (question)
+    onSelect(index);
     setIsQuestionOpen(false); // 옵션 선택 후 드롭다운 닫기
   };
 
@@ -57,15 +63,16 @@ const DropdownQuestion = ({ options, onSelect }) => {
       </SelectQuestion>
       {isQuestionOpen && (
         <List>
-          {options.map((questionKeyword) => (
+          {console.log (options)}
+          {options.map((question, index) => (
             <ListItemWrapper
-              key={questionKeyword}
-              onClick={() => handleSelect(questionKeyword)}
-              onMouseEnter={() => setHoveredItem(questionKeyword)}
+              key={index}
+              onClick={() => handleSelect(question, index)}
+              onMouseEnter={() => setHoveredItem(index)}
               onMouseLeave={() => setHoveredItem(null)}
             >
-              <ListItem>{questionKeyword}</ListItem>
-              <IconWrapper isVisible={hoveredItem === questionKeyword}>
+              <ListItem>{question}</ListItem>
+              <IconWrapper isVisible={hoveredItem === index}>
                 <BigCheck />
               </IconWrapper>
             </ListItemWrapper>
@@ -107,6 +114,7 @@ const SelectedQuestion = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
   color: ${(props) => ( props.theme.color.black)};
+  line-height: 31.2px;
 
 `;
 const PreQuestion = styled.div`

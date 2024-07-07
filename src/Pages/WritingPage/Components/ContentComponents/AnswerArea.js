@@ -29,9 +29,10 @@ const AnswerArea = () => {
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
   const [experienceSections, setExperienceSections] = useState([
     {
-      id: 1,
+      id: 0,
       selectedTag: null,
-      selectedQuestion: null,
+      selectedQuestionId: null,
+      selectedQuestionText: "",
       questionOptions: [],
       text: "",
     },
@@ -71,7 +72,7 @@ const AnswerArea = () => {
           ...section,
           selectedTag: tagId,
           questionOptions: selectedTag ? selectedTag.questions : [],
-          selectedQuestion: "",
+          selectedQuestion,
         };
       }
 
@@ -82,11 +83,11 @@ const AnswerArea = () => {
   };
 
   // 질문 선택 핸들러
-  const handleQuestionSelectInSection = (question, id) => {
-    console.log(`Question selected: ${question} for section id: ${id}`);
+  const handleQuestionSelectInSection = (questionId, id) => {
+    console.log(`QuestionId selected: ${questionId} for section id: ${id}`);
     const updatedSections = experienceSections.map((section) =>
       section.id === id
-        ? { ...section, selectedQuestion: question, isQuestionOpen: false }
+        ? { ...section, selectedQuestionId: questionId, selectedQuestionText: tagAndQuestion[questionId], isQuestionOpen: false }
         : section
     );
     setExperienceSections(updatedSections);
@@ -107,8 +108,8 @@ const AnswerArea = () => {
             />
             <DropdownQuestion
               options={section.questionOptions}
-              onSelect={(question) =>
-                handleQuestionSelectInSection(question, section.id)
+              onSelect={(questionId) =>
+                handleQuestionSelectInSection(questionId, section.id)
               }
             />
           </SelectArea>
