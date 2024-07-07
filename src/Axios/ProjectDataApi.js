@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs';
 
 // 유저의 모든 프로젝트 데이터를 받아옴
 export const getUserProjectDataAPI = async (id) => {
@@ -12,5 +13,48 @@ export const getUserProjectDataAPI = async (id) => {
         alert("유저 정보 로딩에 실패하였습니다.");
     }
 
+};
 
+export const getUserProjectDataFilteredAPI = async (filter) => {
+    console.log(filter);
+    try {
+        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects/search`, filter);
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+        alert("유저 정보 로딩에 실패하였습니다.");
+    }
+};
+
+// 새 프로젝트 생성
+export const postNewProjectAPI = async (data) => {
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}projects`);
+        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects`, data
+            // , {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data'
+            //     }
+            // }
+        );
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+
+};
+
+export const getUserExperienceDataFilteredAPI = async (filter) => {
+    console.log(filter);
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}experiences/search`);
+        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}experiences/search`, filter);
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+        alert("유저 정보 로딩에 실패하였습니다.");
+    }
 };

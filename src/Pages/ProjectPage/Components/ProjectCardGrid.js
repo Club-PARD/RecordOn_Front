@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ProjectCard from "./ProjectCard";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getUserProjectDataAPI } from "../../../Axios/ProjectDataApi";
+import { getUserProjectDataAPI, getUserProjectDataFilteredAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
 import { recoilUserProjectFilter, recoilUserProjectNum } from "../../../Atom/UserDataAtom";
 
@@ -15,7 +15,7 @@ const ProjectCardGrid = () => {
     const [projectNum, setProjectNum] = useRecoilState(recoilUserProjectNum);
     const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
 
-    const [userId, setUserId] = useState("ec87b339-7242-4141-ac09-dfea517ba54b");
+
 
     // console.log(visibleCardStart, visibleCardEnd);
     console.log(userProjectData);
@@ -23,9 +23,7 @@ const ProjectCardGrid = () => {
     useEffect(() => {
         sessionStorage.setItem('startNum', 0);
         sessionStorage.setItem('endNum', 6)
-    }, [])
 
-    useEffect(() => {
         const handleStorageChange = () => {
             const startNum = sessionStorage.getItem('startNum') || 0;
             const endNum = sessionStorage.getItem('endNum') || 6;
@@ -34,22 +32,21 @@ const ProjectCardGrid = () => {
         };
 
         window.addEventListener('storage', handleStorageChange);
+
     }, [])
 
     useEffect(() => {
         const getData = async () => {
-            const response = await getUserProjectDataAPI(userId);
-            // console.log(response);
-            // console.log(response.read_default_page);
-            // console.log(response.read_default_page.length);
-            const cardArray = Array.from({ length: response.read_default_page.length }, (_, index) => index);
+            const response = await getUserProjectDataFilteredAPI(projectFilter);
+            console.log(response);
+            const cardArray = Array.from({ length: response.length }, (_, index) => index);
             setProjectCardNum(cardArray);
-            setProjectNum(response.read_default_page.length);
-            setUserProjectData(response.read_default_page);
+            setProjectNum(response.length);
+            setUserProjectData(response);
         }
         getData();
 
-    }, [])
+    }, [projectFilter])
 
     const gotoProject = () => {
 

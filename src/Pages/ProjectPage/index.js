@@ -12,11 +12,9 @@ import { recoilProjectModal } from "../../Atom/UserDataAtom";
 
 const ProjectPage = () => {
 
-  const [modalOn, setModalOn] = useRecoilState(recoilProjectModal);
 
   return (
     <Container>
-      {modalOn ? <AddProjectModal /> : ""}
       <ProjectTitle />
       <ProjectFilter />
       <ProjectCardGrid />
@@ -26,7 +24,7 @@ const ProjectPage = () => {
 };
 
 const Container = styled.div`
-
+justify-content: center;
 `
 
 

@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import getUrlMetaData from "../../../../Axios/ReferenceApi";
 import Bookmark from "./Bookmark";
-import TiptapEditor from "./TiptapEditor";
 import { useRecoilState } from "recoil";
 import {
   experienceState,
   handleExpRecordSubmit,
 } from "../../../../Atom/ExpRecordAtom";
+import { ReactComponent as CloseIcon } from "../../../../Assets/close.svg";
 
 const LowerArea = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
@@ -16,12 +15,20 @@ const LowerArea = () => {
   );
 
   const [freeContent, setFreeContent] = useState("");
-  
+
+  // 링크 삭제 핸들러
+  const handleDeleteLink = (index) => {
+    const updatedLinks = [...linkArea];
+    updatedLinks.splice(index, 1);
+    setLinkArea(updatedLinks);
+  };
+
   // 링크 입력 영역
   const [linkArea, setLinkArea] = useState([
     {
       id: 1,
       linkUrl: "",
+      isSubmitted: false,
     },
   ]);
 
@@ -32,6 +39,7 @@ const LowerArea = () => {
       {
         id: linkArea.length + 1,
         linkUrl: "",
+        isSubmitted: false,
       },
     ]);
   };
@@ -41,12 +49,29 @@ const LowerArea = () => {
     const updatedLinks = [...linkArea];
     updatedLinks[index].linkUrl = value;
     setLinkArea(updatedLinks);
-    console.log(value, typeof value);
   };
 
   // 자유란 변경 상태 관리
   const handleFreeChange = (e) => {
     setFreeContent(e.target.value);
+  };
+
+  // 붙여넣기 이벤트 핸들러
+  const handlePaste = (event, index) => {
+    const paste = (event.clipboardData || window.clipboardData).getData("text");
+    if (paste) {
+      handleLinkChange(index, paste);
+      handlePasteComplete(index);
+    }
+  };
+
+  // 붙여넣기가 완료되면 호출될 함수
+  const handlePasteComplete = (index) => {
+    const updatedLinks = [...linkArea];
+    if (updatedLinks[index].linkUrl) {
+      updatedLinks[index].isSubmitted = true;
+      setLinkArea(updatedLinks);
+    }
   };
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
@@ -59,34 +84,49 @@ const LowerArea = () => {
         reference_links: links,
       }));
     }
-  }, [isExpRecordSubmitted, freeContent, linkArea]);
+  }, [isExpRecordSubmitted]);
 
   return (
     <>
       {/* 하단 영역 : 자유란과 관련 자료 링크 */}
       <Lower>
+        <StyledHr />
+
         <FixArea>
           <FixAreaLabel>자유란</FixAreaLabel>
           <TextAreaWidth
             placeholder="질문을 통해 다 작성하지 못한 내용을 자유란에 작성해보세요. 자유란만 작성하는 것은 불가능해요."
-            height="168px"
+            height="150px"
             value={freeContent}
             onChange={handleFreeChange}
           />
+          <DivForMargin height={"60px"} />
         </FixArea>
+
+        <StyledHr />
 
         <div>
           <FixArea>
             <FixAreaLabel>관련 자료 링크</FixAreaLabel>
             {linkArea.map((link, index) => (
               <div key={link.id}>
-                <StyledUrlInput
-                  type="url"
-                  placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
-                  value={link.linkUrl}
-                  onChange={(e) => handleLinkChange(index, e.target.value)}
-                />
-                <Bookmark url={link.linkUrl} />
+                {link.isSubmitted ? (
+                  <BookmarkComponent>
+                    <Bookmark url={link.linkUrl} />
+
+                    <XWrapper onClick={() => handleDeleteLink(index)}>
+                      <CloseIcon alt="링크 삭제" />
+                    </XWrapper>
+                  </BookmarkComponent>
+                ) : (
+                  <StyledUrlInput
+                    type="url"
+                    placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
+                    value={link.linkUrl}
+                    onChange={(e) => handleLinkChange(index, e.target.value)}
+                    onPaste={(e) => handlePaste(e, index)}
+                  />
+                )}
               </div>
             ))}
           </FixArea>
@@ -99,19 +139,34 @@ const LowerArea = () => {
   );
 };
 
+const XWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  z-index: 2;
+  cursor: default;
+`;
 const Lower = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 50px;
 
-  margin-top: 44px;
+  margin-top: 50px;
 `;
 
+const StyledHr = styled.hr`
+  border: 0;
+  width: 840px;
+  height: 1px;
+  background-color: #d9d9d9;
+
+  margin-bottom: 46px;
+`;
 const FixArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 15px;
+  gap: 16px;
 
   width: 840px;
 `;
@@ -121,18 +176,48 @@ const FixAreaLabel = styled.label`
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 `;
 
+const LinkField = styled.div`
+display: flex;
+flex-direction: column;
+gap: 9px;
+`;
+const BookmarkComponent = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0 24px 0 24px;
+  width: 840px;
+  height: 50px;
+
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.colors.BoxGray};
+
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  margin-bottom: -10px;
+
+  cursor: pointer;
+`;
+
+const DivForMargin = styled.div`
+  height: ${({ height }) => height};
+`;
 const TextAreaWidth = styled.textarea`
   box-sizing: border-box;
   width: 840px;
   height: ${({ height }) => height};
 
-  border: 1px solid;
   border-radius: 10px;
 
   padding: 22px 24px 31px 24px;
 
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  background-color: ${(props) => props.theme.colors.BoxGray};
 
   resize: none;
   overflow-y: auto;
@@ -145,8 +230,8 @@ const TextAreaWidth = styled.textarea`
 `;
 
 const AddButtonWrapper = styled.div`
-  margin-top: 29px;
-  margin-bottom: 49px;
+  margin-top: 19px;
+  margin-bottom: 105px;
 `;
 
 const AddButton = styled.button`
@@ -154,9 +239,9 @@ const AddButton = styled.button`
   width: 840px;
   height: 50px;
 
-  border: 1px solid;
   border-radius: 10px;
 
+  background-color: ${(props) => props.theme.colors.BoxGray};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 
@@ -164,28 +249,26 @@ const AddButton = styled.button`
 `;
 
 const StyledUrlInput = styled.input`
-  display: flex;
-  align-items: flex-start;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0 24px 0 24px;
   width: 840px;
-  height: 86px;
+  height: 50px;
 
-  border: 1px solid black;
   border-radius: 10px;
-
-  padding: 22px 24px 31px 24px;
+  background-color: ${(props) => props.theme.colors.BoxGray};
 
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 
-  resize: none;
-  overflow-y: auto;
-
-  line-height: 1.5;
-
   &::placeholder {
     color: ${(props) => props.theme.colors.Gray};
   }
+
+  margin-bottom: -10px;
 `;
 
 export default LowerArea;

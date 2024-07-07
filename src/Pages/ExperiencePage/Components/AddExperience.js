@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { recoilProjectModal } from "../../../Atom/UserDataAtom";
-import AddProjectModal from "./AddProjectModal";
+import AddProjectModal from "./DeleteProjectModal";
 import { useState } from "react";
 
 
-const AddProject = () => {
+const AddExperience = () => {
 
     const [modalOn, setModalOn] = useState(false);
 
@@ -17,7 +17,7 @@ const AddProject = () => {
     return (
         <>
             <AddProjectButton onClick={() => setModalOn(true)}>
-                + 프로젝트 추가
+                + 경험 기록 추가
             </AddProjectButton>
             {modalOn && <AddProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} />}
         </>
@@ -36,4 +36,4 @@ border-radius: 10px;
 cursor: pointer;
 `
 
-export default AddProject;
+export default AddExperience;

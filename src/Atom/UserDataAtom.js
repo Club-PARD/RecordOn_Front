@@ -8,6 +8,11 @@ export const isLogined = atom({
     default: false,
     // effects_UNSTABLE: [persistAtom],
 });
+export const recoilUserId = atom({
+    key: "user_id",
+    default: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+    // effects_UNSTABLE: [persistAtom],
+});
 export const recoilUserProjectNum = atom({
     key: "projectNum",
     default: 0,
@@ -16,15 +21,33 @@ export const recoilUserProjectNum = atom({
 export const recoilUserProjectFilter = atom({
     key: "projectFilter",
     default: {
-        processState: 2,
-        startDate: "",
-        endDate: "",
-        tagList: [],
+        user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+        competency_tag_name: [],
+        start_date: "",
+        finish_date: "",
+        is_finished: 2,
     },
     // effects_UNSTABLE: [persistAtom],
 });
 export const recoilProjectModal = atom({
     key: "ProjectModal",
     default: false,
+    // effects_UNSTABLE: [persistAtom],
+});
+export const recoilUserExperienceNum = atom({
+    key: "experienceNum",
+    default: 0,
+    // effects_UNSTABLE: [persistAtom],
+});
+export const recoilUserExperienceFilter = atom({
+    key: "experienceFilter",
+    default: {
+        user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+        project_id: 1,
+        tag_name: [],
+        start_date: "",
+        finish_date: "",
+        search_text: "",
+    },
     // effects_UNSTABLE: [persistAtom],
 });
