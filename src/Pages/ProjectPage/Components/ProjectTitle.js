@@ -3,18 +3,18 @@ import AddProject from "./AddProject";
 import { useState } from "react";
 import { getUserProjectDataAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserId, recoilUserProjectNum } from "../../../Atom/UserDataAtom";
+import { recoilUserData } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 
 
 const ProjectTitle = () => {
 
-    const [userId, setUserId] = useRecoilState(recoilUserId);
+    const [userData, setUserData] = useRecoilState(recoilUserData);
     const [userName, setUserName] = useState("");
 
     useEffect(() => {
         const getData = async () => {
-            const response = await getUserProjectDataAPI(userId);
+            const response = await getUserProjectDataAPI(userData.user_id);
             // console.log(response.user_name);
             setUserName(response.user_name);
         }

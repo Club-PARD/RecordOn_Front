@@ -2,7 +2,7 @@ import styled from "styled-components"
 import DefaultCardImg from "../../../Assets/Project_Default.png"
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
+import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import { useNavigate } from "react-router-dom";
 
 
@@ -12,6 +12,7 @@ const ProjectCard = ({ projectData }) => {
 
     const keyword = [...new Set(projectData.competency_tag_name)];
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
+    const [userData, setUserData] = useRecoilState(recoilUserData);
     const navigate = useNavigate();
 
 
@@ -26,6 +27,10 @@ const ProjectCard = ({ projectData }) => {
                 ...experienceFilter,
                 project_id: projectData.project_id,
             });
+            setUserData({
+                ...userData,
+                project_id: projectData.project_id,
+            })
             navigate("/experience")
         }}>
             {projectData.is_finished == 1 ?

@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as GoogleLogo } from "../../../Assets/GoogleLogo.svg"
 import axios from 'axios'
 import { useRecoilState } from "recoil";
-import { recoilUserId } from "../../../Atom/UserDataAtom";
+import { recoilUserData } from "../../../Atom/UserDataAtom";
 import { useState, useEffect } from "react";
 
 
 const LoginButton = () => {
 
-    const [userId, setUserId] = useRecoilState(recoilUserId);
+    const [userData, setUserData] = useRecoilState(recoilUserData);
     const [isNewUser, setIsNewUser] = useState(null);
     const navigate = useNavigate();
 
@@ -84,7 +84,7 @@ const LoginButton = () => {
             );
             console.log("서버 응답2:", response.data);
             setIsNewUser(response.data.is_new_user);
-            setUserId(response.data.user_id);
+            setUserData(response.data.user_id);
 
         } catch (error) {
             console.error("서버 요청 에러2:", error);

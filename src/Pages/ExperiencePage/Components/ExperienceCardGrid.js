@@ -55,22 +55,32 @@ const ExperienceCardGrid = () => {
 
     return (
         <ExperienceCardDiv>
-            {experienceCardNum.slice(visibleCardStart, visibleCardEnd).map(index => (
-                <ExperienceCard onClick={gotoExperience(index)} key={index} experienceData={userExperienceData[index]}>
-                </ExperienceCard>
-            ))}
+            <ExperienceCardDivContent>
+                {experienceCardNum.slice(visibleCardStart, visibleCardEnd).map(index => (
+                    <ExperienceCard onClick={gotoExperience(index)} key={index} experienceData={userExperienceData[index]}>
+                    </ExperienceCard>
+                ))}
+            </ExperienceCardDivContent>
         </ExperienceCardDiv>
 
     );
 };
+
 const ExperienceCardDiv = styled.div`
+width: 1200px;
+height: 600px;
+/* border: 1px solid black; */
+margin-top: 55px;
+`
+
+const ExperienceCardDivContent = styled.div`
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 grid-template-rows: repeat(2, 1fr);
 width: 1200px;
-height: 565px;
+height: 600px;
 /* border: 1px solid black; */
-margin-top: 55px;
+/* margin-top: 55px; */
 column-gap: 24px;
 row-gap: 20px;
 `
