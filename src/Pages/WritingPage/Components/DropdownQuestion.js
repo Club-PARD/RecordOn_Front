@@ -6,22 +6,24 @@ import { ReactComponent as QArrow } from "../../../Assets/QdropdownArrow.svg";
 import { ReactComponent as BigCheck } from "../../../Assets/BigCheck.svg";
 
 import { useRecoilState } from "recoil";
-import { expTagSelectState } from "../../../Atom/ExpRecordAtom";
+import { expTagSelectState, questionSelectState } from "../../../Atom/ExpRecordAtom";
 
 const DropdownQuestion = ({ options, onSelect }) => {
   // 드롭다운 열림 상태
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
-  // 선택된 질문을 저장하는 상태
-  const [selectedQuestion, setSelectedQuestion] = useState("");
+  // 선택된 질문을 저장하는 상태 (임시변수)
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
 
   // 경험 태그 선택 상태 관리하는 리코일
   const [tagState, setTagState] = useRecoilState(expTagSelectState);
+  const [questionState, setQuestionState] = useRecoilState(questionSelectState);
 
   // 호버 상태 관리
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const toggleDropdown = () => {
+    if (tagState.isTagClicked)
     setIsQuestionOpen(!isQuestionOpen);
   };
 
@@ -32,19 +34,16 @@ const DropdownQuestion = ({ options, onSelect }) => {
   };
 
   useEffect(() => {
-    setSelectedQuestion("");
-  }, [tagState.selectedTagId]);
-
-  useEffect(() => {
     setIsQuestionOpen(false);
-  }, [tagState.isTagClicked]);
+    setSelectedQuestion("");
+  }, [tagState]);
 
   return (
     <DropdownContainer>
       <SelectQuestion onClick={toggleDropdown} isTagClicked={tagState.isTagClicked}>
         {selectedQuestion ? (
           <>
-            <div>{selectedQuestion}</div>
+            <SelectedQuestion>{selectedQuestion}</SelectedQuestion>
             <StyledQArrow isTagClicked={tagState.isTagClicked} isOpen={isQuestionOpen} />
           </>
         ) : (
@@ -104,6 +103,12 @@ const SelectQuestion = styled.div`
   cursor: pointer;
 `;
 
+const SelectedQuestion = styled.div`
+  font-weight: ${(props) => props.theme.fontWeights.TextXL};
+  font-size: ${(props) => props.theme.fontSizes.TextXL};
+  color: ${(props) => ( props.theme.color.black)};
+
+`;
 const PreQuestion = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
