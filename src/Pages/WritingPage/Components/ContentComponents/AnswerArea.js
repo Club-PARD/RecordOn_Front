@@ -4,6 +4,7 @@ import styled from "styled-components";
 // 컴포넌트
 import DropdownQuestion from "../DropdownQuestion";
 import ExpTag from "../ExpTag";
+import { ReactComponent as DeleteIcon } from "../../../../Assets/DeleteButton.svg";
 
 // Api 문서
 import { getAllTagAndQuestionAPI } from "../../../../Axios/StoredTagInfoApi";
@@ -13,9 +14,9 @@ import { useRecoilState } from "recoil";
 import {
   experienceState,
   handleExpRecordSubmit,
-  expTagSelectState
+  expTagSelectState,
+  questionSelectState,
 } from "../../../../Atom/ExpRecordAtom";
-
 
 const AnswerArea = () => {
   // 리코일 변수
@@ -23,21 +24,19 @@ const AnswerArea = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
-    // 경험 태그 선택 상태 관리하는 리코일
-    const [tagState, setTagState] = useRecoilState(expTagSelectState);
+  const [questionState, setQuestionState] = useRecoilState(questionSelectState);
+  const [tagState, setTagState] = useRecoilState(expTagSelectState);
 
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
   const [experienceSections, setExperienceSections] = useState([
     {
       id: 0,
       selectedTag: null,
-      selectedQuestionId: null,
-      selectedQuestionText: "",
+      selectedQuestion: null,
       questionOptions: [],
       text: "",
     },
   ]);
-
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
 
@@ -55,8 +54,30 @@ const AnswerArea = () => {
   }, []);
 
   useEffect(() => {
-    console.log (tagState);
-  },[tagState]);
+    console.log(tagState);
+  }, [tagState]);
+
+  // 경험 섹션 추가
+  const addExperienceSection = () => {
+    const newSectionId = experienceSections.length;
+    setExperienceSections((prevSections) => [
+      ...prevSections,
+      {
+        id: newSectionId,
+        selectedTag: null,
+        selectedQuestion: null,
+        questionOptions: [],
+        text: "",
+      },
+    ]);
+  };
+
+  // 경험 섹션 삭제
+  const removeExperienceSection = (id) => {
+    setExperienceSections((prevSections) =>
+      prevSections.filter((section) => section.id !== id)
+    );
+  };
 
   // 태그 선택 핸들러
   const handleTagSelectInSection = (index, id) => {
@@ -87,7 +108,7 @@ const AnswerArea = () => {
     console.log(`QuestionId selected: ${questionId} for section id: ${id}`);
     const updatedSections = experienceSections.map((section) =>
       section.id === id
-        ? { ...section, selectedQuestionId: questionId, selectedQuestionText: tagAndQuestion[questionId], isQuestionOpen: false }
+        ? { ...section, selectedQuestion: questionId, isQuestionOpen: false }
         : section
     );
     setExperienceSections(updatedSections);
@@ -98,9 +119,17 @@ const AnswerArea = () => {
       <Guide>* 경험태그 선택 후, 질문을 선택해 주세요.</Guide>
       {/* 한 세트 */}
       {experienceSections.map((section) => (
-        <div key={section.id}>
-          {console.log(section.questionOptions)}
-
+        <SectionWrapper key={section.id}>
+          {/* 삭제 버튼 */}
+          {section.id !== 0 && (
+            <DeleteButtonWrapper>
+              <StyledHr />
+              <DeleteButton onClick={() => removeExperienceSection(section.id)}>
+                하단 경험질문 삭제
+                <DeleteIcon />
+              </DeleteButton>
+            </DeleteButtonWrapper>
+          )}
           {/* 선택하는 부분 */}
           <SelectArea>
             <ExpTag
@@ -114,9 +143,14 @@ const AnswerArea = () => {
             />
           </SelectArea>
           {/* 답변란 */}
-          <TextAreaWidth />
-        </div>
+          <TextAreaWidth
+            isQuestionClicked={questionState.isQuestionClicked}
+          />{" "}
+        </SectionWrapper>
       ))}
+
+      {/* 경험 추가 버튼 */}
+      <AddButton onClick={addExperienceSection}>+ 경험 추가</AddButton>
     </>
   );
 };
@@ -152,8 +186,8 @@ const TextAreaWidth = styled.textarea`
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 
-  background-color: ${(props) => props.theme.color.base1};
-
+  background-color: ${({ isQuestionClicked, theme }) =>
+    isQuestionClicked ? theme.color.base2 : theme.color.base1};
   resize: none;
   overflow-y: auto;
 
@@ -163,4 +197,59 @@ const TextAreaWidth = styled.textarea`
     color: ${(props) => props.theme.color.base3};
   }
 `;
+
+const StyledHr = styled.hr`
+  width: 661px;
+  height: 1px;
+  border: 0;
+  background-color: ${(props) => props.theme.color.main};
+`;
+
+const DeleteButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index: 2;
+  
+  width: 162px;
+
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  color: ${(props) => props.theme.color.main};
+
+  cursor: pointer;
+`;
+
+const AddButton = styled.button`
+  justify-content: center;
+  width: 840px;
+  height: 50px;
+
+  border-radius: 10px;
+
+  background-color: ${(props) => props.theme.color.base2};
+
+  font-weight: ${(props) => props.theme.fontWeights.TextL};
+  font-size: ${(props) => props.theme.fontSizes.TextL};
+
+  cursor: pointer;
+
+  margin-top: 9px;
+`;
+
+const SectionWrapper = styled.div`
+  /* margin-bottom: 24px; */
+`;
+
+const DeleteButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 840px;
+
+  margin-top: 59px;
+  margin-bottom: 24px;
+`;
+
 export default AnswerArea;
