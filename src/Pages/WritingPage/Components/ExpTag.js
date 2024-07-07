@@ -1,8 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as RightArrow } from "../../../Assets/RightArrow.svg";
-import { useRecoilState } from "recoil";
-import { expTagSelectState } from "../../../Atom/ExpRecordAtom";
 
 const ExpTag = ({ onSelect }) => {
   const keywords = [
@@ -13,9 +11,6 @@ const ExpTag = ({ onSelect }) => {
     { id: 4, label: "배움", color: "#42B887" },
   ];
 
-  // 경험 태그 선택 내용을 리코일에 저장
-  const [tagState, setTagState] = useRecoilState(expTagSelectState);
-
   // 선택된 경험 태그의 인덱스를 저장
   const [clickedButtonIndex, setClickedButtonIndex] = useState(null);
 
@@ -23,19 +18,11 @@ const ExpTag = ({ onSelect }) => {
     if (clickedButtonIndex === index) {
       // 이미 선택된 태그를 다시 클릭한 경우
       setClickedButtonIndex(null);
-      setTagState({
-        ...tagState,
-        isTagClicked: false,
-        selectedTagId: null,
-      });
+
     } else {
       // 새로운 태그를 선택한 경우
       setClickedButtonIndex(index);
-      setTagState({
-        ...tagState,
-        isTagClicked: true,
-        selectedTagId: keywords[index].id,
-      });
+  
     }
     console.log ("index: " + index);
     // onSelect에 현재 선택된 태그의 인덱스 전달

@@ -25,7 +25,6 @@ const AnswerArea = () => {
     handleExpRecordSubmit
   );
   const [questionState, setQuestionState] = useRecoilState(questionSelectState);
-  const [tagState, setTagState] = useRecoilState(expTagSelectState);
 
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
   const [experienceSections, setExperienceSections] = useState([
@@ -35,6 +34,9 @@ const AnswerArea = () => {
       selectedQuestion: null,
       questionOptions: [],
       text: "",
+      isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
+      isQuestionOpen: false, // true일 경우, 질문 드롭다운이 내려옴
+      isQuestionSelected: false, // true일 경우, textarea 배경색이 달라짐.
     },
   ]);
   // 서버에서 받아온 태그와 질문
@@ -53,10 +55,6 @@ const AnswerArea = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(tagState);
-  }, [tagState]);
-
   // 경험 섹션 추가
   const addExperienceSection = () => {
     const newSectionId = experienceSections.length;
@@ -68,6 +66,9 @@ const AnswerArea = () => {
         selectedQuestion: null,
         questionOptions: [],
         text: "",
+        isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
+        isQuestionOpen: false, // true일 경우, 질문 드롭다운이 내려옴
+        isQuestionSelected: false, // true일 경우, textarea 배경색이 달라짐.
       },
     ]);
   };
@@ -86,14 +87,24 @@ const AnswerArea = () => {
 
     const updatedSections = experienceSections.map((section) => {
       if (section.id === id) {
-        const selectedTag = tagAndQuestion[tagId];
-        // 태그가 바뀔 때 선택된 질문 초기화
-        const selectedQuestion = selectedTag ? selectedTag.questions[0] : "";
+        // 이미 선택된 태그인 경우 선택 해제
+        if (section.selectedTag === tagId) {
+          return {
+            ...section,
+            selectedTag: null,
+            questionOptions: [],
+            selectedQuestion: null,
+            isTagSelected: false,
+          };
+        }
+
+        // 새로운 태그를 선택한 경우
         return {
           ...section,
           selectedTag: tagId,
-          questionOptions: selectedTag ? selectedTag.questions : [],
-          selectedQuestion,
+          questionOptions: tagId ? tagAndQuestion[tagId].questions : [],
+          selectedQuestion: null,
+          isTagSelected: true,
         };
       }
 
@@ -136,6 +147,7 @@ const AnswerArea = () => {
               onSelect={(index) => handleTagSelectInSection(index, section.id)}
             />
             <DropdownQuestion
+              isTagSelected={section.isTagSelected}
               options={section.questionOptions}
               onSelect={(questionId) =>
                 handleQuestionSelectInSection(questionId, section.id)
@@ -210,7 +222,7 @@ const DeleteButton = styled.button`
   flex-direction: row;
   justify-content: space-between;
   z-index: 2;
-  
+
   width: 162px;
 
   font-weight: ${(props) => props.theme.fontWeights.TextM};

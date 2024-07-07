@@ -5,34 +5,22 @@ import { DropdownContainer } from "./DropdownTag";
 import { ReactComponent as QArrow } from "../../../Assets/QdropdownArrow.svg";
 import { ReactComponent as BigCheck } from "../../../Assets/BigCheck.svg";
 
-import { useRecoilState } from "recoil";
-import { expTagSelectState, questionSelectState } from "../../../Atom/ExpRecordAtom";
-
-const DropdownQuestion = ({ options, onSelect }) => {
+const DropdownQuestion = ({ isTagSelected, options, onSelect }) => {
   // 드롭다운 열림 상태
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
   // 선택된 질문을 저장하는 상태 (임시변수)
   const [selectedQuestion, setSelectedQuestion] = useState(null);
 
-  // 경험 태그 선택 상태 관리하는 리코일
-  const [tagState, setTagState] = useRecoilState(expTagSelectState);
-  const [questionState, setQuestionState] = useRecoilState(questionSelectState);
-
   // 호버 상태 관리
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const toggleDropdown = () => {
-    if (tagState.isTagClicked)
+    if (isTagSelected)
     setIsQuestionOpen(!isQuestionOpen);
   };
 
   const handleSelect = (question, index) => {
-    setQuestionState({
-      ...questionState,
-      isQuestionClicked: true,
-      selectedQuestionId: index,
-    })
     setSelectedQuestion(question);
     console.log (question)
     onSelect(index);
@@ -42,22 +30,23 @@ const DropdownQuestion = ({ options, onSelect }) => {
   useEffect(() => {
     setIsQuestionOpen(false);
     setSelectedQuestion("");
-  }, [tagState]);
+  }, [isTagSelected]);
 
   return (
     <DropdownContainer>
-      <SelectQuestion onClick={toggleDropdown} isTagClicked={tagState.isTagClicked}>
+      {console.log (isTagSelected)}
+      <SelectQuestion onClick={toggleDropdown} isTagSelected={isTagSelected}>
         {selectedQuestion ? (
           <>
             <SelectedQuestion>{selectedQuestion}</SelectedQuestion>
-            <StyledQArrow isTagClicked={tagState.isTagClicked} isOpen={isQuestionOpen} />
+            <StyledQArrow isTagSelected={isTagSelected} isOpen={isQuestionOpen} />
           </>
         ) : (
           <>
-            <PreQuestion isTagClicked={tagState.isTagClicked}>
+            <PreQuestion isTagSelected={isTagSelected}>
               Q. 질문을 선택해 주세요.
             </PreQuestion>
-            <StyledQArrow isTagClicked={tagState.isTagClicked} isOpen={isQuestionOpen} />
+            <StyledQArrow isTagSelected={isTagSelected} isOpen={isQuestionOpen} />
           </>
         )}
       </SelectQuestion>
@@ -99,11 +88,11 @@ const SelectQuestion = styled.div`
 
   border: 1px solid;
   border-radius: 5px;
-  border-color: ${(props) => (props.isTagClicked ? "none" : props.theme.color.base3)};
+  border-color: ${(props) => (props.isTagSelected ? "none" : props.theme.color.base3)};
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   font-size: ${(props) => props.theme.fontSizes.TextL};
 
-  box-shadow: ${(props) => (props.isTagClicked ? "1px 1px 3px 0px #00000033" : "none")};
+  box-shadow: ${(props) => (props.isTagSelected ? "1px 1px 3px 0px #00000033" : "none")};
 
   margin-bottom: 20px;
 
@@ -120,11 +109,11 @@ const SelectedQuestion = styled.div`
 const PreQuestion = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
-  color: ${(props) => (props.isTagClicked ? props.theme.color.black : props.theme.color.base3)};
+  color: ${(props) => (props.isTagSelected ? props.theme.color.black : props.theme.color.base3)};
 `;
 
 const StyledQArrow = styled(QArrow)`
-  stroke: ${(props) => (props.isTagClicked ? props.theme.color.black : props.theme.color.base3)};
+  stroke: ${(props) => (props.isTagSelected ? props.theme.color.black : props.theme.color.base3)};
   transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
   transition: transform 0.3s;
 `;
