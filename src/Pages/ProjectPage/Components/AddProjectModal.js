@@ -6,7 +6,7 @@ import ImageIcon from "../../../Assets/ImageIcon.png";
 import { useRef } from "react";
 import { postNewProjectAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserExperienceFilter, recoilUserId } from "../../../Atom/UserDataAtom";
+import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,7 @@ const AddProjectModal = ({
 
     const fileInputRef = useRef(null);
     const [projectData, setProjectData] = useState({});
-    const [userId, setUserID] = useRecoilState(recoilUserId);
+    const [userData, setUserData] = useRecoilState(recoilUserData);
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
     const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ const AddProjectModal = ({
     useEffect(() => {
         setProjectData({
             ...projectData,
-            user_id: userId,
+            user_id: userData.user_id,
         })
     }, [])
 

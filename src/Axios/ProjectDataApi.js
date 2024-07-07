@@ -58,3 +58,31 @@ export const getUserExperienceDataFilteredAPI = async (filter) => {
         alert("유저 정보 로딩에 실패하였습니다.");
     }
 };
+
+export const getUserExperienceDataAPI = async (userKey) => {
+    console.log(userKey);
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}experiences/project`);
+        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}experiences/project`, userKey);
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+        alert("유저 정보 로딩에 실패하였습니다.");
+    }
+};
+
+export const restartProjectAPI = async (projectData) => {
+    console.log(projectData.user_id);
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}projects/resume/${projectData.project_id}`);
+        const response = await axios.put(`${process.env.REACT_APP_DEV_URL}projects/resume/${projectData.project_id}`, {
+            user_id: projectData.user_id
+        });
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+        alert("유저 정보 로딩에 실패하였습니다.");
+    }
+};

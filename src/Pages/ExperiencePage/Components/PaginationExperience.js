@@ -7,15 +7,14 @@ import {
 } from '@workday/canvas-kit-react/pagination';
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { recoilUserProjectNum } from "../Atom/UserDataAtom";
+import { recoilUserExperienceNum } from "../../../Atom/UserDataAtom";
 
-const PaginationBar = () => {
+const PaginationExperience = () => {
 
     const resultCount = 6;
-    const [totalCount, setTotalCount] = useRecoilState(recoilUserProjectNum);
+    const [totalCount, setTotalCount] = useRecoilState(recoilUserExperienceNum);
     const lastPage = getLastPage(resultCount, totalCount);
     const [currentPage, setCurrentPage] = useState(1);
-
 
 
     const handlePageChange = (pageNumber) => {
@@ -85,10 +84,10 @@ const CustomPageButton = styled(Pagination.PageButton)`
 transition: background-color 0s ease-in-out;
 
   &[aria-current="page"] {
-    background-color: ${(props) => props.theme.color.base1};
+    background-color: ${(props) => props.theme.color.base4};
     color: ${(props) => props.theme.color.black};
     font-style:${(props) => props.theme.fontSizes.TextS};
   }
 `;
 
-export default PaginationBar;
+export default PaginationExperience;
