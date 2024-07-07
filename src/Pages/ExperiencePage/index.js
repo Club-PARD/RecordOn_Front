@@ -1,30 +1,24 @@
 import styled from "styled-components";
-import ExperienceCardGrid from "./Components/ExperienceCardGrid";
-import ExperienceFilter from "./Components/ExperienceFilter";
 import ExperienceTitle from "./Components/ExperienceTitle";
-import Pagination from "../../Common/Pagination";
-import Dropdown from "../../Common/Dropdown";
-import Calendar from "../../Common/Calendar";
-import { useState } from "react";
-import AddProjectModal from "./Components/DeleteProjectModal";
-import { useRecoilState } from "recoil";
-import { recoilProjectModal } from "../../Atom/UserDataAtom";
+import ExperienceBody from "./Components/ExperienceBody";
+import { useWindowSize } from "@workday/canvas-kit-react";
 
 const ExperiencePage = () => {
 
+  const { width } = useWindowSize();
 
   return (
-    <Container>
+    <Container width={width} >
       <ExperienceTitle />
-      <ExperienceFilter />
-      <ExperienceCardGrid />
-      <Pagination />
+      <ExperienceBody />
     </Container>
   );
 };
 
 const Container = styled.div`
+width: ${props => props.width}px;
 justify-content: center;
+/* border: 1px solid black; */
 `
 
 

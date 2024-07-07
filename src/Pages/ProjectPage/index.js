@@ -18,7 +18,7 @@ const ProjectPage = () => {
       <ProjectTitle />
       <ProjectFilter />
       <ProjectCardGrid />
-      <Pagination />
+      <Pagination backgroundColor="#FBFBFB" />
     </Container>
   );
 };

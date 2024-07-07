@@ -6,7 +6,7 @@ import ImageIcon from "../../../Assets/ImageIcon.png";
 import { useRef } from "react";
 import { postNewProjectAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserId } from "../../../Atom/UserDataAtom";
+import { recoilUserData } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 
 const DeleteProjectModal = ({
@@ -24,7 +24,7 @@ const DeleteProjectModal = ({
     const fileInputRef = useRef(null);
 
     const [projectData, setProjectData] = useState({});
-    const [userId, setUserID] = useRecoilState(recoilUserId);
+    const [userData, setUserData] = useRecoilState(recoilUserData);
 
     const userInputHandler = (e) => [
         setProjectData({
@@ -50,7 +50,7 @@ const DeleteProjectModal = ({
     useEffect(() => {
         setProjectData({
             ...projectData,
-            user_id: userId,
+            user_id: userData.user_id,
         })
     }, [])
 

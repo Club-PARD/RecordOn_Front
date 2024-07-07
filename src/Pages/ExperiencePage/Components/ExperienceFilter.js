@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
@@ -7,7 +7,15 @@ import { useRecoilState } from "recoil";
 import { recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import ResetIcon from "../../../Assets/ResetIcon.svg"
 import SearchIcon from "../../../Assets/SearchIcon.svg"
+import DropdownArrow from "../../../Assets/DropdownArrow.svg"
+import XChallenge from "../../../Assets/XChallenge.svg"
+import XFail from "../../../Assets/XFail.svg"
+import XHard from "../../../Assets/XHard.svg"
+import XLearn from "../../../Assets/XLearn.svg"
+import XSuccess from "../../../Assets/XSuccess.svg"
 import { useEffect } from "react";
+import { useRef } from "react";
+
 // import { getUserExperienceDataFilteredAPI } from "../../../Axios/ExperienceDataApi";
 
 const ExperienceFilter = () => {
@@ -19,11 +27,19 @@ const ExperienceFilter = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState([]);
-  const keywords = ['성공경험', '갈등경험', '성장경험', '도전경험', '실패경험'];
+  const keywords = ['도전', '어려움', '성공', '실패', '배움'];
 
 
 
   const toggling = () => setIsOpen(!isOpen);
+
+  const searchInput = (e) => {
+    console.log(e.target.value);
+    setExperienceFilter({
+      ...experienceFilter,
+      search_text: e.target.value,
+    })
+  }
 
   const addKeyword = value => () => {
     if (!selectedKeyword.includes(value)) {
@@ -70,103 +86,157 @@ const ExperienceFilter = () => {
 
   }
 
+  // 드롭다운 외부 클릭시 안보이게 하는 부분들
+  const dropdownRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  // 드롭다운 외부 클릭 이벤트 리스너
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+
   console.log(experienceFilter);
 
   return (
-    <>
-      <FilterDiv>
-        <FilterLeft>
-          <ExperienceSearch>
-            <ExperienceSearchInput />
-            <ExperienceSearchInputButton>
-              <img src={SearchIcon} />
-            </ExperienceSearchInputButton>
-          </ExperienceSearch>
-          <ExperienceDate>
-            <ExperienceDateText>
-              기간설정
-            </ExperienceDateText>
-            <ExperienceDateWrapper>
-              <ExperienceDateStart
-                dateFormat='yyyy.MM.dd'
-                shouldCloseOnSelect
-                disabledKeyboardNavigation
-                placeholderText="시작 날짜"
-                minDate={new Date('1980-01-01')}
-                maxDate={new Date('2100-12-31')}
-                locale={ko}
-                selected={selectedStartDate}
-                onChange={(date) => {
-                  setSelectedStartDate(date);
-                  setExperienceFilter({
-                    ...experienceFilter,
-                    start_date: date,
-                  })
-                }}
-              />
-              <ExperienceDateTo>
-                ~
-              </ExperienceDateTo>
-              <ExperienceDateEnd
-                dateFormat='yyyy.MM.dd'
-                shouldCloseOnSelect
-                disabledKeyboardNavigation
-                placeholderText="마무리 날짜"
-                minDate={new Date('1980-01-01')}
-                maxDate={new Date('2100-12-31')}
-                locale={ko}
-                selected={selectedEndDate}
-                onChange={(date) => {
-                  setSelectedEndDate(date);
-                  setExperienceFilter({
-                    ...experienceFilter,
-                    finish_date: date,
-                  })
-                }}
-              />
-            </ExperienceDateWrapper>
-            <ExperienceDateApply onClick={resetDate}>
-              <ResetButton src={ResetIcon}></ResetButton>
-            </ExperienceDateApply>
-          </ExperienceDate>
-        </FilterLeft>
-        <FilterRight>
-          <ExperienceKeyword>
-            <ExperienceKeywordFilter>
-              <ExperienceKeywordFilterText>
-                경험태그필터
-              </ExperienceKeywordFilterText>
-              <ExperienceKeywordFilterButton>
-                <ExperienceKeywordFilterDropdownContainer>
-                  <ExperienceKeywordFilterDropdownHeader onClick={toggling}>
-                    경험태그선택
-                  </ExperienceKeywordFilterDropdownHeader>
-                  {isOpen && (
-                    <ExperienceKeywordFilterDropdownListContainer>
-                      <ExperienceKeywordFilterDropdownList>
-                        {keywords.map(keyword => (
-                          <ExperienceKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
-                            {keyword}
-                          </ExperienceKeywordFilterListItem>
-                        ))}
-                      </ExperienceKeywordFilterDropdownList>
-                    </ExperienceKeywordFilterDropdownListContainer>
-                  )}
-                </ExperienceKeywordFilterDropdownContainer>
-              </ExperienceKeywordFilterButton>
-            </ExperienceKeywordFilter>
-            <ExperienceKeywordList>
-              {selectedKeyword.map(keyword => (
-                <ExperienceKeywordSelected key={keyword} onClick={deleteKeyword(keyword)}>
-                  {keyword}
-                </ExperienceKeywordSelected>
-              ))}
-            </ExperienceKeywordList>
-          </ExperienceKeyword>
-        </FilterRight>
-      </FilterDiv>
+    <FilterDiv>
+      <FilterLeft>
+        <ExperienceSearch>
+          <ExperienceSearchInput onChange={searchInput} />
+          <ExperienceSearchInputButton>
+            <img src={SearchIcon} />
+          </ExperienceSearchInputButton>
+        </ExperienceSearch>
+        <ExperienceDate>
+          <ExperienceDateText>
+            기간설정
+          </ExperienceDateText>
+          <ExperienceDateWrapper>
+            <ExperienceDateStart
+              dateFormat='yyyy.MM.dd'
+              shouldCloseOnSelect
+              disabledKeyboardNavigation
+              placeholderText="시작 날짜"
+              minDate={new Date('1980-01-01')}
+              maxDate={new Date('2100-12-31')}
+              locale={ko}
+              selected={selectedStartDate}
+              onChange={(date) => {
+                setSelectedStartDate(date);
+                setExperienceFilter({
+                  ...experienceFilter,
+                  start_date: date,
+                })
+              }}
+            />
+            <ExperienceDateTo>
+              ~
+            </ExperienceDateTo>
+            <ExperienceDateEnd
+              dateFormat='yyyy.MM.dd'
+              shouldCloseOnSelect
+              disabledKeyboardNavigation
+              placeholderText="마무리 날짜"
+              minDate={new Date('1980-01-01')}
+              maxDate={new Date('2100-12-31')}
+              locale={ko}
+              selected={selectedEndDate}
+              onChange={(date) => {
+                setSelectedEndDate(date);
+                setExperienceFilter({
+                  ...experienceFilter,
+                  finish_date: date,
+                })
+              }}
+            />
+          </ExperienceDateWrapper>
+          <ExperienceDateApply onClick={resetDate}>
+            <ResetButton src={ResetIcon}></ResetButton>
+          </ExperienceDateApply>
+        </ExperienceDate>
+      </FilterLeft>
+      <FilterRight>
+        <ExperienceKeyword>
+          <ExperienceKeywordFilter>
+            <ExperienceKeywordFilterText>
+              경험태그필터
+            </ExperienceKeywordFilterText>
+            <ExperienceKeywordFilterButton>
+              <ExperienceKeywordFilterDropdownContainer>
+                <ExperienceKeywordFilterDropdownHeader onClick={toggling}>
+                  경험태그선택
+                  <ArrowImage src={DropdownArrow} isRotated={isOpen} />
+                </ExperienceKeywordFilterDropdownHeader>
+                {isOpen && (
+                  <ExperienceKeywordFilterDropdownListContainer >
+                    <ExperienceKeywordFilterDropdownList ref={dropdownRef}>
+                      {keywords.map(keyword => (
+                        <ExperienceKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
+                          {keyword}
+                        </ExperienceKeywordFilterListItem>
+                      ))}
+                    </ExperienceKeywordFilterDropdownList>
+                  </ExperienceKeywordFilterDropdownListContainer>
+                )}
+              </ExperienceKeywordFilterDropdownContainer>
+            </ExperienceKeywordFilterButton>
 
-    </>
+          </ExperienceKeywordFilter>
+          <ExperienceKeywordList>
+            {selectedKeyword.map(keyword => (
+              {
+                "도전": (
+                  <ExperienceKeywordSelected borderColor="#2ABCDC" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XChallenge} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+                "실패": (
+                  <ExperienceKeywordSelected borderColor="#F25454" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XFail} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+                "어려움": (
+                  <ExperienceKeywordSelected borderColor="#FF971D" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XHard} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+                "배움": (
+                  <ExperienceKeywordSelected borderColor="#42B887" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XLearn} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+                "성공": (
+                  <ExperienceKeywordSelected borderColor="#4B9EFF" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XSuccess} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+
+              }[keyword]
+
+            ))}
+          </ExperienceKeywordList>
+        </ExperienceKeyword>
+      </FilterRight>
+    </FilterDiv>
+
   );
 };
 
@@ -202,7 +272,8 @@ align-items: center;
 justify-content: start;
 flex-direction: row;
 border-radius: 10px;
-background-color: #f2f2f2;
+background-color: ${(props) => props.theme.color.white};
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 `
 const ExperienceSearchInput = styled.input`
 width: 340px;
@@ -210,7 +281,7 @@ height: 40px;
 /* border: 1px solid black; */
 align-items: start;
 justify-content: center;
-
+padding-left: 20px;
 
 `
 
@@ -370,7 +441,8 @@ height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
 align-items: center;
-background-color: ${(props) => props.theme.colors.Gray};
+background-color: ${(props) => props.theme.color.white};
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 text-align: center;
 `
 
@@ -387,7 +459,8 @@ height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
 align-items: center;
-background-color: ${(props) => props.theme.colors.Gray};
+background-color: ${(props) => props.theme.color.white};
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 text-align: center;
 `
 
@@ -398,7 +471,8 @@ height: 40px;
 border-radius: 10px;
 align-items: center;
 justify-content: center;
-background-color: ${(props) => props.theme.colors.Gray};
+background-color: ${(props) => props.theme.color.white};
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 margin-left: 6px;
 `
 
@@ -440,7 +514,6 @@ height: 40px;
 const ExperienceKeywordFilterDropdownContainer = styled.div`
   position: relative;
   width: 164px;
-  background-color: ${(props) => props.theme.colors.Gray};
   border-radius: 25px;
 `;
 
@@ -448,12 +521,25 @@ const ExperienceKeywordFilterDropdownHeader = styled.div`
   /* padding: 10px; */
   width: 164px;
   height:40px;
+  flex-direction: row;
   justify-content:center;
-  background-color: ${(props) => props.theme.colors.Gray};
+  background-color: ${(props) => props.theme.color.white};
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
   /* border: 1px solid #ccc; */
   border-radius: 25px;
   cursor: pointer;
 `;
+
+const ArrowImage = styled.img`
+  margin-left: 7px;
+  transition: transform 0.3s ease-in-out;
+  ${({ isRotated }) =>
+    isRotated &&
+    css`
+      transform: rotate(-180deg);
+    `}
+
+`
 
 const ExperienceKeywordFilterDropdownListContainer = styled.div`
   position: absolute;
@@ -462,23 +548,46 @@ const ExperienceKeywordFilterDropdownListContainer = styled.div`
 `;
 
 const ExperienceKeywordFilterDropdownList = styled.ul`
-  width: 164px;
-  padding: 0;
-  margin: 45px;
-  list-style: none;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  /* border-top: none; */
+width: 164px;
+max-height: 169px;
+padding: 0;
+margin: 45px;
+list-style: none;
+background: #fff;
+border-radius: 5px;
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+padding: 8px 12px 8px 6px;
+overflow-x: hidden;
+overflow-y: auto;
+position: absolute;
+  /* 스크롤바 스타일 (웹킷 브라우저용) */
+  &::-webkit-scrollbar {
+    width: 5px;
+    /* height: 55px; */
+    margin-right: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.color.base4}; /* 스크롤바 색상 */
+    border-radius: 4px;
+  }
+
 `;
 
 const ExperienceKeywordFilterListItem = styled.li`
-  padding: 10px;
-  padding-left: 20px;
+  width: 146px;
+  height: 30px;
+  padding-left: 15px;
+  /* border: 1px solid black; */
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   &:hover {
-    color: #ffffff;
-    background: ${(props) => props.theme.colors.Green};
+    background: ${(props) => props.theme.color.base3};
+  }
+   ::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.color.base4}; /* 스크롤바 색상 */
   }
 `;
 
@@ -496,12 +605,20 @@ row-gap: 11px;
 const ExperienceKeywordSelected = styled.div`
 width: 122px;
 height: 40px;
-/* border: 1px solid black; */
+
 justify-content: center;
-background-color: ${(props) => props.theme.colors.Gray};
+border: 1.5px solid ${(props) => props.borderColor};
+color: ${(props) => props.borderColor};;
+background-color: ${(props) => props.theme.color.white};
 border-radius: 25px;
 `
 
-
+const ExperienceKeywordFilterButtonContent = styled.div`
+width: 80px;
+height: 40px;
+/* border: 1px solid black; */
+flex-direction: row;
+justify-content: space-between;
+`
 
 export default ExperienceFilter;
