@@ -15,7 +15,7 @@ function RegisterModal ({ show, onClose}) {
 
   const handleSubmit = () => {
     setIsRegisterDataSubmitted(true);
-    console.log(`Tag selected: ${tagName}`);
+    //console.log(`Tag selected: ${tag`);
   };
 
   const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
@@ -104,7 +104,7 @@ const Background = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(18, 18, 18, 0.40);
   z-index: 100000;
 `;
 
