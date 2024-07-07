@@ -15,7 +15,7 @@ const ProjectCardGrid = () => {
     const [projectNum, setProjectNum] = useRecoilState(recoilUserProjectNum);
     const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
 
-    const [userId, setUserId] = useState("ec87b339-7242-4141-ac09-dfea517ba54b");
+
 
     // console.log(visibleCardStart, visibleCardEnd);
     console.log(userProjectData);

@@ -1,82 +1,69 @@
 import styled from "styled-components"
-import DefaultCardImg from "../../../Assets/Project_Default.png"
+// import DefaultCardImg from "../../../Assets/Experience_Default.png"
 import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
-import { useNavigate } from "react-router-dom";
 
 
-const ProjectCard = ({ projectData }) => {
+const ExperienceCard = ({ experienceData }) => {
 
     const [userImg, setUserImg] = useState("");
 
-    const keyword = [...new Set(projectData.competency_tag_name)];
-    const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
-    const navigate = useNavigate();
+    const keyword = [...new Set(experienceData.tag_name)];
 
 
     // console.log(key);
-    // console.log(projectData);
+    console.log(experienceData);
     // console.log(keyword);
 
     return (
 
-        <Container onClick={() => {
-            setExperienceFilter({
-                ...experienceFilter,
-                project_id: projectData.project_id,
-            });
-            navigate("/experience")
-        }}>
-            {projectData.is_finished == 1 ?
+        <Container>
+            {experienceData.is_finished == 1 ?
                 <CardContent>
                     <CardTopDiv>
                         <CardImageDiv>
-                            <CardImage src={userImg == "" ? DefaultCardImg : DefaultCardImg} />
                         </CardImageDiv>
                         <CardDateDiv>
                             <CardDateText>
                                 프로젝트 진행 기간
                             </CardDateText>
                             <CardDate>
-                                {projectData.start_date.substring(0, 10)} ~ {projectData.finish_date.substring(0, 10)}
+                                {experienceData.start_date.substring(0, 10)} ~ {experienceData.finish_date.substring(0, 10)}
                             </CardDate>
 
                         </CardDateDiv>
                     </CardTopDiv>
                     <CardTitle>
-                        {projectData.project_name}
+                        {experienceData.experience_name}
                     </CardTitle>
-                    <ProjectKeywordDiv>
+                    <ExperienceKeywordDiv>
                         {keyword.slice(0, 3).map(tag => (
-                            <ProjectKeyword>
+                            <ExperienceKeyword>
                                 {tag}
-                            </ProjectKeyword>
+                            </ExperienceKeyword>
                         ))}
-                    </ProjectKeywordDiv>
+                    </ExperienceKeywordDiv>
                 </CardContent>
                 :
                 <CardContent>
                     <CardTopDiv>
                         <CardImageDiv>
-                            <CardImage src={userImg == "" ? DefaultCardImg : DefaultCardImg} />
                         </CardImageDiv>
                         <CardDateDiv>
                             <CardDateText>
                                 프로젝트 진행 기간
                             </CardDateText>
                             <CardDate>
-                                {projectData.start_date?.substring(0, 10)} ~ {projectData.finish_date?.substring(0, 10)}
+                                {experienceData.exp_date.substring(0, 10)}
                             </CardDate>
 
                         </CardDateDiv>
                     </CardTopDiv>
                     <CardTitle>
-                        {projectData.project_name}
+                        {experienceData.experience_name}
                     </CardTitle>
-                    <ProjectKeywordDiv2>
+                    <ExperienceKeywordDiv2>
                         # 당신의 멋진 프로젝트가 기록되는 중입니다!
-                    </ProjectKeywordDiv2>
+                    </ExperienceKeywordDiv2>
                 </CardContent>
             }
 
@@ -91,7 +78,7 @@ width: 384px;
 height: 272px;
 border-radius: 20px;
 border: 1px solid #bbbbbb;
-/* background-color: #d9d9d9; */
+background-color: #d9d9d9;
 justify-content: center;
 
 `
@@ -166,7 +153,7 @@ margin-top: 14px;
 align-items: start;
 `
 
-const ProjectKeywordDiv = styled.div`
+const ExperienceKeywordDiv = styled.div`
 width: 254px;
 height: 30px;
 display: grid;
@@ -179,7 +166,7 @@ flex-direction:row;
 align-items: start;
 `
 
-const ProjectKeywordDiv2 = styled.div`
+const ExperienceKeywordDiv2 = styled.div`
 width: 284px;
 height: 40px;
 /* border: 1px solid black; */
@@ -189,7 +176,7 @@ align-items: start;
 font-size: ${(props) => props.theme.fontSizes.TextS};
 `
 
-const ProjectKeyword = styled.div`
+const ExperienceKeyword = styled.div`
 width: 78px;
 height: 30px;
 background-color: black;
@@ -201,4 +188,4 @@ justify-content:center;
 /* margin-right: 10px; */
 `
 
-export default ProjectCard;
+export default ExperienceCard;
