@@ -80,6 +80,7 @@ const WritingPage = () => {
         smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
         keepButtonText="남아서 기록하기"
         deleteButtonText="나가기"
+        keepButtonWidth ="151px"
         onKeep={() => {
           // '계속 작성' 버튼 클릭 시 처리 로직
           console.log("계속 작성");
