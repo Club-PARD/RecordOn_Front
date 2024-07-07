@@ -6,11 +6,10 @@ import ImageIcon from "../../../Assets/ImageIcon.png";
 import { useRef } from "react";
 import { postNewProjectAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserExperienceFilter, recoilUserId } from "../../../Atom/UserDataAtom";
+import { recoilUserId } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
-const AddProjectModal = ({
+const DeleteProjectModal = ({
     isOpen,
     onClose,
     bigAlertText1,
@@ -23,10 +22,9 @@ const AddProjectModal = ({
 }) => {
 
     const fileInputRef = useRef(null);
+
     const [projectData, setProjectData] = useState({});
     const [userId, setUserID] = useRecoilState(recoilUserId);
-    const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
-    const navigate = useNavigate();
 
     const userInputHandler = (e) => [
         setProjectData({
@@ -42,10 +40,10 @@ const AddProjectModal = ({
         })
     ]
 
-    const finishDateHandler = (finishDate) => [
+    const endDateHandler = (endDate) => [
         setProjectData({
             ...projectData,
-            finish_date: finishDate,
+            end_date: endDate,
         })
     ]
 
@@ -111,9 +109,7 @@ const AddProjectModal = ({
         try {
             const response = await postNewProjectAPI(projectData);
             console.log(response);
-            setProjectID(response.object.id);
             handleOverlayClick();
-            navigate("/experience");
         }
         catch (error) {
             console.log(error);
@@ -173,7 +169,7 @@ const AddProjectModal = ({
                             <ModalProjectDateCalendar>
                                 <Calendar name="start_date" setSelectedDate={startDateHandler} />
                                 ~
-                                <Calendar name="finish_date" setSelectedDate={finishDateHandler} />
+                                <Calendar name="end_date" setSelectedDate={endDateHandler} />
 
                             </ModalProjectDateCalendar>
                         </ModalProjectDate>
@@ -481,4 +477,4 @@ color: ${(props) => props.theme.colors.Green};
 justify-content: center;
 `
 
-export default AddProjectModal;
+export default DeleteProjectModal;
