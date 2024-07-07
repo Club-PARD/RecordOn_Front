@@ -3,9 +3,13 @@ import styled from "styled-components";
 import DropdownQuestion from "../DropdownQuestion";
 import DropdownTag from "../DropdownTag";
 import { getAllTagAndQuestionAPI } from "../../../../Axios/StoredTagInfoApi";
-import {TextAreaWidth} from "./LowerArea";
+// import { TextAreaWidth } from "./LowerArea";
 import { useRecoilState } from "recoil";
-import { experienceState,handleExpRecordSubmit } from "../../../../Atom/ExpRecordAtom";
+import {
+  experienceState,
+  handleExpRecordSubmit,
+} from "../../../../Atom/ExpRecordAtom";
+import ExpTag from "../ExpTag";
 
 const QnaArea = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
@@ -109,24 +113,28 @@ const QnaArea = () => {
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        question_answers: experienceSections.map(section => section.text),
-        tag_ids: experienceSections.map(section => section.selectedTag),
-        question_ids: experienceSections.map(section => section.selectedQuestion)
+        question_answers: experienceSections.map((section) => section.text),
+        tag_ids: experienceSections.map((section) => section.selectedTag),
+        question_ids: experienceSections.map(
+          (section) => section.selectedQuestion
+        ),
       }));
     }
   }, [isExpRecordSubmitted]);
 
   return (
     <>
+      <Guide>* 경험태그 선택 후, 질문을 선택해 주세요.</Guide>
       {experienceSections.map((section) => (
         <QuestionArea key={section.id}>
           <SelectArea>
-            <DropdownTag
+            <ExpTag />
+            {/* <DropdownTag
               options={tagKeywords}
               onSelect={(tagName) =>
                 handleTagSelectInSection(tagName, section.id)
               }
-            />
+            /> */}
             <DropdownQuestion
               options={section.questionOptions}
               onSelect={(question) =>
@@ -135,32 +143,69 @@ const QnaArea = () => {
               tagName={section.selectedTag}
             />
           </SelectArea>
-          <TextAreaWidth height="200px"
+          <TextAreaWidth
+            placeholder="첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!"
             value={section.text}
-            onChange={(e) => handleTextChangeInSection(e.target.value, section.id)}/>
+            onChange={(e) =>
+              handleTextChangeInSection(e.target.value, section.id)
+            }
+          />
         </QuestionArea>
       ))}
 
       {/* 경험 추가 버튼 */}
-      <AddButton onClick={addExperienceSection}>+ 경험 추가</AddButton>
+      {/* <AddButton onClick={addExperienceSection}>+ 경험 추가</AddButton> */}
     </>
   );
 };
 
+const Guide = styled.div`
+  align-self: flex-start;
+
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
+  color: ${(props) => props.theme.colors.GreenMain};
+
+  margin-top: 80px;
+  margin-bottom: 16px;
+`;
 const QuestionArea = styled.div``;
 
 const SelectArea = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
-
-  justify-content: space-between;
+  /* 
+  justify-content: space-between; */
   width: 840px;
 
-  margin-top: 49px;
-  margin-bottom: 9px;
+  /* margin-top: 49px; */
+  /* margin-bottom: 9px; */
 `;
 
+const TextAreaWidth = styled.textarea`
+  box-sizing: border-box;
+  width: 840px;
+  height: 150px;
+
+  border-radius: 10px;
+
+  padding: 22px 24px 31px 24px;
+
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  background-color: ${(props) => props.theme.colors.WhiteGray};
+
+  resize: none;
+  overflow-y: auto;
+
+  line-height: 1.5;
+
+  &::placeholder {
+    color: ${(props) => props.theme.colors.Gray};
+  }
+`;
 const AddButton = styled.button`
   justify-content: center;
   width: 840px;

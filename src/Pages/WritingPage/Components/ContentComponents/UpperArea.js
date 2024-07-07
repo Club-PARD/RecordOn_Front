@@ -43,7 +43,7 @@ const UppderArea = () => {
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}
       <Upper>
-        <UppderPart width={"842px"}>
+        <UppderPart width={"840px"}>
           <StyledLabel>소제목</StyledLabel>
           <StyledInput
             type="text"
@@ -55,7 +55,7 @@ const UppderArea = () => {
         <UppderPart width={"227px"}>
           <StyledLabel>경험한 날</StyledLabel>
           <ProjectDateWrapper>
-            <ProjectDateStart
+            <ProjectDateStart calWidth={"126px"}
               dateFormat="yyyy.MM.dd"
               shouldCloseOnSelect
               disabledKeyboardNavigation
@@ -105,8 +105,7 @@ const StyledInput = styled.input`
   width: 740px;
   height: 50px;
 
-  border: 1px solid;
-  border-color: ${(props) => props.theme.colors.Charcoal};
+  background-color: ${(props) => props.theme.colors.BoxGray};
   border-radius: 5px;
 
   font-weight: ${(props) => props.theme.fontWeights.TextL};
