@@ -31,13 +31,7 @@ export const getUserProjectDataFilteredAPI = async (filter) => {
 export const postNewProjectAPI = async (data) => {
     try {
         console.log(`${process.env.REACT_APP_DEV_URL}projects`);
-        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects`, data
-            // , {
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data'
-            //     }
-            // }
-        );
+        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects`, data);
         console.log(response.data)
         return response.data
     } catch (error) {
@@ -47,6 +41,10 @@ export const postNewProjectAPI = async (data) => {
 };
 
 export const postNewProjectImageAPI = async (formData, project_id) => {
+    if (formData == undefined || formData == "") {
+        console.log("이미지 업로드 안함");
+        return 0;
+    }
     try {
         console.log(`${process.env.REACT_APP_DEV_URL}s3/${project_id}`);
         console.log(formData);
@@ -57,6 +55,35 @@ export const postNewProjectImageAPI = async (formData, project_id) => {
                 }
             }
         );
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+
+};
+
+export const updateProjectAPI = async (project_id, data) => {
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}projects`);
+        const response = await axios.put(`${process.env.REACT_APP_DEV_URL}projects/${project_id}`, data);
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+
+};
+
+export const deleteProjectAPI = async (data) => {
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}projects/${data.project_id}`, data.user_id);
+        const response = await axios.delete(`${process.env.REACT_APP_DEV_URL}projects/${data.project_id}`, {
+            data: {
+                user_id: data.user_id
+            }
+
+        });
         console.log(response.data)
         return response.data
     } catch (error) {

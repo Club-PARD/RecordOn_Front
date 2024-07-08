@@ -96,6 +96,7 @@ const BigAlert = styled.div`
   width: 338px;
   white-space: nowrap;
 
+  color: ${(props) => props.theme.color.black};
   font-size: ${(props) => props.theme.fontSizes.TitleS};
   font-weight: ${(props) => props.theme.fontWeights.TitleS};
   line-height: 39px;
@@ -109,6 +110,7 @@ const SmallAlert = styled.div`
   width: 320px;
   white-space: nowrap;
 
+  color: ${(props) => props.theme.color.black};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 

@@ -4,16 +4,25 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as GoogleLogo } from "../../../Assets/GoogleLogo.svg"
 import axios from 'axios'
 import { useRecoilState } from "recoil";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
+import { recoilLoginData, recoilUserData } from "../../../Atom/UserDataAtom";
 import { useState, useEffect } from "react";
-
+import RegisterModal from "./RegisterModal";
 
 const LoginButton = () => {
 
     const [userData1, setUserData] = useRecoilState(recoilUserData);
+    const [loginData, setLoginData] = useRecoilState(recoilLoginData);
     const [isNewUser, setIsNewUser] = useState(null);
     const navigate = useNavigate();
     console.log(userData1);
+    console.log(loginData);
+
+    const [showRegisterModal, setShowRegisterModal] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const handleRegisterClick = () => {
+        setIsLoggedIn(true);
+        setShowRegisterModal(true);
+      };
 
     const googleLogin = useGoogleLogin({
         // 구글 로그인 실행
@@ -80,6 +89,7 @@ const LoginButton = () => {
             console.log("서버 응답2:", response.data);
             setIsNewUser(response.data.is_new_user);
             console.log(userData1);
+            setLoginData(jsonUserData);
             setUserData({
                 ...userData1,
                 user_id: response.data.user_id
@@ -96,8 +106,10 @@ const LoginButton = () => {
     useEffect(() => {
         if (isNewUser == true) {
             console.log("New User");
+            handleRegisterClick();
         }
         else if (isNewUser == false) {
+            console.log("Previous User");
             navigate("/project")
         }
     }, [isNewUser])
@@ -111,6 +123,9 @@ const LoginButton = () => {
                 <GoogleLogo />
                 <div>구글 계정으로 로그인</div>
             </LoginButtonDiv>
+            {/* <ModalButton1 onClick={handleRegisterClick}>로그인</ModalButton1> */}
+            <RegisterModal  show={showRegisterModal} onClose={() => setShowRegisterModal(false)} defaultName={loginData.name} />
+            
         </Container>
 
     )
@@ -136,6 +151,28 @@ const LoginButtonDiv = styled.div`
   color: white;
 
   font-size: ${(props) => props.theme.fontSizes.TextS};
+
+  white-space: nowrap;
+  cursor: pointer;
+`;
+
+const ModalButton1 = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5.31px;
+
+  width: 228px;
+  height: 45px;
+
+  background-color: ${(props) => props.theme.colors.Black};
+  border-radius: 7.5px;
+  color: white;
+
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight : ${(props) => props.theme.fontWeights.TextM};
 
   white-space: nowrap;
   cursor: pointer;

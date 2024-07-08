@@ -1,8 +1,6 @@
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { recoilProjectModal } from "../../../Atom/UserDataAtom";
-import AddProjectModal from "./AddProjectModal";
 import { useState } from "react";
+import EditProjectModal from "./EditProjectModal";
 
 
 const EditProject = () => {
@@ -16,25 +14,26 @@ const EditProject = () => {
     // console.log(modalOn);
     return (
         <>
-            <AddProjectButton onClick={() => setModalOn(true)}>
-                + 프로젝트 추가
-            </AddProjectButton>
-            {modalOn && <AddProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} />}
+            <EditProjectButton onClick={() => setModalOn(true)}>
+                편집
+            </EditProjectButton>
+            {modalOn && <EditProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} />}
         </>
     );
 };
 
 
-const AddProjectButton = styled.button`
-width: 228px;
-height: 50px;
-color: ${(props) => props.theme.colors.White};
-background-color: ${(props) => props.theme.color.main};
-font-size: ${(props) => props.theme.fontSizes.TextXL};
-font-weight: ${(props) => props.theme.fontWeights.TextXL};
-justify-content:center;
-border-radius: 10px;
-margin-top: 18px;
+const EditProjectButton = styled.button`
+width: 42px;
+height: 32px;
+/* border: 1px solid black; */
+color: ${(props) => props.theme.color.main};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
+justify-content: end;
+align-items: end;
+margin-top: 4px;
+text-decoration: underline;
 cursor: pointer;
 `
 

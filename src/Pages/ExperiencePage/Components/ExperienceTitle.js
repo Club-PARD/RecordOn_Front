@@ -12,6 +12,8 @@ import Project_Default from "../../../Assets/Project_Default.png"
 import FinishProject from "./FinishProject";
 import RestartProject from "./RestartProject";
 import { useNavigate } from "react-router-dom";
+import EditProject from "./EditProject";
+import DeleteProject from "./DeleteProject";
 
 const ExperienceTitle = () => {
 
@@ -28,7 +30,7 @@ const ExperienceTitle = () => {
         }
         getData();
 
-    }, [])
+    }, [userData])
 
     const handleProjectEdit = () => {
 
@@ -47,9 +49,9 @@ const ExperienceTitle = () => {
                     {
                         projectData.project_image == null
                             ?
-                            <img src={Project_Default} style={{ width: "126px" }} />
+                            <img src={Project_Default} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
                             :
-                            <img src={projectData.project_image} style={{ width: "126px" }} />
+                            <img src={projectData.project_image} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
                     }
 
                 </ProjectImageDiv>
@@ -76,7 +78,7 @@ const ExperienceTitle = () => {
                     <ExperienceTitleTextDiv>
                         {projectData.project_name}
                     </ExperienceTitleTextDiv>
-                    <ProjectEdit onClick={handleProjectEdit}>편집</ProjectEdit>
+                    <EditProject />
                 </ExperienceTitleText>
                 <ProjectGoalDiv>
                     <ProjectGoalText>
@@ -117,7 +119,7 @@ const ExperienceTitle = () => {
                 </OpenExperienceLinkModal>
                 <DeleteProjectDiv>
                     <DeleteProjectText>
-                        프로젝트 삭제하기
+                        <DeleteProject />
                     </DeleteProjectText>
                 </DeleteProjectDiv>
             </ExperienceTitleRight>
@@ -234,7 +236,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextM};
 justify-content: end;
 align-items: end;
 margin-top: 4px;
-text-decoration:underline;
+text-decoration: underline;
 /* margin-left: 10px; */
 `
 
@@ -258,7 +260,7 @@ const ProjectGoalContents = styled.div`
 width: 600px;
 height: 46px;
 /* border: 1px solid black; */
-justify-content:center;
+justify-content:start;
 align-items: center;
 text-align: center;
 font-size: ${(props) => props.theme.fontSizes.TextM};
@@ -275,18 +277,20 @@ margin-top: 25px;
 `
 
 const ProjectRoleText = styled.div`
-width: 64px;
+width: 32px;
 height: 25px;
 /* border: 1px solid black; */
 align-items: start;
 justify-content: center;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: 600;
+margin-right: 20px;
 `
 
 const ProjectRoleContent = styled.div`
-width: 118px;
-height: 25px;
+display: inline-block; 
+white-space: nowrap; 
+width: fit-content; 
 /* border: 1px solid black; */
 align-items: start;
 justify-content: center;

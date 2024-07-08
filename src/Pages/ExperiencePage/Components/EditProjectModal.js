@@ -4,7 +4,7 @@ import { ReactComponent as CloseIcon } from "../../../Assets/close.svg";
 import Calendar from "../../../Common/Calendar";
 import ImageIcon from "../../../Assets/ImageIcon.png";
 import { useRef } from "react";
-import { postNewProjectAPI, postNewProjectImageAPI } from "../../../Axios/ProjectDataApi";
+import { postNewProjectAPI, postNewProjectImageAPI, updateProjectAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
 import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
@@ -111,8 +111,6 @@ const EditProjectModal = ({
             e.persist();
 
             const picURL = URL.createObjectURL(file);
-            const formData = new FormData();
-            formData.append('image', file);
 
             setProjectData({
                 ...projectData,
@@ -122,18 +120,19 @@ const EditProjectModal = ({
         }
     }
 
-    const addProjectHandler = async () => {
+    const editProjectHandler = async () => {
         if (valid) {
             try {
-                const response = await postNewProjectAPI(projectData);
+                const response = await updateProjectAPI(projectId.project_id, projectData);
                 console.log(response);
-                setProjectID(response.object.id);
-                setProjectData({
-                    ...projectData,
-                    project_id: response.object.id,
-                });
-                const response2 = await postNewProjectImageAPI(projectData.picture, response.object.id);
+                const formData = new FormData();
+                formData.append('image', projectData.picture);
+                const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
                 console.log(response2);
+                setUserData({
+                    ...userData,
+                    project_id: response.response_object.id,
+                });
                 handleOverlayClick();
                 navigate("/experience");
             }
@@ -151,7 +150,7 @@ const EditProjectModal = ({
             <Modal>
                 <ModalContentDiv>
                     <ModalText>
-                        프로젝트 추가
+                        프로젝트 수정
                     </ModalText>
                     <ModalProjectTitle>
                         <ModalProjectTitleText>
@@ -256,7 +255,7 @@ const EditProjectModal = ({
                     </ModalProjectImage>
                     <ModalProjectButtonDiv>
                         <ModalProjectButtons>
-                            <ModalProjectAddButton onClick={addProjectHandler} isValid={valid}>
+                            <ModalProjectAddButton onClick={editProjectHandler} isValid={valid}>
                                 추가하기
                             </ModalProjectAddButton>
                             <ModalProjectCancelButton name="exit" >
@@ -350,6 +349,8 @@ border-radius: 10px;
 background-color: ${(props) => props.theme.color.base2};
 padding: 11px 16px;
 box-sizing: border-box;
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 &::placeholder {
     color: ${(props) => props.theme.color.base6};
   }
@@ -384,6 +385,8 @@ border-radius: 10px;
 background-color: ${(props) => props.theme.color.base2};
 padding: 11px 16px;
 box-sizing: border-box;
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 &::placeholder {
     color: ${(props) => props.theme.color.base6};
   }
@@ -425,6 +428,8 @@ const ModalProjectRoleInput = styled.input.attrs({
     height: 40px;
     border-radius: 10px;
     background-color: ${(props) => props.theme.color.base2};
+    font-size: ${(props) => props.theme.fontSizes.TextM};
+    font-weight: ${(props) => props.theme.fontWeights.TextM};
     padding: 11px 16px;
     box-sizing: border-box;
     &::placeholder {
@@ -457,6 +462,8 @@ height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 justify-content: space-between;
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 `;
 
 const ProjectDateWrapper = styled.div`
@@ -652,6 +659,7 @@ const ModalProjectImageIcon = styled.img`
 width: 18px;
 height: 18px;
 /* border: 1px solid black; */
+margin-right: 7px;
 `;
 
 const ModalProjectButtonDiv = styled.div`
