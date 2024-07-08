@@ -19,7 +19,7 @@ const ExperienceCard = ({ experienceData }) => {
         <Container>
             <CardContent>
                 <CardDate>
-                    {experienceData.exp_date.substring(0, 10)}
+                    {experienceData.exp_date?.substring(0, 10)}
                 </CardDate>
                 <CardTitle>
                     {experienceData.experience_name}
