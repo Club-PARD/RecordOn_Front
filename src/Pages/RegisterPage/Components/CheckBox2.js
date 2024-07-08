@@ -1,59 +1,38 @@
 import React , { useState } from "react";
 import styled from "styled-components";
-import Check from "../../../Assets/Check.svg";
+import { ReactComponent as Check } from "../../../Assets/Check.svg";
 
-function CheckBox({ id, onSelect }) {
+function CheckBox2({ name, onSelect }) {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    console.log("isChecked: " + isChecked);
     setIsChecked(!isChecked);
   };
   return (
-    <Div>
-        <StyledInput type="checkbox" id={id} checked={isChecked} onChange={handleCheckboxChange}/>
-        <Boxlabel htmlFor={id}></Boxlabel>
-    </Div>
+    <>
+        <StyledInput type="checkbox" name={name} checked={isChecked} onChange={handleCheckboxChange} />
+        {isChecked && <StyledCheck />}
+    </>
   );
 }
 
-const Div = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  user-select: none;
-`;
-
-const Boxlabel = styled.label`
-
-  width: 200px;
-  height: 20px;
-
-`;
+// const StyledLabel = styled.label`
+//   display: flex;
+//   align-items: center;
+//   user-select: none;
+// `;
 
 const StyledInput = styled.input`
-  display: flex;
   appearance: none;
-  position: absolute;
-  /* position: relative; */
+  position: relative;
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   border-radius: 2px;
   border: 0.8px solid ${(props) => props.theme.colors.Black};
   cursor: pointer;
-  background-size: cover; 
-  
-  &:checked + ${Boxlabel} {
-    background-repeat: no-repeat;
-    background-image: url(${Check});
-    background-position: left;
-    background-position-x: 5px;
-    background-size: 12px;
-  }
-
+  z-index: 20000;
 `;
-
 
 
 const StyledCheck =styled(Check)`
@@ -65,7 +44,7 @@ const StyledCheck =styled(Check)`
   flex-shrink: 0;
 `;
 
-export default CheckBox;
+export default CheckBox2;
 
 
 

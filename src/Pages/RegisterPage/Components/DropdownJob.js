@@ -1,45 +1,58 @@
 import React, { useState }from "react";
 import styled, { keyframes } from "styled-components";
 import { ReactComponent as DropdownArrow } from "../../../Assets/DropdownArrow.svg";
+import { ReactComponent as SmallCheck } from "../../../Assets/SmallCheck.svg";
 
-const DropdownTag = ({options, onSelect }) => {
+const DropdownJob = ({options, onSelect}) => {
   // 드롭다운 열림 상태
-  const [isTagOpen, setIsTagOpen] = useState(false);
+  const [isJobOpen, setIsJobOpen] = useState(false);
 
   // 선택딘 태그를 저장하는 상태
-  const [selectedTag, setSelectedTag] = useState("");
+  const [selectedJob, setSelectedJob] = useState("");
 
   const toggleDropdown = () => {
-    setIsTagOpen(!isTagOpen);
+    setIsJobOpen(!isJobOpen);
   };
   
-  const handleSelect = (tagKeyword) => {
-    setSelectedTag(tagKeyword);
-    onSelect(tagKeyword);
-    setIsTagOpen(false); // 옵션 선택 후 드롭다운 닫기
+  const handleSelect = (jobKeywords) => {
+    setSelectedJob(jobKeywords);
+    onSelect(jobKeywords);
+    setIsJobOpen(false); // 옵션 선택 후 드롭다운 닫기
   };
+
+  
+  // 호버 상태 관리
+  const [hoveredItem, setHoveredItem] = useState(null);
+
   return (
     <DropdownContainer>
       <SelectJob onClick={toggleDropdown}>
-      {selectedTag ? (
+      {selectedJob ? (
           <>
-            <div>{selectedTag}</div>
-            <StyledDropdownArrow isOpen={isTagOpen} />
+            <div>{selectedJob}</div>
+            <StyledDropdownArrow isOpen={isJobOpen} />
           </>
         ) : (
           <>
             <PlaceHolderDiv>희망직군 선택</PlaceHolderDiv>
-            <StyledDropdownArrow isOpen={isTagOpen} />
+            <StyledDropdownArrow isOpen={isJobOpen} />
           </>
         )}
       </SelectJob>
-      {isTagOpen && (
+      {isJobOpen && (
         <List>
-          {options.map((tagKeyword) => (
-            <ListItem alignItems={"start"} key={tagKeyword}
-            onClick={() => handleSelect (tagKeyword)}>
-              {tagKeyword}
-            </ListItem>
+          {options.map((jobKeywords) => (
+             <ListItemWrapper
+             key={jobKeywords}
+             onClick={() => handleSelect (jobKeywords)}
+             onMouseEnter={() => setHoveredItem(jobKeywords)}
+             onMouseLeave={() => setHoveredItem(null)}
+            >
+            <ListItem>{jobKeywords}</ListItem>
+            <IconWrapper isVisible={hoveredItem === jobKeywords}>
+                <SmallCheck />
+              </IconWrapper>
+            </ListItemWrapper>
           ))}
         </List>
       )}
@@ -94,10 +107,11 @@ const List = styled.div`
   flex-direction: column;
   justify-content: start;
   position: absolute;
-  align-items: start ;
+  align-items: start;
+  padding-left: 13px;
   top: 160%;
   left: -13px;
-  width: 228px;
+  width: 215px;
   height: 160px;
   flex-shrink: 0;
   z-index: 1000;
@@ -106,8 +120,7 @@ const List = styled.div`
   box-shadow: 0px 0px 4px 0px ${(props) => props.theme.colors.Black};
 
   background-color: ${(props) => props.theme.colors.White};
-  font-size: ${(props) => props.theme.fontSizes.TextM};
-  font-weight: ${(props) => props.theme.fontWeights.TextM};
+  
 
   animation: ${slideDown} 0.3s ease-out forwards;
 `;
@@ -118,4 +131,30 @@ const ListItem = styled.div`
   text-align: start;
 `;
 
-export default DropdownTag;
+const ListItemWrapper = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 208px;
+  height: 30px;
+  flex-shrink: 0; 
+  border-radius: 2px;
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
+  font-smooth: antialiased;
+  -webkit-font-smoothing: antialiased;
+  line-height: 23.4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.base3};
+  }
+`;
+const IconWrapper = styled.div`
+  display: flex;
+  visibility: ${(props) => (props.isVisible ? "visible" : "hidden")};
+`;
+
+export default DropdownJob;

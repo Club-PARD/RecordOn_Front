@@ -8,16 +8,17 @@ import ProjectEndModal from "./Components/ProjectEndModal";
 
 
 const RegisterPage = () => {
-    const [showModal, setShowModal] = useState(false);
+    const [showRegisterModal, setShowRegisterModal] = useState(false);
+    const [showProjectModal, setShowProjectModal] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const handleRegisterClick = () => {
         setIsLoggedIn(true);
-        setShowModal(true);
+        setShowRegisterModal(true);
       };
 
       const handleProjectClick = () => {
         setIsLoggedIn(true);
-        setShowModal(true);
+        setShowProjectModal(true);
       };
 
     // const navigate = useNavigate();
@@ -56,10 +57,10 @@ const RegisterPage = () => {
     return (
         <Container>
             <ModalButton1 onClick={handleRegisterClick}>로그인</ModalButton1>
-            <RegisterModal  show={showModal} onClose={() => setShowModal(false)} />
+            <RegisterModal  show={showRegisterModal} onClose={() => setShowRegisterModal(false)} />
             <MarginBetween />
             <LoginButton onClick={handleProjectClick}>프로젝트</LoginButton>
-            <ProjectEndModal  show={showModal} onClose={() => setShowModal(false)} />
+            <ProjectEndModal  show={showProjectModal} onClose={() => setShowProjectModal(false)} />
         </Container>
 
     )

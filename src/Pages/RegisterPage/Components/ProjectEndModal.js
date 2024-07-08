@@ -3,9 +3,6 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { handleRegisterDataSubmit } from "../../../Atom/RegisterDataAtom.js";
 import { ReactComponent as Close } from "../../../Assets/close.svg";
-import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
-import DropdownTag from "./DropdownTag";
-import CheckBox from './CheckBox';
 
 
 
@@ -16,10 +13,10 @@ function ProjectEndModal ({ show, onClose}) {
 
   const handleSubmit = () => {
     setIsRegisterDataSubmitted(true);
-    //console.log(`Tag selected: ${tag`);
+    //console.log(`Job selected: ${Job`);
   };
 
-const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
+const [selectedJobKeyword, setSelectedJobKeyword] = useState("");
 
   useEffect(() => {
     if(show) {
@@ -32,12 +29,6 @@ const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
     };
   }, [show]);  
 
-  const handleTagSelect = (tagName) => {
-    setSelectedTagKeyword(tagName);
-    console.log(`Tag selected: ${tagName}`);
-};
-
-
 if(!show) {
   return null;
 }
@@ -48,43 +39,10 @@ if(!show) {
         <StyledClose onClick={onClose}/>
           
         <Container>
-          <StyledProfile />
-          
-          <UserDiv> 
-            <UserDataDiv>
-              <NameDiv>이름</NameDiv>
-              <BoxDiv>
-              <AnswerDiv name="userName" placeholder="홍길동"></AnswerDiv>
-              </BoxDiv>
-            </UserDataDiv>
-            <UserDataDiv>
-              <NameDiv>희망직군</NameDiv>
-              <BoxDiv>
-              </BoxDiv>
-            </UserDataDiv>
-          </UserDiv>
-          
-
-          <PolicyDiv>
-            <PolicyDataDiv>
-              <PolicyLeftDiv>
-                <CheckBox name="termsOfService" />
-                <PolicyNameDiv>이용약관 (필수)</PolicyNameDiv>
-              </PolicyLeftDiv>
-              <PolicyRightDiv>자세히 보기</PolicyRightDiv>
-            </PolicyDataDiv>
-
-            <PolicyDataDiv>
-              <PolicyLeftDiv>
-              <CheckBox name="privacyPolicy" />
-                <PolicyNameDiv>개인정보 수집 및 이용 (필수)</PolicyNameDiv>
-              </PolicyLeftDiv>
-              <PolicyRightDiv>자세히 보기</PolicyRightDiv>
-            </PolicyDataDiv>
-
-          </PolicyDiv>
-
-            <RegisterBtn onClick={handleSubmit}>회원가입</RegisterBtn>
+          <TitleDiv>축하합니다!<br />프로젝트가 완성되었습니다.</TitleDiv>
+          <MarginUnderTitle></MarginUnderTitle>
+          <CaptionDiv>해당 프로젝트 내에서 가장 돋보였던 핵심역량을 최대 3개 체크해주세요.</CaptionDiv>
+            <RegisterBtn onClick={handleSubmit}>프로젝트 완료</RegisterBtn>
         </Container>
       </OutContatiner>
       </Background>
@@ -111,7 +69,7 @@ const OutContatiner =styled.div`
   overflow-y: auto;
 
   width: 432px;
-  height: 500px;
+  height: 400px;
   flex-shrink: 0;
   border-radius: 16px;
   background-color: ${(props) => props.theme.colors.White};
@@ -133,9 +91,8 @@ const Container = styled.form`
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 51px;
-  width: 330px;
-  height: 500px;
+  width: 432px;
+  height: 400px;
   flex-shrink: 0;
   max-width: 100%;
   max-height: 100%;
@@ -143,128 +100,61 @@ const Container = styled.form`
   
 `;
 
-const StyledProfile =styled(Profile)`
-  position: absolute;
-  width: 125px;
-  height: 125px;
-  top: 40px;
-  left: 103px;
-  flex-shrink: 0;
+const TitleDiv = styled.div`
+width: 301px;
+height: 60.904px;
+position: absolute;
+top: 56px;
+flex-shrink: 0;
+text-align: center;
+color: ${(props) => props.theme.color.Black};
+font-size: ${(props) => props.theme.fontSizes.TextXL};
+font-weight : ${(props) => props.theme.fontWeights.TextXL};
+line-height: 130%; /* 31.2px */
+letter-spacing: -0.48px;
 `;
 
-const UserDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position : absolute;
-  top: 197px;
-  width: 330px;
-  height: 91px;
-  
-`;
+const CaptionDiv = styled.div`
+display: flex;
+position: absolute;
+top: 124.27px;
+width: 432px;
+height: 20px;
+flex-direction: column;
+justify-content: center;
+flex-shrink: 0;
+text-align: center;
+color: ${(props) => props.theme.color.Black};
 
-const UserDataDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 330px;
-  height: 35px;
+font-size: ${(props) => props.theme.fontSizes.Caption};
+font-weight : ${(props) => props.theme.fontWeights.Caption};
+line-height: 130%;
+letter-spacing: -0.24px;
 `;
-
-const NameDiv = styled.div`
-  display: flex;
-  font-size: ${(props) => props.theme.fontSizes.TextM};
-  font-weight : ${(props) => props.theme.fontWeights.TextM};
-  align-items: center;
-  
-`;
-
-const BoxDiv = styled.div`
-  width: 228px;
-  height: 35px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid ${(props) => props.theme.colors.Black};
-`;
-
-const AnswerDiv =styled.input`
-  display: flex;
-  width: 202px;
-  height: 19px;
-  margin-top: 8px;
-  flex-shrink: 0;
-  overflow-y: auto;
-  resize: none;
-  border: none;
-  outline: none;
-  max-width: 100%;
-  max-height: 100%;
-  font-size: ${(props) => props.theme.fontSizes.TextM};
-  font-weight : ${(props) => props.theme.fontWeights.TextM};
-  text-align: start;
-  &::placeholder {
-    color: ${(props) => props.theme.colors.Gray};
-  }
-`;
-
-const PolicyDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position : absolute;
-  top: 332px;
-  width: 330px;
-  height: 55px;
-`;
-
-const PolicyDataDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 330px;
-  height: 20px;
-`;
-
-const PolicyLeftDiv = styled.div`
-  flex-direction: row;
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-`;
-
-const PolicyNameDiv = styled.div`
-  margin-left: 10px;
-  font-size: ${(props) => props.theme.fontSizes.TextS};
-  font-weight : ${(props) => props.theme.fontWeights.TextS};
-`;
-
-const PolicyRightDiv = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: ${(props) => props.theme.fontSizes.TextS};
-  font-weight : ${(props) => props.theme.fontWeights.TextS};
-  color: ${(props) => props.theme.colors.Gray};;
-`;
-
 
 const RegisterBtn = styled.button`
   display: flex;
-  width: 330px;
+  width: 180px;
   height: 40px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  background: ${(props) => props.theme.color.main};
+  background: ${(props) => props.theme.color.base6};
   border-radius: 10px;
 
   position: absolute;
-  top: 412px;
+  top: 303.37px;
   color: ${(props) => props.theme.colors.White};
   text-align: center;
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight : ${(props) => props.theme.fontWeights.TextM};
   line-height: normal;
 `;
+const MarginUnderTitle = styled.div`
+width: 1200px;
+height: 7.37px;
 
+background-color: ${(props) => props.theme.colors.White};
+`;
 
 export default ProjectEndModal;

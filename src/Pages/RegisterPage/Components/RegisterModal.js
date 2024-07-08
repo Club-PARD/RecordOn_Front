@@ -4,9 +4,9 @@ import { useRecoilState } from "recoil";
 import { handleRegisterDataSubmit } from "../../../Atom/RegisterDataAtom.js";
 import { ReactComponent as Close } from "../../../Assets/close.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
-import DropdownTag from "./DropdownTag";
+import DropdownJob from "./DropdownJob";
 import CheckBox from './CheckBox';
-
+import CheckBox2 from './CheckBox2';
 
 function RegisterModal ({ show, onClose}) {
   const [isRegisterDataSubmitted, setIsRegisterDataSubmitted] = useRecoilState(
@@ -15,10 +15,10 @@ function RegisterModal ({ show, onClose}) {
 
   const handleSubmit = () => {
     setIsRegisterDataSubmitted(true);
-    //console.log(`Tag selected: ${tag`);
+    //console.log(`Job selected: ${Job`);
   };
 
-  const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
+  const [selectedJobKeyword, setSelectedJobKeyword] = useState("");
 
   useEffect(() => {
     if(show) {
@@ -31,18 +31,40 @@ function RegisterModal ({ show, onClose}) {
     };
   }, [show]);  
 
-  const tagKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD","개발·데이터","디자인" ,"물류·무역" ,"영업" ,"식·음료", "엔지니어링·설계", "제조·생산", "교육", "건축·시설","의료·바이오"];
+  const jobKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD","개발·데이터","디자인" ,"물류·무역" ,"영업" ,"식·음료", "엔지니어링·설계", "제조·생산", "교육", "건축·시설","의료·바이오"];
 
 
-  const handleTagSelect = (tagName) => {
-    setSelectedTagKeyword(tagName);
-    console.log(`Tag selected: ${tagName}`);
+  const handleJobSelect = (JobName) => {
+    setSelectedJobKeyword(JobName);
+    console.log(`Job selected: ${JobName}`);
 };
 
+const [isBox1Checked, setIsBox1Checked] = useState(false);
+const [isBox2Checked, setIsBox2Checked] = useState(false);
+const isFormValid = (isBox1Checked == false) && (isBox2Checked== false);
 
 if(!show) {
   return null;
 }
+
+// //버튼 활성화
+// // 모든 input의 value가 1자 이상이 되어야 한다
+// const isValidInput = userName.length >= 1;
+
+// // 검사한 모든 로직의 유효성 검사가 true가 될때 getIsActive함수가 작동한다. 버튼 클릭 이벤트가 발생할때 넣어줄 함수.
+// const getIsActive = 
+//    isValidEmail && isValidPassword && isValidInput && checkBoxActive === true;
+
+// // 유효성 검사 중 하나라도 만족하지못할때 즉, 버튼이 비활성화 될 때 버튼을 클릭하면 아래와 같은 경고창이 뜬다.
+// const handleButtomValid = () => {
+//  if (
+//    !isValidInput ||
+//    !isValidEmail ||
+//    !isValidPassword ||
+//    !isCheckBoxClicked()
+//    ) {
+//    alert('please fill in the blanks');
+// }};
 
   return (
     <Background>
@@ -62,10 +84,10 @@ if(!show) {
             <UserDataDiv>
               <NameDiv>희망직군</NameDiv>
               <BoxDiv>
-              <DropdownTag
-                options={tagKeywords}
-                onSelect={(tagName) =>
-                  handleTagSelect(tagName)
+              <DropdownJob
+                options={jobKeywords}
+                onSelect={(JobName) =>
+                  handleJobSelect(JobName)
               }
               />
               </BoxDiv>
@@ -76,7 +98,7 @@ if(!show) {
           <PolicyDiv>
             <PolicyDataDiv>
               <PolicyLeftDiv>
-                <CheckBox name="termsOfService" />
+                <CheckBox id ="termsOfService" onSelect={isBox1Checked}/>
                 <PolicyNameDiv>이용약관 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
               <PolicyRightDiv>자세히 보기</PolicyRightDiv>
@@ -84,7 +106,7 @@ if(!show) {
 
             <PolicyDataDiv>
               <PolicyLeftDiv>
-              <CheckBox name="privacyPolicy" />
+              <CheckBox id ="privacyPolicy" onSelect={isBox2Checked}/>
                 <PolicyNameDiv>개인정보 수집 및 이용 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
               <PolicyRightDiv>자세히 보기</PolicyRightDiv>
@@ -92,7 +114,7 @@ if(!show) {
 
           </PolicyDiv>
 
-            <RegisterBtn onClick={handleSubmit}>회원가입</RegisterBtn>
+            <RegisterBtn onClick={handleSubmit} disabled={!isFormValid}>회원가입</RegisterBtn>
         </Container>
       </OutContatiner>
       </Background>
@@ -241,7 +263,8 @@ const PolicyLeftDiv = styled.div`
 `;
 
 const PolicyNameDiv = styled.div`
-  margin-left: 10px;
+  position: absolute;
+  margin-left: 30px;
   font-size: ${(props) => props.theme.fontSizes.TextS};
   font-weight : ${(props) => props.theme.fontWeights.TextS};
 `;
@@ -272,6 +295,11 @@ const RegisterBtn = styled.button`
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight : ${(props) => props.theme.fontWeights.TextM};
   line-height: normal;
+
+  &:disabled {
+    background: ${(props) => props.theme.colors.Gray};
+    cursor: not-allowed;
+  }
 `;
 
 
