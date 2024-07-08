@@ -45,7 +45,7 @@ const UpperArea = ({ answerObject }) => {
           <StyledLabel>경험태그</StyledLabel>
           <StyledTagArea>
             {answerObject.tag_id && answerObject.tag_id.map((tagId, index) => {
-              const keyword = keywords.find(k => k.id+1 === tagId);
+              const keyword = keywords.find(k => k.id +1 === tagId);
               return (
                 <StyledTag
                   key={index}

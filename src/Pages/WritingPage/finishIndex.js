@@ -34,6 +34,7 @@ const ViewPage = () => {
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answerObject, setAnswerObject] = useState({});
+
   const navigate = useNavigate();
 
   const openModal = () => {
@@ -58,6 +59,14 @@ const ViewPage = () => {
     getRecord();
   }, []);
 
+   // 중간 배열 생성
+   const combinedArray = answerObject.question_text && answerObject.question_text.map((_, index) => ([
+    answerObject.tag_id[index],
+    answerObject.question_text[index],
+    answerObject.question_answer[index]
+  ]));
+
+
   return (
     <Div>
       {/* 뒤로 가기 */}
@@ -74,36 +83,22 @@ const ViewPage = () => {
 
       <StyledHr />
 
+      {/* 경험 기록 내용 */}
       <FixAreaWrapper>
-
-        <FixArea>
-
-            {/* 태그 */}
-          {answerObject.tag_id &&
-            answerObject.tag_id.map((tagId, index) => {
-              const keyword = keywords.find((k) => k.id + 1 === tagId);
-              return (
-                <StyledTag
-                  key={index}
-                  borderColor={keyword ? keyword.color : "#000"}
-                  color={keyword ? keyword.color : "#000"}
-                >
-                  {keyword ? keyword.label : ""}
+        {combinedArray && combinedArray.map((item, index) => {
+          const keyword = keywords.find((k) => k.id+1 === item[0]);
+          return (
+            <FixArea key={index}>
+              {keyword && (
+                <StyledTag borderColor={keyword.color} color={keyword.color}>
+                  {keyword.label}
                 </StyledTag>
-              );
-            })}
-
-            {/* 질문 */}
-          <FixAreaLabel>
-            {answerObject && answerObject.question_text}
-          </FixAreaLabel>
-
-            {/* 질문 */}
-          <FixAnswer>{answerObject && answerObject.question_answer}</FixAnswer>
-
-        </FixArea>
-
-
+              )}
+              <FixAreaLabel>{item[1]}</FixAreaLabel>
+              <FixAnswer>{item[2]}</FixAnswer>
+            </FixArea>
+          );
+        })}
       </FixAreaWrapper>
 
       <StyledHr marginTop={"46px"} />
