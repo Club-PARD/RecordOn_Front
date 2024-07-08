@@ -6,7 +6,7 @@ function CheckBox({ id, onSelect }) {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    console.log("isChecked: " + isChecked);
+    console.log(id +"isChecked: " + isChecked);
     setIsChecked(!isChecked);
   };
   return (
