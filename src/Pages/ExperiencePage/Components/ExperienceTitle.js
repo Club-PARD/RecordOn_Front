@@ -1,65 +1,80 @@
 import styled from "styled-components";
 import AddExperience from "./AddExperience";
 import { useState } from "react";
-// import { getUserExperienceDataAPI } from "../../../Axios/ExperienceDataApi";
+import { getUserExperienceDataAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserId, recoilUserExperienceNum } from "../../../Atom/UserDataAtom";
+import { recoilUserData, recoilUserProjectNum } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import ArrowGray from "../../../Assets/GoBackIcon.svg"
 import ArrowWhite from "../../../Assets/ArrowWhite.svg"
 import BarIcon from "../../../Assets/BarIcon.svg"
 import Project_Default from "../../../Assets/Project_Default.png"
-import DeleteProject from "./DeleteProject";
+import FinishProject from "./FinishProject";
+import RestartProject from "./RestartProject";
+import { useNavigate } from "react-router-dom";
 
 const ExperienceTitle = () => {
 
-    const [userId, setUserId] = useRecoilState(recoilUserId);
-    const [userName, setUserName] = useState("");
+    const [userData, setUserData] = useRecoilState(recoilUserData);
+    const [projectData, setProjectData] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getData = async () => {
-            // const response = await getUserExperienceDataAPI(userId);
-            // // console.log(response.user_name);
-            // setUserName(response.user_name);
+            const response = await getUserExperienceDataAPI(userData);
+            console.log(response);
+            setProjectData(response);
         }
         getData();
 
     }, [])
 
-
     return (
         <ExperienceTitleDiv>
             <ExperienceTitleLeft>
-                <BackToProject>
+                <BackToProject onClick={() => navigate("/project")}>
                     <img src={ArrowGray} style={{ width: "14px", marginRight: "7px" }} />
                     메인 페이지로 돌아가기
                 </BackToProject>
             </ExperienceTitleLeft>
             <ExperienceTitleCenter>
                 <ProjectImageDiv>
-                    <img src={Project_Default} style={{ width: "126px" }} />
+                    {
+                        projectData.project_image == null
+                            ?
+                            <img src={Project_Default} style={{ width: "126px" }} />
+                            :
+                            <img src={projectData.project_image} style={{ width: "126px" }} />
+                    }
+
                 </ProjectImageDiv>
                 <ProjectProcessDate>
-                    <ProjectProcess>
-                        진행중
-                    </ProjectProcess>
+                    {
+                        projectData.is_finished == 1
+                            ?
+                            <ProjectProcess>
+                                진행완료
+                            </ProjectProcess>
+                            : <ProjectProcess>
+                                진행중
+                            </ProjectProcess>
+                    }
                     <ProjectProcessDateBar>
                         <img src={BarIcon} style={{ height: "15px" }} />
                     </ProjectProcessDateBar>
                     <ProjectDate>
-                        2024.00.00~2025.00.00
+                        {projectData.start_date?.substring(0, 10)}~{projectData.finish_date?.substring(0, 10)}
                     </ProjectDate>
                 </ProjectProcessDate>
                 <ExperienceTitleText>
-                    {/* {userName} */}
-                    해커톤 프로젝트
+                    {projectData.project_name}
                 </ExperienceTitleText>
                 <ProjectGoalDiv>
                     <ProjectGoalText>
                         프로젝트 목표
                     </ProjectGoalText>
                     <ProjectGoalContents>
-                        내용 70자 미만 내용 70자 미만 내용 70자 미만 내용 70자 미만 내용 70자 미만 내용 70자 미만 내용 70자 미만 내용 70자 미만 내용 70자 미만 내용 70자 미만
+                        {projectData.description}
                     </ProjectGoalContents>
                 </ProjectGoalDiv>
                 <ProjectRole>
@@ -67,14 +82,23 @@ const ExperienceTitle = () => {
                         역할
                     </ProjectRoleText>
                     <ProjectRoleContent>
-                        디자이너
+                        {projectData.part}
                     </ProjectRoleContent>
                 </ProjectRole>
                 <ExperienceButtons>
-                    <ExperienceButtonsDiv>
-                        <AddExperience />
-                        <DeleteProject />
-                    </ExperienceButtonsDiv>
+                    {
+                        projectData.is_finished == 1
+                            ?
+                            <ExperienceButtonsDivDone>
+                                <RestartProject />
+                            </ExperienceButtonsDivDone>
+                            :
+                            <ExperienceButtonsDiv>
+                                <AddExperience />
+                                <FinishProject />
+                            </ExperienceButtonsDiv>
+                    }
+
                 </ExperienceButtons>
             </ExperienceTitleCenter>
             <ExperienceTitleRight>
@@ -98,14 +122,14 @@ width: 1200px;
 height: 552px;
 flex-direction:row;
 margin-top: 40px;
-border: 1px solid black;
+/* border: 1px solid black; */
 justify-content: space-between;
 align-items:start;
 `
 const ExperienceTitleLeft = styled.div`
 width: 300px;
 height: 552px;
-border: 1px solid black;
+/* border: 1px solid black; */
 `
 const BackToProject = styled.div`
 width: 300px;
@@ -121,14 +145,14 @@ color: ${(props) => props.theme.colors.Charcoal};
 const ExperienceTitleCenter = styled.div`
 width: 600px;
 height: 552px;
-border: 1px solid black;
+/* border: 1px solid black; */
 justify-content: start;
 `
 
 const ProjectImageDiv = styled.div`
 width: 600px;
 height: 126px;
-border: 1px solid black;
+/* border: 1px solid black; */
 margin-top: 60px;
 justify-content: center;
 `
@@ -159,7 +183,7 @@ justify-content:center;
 `
 
 const ProjectDate = styled.div`
-width: 191px;
+width: 215px;
 height: 25px;
 /* border: 1px solid black; */
 align-items: start;
@@ -242,6 +266,14 @@ margin-top: 41px;
 flex-direction: row;
 justify-content: center;
 `
+const ExperienceButtonsDivDone = styled.div`
+width: 465px;
+height: 50px;
+/* border: 1px solid black; */
+flex-direction: row;
+justify-content: center;
+`
+
 const ExperienceButtonsDiv = styled.div`
 width: 465px;
 height: 50px;
@@ -262,8 +294,8 @@ height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
 flex-direction: row;
-color: ${(props) => props.theme.colors.White};
-background-color: ${(props) => props.theme.colors.Black};
+color: ${(props) => props.theme.color.white};
+background-color: ${(props) => props.theme.color.base7};
 justify-content:center;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};

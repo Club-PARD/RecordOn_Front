@@ -18,7 +18,7 @@ const ProjectCardGrid = () => {
 
 
     // console.log(visibleCardStart, visibleCardEnd);
-    console.log(userProjectData);
+    // console.log(userProjectData);
 
     useEffect(() => {
         sessionStorage.setItem('startNum', 0);
@@ -54,22 +54,31 @@ const ProjectCardGrid = () => {
 
     return (
         <ProjectCardDiv>
-            {projectCardNum.slice(visibleCardStart, visibleCardEnd).map(index => (
-                <ProjectCard onClick={gotoProject(index)} key={index} projectData={userProjectData[index]}>
-                </ProjectCard>
-            ))}
+            <ProjectCardDivContent>
+                {projectCardNum.slice(visibleCardStart, visibleCardEnd).map(index => (
+                    <ProjectCard onClick={gotoProject(index)} key={index} projectData={userProjectData[index]}>
+                    </ProjectCard>
+                ))}
+            </ProjectCardDivContent>
         </ProjectCardDiv>
 
     );
 };
 const ProjectCardDiv = styled.div`
+width: 1200px;
+height: 565px;
+margin-top: 55px;
+/* border: 1px solid black; */
+`
+
+const ProjectCardDivContent = styled.div`
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 grid-template-rows: repeat(2, 1fr);
 width: 1200px;
 height: 565px;
 /* border: 1px solid black; */
-margin-top: 55px;
+
 column-gap: 24px;
 row-gap: 20px;
 `

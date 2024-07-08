@@ -11,63 +11,67 @@ const ExperienceCard = ({ experienceData }) => {
 
 
     // console.log(key);
-    console.log(experienceData);
+    // console.log(experienceData);
     // console.log(keyword);
 
     return (
 
         <Container>
-            {experienceData.is_finished == 1 ?
-                <CardContent>
-                    <CardTopDiv>
-                        <CardImageDiv>
-                        </CardImageDiv>
-                        <CardDateDiv>
-                            <CardDateText>
-                                프로젝트 진행 기간
-                            </CardDateText>
-                            <CardDate>
-                                {experienceData.start_date.substring(0, 10)} ~ {experienceData.finish_date.substring(0, 10)}
-                            </CardDate>
-
-                        </CardDateDiv>
-                    </CardTopDiv>
-                    <CardTitle>
-                        {experienceData.experience_name}
-                    </CardTitle>
-                    <ExperienceKeywordDiv>
-                        {keyword.slice(0, 3).map(tag => (
-                            <ExperienceKeyword>
-                                {tag}
-                            </ExperienceKeyword>
-                        ))}
-                    </ExperienceKeywordDiv>
-                </CardContent>
-                :
-                <CardContent>
-                    <CardTopDiv>
-                        <CardImageDiv>
-                        </CardImageDiv>
-                        <CardDateDiv>
-                            <CardDateText>
-                                프로젝트 진행 기간
-                            </CardDateText>
-                            <CardDate>
-                                {experienceData.exp_date.substring(0, 10)}
-                            </CardDate>
-
-                        </CardDateDiv>
-                    </CardTopDiv>
-                    <CardTitle>
-                        {experienceData.experience_name}
-                    </CardTitle>
-                    <ExperienceKeywordDiv2>
-                        # 당신의 멋진 프로젝트가 기록되는 중입니다!
-                    </ExperienceKeywordDiv2>
-                </CardContent>
-            }
-
-
+            <CardContent>
+                <CardDate>
+                    {experienceData.exp_date.substring(0, 10)}
+                </CardDate>
+                <CardTitle>
+                    {experienceData.experience_name}
+                </CardTitle>
+                <ExperienceKeywordDiv>
+                    {keyword.includes("도전") ?
+                        <ExperienceKeyword borderColor="#2ABCDC">
+                            도전
+                        </ExperienceKeyword>
+                        :
+                        <ExperienceKeyword borderColor="#7F7F7F">
+                            도전
+                        </ExperienceKeyword>
+                    }
+                    {keyword.includes("어려움") ?
+                        <ExperienceKeyword borderColor="#FF971D">
+                            어려움
+                        </ExperienceKeyword>
+                        :
+                        <ExperienceKeyword borderColor="#7F7F7F">
+                            어려움
+                        </ExperienceKeyword>
+                    }
+                    {keyword.includes("성공") ?
+                        <ExperienceKeyword borderColor="#4B9EFF">
+                            성공
+                        </ExperienceKeyword>
+                        :
+                        <ExperienceKeyword borderColor="#7F7F7F">
+                            성공
+                        </ExperienceKeyword>
+                    }
+                    {keyword.includes("실패") ?
+                        <ExperienceKeyword borderColor="#F25454">
+                            실패
+                        </ExperienceKeyword>
+                        :
+                        <ExperienceKeyword borderColor="#7F7F7F">
+                            실패
+                        </ExperienceKeyword>
+                    }
+                    {keyword.includes("배움") ?
+                        <ExperienceKeyword borderColor="#42B887">
+                            배움
+                        </ExperienceKeyword>
+                        :
+                        <ExperienceKeyword borderColor="#7F7F7F">
+                            배움
+                        </ExperienceKeyword>
+                    }
+                </ExperienceKeywordDiv>
+            </CardContent>
         </Container>
     )
 
@@ -75,117 +79,62 @@ const ExperienceCard = ({ experienceData }) => {
 
 const Container = styled.div`
 width: 384px;
-height: 272px;
+height: 290px;
 border-radius: 20px;
-border: 1px solid #bbbbbb;
-background-color: #d9d9d9;
+background-color: ${(props) => props.theme.color.white};
 justify-content: center;
-
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 `
 const CardContent = styled.div`
-width: 327px;
-height: 208px;
+width: 312px;
+height: 212px;
 /* border: 1px solid black; */
 align-items: start;
-`
-
-const CardTopDiv = styled.div`
-width: 319px;
-height: 50px;
-flex-direction:row;
-justify-content:space-between;
-align-items: center;
-/* border: 1px solid black; */
-font-size: ${(props) => props.theme.fontSizes.TextS};
-`
-
-const CardImageDiv = styled.div`
-width: 50px;
-height: 50px;
-align-items: start;
-/* border: 1px solid black; */
-`
-
-const CardImage = styled.img`
-width: 50px;
-height: 50px;
-border-radius: 25px;
-/* border: 1px solid black; */
-`
-
-const CardDateDiv = styled.div`
-width: 233px;
-height: 40px;
-align-items: start;
-/* border: 1px solid black; */
-font-size: ${(props) => props.theme.fontSizes.TextS};
-/* font-weight: 400; */
-`
-
-const CardDateText = styled.div`
-width: 193px;
-height: 40px;
-align-items: start;
-/* border: 1px solid black; */
-font-size: ${(props) => props.theme.fontSizes.TextM};
-font-weight: ${(props) => props.theme.fontWeights.TextM};
-/* font-weight: 400; */
 `
 
 const CardDate = styled.div`
-width: 233px;
-height: 40px;
+width: 193px;
+height: 18px;
 align-items: start;
 /* border: 1px solid black; */
-font-size: ${(props) => props.theme.fontSizes.TextM};
-font-weight: ${(props) => props.theme.fontWeights.TextM};
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
 /* font-weight: 400; */
 `
 
 const CardTitle = styled.div`
-width: 327px;
-height: 85px;
+width: 312px;
+height: 94px;
 /* border: 1px solid black; */
 font-size: ${(props) => props.theme.fontSizes.TitleM};
 font-weight: ${(props) => props.theme.fontWeights.TitleM};
 line-height: 130%;
-margin-top: 14px;
+margin-top: 6px;
 align-items: start;
 `
 
 const ExperienceKeywordDiv = styled.div`
-width: 254px;
-height: 30px;
+width: 262px;
+height: 70px;
 display: grid;
 grid-template-columns: repeat(3, 1fr);
-grid-template-rows: repeat(1, 1fr);
-column-gap: 10px;
+grid-template-rows: repeat(2, 1fr);
+column-gap: 14px;
+row-gap: 10px;
 /* border: 1px solid black; */
-margin-top: 29px;
+margin-top: 24px;
 flex-direction:row;
 align-items: start;
-`
-
-const ExperienceKeywordDiv2 = styled.div`
-width: 284px;
-height: 40px;
-/* border: 1px solid black; */
-margin-top: 29px;
-flex-direction:row;
-align-items: start;
-font-size: ${(props) => props.theme.fontSizes.TextS};
 `
 
 const ExperienceKeyword = styled.div`
 width: 78px;
 height: 30px;
-background-color: black;
-/* border: 1px solid black; */
-border-radius: 25px;
-color: ${(props) => props.theme.colors.White};
+border: 1.5px solid ${(props) => props.borderColor};
+border-radius: 20px;
+color: ${(props) => props.borderColor};
 font-size: ${(props) => props.theme.fontSizes.TextS};
-justify-content:center;
-/* margin-right: 10px; */
+justify-content: center;
 `
 
 export default ExperienceCard;

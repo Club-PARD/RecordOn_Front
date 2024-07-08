@@ -1,18 +1,23 @@
 import { atom } from "recoil";
-// import { recoilPersist } from "recoil-persist";
+import { recoilPersist } from "recoil-persist";
 
-// const { persistAtom } = recoilPersist();
+const { persistAtom } = recoilPersist();
 
 export const isLogined = atom({
     key: "isLogined",
     default: false,
     // effects_UNSTABLE: [persistAtom],
 });
-export const recoilUserId = atom({
-    key: "user_id",
-    default: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+export const recoilUserData = atom({
+    key: "UserData",
+    default: {
+        user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+        project_id: 0,
+        id: 0, // experience id
+    },
     // effects_UNSTABLE: [persistAtom],
 });
+
 export const recoilUserProjectNum = atom({
     key: "projectNum",
     default: 0,
