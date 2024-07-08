@@ -9,7 +9,7 @@ export const getUrlMetaData = async (url) => {
   const encodedUrl = encodeURIComponent(url);
   console.log(encodedUrl);
   try {
-    const response = await axios.post(`${server}reference/get`, { url: encodedUrl });
+    const response = await axios.post(`${server}reference`, { url: encodedUrl });
     // const response = await axios.get(`${server}reference/get`, {
     //   params: { url: url },
     // });

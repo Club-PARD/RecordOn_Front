@@ -117,7 +117,7 @@ const StyledTag = styled.div`
 
   border-radius: 25px;
 
-  border: 1px solid ${(props) => props.borderColor};
+  border: 1.5px solid ${(props) => props.borderColor};
   color: ${(props) => props.color};
 
   font-size: ${(props) => props.theme.fontSizes.TextL};

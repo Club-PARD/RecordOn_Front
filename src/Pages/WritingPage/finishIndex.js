@@ -48,8 +48,7 @@ const ViewPage = () => {
   useEffect(() => {
     const getRecord = async () => {
       try {
-        const id = 3;
-        const response = await getOneExperienceAPI(id);
+        const response = await getOneExperienceAPI();
         console.log(response.success);
         setAnswerObject(response.response_object);
       } catch (error) {
@@ -103,24 +102,30 @@ const ViewPage = () => {
           })}
       </FixAreaWrapper>
 
-      <StyledHr marginTop={"46px"} />
+      {answerObject.free_content && answerObject.free_content.length != 0 && (
+        <>
+          <StyledHr />
+          <FixArea>
+            <FixAreaLabel>자유란</FixAreaLabel>
+            <FixAnswer>{answerObject && answerObject.free_content}</FixAnswer>
+          </FixArea>
+        </>
+      )}
 
-      <FixArea>
-        <FixAreaLabel>자유란</FixAreaLabel>
-        <FixAnswer>{answerObject && answerObject.free_content}</FixAnswer>
-      </FixArea>
-
-      <StyledHr marginTop={"46px"} />
-
-      <FixArea>
-        <FixAreaLabel>관련 자료 링크</FixAreaLabel>
-        {answerObject.reference_link &&
-          answerObject.reference_link.map((link, index) => (
-            <BookmarkComponent key={index}>
-              <Bookmark url={link} />
-            </BookmarkComponent>
-          ))}
-      </FixArea>
+      {answerObject.reference_link && answerObject.reference_link.length != 0 && (
+        <>
+          <StyledHr />
+          <FixArea>
+            <FixAreaLabel>관련 자료 링크</FixAreaLabel>
+            {answerObject.reference_link &&
+              answerObject.reference_link.map((link, index) => (
+                <BookmarkComponent key={index}>
+                  <Bookmark url={link} />
+                </BookmarkComponent>
+              ))}
+          </FixArea>
+        </>
+      )}
 
       <ButtonArea>
         <Button
@@ -156,7 +161,7 @@ const ViewPage = () => {
         onDelete={() => {
           // '삭제' 버튼 클릭 시 처리 로직
           console.log("삭제");
-          deleteOneExperienceAPI();
+          deleteOneExperienceAPI(13);
           closeModal(); // 모달 닫기
           navigate("/experience");
         }}
@@ -171,7 +176,7 @@ const StyledHr = styled.hr`
   height: 1px;
   background-color: ${(props) => props.theme.color.base4};
 
-  margin-top: ${(props) => props.marginTop};
+  margin-top: 43px;
   margin-bottom: 50px;
 `;
 
@@ -180,6 +185,7 @@ const FixAreaWrapper = styled.div`
 `;
 
 const FixAnswer = styled.div`
+min-height: 46px;
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: 400px;
   line-height: 23.4px;
@@ -190,7 +196,7 @@ const ButtonArea = styled.div`
   flex-direction: row;
   gap: 10px;
 
-  margin-top: 50px;
+  margin-top: 60px;
   margin-bottom: 136px;
 `;
 

@@ -13,7 +13,7 @@ export const postExperienceAPI = async (data) => {
 };
 
 export const getOneExperienceAPI = async () => {
-    const id = 15;
+    const id = 13;
     try {
         const response = await axios.get (`${server}experiences/${id}`);
         if (response.data.success) {
@@ -28,8 +28,7 @@ export const getOneExperienceAPI = async () => {
     }
 };
 
-export const deleteOneExperienceAPI = async () => {
-const id = 2;
+export const deleteOneExperienceAPI = async (id) => {
 try{
     const response = await axios.get (`${server}experiences/${id}`, "f245d2ac-d421-4cfb-99cf-c544071446ac");
 console.log (response.data);
