@@ -132,3 +132,13 @@ export const restartProjectAPI = async (projectData) => {
         alert("유저 정보 로딩에 실패하였습니다.");
     }
 };
+
+export const getAllLink = async (data) => {
+try {
+    const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects/reference`, data);
+    console.log (response.data);
+    return response.data;
+} catch (error) {
+    console.error(error);
+}
+};

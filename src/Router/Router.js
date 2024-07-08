@@ -8,6 +8,8 @@ import WritingPage from "../Pages/WritingPage";
 import Layout from "../Layout";
 import DeleteModal from "../Common/DeleteModal";
 import ViewPage from "../Pages/WritingPage/finishIndex";
+import LinkPage from "../Pages/ExperiencePage/Link";
+
 function Router() {
   return (
     <Routes>
@@ -19,6 +21,7 @@ function Router() {
         <Route path="/writing" element={<WritingPage />}/>
         <Route path ="/modal" element={<DeleteModal />}/>
         <Route path ="/view" element={<ViewPage />} />
+        <Route path = "/link" element={<LinkPage />} />
         {/* theme 사용 에시 페이지 */}
         <Route path="/theme" element={<ThemeExample />} />
       </Route>
