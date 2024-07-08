@@ -22,7 +22,6 @@ const ProjectFilter = () => {
   const [selectedKeyword, setSelectedKeyword] = useState([]);
   const keywords = ['신뢰성', '전문성', '책임감', '열정', '실행력', '창의성', '성실성', '정직', '소통/협력'];
 
-
   const processOnChange = () => {
 
     if (projectFilter.is_finished == 2) {

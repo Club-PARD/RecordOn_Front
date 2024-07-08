@@ -4,16 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as GoogleLogo } from "../../../Assets/GoogleLogo.svg"
 import axios from 'axios'
 import { useRecoilState } from "recoil";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
+import { recoilLoginData, recoilUserData } from "../../../Atom/UserDataAtom";
 import { useState, useEffect } from "react";
 
 
 const LoginButton = () => {
 
     const [userData1, setUserData] = useRecoilState(recoilUserData);
+    const [loginData, setLoginData] = useRecoilState(recoilLoginData);
     const [isNewUser, setIsNewUser] = useState(null);
     const navigate = useNavigate();
     console.log(userData1);
+    console.log(loginData);
 
     const googleLogin = useGoogleLogin({
         // 구글 로그인 실행
@@ -80,6 +82,7 @@ const LoginButton = () => {
             console.log("서버 응답2:", response.data);
             setIsNewUser(response.data.is_new_user);
             console.log(userData1);
+            setLoginData(jsonUserData);
             setUserData({
                 ...userData1,
                 user_id: response.data.user_id

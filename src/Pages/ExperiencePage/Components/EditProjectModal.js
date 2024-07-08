@@ -4,7 +4,7 @@ import { ReactComponent as CloseIcon } from "../../../Assets/close.svg";
 import Calendar from "../../../Common/Calendar";
 import ImageIcon from "../../../Assets/ImageIcon.png";
 import { useRef } from "react";
-import { postNewProjectAPI, postNewProjectImageAPI } from "../../../Axios/ProjectDataApi";
+import { postNewProjectAPI, postNewProjectImageAPI, updateProjectAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
 import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
 
-const AddProjectModal = ({
+const EditProjectModal = ({
     isOpen,
     onClose,
     bigAlertText1,
@@ -31,7 +31,6 @@ const AddProjectModal = ({
     const [projectData, setProjectData] = useState({});
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
-    const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [valid, setValid] = useState(false);
     const navigate = useNavigate();
 
@@ -121,27 +120,19 @@ const AddProjectModal = ({
         }
     }
 
-    const addProjectHandler = async () => {
+    const editProjectHandler = async () => {
         if (valid) {
             try {
-                console.log(projectData);
-                const response = await postNewProjectAPI(projectData);
+                const response = await updateProjectAPI(projectId.project_id, projectData);
                 console.log(response);
-                console.log(response.response_object.id);
-                setProjectID(response.response_object.id);
-                setUserData({
-                    ...userData,
-                    project_id: response.response_object.id,
-                })
-                setExperienceFilter({
-                    ...experienceFilter,
-                    project_id: response.response_object.id,
-                })
-                console.log(experienceFilter);
                 const formData = new FormData();
                 formData.append('image', projectData.picture);
                 const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
                 console.log(response2);
+                setUserData({
+                    ...userData,
+                    project_id: response.response_object.id,
+                });
                 handleOverlayClick();
                 navigate("/experience");
             }
@@ -159,7 +150,7 @@ const AddProjectModal = ({
             <Modal>
                 <ModalContentDiv>
                     <ModalText>
-                        프로젝트 추가
+                        프로젝트 수정
                     </ModalText>
                     <ModalProjectTitle>
                         <ModalProjectTitleText>
@@ -264,7 +255,7 @@ const AddProjectModal = ({
                     </ModalProjectImage>
                     <ModalProjectButtonDiv>
                         <ModalProjectButtons>
-                            <ModalProjectAddButton onClick={addProjectHandler} isValid={valid}>
+                            <ModalProjectAddButton onClick={editProjectHandler} isValid={valid}>
                                 추가하기
                             </ModalProjectAddButton>
                             <ModalProjectCancelButton name="exit" >
@@ -358,6 +349,8 @@ border-radius: 10px;
 background-color: ${(props) => props.theme.color.base2};
 padding: 11px 16px;
 box-sizing: border-box;
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 &::placeholder {
     color: ${(props) => props.theme.color.base6};
   }
@@ -392,6 +385,8 @@ border-radius: 10px;
 background-color: ${(props) => props.theme.color.base2};
 padding: 11px 16px;
 box-sizing: border-box;
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 &::placeholder {
     color: ${(props) => props.theme.color.base6};
   }
@@ -433,6 +428,8 @@ const ModalProjectRoleInput = styled.input.attrs({
     height: 40px;
     border-radius: 10px;
     background-color: ${(props) => props.theme.color.base2};
+    font-size: ${(props) => props.theme.fontSizes.TextM};
+    font-weight: ${(props) => props.theme.fontWeights.TextM};
     padding: 11px 16px;
     box-sizing: border-box;
     &::placeholder {
@@ -465,6 +462,8 @@ height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 justify-content: space-between;
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 `;
 
 const ProjectDateWrapper = styled.div`
@@ -709,4 +708,4 @@ color: ${(props) => props.theme.color.main};
 justify-content: center;
 `
 
-export default AddProjectModal;
+export default EditProjectModal;

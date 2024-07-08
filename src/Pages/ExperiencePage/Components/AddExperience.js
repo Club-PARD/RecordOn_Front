@@ -13,7 +13,7 @@ const AddExperience = () => {
         setModalOn((prev) => (!prev));
     }
 
-    console.log(modalOn);
+    // console.log(modalOn);
     return (
         <>
             <AddProjectButton onClick={() => setModalOn(true)}>

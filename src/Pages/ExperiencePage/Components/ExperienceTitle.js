@@ -12,6 +12,7 @@ import Project_Default from "../../../Assets/Project_Default.png"
 import FinishProject from "./FinishProject";
 import RestartProject from "./RestartProject";
 import { useNavigate } from "react-router-dom";
+import EditProject from "./EditProject";
 
 const ExperienceTitle = () => {
 
@@ -20,6 +21,7 @@ const ExperienceTitle = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(userData);
         const getData = async () => {
             const response = await getUserExperienceDataAPI(userData);
             console.log(response);
@@ -27,7 +29,11 @@ const ExperienceTitle = () => {
         }
         getData();
 
-    }, [])
+    }, [userData])
+
+    const handleProjectEdit = () => {
+
+    }
 
     return (
         <ExperienceTitleDiv>
@@ -42,9 +48,9 @@ const ExperienceTitle = () => {
                     {
                         projectData.project_image == null
                             ?
-                            <img src={Project_Default} style={{ width: "126px" }} />
+                            <img src={Project_Default} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
                             :
-                            <img src={projectData.project_image} style={{ width: "126px" }} />
+                            <img src={projectData.project_image} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
                     }
 
                 </ProjectImageDiv>
@@ -67,7 +73,11 @@ const ExperienceTitle = () => {
                     </ProjectDate>
                 </ProjectProcessDate>
                 <ExperienceTitleText>
-                    {projectData.project_name}
+                    <ProjectEdit></ProjectEdit>
+                    <ExperienceTitleTextDiv>
+                        {projectData.project_name}
+                    </ExperienceTitleTextDiv>
+                    <EditProject />
                 </ExperienceTitleText>
                 <ProjectGoalDiv>
                     <ProjectGoalText>
@@ -200,6 +210,33 @@ font-size: ${(props) => props.theme.fontSizes.TitleL};
 font-weight: ${(props) => props.theme.fontWeights.TitleL};
 justify-content: center;
 margin-top: 4px;
+flex-direction:row;
+`
+
+const ExperienceTitleTextDiv = styled.div`
+display: inline-block; 
+white-space: nowrap; 
+width: fit-content; 
+/* height: 62px; */
+/* border: 1px solid black; */
+font-size: ${(props) => props.theme.fontSizes.TitleL};
+font-weight: ${(props) => props.theme.fontWeights.TitleL};
+justify-content: center;
+margin-top: 4px;
+`
+
+const ProjectEdit = styled.div`
+width: 42px;
+height: 32px;
+/* border: 1px solid black; */
+color: ${(props) => props.theme.color.main};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
+justify-content: end;
+align-items: end;
+margin-top: 4px;
+text-decoration: underline;
+/* margin-left: 10px; */
 `
 
 const ProjectGoalDiv = styled.div`
@@ -222,7 +259,7 @@ const ProjectGoalContents = styled.div`
 width: 600px;
 height: 46px;
 /* border: 1px solid black; */
-justify-content:center;
+justify-content:start;
 align-items: center;
 text-align: center;
 font-size: ${(props) => props.theme.fontSizes.TextM};
@@ -239,18 +276,20 @@ margin-top: 25px;
 `
 
 const ProjectRoleText = styled.div`
-width: 64px;
+width: 32px;
 height: 25px;
 /* border: 1px solid black; */
 align-items: start;
 justify-content: center;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: 600;
+margin-right: 20px;
 `
 
 const ProjectRoleContent = styled.div`
-width: 118px;
-height: 25px;
+display: inline-block; 
+white-space: nowrap; 
+width: fit-content; 
 /* border: 1px solid black; */
 align-items: start;
 justify-content: center;

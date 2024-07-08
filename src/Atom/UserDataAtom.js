@@ -8,6 +8,15 @@ export const isLogined = atom({
     default: false,
     // effects_UNSTABLE: [persistAtom],
 });
+export const recoilLoginData = atom({
+    key: "loginData",
+    default: {
+        name: "",
+        imageUrl: "",
+        email: "",
+    },
+    // effects_UNSTABLE: [persistAtom],
+});
 export const recoilUserData = atom({
     key: "UserData",
     default: {
