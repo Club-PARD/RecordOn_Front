@@ -52,7 +52,7 @@ const ProjectCard = ({ projectData }) => {
                                 프로젝트 진행 기간
                             </CardDateText>
                             <CardDate>
-                                {projectData.start_date.substring(0, 10)} ~ {projectData.finish_date.substring(0, 10)}
+                                {projectData.start_date?.substring(0, 10)} ~ {projectData.finish_date?.substring(0, 10)}
                             </CardDate>
 
                         </CardDateDiv>

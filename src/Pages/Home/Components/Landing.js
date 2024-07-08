@@ -1,9 +1,29 @@
 import styled from "styled-components";
 import LandingToggle from "../../../Assets/LandingToggle.svg";
 import LandingFolder from "../../../Assets/LandingFolder.png";
+import LandingProblem from "../../../Assets/LandingProblem.png";
+import LandingGuide from "../../../Assets/LandingGuide.png";
+import LandingSearch from "../../../Assets/LandingSearch.png";
+import LandingArchive from "../../../Assets/LandingArchive.png";
+import LandingComehere from "../../../Assets/LandingComehere.png";
+import LandingFooterDivImage from "../../../Assets/LandingFooterDiv.png";
 import LoginButton from "./LoginButton";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { isLogined } from "../../../Atom/UserDataAtom"
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate("/project");
+        }
+    }, [isLoggedIn])
+
     return (
         <Container>
             <LandingTitle >
@@ -20,7 +40,16 @@ const Landing = () => {
                 </LandingTitleText>
                 <LoginButton />
             </LandingTitle>
-            <img src={LandingFolder} />
+            <img src={LandingFolder} style={{ marginTop: "79px" }} />
+            <img src={LandingProblem} style={{ marginTop: "68px" }} />
+            <img src={LandingGuide} />
+            <img src={LandingSearch} />
+            <img src={LandingArchive} />
+            <LandingFooter>
+                <img src={LandingComehere} style={{ marginTop: "100px" }} />
+                <LoginButton />
+                <img src={LandingFooterDivImage} />
+            </LandingFooter>
         </Container>
     );
 };
@@ -30,13 +59,14 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: start;
   background-color: ${(props) => props.theme.color.base1};
-  gap: 60px;
+  /* gap: 60px; */
 `;
 
 const LandingTitle = styled.div`
   width: 1056px;
   height: 365px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  margin-top: 100px;
 `;
 
 const CatchPhrase = styled.div`
@@ -70,6 +100,21 @@ const LandingTitleText = styled.div`
   text-align: center;
   line-height: 130%; 
   letter-spacing: -0.48px;
+`;
+
+const LandingFooter = styled.div`
+  width: 1440px;
+  height: 765px;
+  /* border: 1px solid black; */
+  background-color: #F5F5F5;
+  border-radius: 50px 50px 0 0;
+  margin-top: -60px;
+`;
+
+const FooterDiv = styled.div`
+  width: 1440px;
+  height: 184px;
+  /* border: 1px solid black; */
 `;
 
 export default Landing;
