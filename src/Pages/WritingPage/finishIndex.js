@@ -19,11 +19,23 @@ import {
   BookmarkComponent,
 } from "./Components/ContentComponents/LowerArea";
 import DeleteModal from "../../Common/DeleteModal";
-import {getOneExperienceAPI, deleteOneExperienceAPI} from "../../Axios/ExperienceApi";
+import {
+  getOneExperienceAPI,
+  deleteOneExperienceAPI,
+} from "../../Axios/ExperienceApi";
 
 const ViewPage = () => {
+  const keywords = [
+    { id: 0, label: "도전", color: "#2ABCDC" },
+    { id: 1, label: "어려움", color: "#FF971D" },
+    { id: 2, label: "성공", color: "#4B9EFF" },
+    { id: 3, label: "실패", color: "#F25454" },
+    { id: 4, label: "배움", color: "#42B887" },
+  ];
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [answerObject, setAnswerObject] = useState({});
   const navigate = useNavigate();
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -32,9 +44,20 @@ const ViewPage = () => {
     setIsModalOpen(false);
   };
 
-  useEffect(()=>{
-    getOneExperienceAPI();
+  useEffect(() => {
+    const getRecord = async () => {
+      try {
+        const id = 3;
+        const response = await getOneExperienceAPI(id);
+        console.log(response.success);
+        setAnswerObject(response.response_object);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getRecord();
   }, []);
+
   return (
     <Div>
       {/* 뒤로 가기 */}
@@ -47,27 +70,47 @@ const ViewPage = () => {
         <MarginBottomForGoBackDiv />
       </GoBackArea>
 
-      <UpperArea />
+      <UpperArea answerObject={answerObject} />
 
       <StyledHr />
+
       <FixAreaWrapper>
+
         <FixArea>
-          <StyledTag>도전</StyledTag>
+
+            {/* 태그 */}
+          {answerObject.tag_id &&
+            answerObject.tag_id.map((tagId, index) => {
+              const keyword = keywords.find((k) => k.id + 1 === tagId);
+              return (
+                <StyledTag
+                  key={index}
+                  borderColor={keyword ? keyword.color : "#000"}
+                  color={keyword ? keyword.color : "#000"}
+                >
+                  {keyword ? keyword.label : ""}
+                </StyledTag>
+              );
+            })}
+
+            {/* 질문 */}
           <FixAreaLabel>
-            Q. 성장했다고 느끼는 부분은 구체적으로 어떤 부분인가요? 이루신
-            성과가 있다면 같이 적어주세요!
+            {answerObject && answerObject.question_text}
           </FixAreaLabel>
-          <FixAnswer>
-          </FixAnswer>
+
+            {/* 질문 */}
+          <FixAnswer>{answerObject && answerObject.question_answer}</FixAnswer>
+
         </FixArea>
+
+
       </FixAreaWrapper>
 
       <StyledHr marginTop={"46px"} />
 
       <FixArea>
         <FixAreaLabel>자유란</FixAreaLabel>
-        <FixAnswer>
-        </FixAnswer>
+        <FixAnswer>{answerObject && answerObject.free_content}</FixAnswer>
       </FixArea>
 
       <StyledHr marginTop={"46px"} />
@@ -118,6 +161,7 @@ const ViewPage = () => {
           navigate("/experience");
         }}
       />
+      {answerObject && console.log(answerObject)}
     </Div>
   );
 };

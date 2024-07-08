@@ -13,10 +13,16 @@ export const postExperienceAPI = async (data) => {
 };
 
 export const getOneExperienceAPI = async () => {
-    const id = 2;
+    const id = 13;
     try {
         const response = await axios.get (`${server}experiences/${id}`);
+        if (response.data.success) {
+            console.log (response.data.response_object);
+        } else {
+            console.error("API 호출 실패: ", response.data.message);
+        }
         console.log (response.data);
+        return response.data;
     } catch (error) {
         console.error(error);
     }

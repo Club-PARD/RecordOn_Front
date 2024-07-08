@@ -6,30 +6,62 @@ import {
   FixAreaLabel,
 } from "../Components/ContentComponents/LowerArea";
 
-const UpperArea = () => {
+const UpperArea = ({ answerObject }) => {
+  const keywords = [
+    { id: 0, label: "도전", color: "#2ABCDC" },
+    { id: 1, label: "어려움", color: "#FF971D" },
+    { id: 2, label: "성공", color: "#4B9EFF" },
+    { id: 3, label: "실패", color: "#F25454" },
+    { id: 4, label: "배움", color: "#42B887" },
+  ];
+
+  const [formattedExpDate, setFormattedExpDate] = useState("");
+  useEffect(() => {
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}.${month}.${day}`;
+    };
+
+    if (answerObject.exp_date) {
+      const originalDate = answerObject.exp_date;
+      const formattedDate = formatDate(originalDate);
+      setFormattedExpDate(formattedDate);
+    }
+  }, [answerObject]);
+
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}
       <Upper>
         <UppderPart width={"840px"}>
           <StyledLabel>소제목</StyledLabel>
-          <StyledTitle />
+          <StyledTitle>{answerObject.experience_name}</StyledTitle>
         </UppderPart>
 
         <UppderPart width={"713px"}>
           <StyledLabel>경험태그</StyledLabel>
           <StyledTagArea>
-            <StyledTag>도전</StyledTag>
-            <StyledTag>배움</StyledTag>
-            <StyledTag>성공</StyledTag>
-            <StyledTag>실패</StyledTag>
-            <StyledTag>어려움</StyledTag>
+            {answerObject.tag_id && answerObject.tag_id.map((tagId, index) => {
+              const keyword = keywords.find(k => k.id+1 === tagId);
+              return (
+                <StyledTag
+                  key={index}
+                  borderColor={keyword ? keyword.color : "#000"}
+                  color = {keyword ? keyword.color: "#000"}
+                >
+                  {keyword ? keyword.label : ""}
+                </StyledTag>
+              );
+            })}
           </StyledTagArea>
         </UppderPart>
 
         <UppderPart width={"239px"}>
           <StyledLabel>경험한 날</StyledLabel>
-          <StyledDate></StyledDate>
+          <StyledDate>{formattedExpDate}</StyledDate>
         </UppderPart>
       </Upper>
 
@@ -37,7 +69,7 @@ const UpperArea = () => {
         <FixAreaLabel>
           Q. 오늘 있었던 경험을 떠올리며, 연상되는 다섯 가지 단어를 적어보세요!
         </FixAreaLabel>
-        <FixAnswer>와이어프레임, 로고, 멘토링, 저녁약속, GUI</FixAnswer>
+        <FixAnswer>{answerObject.common_question_answer}</FixAnswer>
       </FixArea>
     </>
   );
@@ -84,14 +116,19 @@ const StyledTag = styled.div`
   height: 40px;
 
   border-radius: 25px;
-  border: 1.5px solid black;
+
+  border: 1px solid ${(props) => props.borderColor};
+  color: ${(props) => props.color};
 
   font-size: ${(props) => props.theme.fontSizes.TextL};
   font-weight: ${(props) => props.theme.fontWeights.TitleL};
   background-color: ${(props) => props.theme.color.white};
 `;
+
 const StyledTitle = styled.div`
   box-sizing: border-box;
+  justify-content: center;
+  align-items: flex-start;
   padding-left: 25px;
 
   width: 740px;
@@ -102,19 +139,17 @@ const StyledTitle = styled.div`
 
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   font-size: ${(props) => props.theme.fontSizes.TextL};
-  &::placeholder {
-    font-weight: ${(props) => props.theme.fontWeights.TextL};
-    font-size: ${(props) => props.theme.fontSizes.TextL};
-    color: ${(props) => props.theme.color.base6};
-  }
 `;
 
 const StyledDate = styled.div`
+  justify-content: center;
   width: 136px;
   height: 40px;
 
   border-radius: 10px;
   background-color: ${(props) => props.theme.color.base2};
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
+  font-size: ${(props) => props.theme.fontSizes.TextM};
 `;
 
 const FixAnswer = styled.div`

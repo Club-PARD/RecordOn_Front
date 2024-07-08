@@ -20,6 +20,7 @@ const ExperienceTitle = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(userData);
         const getData = async () => {
             const response = await getUserExperienceDataAPI(userData);
             console.log(response);
@@ -28,6 +29,10 @@ const ExperienceTitle = () => {
         getData();
 
     }, [])
+
+    const handleProjectEdit = () => {
+
+    }
 
     return (
         <ExperienceTitleDiv>
@@ -67,7 +72,11 @@ const ExperienceTitle = () => {
                     </ProjectDate>
                 </ProjectProcessDate>
                 <ExperienceTitleText>
-                    {projectData.project_name}
+                    <ProjectEdit></ProjectEdit>
+                    <ExperienceTitleTextDiv>
+                        {projectData.project_name}
+                    </ExperienceTitleTextDiv>
+                    <ProjectEdit onClick={handleProjectEdit}>편집</ProjectEdit>
                 </ExperienceTitleText>
                 <ProjectGoalDiv>
                     <ProjectGoalText>
@@ -200,6 +209,33 @@ font-size: ${(props) => props.theme.fontSizes.TitleL};
 font-weight: ${(props) => props.theme.fontWeights.TitleL};
 justify-content: center;
 margin-top: 4px;
+flex-direction:row;
+`
+
+const ExperienceTitleTextDiv = styled.div`
+display: inline-block; 
+white-space: nowrap; 
+width: fit-content; 
+/* height: 62px; */
+/* border: 1px solid black; */
+font-size: ${(props) => props.theme.fontSizes.TitleL};
+font-weight: ${(props) => props.theme.fontWeights.TitleL};
+justify-content: center;
+margin-top: 4px;
+`
+
+const ProjectEdit = styled.div`
+width: 42px;
+height: 32px;
+/* border: 1px solid black; */
+color: ${(props) => props.theme.color.main};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
+justify-content: end;
+align-items: end;
+margin-top: 4px;
+text-decoration:underline;
+/* margin-left: 10px; */
 `
 
 const ProjectGoalDiv = styled.div`
