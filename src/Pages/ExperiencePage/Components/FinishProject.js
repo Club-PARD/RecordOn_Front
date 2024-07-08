@@ -1,21 +1,28 @@
 import styled from "styled-components";
 import { useState } from "react";
+import ProjectEndModal from "../../RegisterPage/Components/ProjectEndModal";
 
 
 const FinishProject = () => {
 
     const [modalOn, setModalOn] = useState(false);
+    const [showProjectEndModal, setShowProjectEndModal] = useState(false);
 
     const handleAddProjectModal = () => {
         setModalOn((prev) => (!prev));
     }
 
+    const handleProjectEndModal = () => {
+        setShowProjectEndModal(true);
+      };
+
     // console.log(modalOn);
     return (
         <>
-            <AddProjectButton onClick={() => setModalOn(true)}>
+            <AddProjectButton onClick={handleProjectEndModal}>
                 프로젝트 완료하기
             </AddProjectButton>
+            <ProjectEndModal  show={showProjectEndModal} onClose={() => setShowProjectEndModal(false)} />
             {/* {modalOn && <AddProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} />} */}
         </>
     );
