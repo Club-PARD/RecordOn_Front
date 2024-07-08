@@ -27,7 +27,6 @@ const WritingPage = () => {
       await postExperienceAPI(experience);
       refreshRecoil();
       navigate("/experience");
-
     } catch (error) {
       console.error("경험 데이터 제출 중 오류가 발생했습니다:", error);
       setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
@@ -166,3 +165,4 @@ const ConfirmButton = styled.button`
 `;
 
 export default WritingPage;
+export { Div, GoBackArea, MarginTopForGoBackDiv, MarginBottomForGoBackDiv, GoBackDiv, GoBackIcon };

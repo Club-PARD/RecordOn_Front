@@ -158,7 +158,7 @@ const StyledHr = styled.hr`
   border: 0;
   width: 840px;
   height: 1px;
-  background-color: #d9d9d9;
+  background-color: ${(props) => props.theme.color.base4};
 
   margin-bottom: 46px;
 `;
@@ -174,12 +174,15 @@ const FixArea = styled.div`
 const FixAreaLabel = styled.label`
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
+  color: ${(props) => props.theme.color.black};
+  line-height: 31.2px;
+  word-break: keep-all;
 `;
 
 const LinkField = styled.div`
-display: flex;
-flex-direction: column;
-gap: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
 `;
 const BookmarkComponent = styled.div`
   box-sizing: border-box;
@@ -272,4 +275,4 @@ const StyledUrlInput = styled.input`
 `;
 
 export default LowerArea;
-export { FixArea, FixAreaLabel, TextAreaWidth };
+export { FixArea, FixAreaLabel, TextAreaWidth, StyledHr, BookmarkComponent };

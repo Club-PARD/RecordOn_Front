@@ -118,3 +118,4 @@ const StyledInput = styled.input`
 `;
 
 export default UppderArea;
+export {Upper, UppderPart, StyledLabel, StyledInput};
