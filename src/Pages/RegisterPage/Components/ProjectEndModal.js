@@ -1,20 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { handleRegisterDataSubmit } from "../../../Atom/RegisterDataAtom.js";
 import { ReactComponent as Close } from "../../../Assets/close.svg";
-
+import { SelectInput } from '@workday/canvas-kit-react';
+import SelectTag from './SelectTag.js';
+import CheckboxGrid from './CheckBoxGrid.js';
 
 
 function ProjectEndModal ({ show, onClose}) {
-  const [isRegisterDataSubmitted, setIsRegisterDataSubmitted] = useRecoilState(
-    handleRegisterDataSubmit
-  );
 
-  const handleSubmit = () => {
-    setIsRegisterDataSubmitted(true);
-    //console.log(`Job selected: ${Job`);
-  };
 
 const [selectedJobKeyword, setSelectedJobKeyword] = useState("");
 
@@ -40,9 +34,11 @@ if(!show) {
           
         <Container>
           <TitleDiv>축하합니다!<br />프로젝트가 완성되었습니다.</TitleDiv>
-          <MarginUnderTitle></MarginUnderTitle>
+          <MarginUnderTitle/>
           <CaptionDiv>해당 프로젝트 내에서 가장 돋보였던 핵심역량을 최대 3개 체크해주세요.</CaptionDiv>
-            <RegisterBtn onClick={handleSubmit}>프로젝트 완료</RegisterBtn>
+          <MarginAboutTag/>
+          <CheckboxGrid></CheckboxGrid>
+            {/* <RegisterBtn onClick={handleSubmit}>프로젝트 완료</RegisterBtn> */}
         </Container>
       </OutContatiner>
       </Background>
@@ -85,7 +81,7 @@ const StyledClose =styled(Close)`
   cursor: pointer;
 `;
 
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -132,6 +128,17 @@ line-height: 130%;
 letter-spacing: -0.24px;
 `;
 
+// const SelectTag = styled.div`
+//   display: flex;
+// width: 230px;
+// height: 109px;
+// justify-content: center;
+// align-items: center;
+// align-content: center;
+
+
+// `;
+
 const RegisterBtn = styled.button`
   display: flex;
   width: 180px;
@@ -151,8 +158,15 @@ const RegisterBtn = styled.button`
   line-height: normal;
 `;
 const MarginUnderTitle = styled.div`
-width: 1200px;
+width: 432px;
 height: 7.37px;
+
+background-color: ${(props) => props.theme.colors.White};
+`;
+
+const MarginAboutTag = styled.div`
+width: 432px;
+height: 25px;
 
 background-color: ${(props) => props.theme.colors.White};
 `;

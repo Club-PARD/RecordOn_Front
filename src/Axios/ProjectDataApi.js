@@ -133,6 +133,20 @@ export const restartProjectAPI = async (projectData) => {
     }
 };
 
+export const putProjectTagAPI = async (projectData, data) => {
+    console.log(projectData.user_id);
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}projects/finish/${projectData.project_id}`);
+        const response = await axios.put(`${process.env.REACT_APP_DEV_URL}projects/finish/${projectData.project_id}`, {
+            user_id: projectData.user_id
+        , competency_tag_ids : data});
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+        alert("유저 정보 로딩에 실패하였습니다.");
+    }
+}
 export const getAllLink = async (data) => {
 try {
     const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects/reference`, data);
