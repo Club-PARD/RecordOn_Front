@@ -147,8 +147,8 @@ const ViewPage = () => {
       <DeleteModal
         isOpen={isModalOpen}
         onClose={closeModal} // 모달 닫기 함수 설정
-        bigAlertText1="삭제하신 경험은"
-        bigAlertText2="저장되지 않습니다."
+        bigAlertText1="삭제하신 경험기록은"
+        bigAlertText2="완전히 사라지게 됩니다."
         smallAlertText="경험기록을 정말 삭제하시겠습니까?"
         keepButtonText="경험기록 유지하기"
         deleteButtonText="삭제하기"
