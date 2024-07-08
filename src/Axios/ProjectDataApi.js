@@ -75,6 +75,23 @@ export const updateProjectAPI = async (project_id, data) => {
 
 };
 
+export const deleteProjectAPI = async (data) => {
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}projects/${data.project_id}`, data.user_id);
+        const response = await axios.delete(`${process.env.REACT_APP_DEV_URL}projects/${data.project_id}`, {
+            data: {
+                user_id: data.user_id
+            }
+
+        });
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+
+};
+
 export const getUserExperienceDataFilteredAPI = async (filter) => {
     console.log(filter);
     try {

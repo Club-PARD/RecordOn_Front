@@ -13,7 +13,7 @@ const DeleteModal = ({
   onKeep,
   onDelete,
 }) => {
-  if (isOpen) return null;
+  if (!isOpen) return null;
 
   //오버레이 영역 선택하면 모달 닫힘
   const handleOverlayClick = (e) => {
@@ -99,6 +99,7 @@ const BigAlert = styled.div`
   width: 338px;
   white-space: nowrap;
 
+  color: ${(props) => props.theme.color.black};
   font-size: ${(props) => props.theme.fontSizes.TitleS};
   font-weight: ${(props) => props.theme.fontWeights.TitleS};
   line-height: 39px;
@@ -112,6 +113,7 @@ const SmallAlert = styled.div`
   width: 320px;
   white-space: nowrap;
 
+  color: ${(props) => props.theme.color.black};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 
