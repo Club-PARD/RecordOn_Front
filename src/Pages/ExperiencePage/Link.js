@@ -135,6 +135,8 @@ const StyledA = styled.a`
     width: 30px;
     height: 30px;
   }
+
+  cursor: pointer;
 `;
 
 export default LinkPage;
