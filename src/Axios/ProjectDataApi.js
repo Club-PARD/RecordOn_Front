@@ -133,7 +133,6 @@ export const restartProjectAPI = async (projectData) => {
     }
 };
 
-<<<<<<< HEAD
 export const putProjectTagAPI = async (projectData, data) => {
     console.log(projectData.user_id);
     try {
@@ -148,7 +147,6 @@ export const putProjectTagAPI = async (projectData, data) => {
         alert("유저 정보 로딩에 실패하였습니다.");
     }
 }
-=======
 export const getAllLink = async (data) => {
 try {
     const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects/reference`, data);
@@ -158,4 +156,3 @@ try {
     console.error(error);
 }
 };
->>>>>>> main
