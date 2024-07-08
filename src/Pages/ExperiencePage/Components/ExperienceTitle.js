@@ -13,6 +13,7 @@ import FinishProject from "./FinishProject";
 import RestartProject from "./RestartProject";
 import { useNavigate } from "react-router-dom";
 import EditProject from "./EditProject";
+import DeleteProject from "./DeleteProject";
 
 const ExperienceTitle = () => {
 
@@ -118,7 +119,7 @@ const ExperienceTitle = () => {
                 </OpenExperienceLinkModal>
                 <DeleteProjectDiv>
                     <DeleteProjectText>
-                        프로젝트 삭제하기
+                        <DeleteProject />
                     </DeleteProjectText>
                 </DeleteProjectDiv>
             </ExperienceTitleRight>
