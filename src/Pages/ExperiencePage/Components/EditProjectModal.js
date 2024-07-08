@@ -13,7 +13,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
 
-const AddProjectModal = ({
+const EditProjectModal = ({
     isOpen,
     onClose,
     bigAlertText1,
@@ -31,7 +31,6 @@ const AddProjectModal = ({
     const [projectData, setProjectData] = useState({});
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
-    const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [valid, setValid] = useState(false);
     const navigate = useNavigate();
 
@@ -112,6 +111,8 @@ const AddProjectModal = ({
             e.persist();
 
             const picURL = URL.createObjectURL(file);
+            const formData = new FormData();
+            formData.append('image', file);
 
             setProjectData({
                 ...projectData,
@@ -127,22 +128,11 @@ const AddProjectModal = ({
                 const response = await postNewProjectAPI(projectData);
                 console.log(response);
                 setProjectID(response.object.id);
-                setUserData({
-                    ...userData,
+                setProjectData({
+                    ...projectData,
                     project_id: response.object.id,
-                })
-                // setProjectData({
-                //     ...projectData,
-                //     project_id: response.object.id,
-                // });
-                setExperienceFilter({
-                    ...experienceFilter,
-                    project_id: response.object.id,
-                })
-                console.log(experienceFilter);
-                const formData = new FormData();
-                formData.append('image', projectData.picture);
-                const response2 = await postNewProjectImageAPI(formData, response.object.id);
+                });
+                const response2 = await postNewProjectImageAPI(projectData.picture, response.object.id);
                 console.log(response2);
                 handleOverlayClick();
                 navigate("/experience");
@@ -710,4 +700,4 @@ color: ${(props) => props.theme.color.main};
 justify-content: center;
 `
 
-export default AddProjectModal;
+export default EditProjectModal;
