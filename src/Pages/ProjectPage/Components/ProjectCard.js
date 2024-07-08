@@ -1,6 +1,11 @@
 import styled from "styled-components"
 import DefaultCardImg from "../../../Assets/Project_Default.png"
+import DefaultCardImg2 from "../../../Assets/Project_Default2.png"
+import ProjectFolder from "../../../Assets/ProjectFolder.png"
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
+import { useNavigate } from "react-router-dom";
 
 
 const ProjectCard = ({ projectData }) => {
@@ -8,20 +13,40 @@ const ProjectCard = ({ projectData }) => {
     const [userImg, setUserImg] = useState("");
 
     const keyword = [...new Set(projectData.competency_tag_name)];
+    const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
+    const [userData, setUserData] = useRecoilState(recoilUserData);
+    const navigate = useNavigate();
 
+    const projectCardClickHandler = () => {
+        setExperienceFilter({
+            ...experienceFilter,
+            project_id: projectData.project_id,
+        });
+        console.log(userData);
+        console.log({
+            ...userData,
+            project_id: projectData.project_id,
+        });
+        console.log(userData);
+        setUserData({
+            ...userData,
+            project_id: projectData.project_id,
+        })
+        navigate("/experience")
+    }
 
     // console.log(key);
-    console.log(projectData);
+    // console.log(projectData);
     // console.log(keyword);
 
     return (
 
-        <Container>
+        <Container backGroundImg={ProjectFolder} onClick={projectCardClickHandler}>
             {projectData.is_finished == 1 ?
                 <CardContent>
                     <CardTopDiv>
                         <CardImageDiv>
-                            <CardImage src={userImg == "" ? DefaultCardImg : DefaultCardImg} />
+                            <CardImage src={userImg == "" ? DefaultCardImg2 : DefaultCardImg2} />
                         </CardImageDiv>
                         <CardDateDiv>
                             <CardDateText>
@@ -55,7 +80,7 @@ const ProjectCard = ({ projectData }) => {
                                 프로젝트 진행 기간
                             </CardDateText>
                             <CardDate>
-                                {projectData.start_date.substring(0, 10)} ~ {projectData.finish_date.substring(0, 10)}
+                                {projectData.start_date?.substring(0, 10)} ~ {projectData.finish_date?.substring(0, 10)}
                             </CardDate>
 
                         </CardDateDiv>
@@ -77,46 +102,46 @@ const ProjectCard = ({ projectData }) => {
 
 const Container = styled.div`
 width: 384px;
-height: 272px;
-border-radius: 20px;
-border: 1px solid #bbbbbb;
-/* background-color: #d9d9d9; */
+height: 304px;
+/* border: 1px solid #bbbbbb; */
 justify-content: center;
-
+background-image: url(${(props) => props.backGroundImg});
+background-size: cover;
+background-position: center;
 `
 const CardContent = styled.div`
-width: 327px;
-height: 208px;
+width: 334px;
+height: 242px;
 /* border: 1px solid black; */
 align-items: start;
 `
 
 const CardTopDiv = styled.div`
-width: 319px;
-height: 50px;
+width: 334px;
+height: 77px;
 flex-direction:row;
 justify-content:space-between;
-align-items: center;
+align-items: end;
 /* border: 1px solid black; */
 font-size: ${(props) => props.theme.fontSizes.TextS};
 `
 
 const CardImageDiv = styled.div`
-width: 50px;
-height: 50px;
+width: 77px;
+height: 77px;
 align-items: start;
 /* border: 1px solid black; */
 `
 
 const CardImage = styled.img`
-width: 50px;
-height: 50px;
-border-radius: 25px;
+width: 77px;
+height: 77px;
+border-radius: 100px;
 /* border: 1px solid black; */
 `
 
 const CardDateDiv = styled.div`
-width: 233px;
+width: 221px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
@@ -129,62 +154,67 @@ width: 193px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
+color: ${(props) => props.theme.color.black};
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 /* font-weight: 400; */
 `
 
 const CardDate = styled.div`
-width: 233px;
+width: 221px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
+color: ${(props) => props.theme.color.black};
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 /* font-weight: 400; */
 `
 
 const CardTitle = styled.div`
-width: 327px;
+width: 334px;
 height: 85px;
 /* border: 1px solid black; */
+color: ${(props) => props.theme.color.black};
 font-size: ${(props) => props.theme.fontSizes.TitleM};
 font-weight: ${(props) => props.theme.fontWeights.TitleM};
 line-height: 130%;
-margin-top: 14px;
+margin-top: 20px;
 align-items: start;
 `
 
 const ProjectKeywordDiv = styled.div`
-width: 254px;
+width: 262px;
 height: 30px;
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 grid-template-rows: repeat(1, 1fr);
-column-gap: 10px;
+column-gap: 14px;
 /* border: 1px solid black; */
-margin-top: 29px;
+margin-top: 30px;
 flex-direction:row;
 align-items: start;
 `
 
 const ProjectKeywordDiv2 = styled.div`
-width: 284px;
+width: 321px;
 height: 40px;
 /* border: 1px solid black; */
 margin-top: 29px;
 flex-direction:row;
 align-items: start;
-font-size: ${(props) => props.theme.fontSizes.TextS};
+color: ${(props) => props.theme.color.main};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
 `
 
 const ProjectKeyword = styled.div`
 width: 78px;
 height: 30px;
-background-color: black;
 /* border: 1px solid black; */
 border-radius: 25px;
-color: ${(props) => props.theme.colors.White};
+color: ${(props) => props.theme.color.white};
+background-color: ${(props) => props.theme.color.main};
 font-size: ${(props) => props.theme.fontSizes.TextS};
 justify-content:center;
 /* margin-right: 10px; */

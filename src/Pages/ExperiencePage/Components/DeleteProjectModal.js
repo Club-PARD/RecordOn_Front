@@ -6,14 +6,10 @@ import ImageIcon from "../../../Assets/ImageIcon.png";
 import { useRef } from "react";
 import { postNewProjectAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
+import { recoilUserData } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { ko } from "date-fns/locale";
 
-const AddProjectModal = ({
+const DeleteProjectModal = ({
     isOpen,
     onClose,
     bigAlertText1,
@@ -25,14 +21,10 @@ const AddProjectModal = ({
     onDelete,
 }) => {
 
-    const [selectedStartDate, setSelectedStartDate] = useState("");
-    const [selectedEndDate, setSelectedEndDate] = useState("");
     const fileInputRef = useRef(null);
+
     const [projectData, setProjectData] = useState({});
     const [userData, setUserData] = useRecoilState(recoilUserData);
-    const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
-    const [valid, setValid] = useState(false);
-    const navigate = useNavigate();
 
     const userInputHandler = (e) => [
         setProjectData({
@@ -48,10 +40,10 @@ const AddProjectModal = ({
         })
     ]
 
-    const finishDateHandler = (finishDate) => [
+    const endDateHandler = (endDate) => [
         setProjectData({
             ...projectData,
-            finish_date: finishDate,
+            end_date: endDate,
         })
     ]
 
@@ -63,15 +55,6 @@ const AddProjectModal = ({
     }, [])
 
     console.log(projectData);
-
-    useEffect(() => {
-        if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0) {
-            setValid(true);
-        }
-        else {
-            setValid(false);
-        }
-    }, [projectData])
 
     if (!isOpen) return null;
 
@@ -126,9 +109,7 @@ const AddProjectModal = ({
         try {
             const response = await postNewProjectAPI(projectData);
             console.log(response);
-            setProjectID(response.object.id);
             handleOverlayClick();
-            navigate("/experience");
         }
         catch (error) {
             console.log(error);
@@ -151,7 +132,7 @@ const AddProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectTitleText>
-                        <ModalProjectTitleInput name="name" onChange={userInputHandler} placeholder="15자 이내로 입력해주세요.">
+                        <ModalProjectTitleInput name="name" onChange={userInputHandler}>
 
                         </ModalProjectTitleInput>
                     </ModalProjectTitle>
@@ -162,7 +143,7 @@ const AddProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectGoalText>
-                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="이번 프로젝트 목표 또는 포부를 한 줄로 짧게 남겨주세요!  50자 이내로 입력해주세요.">
+                        <ModalProjectGoalInput name="description" onChange={userInputHandler}>
 
                         </ModalProjectGoalInput>
                     </ModalProjectGoal>
@@ -174,7 +155,7 @@ const AddProjectModal = ({
                                     *
                                 </Asterisk>
                             </ModalProjectRoleText>
-                            <ModalProjectRoleInput name="part" onChange={userInputHandler} placeholder="10자 이내로 입력해주세요.">
+                            <ModalProjectRoleInput name="part" onChange={userInputHandler}>
 
                             </ModalProjectRoleInput>
                         </ModalProjectRole>
@@ -186,39 +167,9 @@ const AddProjectModal = ({
                                 </Asterisk>
                             </ModalProjectDateText>
                             <ModalProjectDateCalendar>
-                                <ProjectDateWrapper>
-                                    <ProjectDateStart
-                                        dateFormat='yyyy.MM.dd'
-                                        shouldCloseOnSelect
-                                        disabledKeyboardNavigation
-                                        placeholderText="시작 날짜"
-                                        minDate={new Date('1980-01-01')}
-                                        maxDate={new Date('2100-12-31')}
-                                        locale={ko}
-                                        selected={selectedStartDate}
-                                        onChange={(date) => {
-                                            setSelectedStartDate(date);
-                                            startDateHandler(date);
-                                        }}
-                                    />
-                                    <ProjectDateTo>
-                                        ~
-                                    </ProjectDateTo>
-                                    <ProjectDateEnd
-                                        dateFormat='yyyy.MM.dd'
-                                        shouldCloseOnSelect
-                                        disabledKeyboardNavigation
-                                        placeholderText="마무리 날짜"
-                                        minDate={new Date('1980-01-01')}
-                                        maxDate={new Date('2100-12-31')}
-                                        locale={ko}
-                                        selected={selectedEndDate}
-                                        onChange={(date) => {
-                                            setSelectedEndDate(date);
-                                            finishDateHandler(date);
-                                        }}
-                                    />
-                                </ProjectDateWrapper>
+                                <Calendar name="start_date" setSelectedDate={startDateHandler} />
+                                ~
+                                <Calendar name="end_date" setSelectedDate={endDateHandler} />
 
                             </ModalProjectDateCalendar>
                         </ModalProjectDate>
@@ -226,7 +177,7 @@ const AddProjectModal = ({
                     </ModalProjectRoleDate>
                     <ModalProjectImage>
                         <ModalProjectImageText>
-                            프로젝트 대표 이미지
+                            프로젝트 대표 사진
                         </ModalProjectImageText>
                         <ModalProjectImageUpload name="picture" onClick={handleDivClick}>{
                             projectData.image ?
@@ -234,20 +185,19 @@ const AddProjectModal = ({
                                     <img
                                         src={projectData.image}
                                         alt="프로젝트 대표 사진"
-                                        style={{ width: '18px', height: '18px', objectFit: 'cover', marginRight: "7px" }}
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
-                                    {projectData.picture.name}
                                 </ModalProjectImageUploadContent>
                                 : <ModalProjectImageUploadContent>  <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                     <ModalProjectImageIcon src={ImageIcon} />
-                                    이미지 업로드
+                                    사진 업로드
                                 </ModalProjectImageUploadContent>}
 
                         </ModalProjectImageUpload>
                     </ModalProjectImage>
                     <ModalProjectButtonDiv>
                         <ModalProjectButtons>
-                            <ModalProjectAddButton onClick={addProjectHandler} isValid={valid}>
+                            <ModalProjectAddButton onClick={addProjectHandler}>
                                 추가하기
                             </ModalProjectAddButton>
                             <ModalProjectCancelButton name="exit" >
@@ -331,19 +281,11 @@ font-weight: ${(props) => props.theme.fontWeights.TextM};
 flex-direction:row;
 `;
 
-const ModalProjectTitleInput = styled.input.attrs({
-    maxLength: 15
-})`
+const ModalProjectTitleInput = styled.input`
 width: 636px;
 height: 40px;
-/* border: 1px solid black; */
-border-radius: 10px;
-background-color: ${(props) => props.theme.color.base2};
-padding: 11px 16px;
-box-sizing: border-box;
-&::placeholder {
-    color: ${(props) => props.theme.color.base6};
-  }
+border: 1px solid black;
+border-radius: 5px;
 `;
 
 const ModalProjectGoal = styled.div`
@@ -366,18 +308,11 @@ font-weight: ${(props) => props.theme.fontWeights.TextM};
 flex-direction:row;
 `;
 
-const ModalProjectGoalInput = styled.textarea.attrs({
-    maxLength: 50
-})`
+const ModalProjectGoalInput = styled.input`
 width: 636px;
 height: 80px;
-border-radius: 10px;
-background-color: ${(props) => props.theme.color.base2};
-padding: 11px 16px;
-box-sizing: border-box;
-&::placeholder {
-    color: ${(props) => props.theme.color.base6};
-  }
+border: 1px solid black;
+border-radius: 5px;
 `;
 
 const ModalProjectRoleDate = styled.div`
@@ -409,19 +344,12 @@ font-weight: ${(props) => props.theme.fontWeights.TextM};
 flex-direction:row;
 `;
 
-const ModalProjectRoleInput = styled.input.attrs({
-    maxLength: 10
-})`
-    width: 306px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: ${(props) => props.theme.color.base2};
-    padding: 11px 16px;
-    box-sizing: border-box;
-    &::placeholder {
-      color: ${(props) => props.theme.color.base6};
-    }
-  `;
+const ModalProjectRoleInput = styled.input`
+width: 306px;
+height: 40px;
+border: 1px solid black;
+border-radius: 5px;
+`;
 
 const ModalProjectDate = styled.div`
 width: 286px;
@@ -450,142 +378,6 @@ flex-direction: row;
 justify-content: space-between;
 `;
 
-const ProjectDateWrapper = styled.div`
-width: 286px;
-height: 40px;
-/* border: 1px solid black; */
-flex-direction: row;
-justify-content: start;
-
-
-/* DatePicker에 직접 하면 적용이 안된다.. */
-.react-datepicker {
-    background-color: ${(props) => props.theme.colors.white}; 
-    width: 300px;
-    align-items: center;
-    justify-content: center;
-    font-style: ${(props) => props.theme.fontSizes.TextS};
-    border-radius: 15px;
-    
-  }
-  
-  .react-datepicker__header {
-    background-color: ${(props) => props.theme.color.white}; 
-    width: 250px;
-    font-size: 15px;
-    font-family: "Pretendard";
-    border: 0px;
-    
-    /* border: 1px solid black; */
-  }
-
-  .react-datepicker__current-month {
-    /* width: 150px; */
-    height: 20px;
-    flex-direction: row;
-    justify-content: space-between;
-    font-family: "Pretendard";
-    font-style: ${(props) => props.theme.fontSizes.TextL};
-    margin-top: 15px;
-    margin-bottom: 15px;
-    /* border: 1px solid black; */
-  }
-  .react-datepicker__navigation--previous{
-    margin-top: 15px;
-    
-  }
-
-  .react-datepicker__navigation--next{
-    margin-top: 15px;
-  }
-
-  .react-datepicker__day-names {
-    width: 250px;
-    height: 20px;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 20px;
-    /* margin-bottom: -20px; */
-    /* border: 1px solid black; */
-  }
-
-  .react-datepicker__day-name {
-    font-size: 15px;
-    color: #aaaaaa;
-    align-items: center;
-    justify-content: center;
-    font-family: "Pretendard";
-    /* border: 1px solid black; */
-  }
-  
-  .react-datepicker__month-container {
-    width: 100%;
-  }
-  
-
-  .react-datepicker__week {
-    display: flex;
-    flex-direction: row;
-    width: 250px;
-    /* justify-content: space-between; */
-    /* border: 1px solid black; */
-  }
-
-  .react-datepicker__day {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #444444;
-    /* border: 1px solid black; */
-  }
-
-  .react-datepicker__day--selected {
-    background-color: ${(props) => props.theme.color.main}; 
-    border-radius: 15px;
-    color: white;
-  }
-  .react-datepicker__triangle {
-      display: none;
-    }
-
-  .react-datepicker__day--outside-month {
-    cursor: default;
-    visibility: hidden;
-  }
-
-
-`
-
-const ProjectDateStart = styled(DatePicker)`
-width: 126px;
-height: 40px;
-/* border: 1px solid black; */
-border-radius: 10px;
-align-items: center;
-background-color: ${(props) => props.theme.color.base2};
-text-align: center;
-`
-
-
-const ProjectDateTo = styled.div`
-width: 34px;
-height: 25px;
-/* border: 1px solid black; */
-`
-
-const ProjectDateEnd = styled(DatePicker)`
-width: 126px;
-height: 40px;
-/* border: 1px solid black; */
-border-radius: 10px;
-align-items: center;
-background-color: ${(props) => props.theme.color.base2};
-text-align: center;
-`
-
 const ModalProjectImage = styled.div`
 width: 290px;
 height: 68px;
@@ -606,33 +398,29 @@ font-weight: ${(props) => props.theme.fontWeights.TextM};
 `;
 
 const ModalProjectImageUpload = styled.div`
-width: 306px;
+width: 138px;
 height: 40px;
 /* border: 1px solid black; */
-background-color: ${(props) => props.theme.color.base2};
+background-color: ${(props) => props.theme.colors.Gray};
 border-radius: 10px;
 flex-direction: row;
-justify-content: start;
+justify-content: space-between;
+padding-left: 24px;
+padding-right: 25px;
 box-sizing: border-box;
 font-size: ${(props) => props.theme.fontSizes.TextS};
 font-weight: ${(props) => props.theme.fontWeights.TextS};
 cursor: pointer;
-text-overflow: ellipsis;
 `;
 
 const ModalProjectImageUploadContent = styled.div`
-width: 306px;
+width: 89px;
 height: 18px;
-/* border: 1px solid black; */
 flex-direction: row;
-justify-content: start;
+justify-content: space-between;
 box-sizing: content-box;
 font-size: ${(props) => props.theme.fontSizes.TextS};
 font-weight: ${(props) => props.theme.fontWeights.TextS};
-overflow:hidden;
-white-space:nowrap;
-text-overflow: ellipsis;
-margin-left: 24px;
 `
 
 const ModalProjectImageInput = styled.input`
@@ -666,7 +454,7 @@ height: 40px;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 color: ${(props) => props.theme.colors.White};
-background-color: ${(props) => (props.isValid ? props.theme.color.main : props.theme.color.base6)};
+background-color: ${(props) => props.theme.colors.Green};
 justify-content: center;
 border-radius: 10px;
 `;
@@ -677,18 +465,16 @@ height: 40px;
 /* border: 1px solid black; */
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
-color: ${(props) => props.theme.color.base6};
-background-color: ${(props) => props.theme.color.base3};
+background-color: ${(props) => props.theme.colors.Gray};
 justify-content: center;
 border-radius: 10px;
-
 `;
 
 const Asterisk = styled.div`
 width: 10px;
 height: 23px;
-color: ${(props) => props.theme.color.main};
+color: ${(props) => props.theme.colors.Green};
 justify-content: center;
 `
 
-export default AddProjectModal;
+export default DeleteProjectModal;

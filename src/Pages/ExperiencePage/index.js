@@ -1,11 +1,25 @@
 import styled from "styled-components";
+import ExperienceTitle from "./Components/ExperienceTitle";
+import ExperienceBody from "./Components/ExperienceBody";
+import { useWindowSize } from "@workday/canvas-kit-react";
 
 const ExperiencePage = () => {
+
+  const { width } = useWindowSize();
+
   return (
-    <>
-      <div>안녕하세요</div>
-    </>
+    <Container width={width} >
+      <ExperienceTitle />
+      <ExperienceBody />
+    </Container>
   );
 };
+
+const Container = styled.div`
+width: ${props => props.width}px;
+justify-content: center;
+/* border: 1px solid black; */
+`
+
 
 export default ExperiencePage;

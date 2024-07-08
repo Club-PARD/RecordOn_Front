@@ -192,7 +192,7 @@ const BookmarkComponent = styled.div`
   height: 50px;
 
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.BoxGray};
+  background-color: ${(props) => props.theme.color.base2};
 
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
@@ -217,7 +217,7 @@ const TextAreaWidth = styled.textarea`
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 
-  background-color: ${(props) => props.theme.colors.BoxGray};
+  background-color: ${(props) => props.theme.color.base2};
 
   resize: none;
   overflow-y: auto;
@@ -225,7 +225,7 @@ const TextAreaWidth = styled.textarea`
   line-height: 1.5;
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.Gray};
+    color: ${(props) => props.theme.color.base6};
   }
 `;
 
@@ -241,7 +241,7 @@ const AddButton = styled.button`
 
   border-radius: 10px;
 
-  background-color: ${(props) => props.theme.colors.BoxGray};
+  background-color: ${(props) => props.theme.color.base2};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
 
@@ -259,13 +259,13 @@ const StyledUrlInput = styled.input`
   height: 50px;
 
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.BoxGray};
+  background-color: ${(props) => props.theme.color.base2};
 
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.Gray};
+    color: ${(props) => props.theme.color.base6};
   }
 
   margin-bottom: -10px;

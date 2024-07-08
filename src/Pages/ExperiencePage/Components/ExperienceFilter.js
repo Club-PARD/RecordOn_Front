@@ -1,61 +1,45 @@
 import styled, { css } from "styled-components";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
-import { recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
+import { recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import ResetIcon from "../../../Assets/ResetIcon.svg"
+import SearchIcon from "../../../Assets/SearchIcon.svg"
 import DropdownArrow from "../../../Assets/DropdownArrow.svg"
-import XWhite from "../../../Assets/XWhite.svg"
+import XChallenge from "../../../Assets/XChallenge.svg"
+import XFail from "../../../Assets/XFail.svg"
+import XHard from "../../../Assets/XHard.svg"
+import XLearn from "../../../Assets/XLearn.svg"
+import XSuccess from "../../../Assets/XSuccess.svg"
 import { useEffect } from "react";
-import { getUserProjectDataFilteredAPI } from "../../../Axios/ProjectDataApi";
+import { useRef } from "react";
 
-const ProjectFilter = () => {
+// import { getUserExperienceDataFilteredAPI } from "../../../Axios/ExperienceDataApi";
+
+const ExperienceFilter = () => {
 
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
 
-  const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
+  const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState([]);
-  const keywords = ['신뢰성', '전문성', '책임감', '열정', '실행력', '창의성', '성실성', '정직', '소통/협력'];
+  const keywords = ['도전', '어려움', '성공', '실패', '배움'];
 
 
-  const processOnChange = () => {
-
-    if (projectFilter.is_finished == 2) {
-      setProjectFilter({
-        ...projectFilter,
-        is_finished: 1,
-      })
-    }
-    else if (projectFilter.is_finished == 1) {
-      setProjectFilter({
-        ...projectFilter,
-        is_finished: 2,
-      })
-    }
-  }
-
-  const processOffChange = () => {
-    if (projectFilter.is_finished == 2) {
-      setProjectFilter({
-        ...projectFilter,
-        is_finished: 0,
-      })
-    }
-    else if (projectFilter.is_finished == 0) {
-      setProjectFilter({
-        ...projectFilter,
-        is_finished: 2,
-      })
-    }
-    // applyFilter();
-  }
 
   const toggling = () => setIsOpen(!isOpen);
+
+  const searchInput = (e) => {
+    console.log(e.target.value);
+    setExperienceFilter({
+      ...experienceFilter,
+      search_text: e.target.value,
+    })
+  }
 
   const addKeyword = value => () => {
     if (!selectedKeyword.includes(value)) {
@@ -65,9 +49,9 @@ const ProjectFilter = () => {
           value,
         ]
       );
-      setProjectFilter({
-        ...projectFilter,
-        competency_tag_name: [
+      setExperienceFilter({
+        ...experienceFilter,
+        tag_name: [
           ...selectedKeyword,
           value,
         ],
@@ -82,9 +66,9 @@ const ProjectFilter = () => {
     setSelectedKeyword(
       selectedKeyword.filter(keywords => keywords !== value)
     );
-    setProjectFilter({
-      ...projectFilter,
-      competency_tag_name: selectedKeyword.filter(keywords => keywords !== value),
+    setExperienceFilter({
+      ...experienceFilter,
+      tag_name: selectedKeyword.filter(keywords => keywords !== value),
     })
     // console.log(value);
 
@@ -92,8 +76,8 @@ const ProjectFilter = () => {
 
 
   const resetDate = () => {
-    setProjectFilter({
-      ...projectFilter,
+    setExperienceFilter({
+      ...experienceFilter,
       start_date: "",
       finish_date: "",
     })
@@ -101,8 +85,6 @@ const ProjectFilter = () => {
     setSelectedEndDate("");
 
   }
-
-  console.log("프로젝트 필터 ", projectFilter);
 
   // 드롭다운 외부 클릭시 안보이게 하는 부분들
   const dropdownRef = useRef(null);
@@ -121,52 +103,24 @@ const ProjectFilter = () => {
     };
   }, []);
 
+
+  console.log(experienceFilter);
+
   return (
     <FilterDiv>
       <FilterLeft>
-        <ProjectProcess>
-          <ProjectProcessText>
-            진행현황
-          </ProjectProcessText>
-          {{
-            0: (
-              <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "#303030", color: "white" }} onClick={processOnChange}>
-                  진행중
-                </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "white", color: "#303030" }} onClick={processOffChange}>
-                  진행완료
-                </ProjectProcessDone>
-              </ProjectProcessOnOff>
-            ),
-            1: (
-              <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "white", color: "#303030" }} onClick={processOnChange}>
-                  진행중
-                </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "#303030", color: "white" }} onClick={processOffChange}>
-                  진행완료
-                </ProjectProcessDone>
-              </ProjectProcessOnOff>
-            ),
-            2: (
-              <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "#303030", color: "white" }} onClick={processOnChange}>
-                  진행중
-                </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "#303030", color: "white" }} onClick={processOffChange}>
-                  진행완료
-                </ProjectProcessDone>
-              </ProjectProcessOnOff>
-            )
-          }[projectFilter.is_finished]}
-        </ProjectProcess>
-        <ProjectDate>
-          <ProjectDateText>
+        <ExperienceSearch>
+          <ExperienceSearchInput onChange={searchInput} />
+          <ExperienceSearchInputButton>
+            <img src={SearchIcon} />
+          </ExperienceSearchInputButton>
+        </ExperienceSearch>
+        <ExperienceDate>
+          <ExperienceDateText>
             기간설정
-          </ProjectDateText>
-          <ProjectDateWrapper>
-            <ProjectDateStart
+          </ExperienceDateText>
+          <ExperienceDateWrapper>
+            <ExperienceDateStart
               dateFormat='yyyy.MM.dd'
               shouldCloseOnSelect
               disabledKeyboardNavigation
@@ -177,16 +131,16 @@ const ProjectFilter = () => {
               selected={selectedStartDate}
               onChange={(date) => {
                 setSelectedStartDate(date);
-                setProjectFilter({
-                  ...projectFilter,
+                setExperienceFilter({
+                  ...experienceFilter,
                   start_date: date,
                 })
               }}
             />
-            <ProjectDateTo>
+            <ExperienceDateTo>
               ~
-            </ProjectDateTo>
-            <ProjectDateEnd
+            </ExperienceDateTo>
+            <ExperienceDateEnd
               dateFormat='yyyy.MM.dd'
               shouldCloseOnSelect
               disabledKeyboardNavigation
@@ -197,62 +151,98 @@ const ProjectFilter = () => {
               selected={selectedEndDate}
               onChange={(date) => {
                 setSelectedEndDate(date);
-                setProjectFilter({
-                  ...projectFilter,
+                setExperienceFilter({
+                  ...experienceFilter,
                   finish_date: date,
                 })
               }}
             />
-          </ProjectDateWrapper>
-          <ProjectDateApply onClick={resetDate}>
+          </ExperienceDateWrapper>
+          <ExperienceDateApply onClick={resetDate}>
             <ResetButton src={ResetIcon}></ResetButton>
-          </ProjectDateApply>
-        </ProjectDate>
+          </ExperienceDateApply>
+        </ExperienceDate>
       </FilterLeft>
       <FilterRight>
-        <ProjectKeyword>
-          <ProjectKeywordFilter>
-            <ProjectKeywordFilterText>
-              핵심역량필터
-            </ProjectKeywordFilterText>
-            <ProjectKeywordFilterButton>
-              <ProjectKeywordFilterDropdownContainer>
-                <ProjectKeywordFilterDropdownHeader onClick={toggling}>
-                  핵심역량선택
+        <ExperienceKeyword>
+          <ExperienceKeywordFilter>
+            <ExperienceKeywordFilterText>
+              경험태그필터
+            </ExperienceKeywordFilterText>
+            <ExperienceKeywordFilterButton>
+              <ExperienceKeywordFilterDropdownContainer>
+                <ExperienceKeywordFilterDropdownHeader onClick={toggling}>
+                  경험태그선택
                   <ArrowImage src={DropdownArrow} isRotated={isOpen} />
-                </ProjectKeywordFilterDropdownHeader>
+                </ExperienceKeywordFilterDropdownHeader>
                 {isOpen && (
-                  <ProjectKeywordFilterDropdownListContainer>
-                    <ProjectKeywordFilterDropdownList ref={dropdownRef}>
+                  <ExperienceKeywordFilterDropdownListContainer >
+                    <ExperienceKeywordFilterDropdownList ref={dropdownRef}>
                       {keywords.map(keyword => (
-                        <ProjectKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
+                        <ExperienceKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
                           {keyword}
-                        </ProjectKeywordFilterListItem>
+                        </ExperienceKeywordFilterListItem>
                       ))}
-                    </ProjectKeywordFilterDropdownList>
-                  </ProjectKeywordFilterDropdownListContainer>
+                    </ExperienceKeywordFilterDropdownList>
+                  </ExperienceKeywordFilterDropdownListContainer>
                 )}
-              </ProjectKeywordFilterDropdownContainer>
-            </ProjectKeywordFilterButton>
-          </ProjectKeywordFilter>
-          <ProjectKeywordList>
+              </ExperienceKeywordFilterDropdownContainer>
+            </ExperienceKeywordFilterButton>
+
+          </ExperienceKeywordFilter>
+          <ExperienceKeywordList>
             {selectedKeyword.map(keyword => (
-              <ProjectKeywordSelected key={keyword} onClick={deleteKeyword(keyword)}>
-                <ProjectKeywordFilterButtonContent>
-                  {keyword} <img src={XWhite} />
-                </ProjectKeywordFilterButtonContent>
-              </ProjectKeywordSelected>
+              {
+                "도전": (
+                  <ExperienceKeywordSelected borderColor="#2ABCDC" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XChallenge} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+                "실패": (
+                  <ExperienceKeywordSelected borderColor="#F25454" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XFail} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+                "어려움": (
+                  <ExperienceKeywordSelected borderColor="#FF971D" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XHard} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+                "배움": (
+                  <ExperienceKeywordSelected borderColor="#42B887" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XLearn} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+                "성공": (
+                  <ExperienceKeywordSelected borderColor="#4B9EFF" key={keyword} onClick={deleteKeyword(keyword)}>
+                    <ExperienceKeywordFilterButtonContent>
+                      {keyword} <img src={XSuccess} />
+                    </ExperienceKeywordFilterButtonContent>
+                  </ExperienceKeywordSelected>
+                ),
+
+              }[keyword]
+
             ))}
-          </ProjectKeywordList>
-        </ProjectKeyword>
+          </ExperienceKeywordList>
+        </ExperienceKeyword>
       </FilterRight>
     </FilterDiv>
+
   );
 };
 
 const FilterDiv = styled.div`
 width: 1200px;
-height: 143px;
+height: 90px;
 /* border: 1px solid black; */
 margin-top: 62px;
 flex-direction: row;
@@ -273,30 +263,36 @@ height: 143px;
 /* border: 1px solid black; */
 `
 
-const ProjectProcess = styled.div`
-width: 290px;
+const ExperienceSearch = styled.div`
+flex-direction: row;
+width: 410px;
 height: 40px;
 /* border: 1px solid black; */
 align-items: center;
 justify-content: start;
 flex-direction: row;
+border-radius: 10px;
+background-color: ${(props) => props.theme.color.white};
+box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 `
-const ProjectProcessText = styled.div`
-width: 78px;
-height: 25px;
+const ExperienceSearchInput = styled.input`
+width: 340px;
+height: 40px;
 /* border: 1px solid black; */
 align-items: start;
 justify-content: center;
+padding-left: 20px;
+
 `
 
-const ProjectProcessOnOff = styled.div`
-flex-direction: row;
-width: 212px;
+const ExperienceSearchInputButton = styled.div`
+width: 60px;
 height: 40px;
 /* border: 1px solid black; */
+justify-content:center;
 `
 
-const ProjectProcessOngoing = styled.div`
+const ExperienceProcessOngoing = styled.div`
 width: 98px;
 height: 40px;
 /* border: 1px solid black; */
@@ -304,28 +300,26 @@ justify-content: center;
 border-radius: 25px;
 color: ${(props) => props.theme.colors.White};
 /* background-color: ${(props) => props.theme.colors.Black}; */
-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 `
-const ProjectProcessDone = styled.div`
+const ExperienceProcessDone = styled.div`
 width: 98px;
 height: 40px;
 /* border: 1px solid black; */
 justify-content: center;
 border-radius: 25px;
 color: ${(props) => props.theme.colors.Black};
-background-color: ${(props) => props.theme.color.Gray};
-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+background-color: ${(props) => props.theme.colors.Gray};
 margin-left: 16px;
 `
 
-const ProjectDate = styled.div`
+const ExperienceDate = styled.div`
 width: 420px;
 height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 `
 
-const ProjectDateText = styled.div`
+const ExperienceDateText = styled.div`
 width: 78px;
 height: 25px;
 /* border: 1px solid black; */
@@ -333,7 +327,7 @@ align-items: start;
 justify-content: center;
 `
 
-const ProjectDateWrapper = styled.div`
+const ExperienceDateWrapper = styled.div`
 width: 286px;
 height: 40px;
 /* border: 1px solid black; */
@@ -342,7 +336,7 @@ justify-content: start;
 
 /* DatePicker에 직접 하면 적용이 안된다.. */
 .react-datepicker {
-    background-color: ${(props) => props.theme.colors.white}; 
+    background-color: ${(props) => props.theme.colors.White}; 
     width: 300px;
     align-items: center;
     justify-content: center;
@@ -352,7 +346,7 @@ justify-content: start;
   }
   
   .react-datepicker__header {
-    background-color: ${(props) => props.theme.color.white}; 
+    background-color: ${(props) => props.theme.colors.White}; 
     width: 250px;
     font-size: 15px;
     font-family: "Pretendard";
@@ -425,7 +419,7 @@ justify-content: start;
   }
 
   .react-datepicker__day--selected {
-    background-color: ${(props) => props.theme.color.main}; 
+    background-color: ${(props) => props.theme.colors.Green}; 
     border-radius: 15px;
     color: white;
   }
@@ -441,36 +435,36 @@ justify-content: start;
 
 `
 
-const ProjectDateStart = styled(DatePicker)`
+const ExperienceDateStart = styled(DatePicker)`
 width: 126px;
 height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
 align-items: center;
 background-color: ${(props) => props.theme.color.white};
-text-align: center;
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+text-align: center;
 `
 
 
-const ProjectDateTo = styled.div`
+const ExperienceDateTo = styled.div`
 width: 34px;
 height: 25px;
 /* border: 1px solid black; */
 `
 
-const ProjectDateEnd = styled(DatePicker)`
+const ExperienceDateEnd = styled(DatePicker)`
 width: 126px;
 height: 40px;
 /* border: 1px solid black; */
 border-radius: 10px;
 align-items: center;
 background-color: ${(props) => props.theme.color.white};
-text-align: center;
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+text-align: center;
 `
 
-const ProjectDateApply = styled.div`
+const ExperienceDateApply = styled.div`
 width: 40px;
 height: 40px;
 /* border: 1px solid black; */
@@ -478,8 +472,8 @@ border-radius: 10px;
 align-items: center;
 justify-content: center;
 background-color: ${(props) => props.theme.color.white};
-margin-left: 6px;
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+margin-left: 6px;
 `
 
 const ResetButton = styled.img`
@@ -489,7 +483,7 @@ height: 20px;
 cursor: pointer;
 `
 
-const ProjectKeyword = styled.div`
+const ExperienceKeyword = styled.div`
 width: 677px;
 height: 143px;
 /* border: 1px solid black; */
@@ -498,35 +492,33 @@ justify-content: space-between;
 align-items:start;
 `
 
-const ProjectKeywordFilter = styled.div`
+const ExperienceKeywordFilter = styled.div`
 width: 268px;
 height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 `
-const ProjectKeywordFilterText = styled.div`
+const ExperienceKeywordFilterText = styled.div`
 width: 105px;
 height: 40px;
 /* border: 1px solid black; */
 align-items:start;
 justify-content:center;
 `
-const ProjectKeywordFilterButton = styled.div`
+const ExperienceKeywordFilterButton = styled.div`
 width: 164px;
 height: 40px;
 /* border: 1px solid black; */
 `
 
-
-
-
-const ProjectKeywordFilterDropdownContainer = styled.div`
+const ExperienceKeywordFilterDropdownContainer = styled.div`
   position: relative;
   width: 164px;
   border-radius: 25px;
 `;
 
-const ProjectKeywordFilterDropdownHeader = styled.div`
+const ExperienceKeywordFilterDropdownHeader = styled.div`
+  /* padding: 10px; */
   width: 164px;
   height:40px;
   flex-direction: row;
@@ -549,13 +541,13 @@ const ArrowImage = styled.img`
 
 `
 
-const ProjectKeywordFilterDropdownListContainer = styled.div`
+const ExperienceKeywordFilterDropdownListContainer = styled.div`
   position: absolute;
   width: 100%;
   z-index: 1000;
 `;
 
-const ProjectKeywordFilterDropdownList = styled.ul`
+const ExperienceKeywordFilterDropdownList = styled.ul`
 width: 164px;
 max-height: 169px;
 padding: 0;
@@ -582,7 +574,7 @@ position: absolute;
 
 `;
 
-const ProjectKeywordFilterListItem = styled.li`
+const ExperienceKeywordFilterListItem = styled.li`
   width: 146px;
   height: 30px;
   padding-left: 15px;
@@ -599,27 +591,29 @@ const ProjectKeywordFilterListItem = styled.li`
   }
 `;
 
-const ProjectKeywordList = styled.div`
+const ExperienceKeywordList = styled.div`
 width: 384px;
-height: 143px;
+height: 90px;
 /* border: 1px solid black; */
 display: grid;
 grid-template-columns: 3fr 3fr 3fr;
-grid-template-rows: 3fr 3fr 3fr;
+grid-template-rows: 2fr 2fr 2fr;
 column-gap: 10px;
 row-gap: 11px;
 `
 
-const ProjectKeywordSelected = styled.div`
+const ExperienceKeywordSelected = styled.div`
 width: 122px;
 height: 40px;
-/* border: 1px solid black; */
+
 justify-content: center;
-color: ${(props) => props.theme.color.white};
-background-color: ${(props) => props.theme.color.base7};
+border: 1.5px solid ${(props) => props.borderColor};
+color: ${(props) => props.borderColor};;
+background-color: ${(props) => props.theme.color.white};
 border-radius: 25px;
 `
-const ProjectKeywordFilterButtonContent = styled.div`
+
+const ExperienceKeywordFilterButtonContent = styled.div`
 width: 80px;
 height: 40px;
 /* border: 1px solid black; */
@@ -627,5 +621,4 @@ flex-direction: row;
 justify-content: space-between;
 `
 
-
-export default ProjectFilter;
+export default ExperienceFilter;
