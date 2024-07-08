@@ -59,13 +59,14 @@ const ViewPage = () => {
     getRecord();
   }, []);
 
-   // 중간 배열 생성
-   const combinedArray = answerObject.question_text && answerObject.question_text.map((_, index) => ([
-    answerObject.tag_id[index],
-    answerObject.question_text[index],
-    answerObject.question_answer[index]
-  ]));
-
+  // 중간 배열 생성
+  const combinedArray =
+    answerObject.question_text &&
+    answerObject.question_text.map((_, index) => [
+      answerObject.tag_id[index],
+      answerObject.question_text[index],
+      answerObject.question_answer[index],
+    ]);
 
   return (
     <Div>
@@ -85,20 +86,21 @@ const ViewPage = () => {
 
       {/* 경험 기록 내용 */}
       <FixAreaWrapper>
-        {combinedArray && combinedArray.map((item, index) => {
-          const keyword = keywords.find((k) => k.id+1 === item[0]);
-          return (
-            <FixArea key={index}>
-              {keyword && (
-                <StyledTag borderColor={keyword.color} color={keyword.color}>
-                  {keyword.label}
-                </StyledTag>
-              )}
-              <FixAreaLabel>{item[1]}</FixAreaLabel>
-              <FixAnswer>{item[2]}</FixAnswer>
-            </FixArea>
-          );
-        })}
+        {combinedArray &&
+          combinedArray.map((item, index) => {
+            const keyword = keywords.find((k) => k.id + 1 === item[0]);
+            return (
+              <FixArea key={index}>
+                {keyword && (
+                  <StyledTag borderColor={keyword.color} color={keyword.color}>
+                    {keyword.label}
+                  </StyledTag>
+                )}
+                <FixAreaLabel>{item[1]}</FixAreaLabel>
+                <FixAnswer>{item[2]}</FixAnswer>
+              </FixArea>
+            );
+          })}
       </FixAreaWrapper>
 
       <StyledHr marginTop={"46px"} />
@@ -112,9 +114,12 @@ const ViewPage = () => {
 
       <FixArea>
         <FixAreaLabel>관련 자료 링크</FixAreaLabel>
-        <BookmarkComponent>
-          <Bookmark />
-        </BookmarkComponent>
+        {answerObject.reference_link &&
+          answerObject.reference_link.map((link, index) => (
+            <BookmarkComponent key={index}>
+              <Bookmark url={link} />
+            </BookmarkComponent>
+          ))}
       </FixArea>
 
       <ButtonArea>
@@ -156,7 +161,6 @@ const ViewPage = () => {
           navigate("/experience");
         }}
       />
-      {answerObject && console.log(answerObject)}
     </Div>
   );
 };

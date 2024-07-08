@@ -13,7 +13,7 @@ export const postExperienceAPI = async (data) => {
 };
 
 export const getOneExperienceAPI = async () => {
-    const id = 14;
+    const id = 15;
     try {
         const response = await axios.get (`${server}experiences/${id}`);
         if (response.data.success) {
