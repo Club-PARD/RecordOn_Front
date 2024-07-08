@@ -134,7 +134,7 @@ background-color: ${(props) => props.theme.color.base3};
 const LogoDiv = styled(Logo)`
   justify-content: center;
   width: 166.64px;
-  height: 50px;
+  height: 40px;
 `;
 
 const LogInButton = styled.div`
