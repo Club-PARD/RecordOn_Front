@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UpperArea, {
@@ -19,6 +19,7 @@ import {
   BookmarkComponent,
 } from "./Components/ContentComponents/LowerArea";
 import DeleteModal from "../../Common/DeleteModal";
+import {getOneExperienceAPI, deleteOneExperienceAPI} from "../../Axios/ExperienceApi";
 
 const ViewPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,6 +31,10 @@ const ViewPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(()=>{
+    getOneExperienceAPI();
+  }, []);
   return (
     <Div>
       {/* 뒤로 가기 */}
@@ -53,14 +58,6 @@ const ViewPage = () => {
             성과가 있다면 같이 적어주세요!
           </FixAreaLabel>
           <FixAnswer>
-            자자 텍스트라인은 이정도까지입니다. 여백 잘 봐주시고여 이런
-            느낌입니다이런느낌~~~~아시겠죠~~ 야호야호 나의 성공경험은 이거라고
-            저거라고 어쩌라고 저쩌라고 뭐라고자자 텍스트라인은 이정도까지입니다.
-            여백 잘 봐주시고여 이런 느낌입니다이런느낌~~~~아시겠죠~~ 야호야호
-            나의 성공경험은 이거라고 저거라고 어쩌라고 저쩌라고 뭐라고자자
-            텍스트라인은 이정도까지입니다. 여백 잘 봐주시고여 이런
-            느낌입니다이런느낌~~~~아시겠죠~~ 야호야호 나의 성공경험은 이거라고
-            저거라고 어쩌라고 저쩌라고 뭐라고
           </FixAnswer>
         </FixArea>
       </FixAreaWrapper>
@@ -70,14 +67,6 @@ const ViewPage = () => {
       <FixArea>
         <FixAreaLabel>자유란</FixAreaLabel>
         <FixAnswer>
-          자자 텍스트라인은 이정도까지입니다. 여백 잘 봐주시고여 이런
-          느낌입니다이런느낌~~~~아시겠죠~~ 야호야호 나의 성공경험은 이거라고
-          저거라고 어쩌라고 저쩌라고 뭐라고자자 텍스트라인은 이정도까지입니다.
-          여백 잘 봐주시고여 이런 느낌입니다이런느낌~~~~아시겠죠~~ 야호야호 나의
-          성공경험은 이거라고 저거라고 어쩌라고 저쩌라고 뭐라고자자 텍스트라인은
-          이정도까지입니다. 여백 잘 봐주시고여 이런
-          느낌입니다이런느낌~~~~아시겠죠~~ 야호야호 나의 성공경험은 이거라고
-          저거라고 어쩌라고 저쩌라고 뭐라고
         </FixAnswer>
       </FixArea>
 
@@ -122,8 +111,9 @@ const ViewPage = () => {
           closeModal(); // 모달 닫기
         }}
         onDelete={() => {
-          // '나가기' 버튼 클릭 시 처리 로직
+          // '삭제' 버튼 클릭 시 처리 로직
           console.log("삭제");
+          deleteOneExperienceAPI();
           closeModal(); // 모달 닫기
           navigate("/experience");
         }}

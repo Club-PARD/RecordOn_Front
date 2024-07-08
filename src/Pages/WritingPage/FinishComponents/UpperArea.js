@@ -7,17 +7,13 @@ import {
 } from "../Components/ContentComponents/LowerArea";
 
 const UpperArea = () => {
-
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}
       <Upper>
         <UppderPart width={"840px"}>
           <StyledLabel>소제목</StyledLabel>
-          <StyledInput
-            type="text"
-            placeholder="오늘의 프로젝트 경험은 어땠나요~?"
-          />
+          <StyledTitle />
         </UppderPart>
 
         <UppderPart width={"713px"}>
@@ -94,7 +90,7 @@ const StyledTag = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TitleL};
   background-color: ${(props) => props.theme.color.white};
 `;
-const StyledInput = styled.input`
+const StyledTitle = styled.div`
   box-sizing: border-box;
   padding-left: 25px;
 
@@ -134,4 +130,4 @@ const FixAnswer = styled.div`
   margin-top: 2px;
 `;
 export default UpperArea;
-export {StyledTag, FixAreaLabel};
+export { StyledTag, FixAreaLabel };
