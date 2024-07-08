@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {ReactComponent as Logo} from "../Assets/Logo.svg"
+import { ReactComponent as Logo } from "../Assets/Logo.svg"
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,7 +45,7 @@ const Header = () => {
 
           <div onClick={myPageHandler}>프로필 이미지</div>
         ) : (
-          <LogInButton onClick={loginHandler}>로그인</LogInButton>
+          <LogInButton onClick={loginHandler}>기록 시작하기</LogInButton>
         )}
       </Div>
     </HeaderContainer>
@@ -61,6 +61,9 @@ const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
 
+  border: 1px solid black;
+
+  background-color: #ffffff;
   z-index: 99999;
   box-shadow: ${(props) =>
     props.$scrolled ? "0px 1px 3px 0px #00000033" : "transparent"};
@@ -72,6 +75,7 @@ const Div = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid black;
 
   width: 1200px;
   height: 70px;
@@ -90,16 +94,13 @@ const LogInButton = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 102px;
+  width: 132px;
   height: 40px;
 
-  border-radius: 25px;
-  background-color: ${(props) => props.theme.colors.GreenMain};
-  font-family: Pretendard, sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 26px;
-  letter-spacing: -0.02em;
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.color.base7};
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight: ${(props) => props.theme.fontWeights.TextM};
   text-align: center;
   color: white;
   cursor: pointer;
