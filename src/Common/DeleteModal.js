@@ -10,6 +10,7 @@ const DeleteModal = ({
   smallAlertText,
   keepButtonText,
   deleteButtonText,
+  keepButtonWidth,
   onKeep,
   onDelete,
 }) => {
@@ -39,7 +40,7 @@ const DeleteModal = ({
         </div>
         {/* 하단 버튼 영역 */}
         <ButtonDiv>
-          <KeepButton onClick={onKeep}>{keepButtonText}</KeepButton>
+          <KeepButton keepButtonWidth = {keepButtonWidth} onClick={onKeep}>{keepButtonText}</KeepButton>
           <DeleteButton onClick={onDelete}>{deleteButtonText}</DeleteButton>
         </ButtonDiv>
       </Modal>
@@ -79,13 +80,9 @@ const Modal = styled.div`
   background-color: ${(props) => props.theme.colors.White};
 `;
 
-const Upper = styled.div`
-  width: 100%;
-  align-items: flex-end;
-`;
 const DesignArea = styled.div`
-  width: 65px;
-  height: 55px;
+  width: 69px;
+  height: 73px;
 
   margin-top: 16px;
 `;
@@ -132,7 +129,8 @@ const KeepButton = styled.button`
   display: flex;
   justify-content: center;
 
-  width: 174px;
+  width: ${({keepButtonWidth}) => keepButtonWidth || "174px"};
+
   height: 40px;
   border-radius: 10px;
 
@@ -140,6 +138,8 @@ const KeepButton = styled.button`
   color: ${(props) => props.theme.color.white};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  cursor: pointer;
 `;
 
 const DeleteButton = styled.button`
@@ -154,6 +154,8 @@ const DeleteButton = styled.button`
   color: ${(props) => props.theme.color.base6};
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
+
+  cursor: pointer;
 `;
 
 export default DeleteModal;

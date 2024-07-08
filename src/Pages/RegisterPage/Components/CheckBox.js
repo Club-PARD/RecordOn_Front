@@ -1,4 +1,4 @@
-import React , { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Check from "../../../Assets/Check.svg";
 
@@ -6,13 +6,15 @@ function CheckBox({ id, onSelect }) {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    console.log(id +"isChecked: " + isChecked);
     setIsChecked(!isChecked);
   };
+
+  console.log(id + "isChecked: " + isChecked);
+
   return (
     <Div>
-        <StyledInput type="checkbox" id={id} checked={isChecked} onChange={handleCheckboxChange}/>
-        <Boxlabel htmlFor={id}></Boxlabel>
+      <StyledInput type="checkbox" id={id} checked={isChecked} onChange={handleCheckboxChange} />
+      <Boxlabel htmlFor={id}></Boxlabel>
     </Div>
   );
 }
@@ -26,7 +28,7 @@ const Div = styled.div`
 
 const Boxlabel = styled.label`
 
-  width: 200px;
+  width: 100px;
   height: 20px;
 
 `;
@@ -56,7 +58,7 @@ const StyledInput = styled.input`
 
 
 
-const StyledCheck =styled(Check)`
+const StyledCheck = styled(Check)`
   position: absolute;
   width: 12px;
   height: 9px;

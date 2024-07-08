@@ -37,7 +37,6 @@ const DropdownQuestion = ({
 
   return (
     <DropdownContainer>
-      {console.log(isTagSelected)}
       <SelectQuestion onClick={toggleDropdown} isTagSelected={isTagSelected}>
         {selectedQuestion ? (
           <>
@@ -61,7 +60,6 @@ const DropdownQuestion = ({
       </SelectQuestion>
       {isQuestionOpen && (
         <List>
-          {console.log(options)}
           {options.map((question, index) => (
             <ListItemWrapper
               key={index}
@@ -116,16 +114,18 @@ const SelectQuestion = styled.div`
 `;
 
 const SelectedQuestion = styled.div`
-  font-weight: ${(props) => props.theme.fontWeights.TextXL};
-  font-size: ${(props) => props.theme.fontSizes.TextXL};
+  font-weight: ${(props) => props.theme.fontWeights.TextL};
+  font-size: ${(props) => props.theme.fontSizes.TextL};
   color: ${(props) => props.theme.color.black};
   line-height: 31.2px;
+  word-break: keep-all;
 `;
 const PreQuestion = styled.div`
-  font-weight: ${(props) => props.theme.fontWeights.TextXL};
-  font-size: ${(props) => props.theme.fontSizes.TextXL};
+  font-weight: ${(props) => props.theme.fontWeights.TextL};
+  font-size: ${(props) => props.theme.fontSizes.TextL};
   color: ${(props) =>
     props.isTagSelected ? props.theme.color.black : props.theme.color.base3};
+  word-break: keep-all;
 `;
 
 const StyledQArrow = styled(QArrow)`
@@ -180,8 +180,8 @@ const ListItemWrapper = styled.div`
   width: 805px;
 
   border-radius: 5px;
-  font-size: ${(props) => props.theme.fontSizes.TextXL};
-  font-weight: ${(props) => props.theme.fontWeights.TextXL};
+  font-size: ${(props) => props.theme.fontSizes.TextL};
+  font-weight: ${(props) => props.theme.fontWeights.TextL};
   line-height: 31.2px;
   cursor: pointer;
 
@@ -200,13 +200,14 @@ const ListItem = styled.div`
 
   /* 조건부 스타일링 */
   ${(props) => {
-    // 글자 수가 42자 이상인 경우 height를 80px으로 설정
-    if (props.children && props.children.length > 42) {
+    // 글자 수가 52자 이상인 경우 height를 80px으로 설정
+    if (props.children && props.children.length > 52) {
       return css`
         height: 80px;
       `;
     }
   }}
+  word-break: keep-all;
 `;
 
 const IconWrapper = styled.div`
