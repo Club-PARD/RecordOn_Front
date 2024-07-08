@@ -253,6 +253,8 @@ const AnswerArea = () => {
             onChange={(e) =>
               handleTextChangeInSection(e.target.value, section.id)
             }
+            disabled={!section.isQuestionSelected}
+            placeholder={section.id === 0 ? "첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!" : ""}
           />{" "}
         </SectionWrapper>
       ))}
@@ -302,7 +304,8 @@ const TextAreaWidth = styled.textarea`
   line-height: 1.5;
 
   &::placeholder {
-    color: ${(props) => props.theme.color.base3};
+    color: ${({isQuestionSelected, theme}) => 
+      isQuestionSelected ? theme.color.base6 : theme.color.base3};
   }
 `;
 
