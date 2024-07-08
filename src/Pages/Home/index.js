@@ -1,15 +1,10 @@
 import styled from "styled-components";
-import { ReactComponent as MainEx } from "../../Assets/MainEx.svg";
-import LoginButton from "./Components/LoginButton";
+import Landing from "./Components/Landing";
 
 const HomePage = () => {
   return (
     <Div>
-      {/* 랜딩 페이지 예시 이미지 */}
-      <StyledMainEx />
-
-      {/* 로그인 버튼 컴포넌트 */}
-      <LoginButton />
+      <Landing />
     </Div>
   );
 };
@@ -20,9 +15,5 @@ const Div = styled.div`
   gap: 60px;
 `;
 
-const StyledMainEx = styled(MainEx)`
-  width: 680px;
-  height: 254px;
-`;
 
 export default HomePage;

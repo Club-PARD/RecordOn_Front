@@ -18,6 +18,7 @@ const ProjectPage = () => {
 const Container = styled.div`
 width: ${props => props.width}px;
 justify-content: center;
+background-color: #FBFBFB;
 `
 
 

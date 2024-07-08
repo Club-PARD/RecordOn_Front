@@ -2,31 +2,48 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { handleRegisterDataSubmit } from "../../../Atom/RegisterDataAtom.js";
-import { recoilLoginData } from "../../../Atom/UserDataAtom.js"
+import { isLogined, recoilLoginData, recoilUserData } from "../../../Atom/UserDataAtom.js"
 import { ReactComponent as Close } from "../../../Assets/close.svg";
+import Check from "../../../Assets/Check.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
 import DropdownJob from "../../RegisterPage/Components/DropdownJob.js";
-import CheckBox from '../../RegisterPage/Components/CheckBox.js';
+import { registerUserAPI } from '../../../Axios/RegisterApi.js';
+import { useNavigate } from 'react-router-dom';
 
 
-function RegisterModal ({ show, onClose, defaultName}) {
+function RegisterModal({ show, onClose, defaultName }) {
   const [isRegisterDataSubmitted, setIsRegisterDataSubmitted] = useRecoilState(
     handleRegisterDataSubmit
   );
-  const [loginData, setLoginData] = useRecoilState(recoilLoginData);
-  const [registerData, setRegisterData] = useState({});
-  console.log(loginData);
-  console.log(loginData.name);
 
-  const handleSubmit = () => {
-    setIsRegisterDataSubmitted(true);
-    //console.log(`Job selected: ${Job`);
+  const [loginData, setLoginData] = useRecoilState(recoilLoginData);
+  const [userData, setUserData] = useRecoilState(recoilUserData);
+  const [registerData, setRegisterData] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    // setIsRegisterDataSubmitted(true);
+    const response = await registerUserAPI(registerData);
+    console.log(response);
+    setIsLoggedIn(true);
+    // navigate("/project");
   };
+
+  useEffect(() => {
+    setRegisterData({
+      ...registerData,
+      name: loginData.name,
+      id: userData.user_id,
+    })
+  }, [userData])
+
+  console.log(registerData);
 
   const [selectedJobKeyword, setSelectedJobKeyword] = useState("");
 
   useEffect(() => {
-    if(show) {
+    if (show) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -34,76 +51,82 @@ function RegisterModal ({ show, onClose, defaultName}) {
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [show]);  
+  }, [show]);
 
-  const jobKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD","개발·데이터","디자인" ,"물류·무역" ,"영업" ,"식·음료", "엔지니어링·설계", "제조·생산", "교육", "건축·시설","의료·바이오"];
+  const jobKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD", "개발·데이터", "디자인", "물류·무역", "영업", "식·음료", "엔지니어링·설계", "제조·생산", "교육", "건축·시설", "의료·바이오"];
 
+  const handleNameInput = (e) => {
+    setRegisterData({
+      ...registerData,
+      name: e.target.value,
+    })
+  };
 
   const handleJobSelect = (JobName) => {
+    setRegisterData({
+      ...registerData,
+      job: JobName,
+    })
     setSelectedJobKeyword(JobName);
-    console.log(`Job selected: ${JobName}`);
-};
+  };
 
-const [isBox1Checked, setIsBox1Checked] = useState(false);
-const [isBox2Checked, setIsBox2Checked] = useState(false);
-const isFormValid = (isBox1Checked == false) && (isBox2Checked== false);
 
-if(!show) {
-  return null;
-}
 
-// //버튼 활성화
-// // 모든 input의 value가 1자 이상이 되어야 한다
-// const isValidInput = userName.length >= 1;
+  const [isBox1Checked, setIsBox1Checked] = useState(false);
+  const [isBox2Checked, setIsBox2Checked] = useState(false);
+  const isFormValid = (isBox1Checked) && (isBox2Checked) && (selectedJobKeyword !== "");
 
-// // 검사한 모든 로직의 유효성 검사가 true가 될때 getIsActive함수가 작동한다. 버튼 클릭 이벤트가 발생할때 넣어줄 함수.
-// const getIsActive = 
-//    isValidEmail && isValidPassword && isValidInput && checkBoxActive === true;
 
-// // 유효성 검사 중 하나라도 만족하지못할때 즉, 버튼이 비활성화 될 때 버튼을 클릭하면 아래와 같은 경고창이 뜬다.
-// const handleButtomValid = () => {
-//  if (
-//    !isValidInput ||
-//    !isValidEmail ||
-//    !isValidPassword ||
-//    !isCheckBoxClicked()
-//    ) {
-//    alert('please fill in the blanks');
-// }};
+
+  if (!show) {
+    return null;
+  }
+  console.log(isBox1Checked);
+  console.log(isBox2Checked);
+  console.log(isFormValid);
+
+
+  const boxChecking = () => {
+    setIsBox1Checked((prev) => (!prev));
+    console.log(isBox1Checked);
+  }
 
   return (
     <Background>
-      <OutContatiner>
-        <StyledClose onClick={onClose}/>
-          
+      <OutContainer>
+        <StyledClose onClick={onClose} />
+
         <Container>
-          <StyledProfile />
-          
-          <UserDiv> 
+          <StyledProfile src={loginData.imageUrl} />
+
+          <UserDiv>
             <UserDataDiv>
               <NameDiv>이름</NameDiv>
               <BoxDiv>
-              <AnswerDiv type='text' id="userName" defaultValue = {loginData.name}  ></AnswerDiv>
+                <AnswerDiv type='text' id="userName" defaultValue={loginData.name} onChange={handleNameInput}  ></AnswerDiv>
               </BoxDiv>
             </UserDataDiv>
             <UserDataDiv>
               <NameDiv>희망직군</NameDiv>
               <BoxDiv>
-              <DropdownJob
-                options={jobKeywords}
-                onSelect={(JobName) =>
-                  handleJobSelect(JobName)
-              }
-              />
+                <DropdownJob
+                  options={jobKeywords}
+                  onSelect={(JobName) =>
+                    handleJobSelect(JobName)
+                  }
+                />
               </BoxDiv>
             </UserDataDiv>
           </UserDiv>
-          
+
 
           <PolicyDiv>
             <PolicyDataDiv>
-              <PolicyLeftDiv>
-                <CheckBox id ="termsOfService" onSelect={isBox1Checked}/>
+              <PolicyLeftDiv >
+                <CheckboxDiv >
+                  <Checkbox type='checkbox' checked={isBox1Checked} onChange={() => { setIsBox1Checked((prev) => !prev) }} />
+                  {isBox1Checked && <img src={Check} style={{ position: "fixed", justifyContent: "center", marginTop: "4px" }} />}
+                </CheckboxDiv>
                 <PolicyNameDiv>이용약관 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
               <PolicyRightDiv>자세히 보기</PolicyRightDiv>
@@ -111,7 +134,10 @@ if(!show) {
 
             <PolicyDataDiv>
               <PolicyLeftDiv>
-              <CheckBox id ="privacyPolicy" onSelect={isBox2Checked}/>
+                <CheckboxDiv >
+                  <Checkbox type='checkbox' checked={isBox2Checked} onChange={() => { setIsBox2Checked((prev) => !prev) }} />
+                  {isBox2Checked && <img src={Check} style={{ position: "fixed", justifyContent: "center", marginTop: "4px" }} />}
+                </CheckboxDiv>
                 <PolicyNameDiv>개인정보 수집 및 이용 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
               <PolicyRightDiv>자세히 보기</PolicyRightDiv>
@@ -119,10 +145,10 @@ if(!show) {
 
           </PolicyDiv>
 
-            <RegisterBtn onClick={handleSubmit} disabled={!isFormValid}>회원가입</RegisterBtn>
+          <RegisterBtn onClick={handleSubmit} disabled={!isFormValid}>회원가입</RegisterBtn>
         </Container>
-      </OutContatiner>
-      </Background>
+      </OutContainer>
+    </Background >
   );
 };
 const Background = styled.div`
@@ -135,7 +161,7 @@ const Background = styled.div`
   z-index: 100000;
 `;
 
-const OutContatiner =styled.div`
+const OutContainer = styled.div`
   
   justify-content: center;
   align-items: center;
@@ -152,7 +178,7 @@ const OutContatiner =styled.div`
   background-color: ${(props) => props.theme.colors.White};
 `;
 
-const StyledClose =styled(Close)`
+const StyledClose = styled(Close)`
   position: absolute;
   width: 20px;
   height: 20px;
@@ -162,7 +188,7 @@ const StyledClose =styled(Close)`
   cursor: pointer;
 `;
 
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -178,13 +204,15 @@ const Container = styled.form`
   
 `;
 
-const StyledProfile =styled(Profile)`
+const StyledProfile = styled.img`
   position: absolute;
   width: 125px;
   height: 125px;
   top: 40px;
   left: 103px;
   flex-shrink: 0;
+  /* border: 1px solid black; */
+  border-radius: 65px;
 `;
 
 const UserDiv = styled.div`
@@ -219,10 +247,11 @@ const BoxDiv = styled.div`
   height: 35px;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1px solid ${(props) => props.theme.colors.Black};
+  /* border: 1px solid ${(props) => props.theme.colors.Black}; */
+  background-color: ${(props) => props.theme.color.base2};
 `;
 
-const AnswerDiv =styled.input`
+const AnswerDiv = styled.input`
   display: flex;
   width: 202px;
   height: 19px;
@@ -261,25 +290,47 @@ const PolicyDataDiv = styled.div`
 `;
 
 const PolicyLeftDiv = styled.div`
+width: 208px;
+height: 20px;
   flex-direction: row;
   justify-content: space-between;
   display: flex;
   align-items: center;
+  /* border: 1px solid black; */
+`;
+
+const CheckboxDiv = styled.div`
+  width: 20px;
+  height: 20px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  /* border: 1px solid black; */
+`;
+
+const Checkbox = styled.input`
+  width: 19px;
+  height: 19px;
+  border: 0.8px solid black;
+  border-radius: 2px;
 `;
 
 const PolicyNameDiv = styled.div`
-  position: absolute;
-  margin-left: 30px;
-  font-size: ${(props) => props.theme.fontSizes.TextS};
-  font-weight : ${(props) => props.theme.fontWeights.TextS};
+width: 178px;
+height: 20px;
+margin-left: 10px;
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight : ${(props) => props.theme.fontWeights.TextS};
+/* border: 1px solid black; */
+align-items: start;
 `;
 
 const PolicyRightDiv = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: ${(props) => props.theme.fontSizes.TextS};
-  font-weight : ${(props) => props.theme.fontWeights.TextS};
-  color: ${(props) => props.theme.colors.Gray};;
+display: flex;
+align-items: center;
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight : ${(props) => props.theme.fontWeights.TextS};
+color: ${(props) => props.theme.colors.Gray};;
 `;
 
 
