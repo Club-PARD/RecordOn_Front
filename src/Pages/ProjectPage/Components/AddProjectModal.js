@@ -124,25 +124,23 @@ const AddProjectModal = ({
     const addProjectHandler = async () => {
         if (valid) {
             try {
+                console.log(projectData);
                 const response = await postNewProjectAPI(projectData);
                 console.log(response);
-                setProjectID(response.object.id);
+                console.log(response.response_object.id);
+                setProjectID(response.response_object.id);
                 setUserData({
                     ...userData,
-                    project_id: response.object.id,
+                    project_id: response.response_object.id,
                 })
-                // setProjectData({
-                //     ...projectData,
-                //     project_id: response.object.id,
-                // });
                 setExperienceFilter({
                     ...experienceFilter,
-                    project_id: response.object.id,
+                    project_id: response.response_object.id,
                 })
                 console.log(experienceFilter);
                 const formData = new FormData();
                 formData.append('image', projectData.picture);
-                const response2 = await postNewProjectImageAPI(formData, response.object.id);
+                const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
                 console.log(response2);
                 handleOverlayClick();
                 navigate("/experience");
@@ -662,6 +660,7 @@ const ModalProjectImageIcon = styled.img`
 width: 18px;
 height: 18px;
 /* border: 1px solid black; */
+margin-right: 7px;
 `;
 
 const ModalProjectButtonDiv = styled.div`

@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({ projectData }) => {
 
-    const [userImg, setUserImg] = useState("");
 
     const keyword = [...new Set(projectData.competency_tag_name)];
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
@@ -46,7 +45,7 @@ const ProjectCard = ({ projectData }) => {
                 <CardContent>
                     <CardTopDiv>
                         <CardImageDiv>
-                            <CardImage src={userImg == "" ? DefaultCardImg2 : DefaultCardImg2} />
+                            <CardImage src={projectData.project_image == null || projectData.project_image == "" ? DefaultCardImg2 : projectData.project_image} />
                         </CardImageDiv>
                         <CardDateDiv>
                             <CardDateText>
@@ -73,7 +72,7 @@ const ProjectCard = ({ projectData }) => {
                 <CardContent>
                     <CardTopDiv>
                         <CardImageDiv>
-                            <CardImage src={userImg == "" ? DefaultCardImg : DefaultCardImg} />
+                            <CardImage src={projectData.project_image == null || projectData.project_image == "" ? DefaultCardImg : projectData.project_image} />
                         </CardImageDiv>
                         <CardDateDiv>
                             <CardDateText>
