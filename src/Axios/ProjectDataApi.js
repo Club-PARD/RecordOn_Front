@@ -46,6 +46,25 @@ export const postNewProjectAPI = async (data) => {
 
 };
 
+export const postNewProjectImageAPI = async (formData, project_id) => {
+    try {
+        console.log(`${process.env.REACT_APP_DEV_URL}s3/${project_id}`);
+        console.log(formData);
+        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}s3/${project_id}`, formData
+            , {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+
+};
+
 export const getUserExperienceDataFilteredAPI = async (filter) => {
     console.log(filter);
     try {
