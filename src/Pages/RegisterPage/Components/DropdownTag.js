@@ -92,9 +92,9 @@ const slideDown = keyframes`
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: start;
   position: absolute;
-  text-align: left;
+  align-items: start ;
   top: 160%;
   left: -13px;
   width: 228px;
@@ -115,7 +115,7 @@ const List = styled.div`
 const ListItem = styled.div`
   padding: 5px;
   cursor: pointer;
-  text-align: left;
+  text-align: start;
 `;
 
 export default DropdownTag;

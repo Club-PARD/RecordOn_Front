@@ -4,12 +4,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RegisterModal from "./Components/RegisterModal";
+import ProjectEndModal from "./Components/ProjectEndModal";
 
 
 const RegisterPage = () => {
     const [showModal, setShowModal] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const handleLoginClick = () => {
+    const handleRegisterClick = () => {
+        setIsLoggedIn(true);
+        setShowModal(true);
+      };
+
+      const handleProjectClick = () => {
         setIsLoggedIn(true);
         setShowModal(true);
       };
@@ -49,8 +55,11 @@ const RegisterPage = () => {
 
     return (
         <Container>
-            <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
+            <ModalButton1 onClick={handleRegisterClick}>로그인</ModalButton1>
             <RegisterModal  show={showModal} onClose={() => setShowModal(false)} />
+            <MarginBetween />
+            <LoginButton onClick={handleProjectClick}>프로젝트</LoginButton>
+            <ProjectEndModal  show={showModal} onClose={() => setShowModal(false)} />
         </Container>
 
     )
@@ -59,10 +68,14 @@ const RegisterPage = () => {
 }
 
 const Container = styled.div`
-`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
 
 const LoginButton = styled.div`
   display: flex;
+  position: relative;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -82,4 +95,32 @@ const LoginButton = styled.div`
   cursor: pointer;
 `;
 
+const ModalButton1 = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5.31px;
+
+  width: 228px;
+  height: 45px;
+
+  background-color: ${(props) => props.theme.colors.Black};
+  border-radius: 7.5px;
+  color: white;
+
+  font-size: ${(props) => props.theme.fontSizes.TextM};
+  font-weight : ${(props) => props.theme.fontWeights.TextM};
+
+  white-space: nowrap;
+  cursor: pointer;
+`;
+
+const MarginBetween = styled.div`
+width: 1200px;
+height: 50px;
+
+background-color: ${(props) => props.theme.colors.White};
+`;
 export default RegisterPage;

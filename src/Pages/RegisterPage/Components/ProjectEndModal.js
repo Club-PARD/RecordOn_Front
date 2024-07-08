@@ -8,7 +8,8 @@ import DropdownTag from "./DropdownTag";
 import CheckBox from './CheckBox';
 
 
-function RegisterModal ({ show, onClose}) {
+
+function ProjectEndModal ({ show, onClose}) {
   const [isRegisterDataSubmitted, setIsRegisterDataSubmitted] = useRecoilState(
     handleRegisterDataSubmit
   );
@@ -18,7 +19,7 @@ function RegisterModal ({ show, onClose}) {
     //console.log(`Tag selected: ${tag`);
   };
 
-  const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
+const [selectedTagKeyword, setSelectedTagKeyword] = useState("");
 
   useEffect(() => {
     if(show) {
@@ -30,9 +31,6 @@ function RegisterModal ({ show, onClose}) {
       document.body.style.overflow = 'auto';
     };
   }, [show]);  
-
-  const tagKeywords = ["기획·전략", "법무·사무·총무", "인사·HR", "마케팅·광고·MD","개발·데이터","디자인" ,"물류·무역" ,"영업" ,"식·음료", "엔지니어링·설계", "제조·생산", "교육", "건축·시설","의료·바이오"];
-
 
   const handleTagSelect = (tagName) => {
     setSelectedTagKeyword(tagName);
@@ -62,12 +60,6 @@ if(!show) {
             <UserDataDiv>
               <NameDiv>희망직군</NameDiv>
               <BoxDiv>
-              <DropdownTag
-                options={tagKeywords}
-                onSelect={(tagName) =>
-                  handleTagSelect(tagName)
-              }
-              />
               </BoxDiv>
             </UserDataDiv>
           </UserDiv>
@@ -275,4 +267,4 @@ const RegisterBtn = styled.button`
 `;
 
 
-export default RegisterModal;
+export default ProjectEndModal;
