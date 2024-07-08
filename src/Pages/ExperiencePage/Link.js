@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { getAllLink } from "../../Axios/ProjectDataApi";
 
 const LinkPage = ({ onClose }) => {
-  const [linkData, setLinkData] = useState([]);
+  const [metaData, setMetaData] = useState([]);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const defaultImageUrl = "https://i.ibb.co/hCHb2ZJ/logo512.png";
 
   useEffect(() => {
     const getAllLinks = async () => {
@@ -13,7 +15,7 @@ const LinkPage = ({ onClose }) => {
       };
       try {
         const response = await getAllLink(data);
-        setLinkData(response);
+        setMetaData(response);
       } catch (error) {
         console.error(error);
       }
@@ -33,21 +35,28 @@ const LinkPage = ({ onClose }) => {
       <Modal>
         <Body>
           <Title>📎 관련 자료 링크</Title>
-          {console.log(typeof linkData)}
-          <div>dd</div>
-          {/* 
-          <StyledA href={url} target="_blank" rel="noopener noreferrer">
-            <img
-              src={metaData.imageUrl || defaultImageUrl}
-              alt={metaData.title}
-              style={{ display: imageLoaded ? "block" : "none" }}
-            />
-            {!imageLoaded && <MariginDiv></MariginDiv>}
-            <div>{metaData.title}</div>
-          </StyledA> */}
+          <LinkArea>
+            {metaData.map((link, index) => (
+              <StyledA
+                key={index}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={link.imageUrl || defaultImageUrl}
+                  alt={link.title}
+                  style={{ display: "flex" }}
+                />
+                <div>{link.title}</div>
+              </StyledA>
+            ))}
+            {!metaData.length && <div>데이터를 로딩 중입니다...</div>}
+          </LinkArea>
         </Body>
+        {/* 그동안 각 경험 기록에 저장한 링크들을 한꺼번에 보여드리는 페이지입니다. */}
       </Modal>
-      {console.log(linkData)}
+      {console.log(metaData)}
     </Overlay>
   );
 };
@@ -73,8 +82,8 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-
-  width: 42%;
+  width: 606px;
+  /* width: 42%; */
   height: 100vh;
   z-index: 999999;
 
@@ -89,31 +98,38 @@ const Body = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 23px;
 
-  width: 80%;
+  /* width: 80%; */
+  width: 510px;
 
   margin-top: 82px;
+`;
 
-  background-color: aliceblue;
+const LinkArea = styled.div`
+  display: flex;
+  gap: 20px;
 `;
 const Title = styled.div`
   font-size: ${(props) => props.theme.fontSizes.TitleS};
   font-weight: ${(props) => props.theme.fontWeights.TitleS};
-`;
-
-const MariginDiv = styled.div`
-  height: 50px;
+  margin-bottom: 30px;
 `;
 
 const StyledA = styled.a`
+  box-sizing: border-box;
   all: unset;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
 
-  width: 750px;
+  width: 510px;
+  height: 50px;
+
+  background-color: ${(props) => props.theme.color.base2};
+  border-radius: 10px;
+
+  padding-left: 24px;
 
   img {
     width: 30px;
