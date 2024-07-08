@@ -5,16 +5,18 @@ import { handleRegisterDataSubmit } from "../../../Atom/RegisterDataAtom.js";
 import { recoilLoginData } from "../../../Atom/UserDataAtom.js"
 import { ReactComponent as Close } from "../../../Assets/close.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
-import DropdownJob from "./DropdownJob";
-import CheckBox from './CheckBox';
+import DropdownJob from "../../RegisterPage/Components/DropdownJob.js";
+import CheckBox from '../../RegisterPage/Components/CheckBox.js';
 
 
-function RegisterModal ({ show, onClose}) {
+function RegisterModal ({ show, onClose, defaultName}) {
   const [isRegisterDataSubmitted, setIsRegisterDataSubmitted] = useRecoilState(
     handleRegisterDataSubmit
   );
   const [loginData, setLoginData] = useRecoilState(recoilLoginData);
+  const [registerData, setRegisterData] = useState({});
   console.log(loginData);
+  console.log(loginData.name);
 
   const handleSubmit = () => {
     setIsRegisterDataSubmitted(true);
@@ -81,7 +83,7 @@ if(!show) {
             <UserDataDiv>
               <NameDiv>이름</NameDiv>
               <BoxDiv>
-              <AnswerDiv type='text' id="userName" value = {loginData.name}  ></AnswerDiv>
+              <AnswerDiv type='text' id="userName" defaultValue = {loginData.name}  ></AnswerDiv>
               </BoxDiv>
             </UserDataDiv>
             <UserDataDiv>
