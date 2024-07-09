@@ -3,39 +3,20 @@ import styled from "styled-components";
 import Bookmark from "./Bookmark";
 import { useRecoilState } from "recoil";
 import {
+  answerState,
   experienceState,
   handleExpRecordSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 import { ReactComponent as CloseIcon } from "../../../../../../Assets/close.svg";
 
 const LowerArea = () => {
-  // 리코일 변수
+  const [answer, setAnswer] = useRecoilState(answerState);
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
 
-  // 임시 변수
   const [freeContent, setFreeContent] = useState("");
-  const [linkArea, setLinkArea] = useState([
-    {
-      id: 1,
-      linkUrl: "",
-      isSubmitted: false,
-    },
-  ]);
-
-  // 자유란 변경 상태 관리
-  const handleFreeChange = (e) => {
-    setFreeContent(e.target.value);
-  };
-
-  // 링크 입력 값 변경 핸들러
-  const handleLinkChange = (index, value) => {
-    const updatedLinks = [...linkArea];
-    updatedLinks[index].linkUrl = value;
-    setLinkArea(updatedLinks);
-  };
 
   // 링크 삭제 핸들러
   const handleDeleteLink = (index) => {
@@ -43,6 +24,15 @@ const LowerArea = () => {
     updatedLinks.splice(index, 1);
     setLinkArea(updatedLinks);
   };
+
+  // 링크 입력 영역
+  const [linkArea, setLinkArea] = useState([
+    {
+      id: 1,
+      linkUrl: "",
+      isSubmitted: false,
+    },
+  ]);
 
   // 링크 입력 영역 추가
   const addLinkArea = () => {
@@ -54,6 +44,18 @@ const LowerArea = () => {
         isSubmitted: false,
       },
     ]);
+  };
+
+  // 링크 입력 값 변경 핸들러
+  const handleLinkChange = (index, value) => {
+    const updatedLinks = [...linkArea];
+    updatedLinks[index].linkUrl = value;
+    setLinkArea(updatedLinks);
+  };
+
+  // 자유란 변경 상태 관리
+  const handleFreeChange = (e) => {
+    setFreeContent(e.target.value);
   };
 
   // 붙여넣기 이벤트 핸들러
@@ -84,7 +86,7 @@ const LowerArea = () => {
         reference_links: links,
       }));
     }
-  }, [isExpRecordSubmitted, freeContent, linkArea, setExperience]);
+  }, [isExpRecordSubmitted]);
 
   return (
     <>
@@ -95,10 +97,10 @@ const LowerArea = () => {
         <FixArea>
           <FixAreaLabel>자유란</FixAreaLabel>
           <TextAreaWidth
-            placeholder="질문을 통해 다 작성하지 못한 내용을 자유란에 작성해보세요. 하지만 자유란만 작성하는 것은 불가능해요. 최소 질문 한 가지에 답하고 와주세요:)"
             height="150px"
             value={freeContent}
             onChange={handleFreeChange}
+            defaultValue={answer && answer.free_content}
           />
           <DivForMargin height={"60px"} />
         </FixArea>
