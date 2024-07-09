@@ -7,8 +7,6 @@ import CheckboxGrid from './CheckBoxGrid';
 function ProjectEndModal ({ show, onClose}) {
 
 
-const [selectedJobKeyword, setSelectedJobKeyword] = useState("");
-
   useEffect(() => {
     if(show) {
       document.body.style.overflow = 'hidden';
