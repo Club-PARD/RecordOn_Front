@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { FixArea, FixAreaLabel, TextAreaWidth } from "./LowerArea";
+import { FixArea, FixAreaLabel, TextAreaWidth } from "./LowerComponents/LowerArea";
 import { useRecoilState } from "recoil";
 import {
   experienceState,
   handleExpRecordSubmit,
-} from "../../../../Atom/ExpRecordAtom";
+} from "../../../../../Atom/ExpRecordAtom";
 
 const FixedArea = () => {
   const [experience, setExperience] = useRecoilState(experienceState);

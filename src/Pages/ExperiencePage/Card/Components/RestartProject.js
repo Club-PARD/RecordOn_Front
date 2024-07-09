@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
-import { restartProjectAPI } from "../../../Axios/ProjectDataApi";
+import { recoilUserData } from "../../../../Atom/UserDataAtom";
+import { restartProjectAPI } from "../../../../Axios/ProjectDataApi";
 import { useNavigate } from "react-router-dom";
 
 const RestartProject = () => {
