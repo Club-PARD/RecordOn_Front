@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import {
   FixArea,
   FixAreaLabel,
-} from "../Components/ContentComponents/LowerArea";
+} from "../../Writing/Components/ContentComponents/LowerComponents/LowerArea";
 
 const UpperArea = ({ answerObject }) => {
   const keywords = [

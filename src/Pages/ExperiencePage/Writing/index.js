@@ -5,11 +5,11 @@ import { useRecoilState } from "recoil";
 import {
   handleExpRecordSubmit,
   experienceState,
-} from "../../Atom/ExpRecordAtom";
-import { ReactComponent as GoBackIcon } from "../../Assets/GoBackIcon.svg";
+} from "../../../Atom/ExpRecordAtom";
+import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
-import { postExperienceAPI } from "../../Axios/ExperienceApi";
-import DeleteModal from "../../Common/DeleteModal";
+import { postExperienceAPI } from "../../../Axios/ExperienceApi";
+import DeleteModal from "../../../Common/DeleteModal";
 
 const WritingPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);

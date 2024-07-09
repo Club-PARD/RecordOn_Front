@@ -7,7 +7,7 @@ import {
 } from '@workday/canvas-kit-react/pagination';
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { recoilUserExperienceNum } from "../../../Atom/UserDataAtom";
+import { recoilUserExperienceNum } from "../../../../Atom/UserDataAtom";
 
 const PaginationExperience = () => {
 

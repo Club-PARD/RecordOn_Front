@@ -2,9 +2,9 @@ import styled from "styled-components";
 import ExperienceCard from "./ExperienceCard";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getUserExperienceDataAPI, getUserExperienceDataFilteredAPI } from "../../../Axios/ProjectDataApi";
+import { getUserExperienceDataFilteredAPI } from "../../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserExperienceFilter, recoilUserExperienceNum } from "../../../Atom/UserDataAtom";
+import { recoilUserExperienceFilter, recoilUserExperienceNum } from "../../../../Atom/UserDataAtom";
 
 const ExperienceCardGrid = () => {
 

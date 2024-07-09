@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled, { css, keyframes } from "styled-components";
 
-import { ReactComponent as QArrow } from "../../../Assets/QdropdownArrow.svg";
-import { ReactComponent as BigCheck } from "../../../Assets/BigCheck.svg";
+import { ReactComponent as QArrow } from "../../../../../../Assets/QdropdownArrow.svg";
+import { ReactComponent as BigCheck } from "../../../../../../Assets/BigCheck.svg";
 
 const DropdownQuestion = ({
   selectedTag,
