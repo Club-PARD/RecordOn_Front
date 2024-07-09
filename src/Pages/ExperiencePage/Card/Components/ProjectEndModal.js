@@ -1,10 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { ReactComponent as Close } from "../../../Assets/close.svg";
-import { SelectInput } from '@workday/canvas-kit-react';
-import SelectTag from './SelectTag.js';
-import CheckboxGrid from './CheckBoxGrid.js';
+import { ReactComponent as Close } from "../../../../Assets/close.svg";
+import CheckboxGrid from './CheckBoxGrid';
 
 
 function ProjectEndModal ({ show, onClose}) {

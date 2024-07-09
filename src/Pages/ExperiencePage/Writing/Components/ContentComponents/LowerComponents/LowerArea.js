@@ -5,8 +5,8 @@ import { useRecoilState } from "recoil";
 import {
   experienceState,
   handleExpRecordSubmit,
-} from "../../../../Atom/ExpRecordAtom";
-import { ReactComponent as CloseIcon } from "../../../../Assets/close.svg";
+} from "../../../../../../Atom/ExpRecordAtom";
+import { ReactComponent as CloseIcon } from "../../../../../../Assets/close.svg";
 
 const LowerArea = () => {
   const [experience, setExperience] = useRecoilState(experienceState);

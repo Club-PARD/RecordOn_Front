@@ -3,13 +3,13 @@ import styled from "styled-components";
 import {
   ProjectDateWrapper,
   ProjectDateStart,
-} from "../../../../Common/Calendar";
+} from "../../../../../Common/Calendar";
 import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import {
   experienceState,
   handleExpRecordSubmit,
-} from "../../../../Atom/ExpRecordAtom";
+} from "../../../../../Atom/ExpRecordAtom";
 
 const UppderArea = () => {
   const [experience, setExperience] = useRecoilState(experienceState);

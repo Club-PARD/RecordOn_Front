@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useState } from "react";
-import DeleteModal from "../../../Common/DeleteModal";
-import { deleteProjectAPI } from "../../../Axios/ProjectDataApi";
+import DeleteModal from "../../../../Common/DeleteModal";
+import { deleteProjectAPI } from "../../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
+import { recoilUserData } from "../../../../Atom/UserDataAtom";
 import { useNavigate } from "react-router-dom";
 
 const DeleteProject = () => {

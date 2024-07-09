@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import ProjectEndModal from "../../RegisterPage/Components/ProjectEndModal";
+import ProjectEndModal from "./ProjectEndModal";
 
 
 const FinishProject = () => {

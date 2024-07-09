@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { ReactComponent as CloseIcon } from "../../../Assets/close.svg";
-import Calendar from "../../../Common/Calendar";
-import ImageIcon from "../../../Assets/ImageIcon.png";
+import ImageIcon from "../../../../Assets/ImageIcon.png";
 import { useRef } from "react";
-import { postNewProjectAPI, postNewProjectImageAPI, updateProjectAPI } from "../../../Axios/ProjectDataApi";
+import { postNewProjectImageAPI, updateProjectAPI } from "../../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
+import { recoilUserData, recoilUserExperienceFilter } from "../../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
