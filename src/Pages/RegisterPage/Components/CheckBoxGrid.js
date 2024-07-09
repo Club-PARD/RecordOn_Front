@@ -4,19 +4,21 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { recoilUserData } from "../../../Atom/UserDataAtom";
 import { putProjectTagAPI } from "../../../Axios/ProjectDataApi";
+import { useNavigate } from "react-router-dom";
 
 
 const CheckboxGrid = () => {
   const [checkedItems, setCheckedItems] = useState([]);
 
   const [userData, setUserData] = useRecoilState(recoilUserData);
-    // const navigate = useNaavigate();
+  const navigate = useNavigate();
 
     const putProjectTagHandler = async () => {
       try {
         const response = await putProjectTagAPI(userData, checkedItems);
         console.log('Checkboxes Put:', checkedItems);
         console.log(response + "///");
+        navigate("/project");
       } catch (error) {
         console.error('Error:', error);
       }

@@ -7,7 +7,7 @@ import { ReactComponent as Close } from "../../../Assets/close.svg";
 import Check from "../../../Assets/Check.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
 import DropdownJob from "../../RegisterPage/Components/DropdownJob.js";
-import { registerUserAPI } from '../../../Axios/RegisterApi.js';
+import { registerUserAPI } from '../../../Axios/RegisterApi.js'
 import { useNavigate } from 'react-router-dom';
 
 
@@ -29,7 +29,6 @@ function RegisterModal({ show, onClose, defaultName }) {
     setIsLoggedIn(true);
     // navigate("/project");
   };
-
   useEffect(() => {
     setRegisterData({
       ...registerData,
