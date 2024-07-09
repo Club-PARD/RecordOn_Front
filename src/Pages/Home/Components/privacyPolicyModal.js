@@ -1,18 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { ReactComponent as GoldenBell } from "../Assets/GoldenBell.svg";
+import { ReactComponent as Close } from "../../../Assets/close.svg";
 
-const privacyPolicyModal = ({
+const PrivacyPolicyModal = ({
   isOpen,
   onClose,
-  bigAlertText1,
-  bigAlertText2,
-  smallAlertText,
-  keepButtonText,
-  deleteButtonText,
-  keepButtonWidth,
-  onKeep,
-  onDelete,
 }) => {
   if (!isOpen) return null;
 
@@ -26,136 +18,97 @@ const privacyPolicyModal = ({
   return (
     <Overlay onClick={handleOverlayClick}>
       <Modal>
-        <div>
-          {/* 뭔가 디자인 요소 들어감 */}
-          <DesignArea>
-            <GoldenBell />
-          </DesignArea>
-          <BigAlert>
-            {bigAlertText1}
-            <br />
-            {bigAlertText2}
-          </BigAlert>
-          <SmallAlert>{smallAlertText}</SmallAlert>
-        </div>
-        {/* 하단 버튼 영역 */}
-        <ButtonDiv>
-          <KeepButton keepButtonWidth = {keepButtonWidth} onClick={onKeep}>{keepButtonText}</KeepButton>
-          <DeleteButton onClick={onDelete}>{deleteButtonText}</DeleteButton>
-        </ButtonDiv>
+      <StyledClose onClick={onClose} />
+{/* 
+      <TextContainer> */}
+      <TitleDiv>개인정보 수집 및 이용 동의</TitleDiv>
+      <ContentDiv>
+      레코드온 서비스는 원활한 서비스 제공을 위해 최소한의 
+범위 내에서 아래와 같이 개인정보를 수집 및 이용합니다.
+<br /><br />
+1. 수집 항목<br />
+- 구글 이메일을 통한 로그인 및 회원가입<br />
+: 구글 이메일, 프로필 사진, 이름<br />
+- 서비스 회원가입<br />
+: 닉네임, 희망직군<br />
+<br />
+2. 수집 및 이용 목적<br />
+- 회원 식별 및 서비스 제공<br />
+<br />
+3. 보유 및 이용기간<br />
+- 서비스 탈퇴 시<br />
+<br />
+귀하는 이와 같이 개인정보를 수집 및 이용하는데 동의를 <br />
+거부할 권리가 있습니다. 다만, 필수 수집 항목에 대한 동의를 <br />
+거절하는 경우 서비스 이용이 제한 될 수 있습니다.
+
+      </ContentDiv>
+      {/* </TextContainer> */}
       </Modal>
     </Overlay>
   );
 };
 
 const Overlay = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999998; /* Modal보다 뒤에 배치 */
-
   position: fixed;
   top: 0;
   left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  /* background-color: rgba(18, 18, 18, 0.40); */
+  z-index: 100000;
 `;
 
 const Modal = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+   justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); // 중앙으로 배치하기 위해
+  overflow-y: auto;
 
   width: 432px;
-  height: 400px;
-  z-index: 999999;
-
-  padding: 24px 31px 71px;
-
+  height: 500px;
+  flex-shrink: 0;
   border-radius: 16px;
   background-color: ${(props) => props.theme.colors.White};
 `;
 
-const DesignArea = styled.div`
-  width: 69px;
-  height: 73px;
-
-  margin-top: 16px;
+const StyledClose = styled(Close)`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 25px;
+  left: 386px;
+  flex-shrink: 0;
+  cursor: pointer;
 `;
 
-const BigAlert = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+// const TextContainer = styled.div`
 
-  width: 338px;
-  white-space: nowrap;
-
-  color: ${(props) => props.theme.color.black};
-  font-size: ${(props) => props.theme.fontSizes.TitleS};
-  font-weight: ${(props) => props.theme.fontWeights.TitleS};
-  line-height: 39px;
-
-  margin-top: 20px;
-`;
-
-const SmallAlert = styled.div`
-  text-align: center;
-
-  width: 320px;
-  white-space: nowrap;
-
-  color: ${(props) => props.theme.color.black};
-  font-size: ${(props) => props.theme.fontSizes.TextM};
-  font-weight: ${(props) => props.theme.fontWeights.TextM};
-
-  margin-top: 10px;
-`;
-
-const ButtonDiv = styled.div`
-  display: flex;
+// `;
+const TitleDiv = styled.div`
+  position: absolute;
   flex-direction: row;
-  gap: 10px;
-
-  margin-top: 40px;
-`;
-
-const KeepButton = styled.button`
-  display: flex;
-  justify-content: center;
-
-  width: ${({keepButtonWidth}) => keepButtonWidth || "174px"};
-
-  height: 40px;
-  border-radius: 10px;
-
-  background-color: ${(props) => props.theme.color.main};
-  color: ${(props) => props.theme.color.white};
+  width: 332px;
+  height: 23px;
+  top: 50px;
+  left: 50px;
+  text-align: start;
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: ${(props) => props.theme.fontWeights.TextM};
-
-  cursor: pointer;
 `;
 
-const DeleteButton = styled.button`
-  display: flex;
-  justify-content: center;
-
-  width: 84px;
-  height: 40px;
-  border-radius: 10px;
-
-  background-color: ${(props) => props.theme.color.base3};
-  color: ${(props) => props.theme.color.base6};
-  font-size: ${(props) => props.theme.fontSizes.TextM};
-  font-weight: ${(props) => props.theme.fontWeights.TextM};
-
-  cursor: pointer;
+const  ContentDiv = styled.div`
+  position: absolute;
+  width: 332px;
+  height: 360px;
+  top: 90px;
+  left: 50px;
+  font-size: ${(props) => props.theme.fontSizes.TextS};
+  font-weight: ${(props) => props.theme.fontWeights.TextS};
+  line-height: 18.2px;
+letter-spacing: -0.28px;
 `;
-
-export default privacyPolicyModal;
+export default PrivacyPolicyModal;
