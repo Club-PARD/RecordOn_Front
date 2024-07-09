@@ -82,7 +82,7 @@ export const postNewProjectImageAPI = async (formData, project_id) => {
 
 export const updateProjectAPI = async (project_id, data) => {
     try {
-        console.log(`${process.env.REACT_APP_DEV_URL}projects`);
+        console.log(data);
         const response = await axios.put(`${process.env.REACT_APP_DEV_URL}projects/${project_id}`, data);
         console.log(response.data)
         return response.data
