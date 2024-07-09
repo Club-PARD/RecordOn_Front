@@ -20,31 +20,34 @@ const WritingPage = () => {
   );
 
   const navigate = useNavigate();
-  const {isModalOpen, openModal, closeModal} = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
   const [isUpdated, setIsUpdated] = useState(false);
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await new Promise((resolve) => setTimeout(resolve, 0));
     setIsUpdated(true);
   };
 
   const submitData = async () => {
     if (isExpRecordSubmitted && isUpdated) {
-      {console.log (experience)}
+      {
+        console.log(experience);
+      }
       try {
         const response = await postExperienceAPI(experience);
-        console.log ("request successful: ", response);
+        console.log("request successful: ", response);
       } catch (error) {
         console.error("request failed: ", error);
       } finally {
-        setIsExpRecordSubmitted (false);
-        setIsUpdated (false);
+        setIsExpRecordSubmitted(false);
+        setIsUpdated(false);
+        navigate("/experience");
       }
     }
   };
 
-  useEffect (() => {
+  useEffect(() => {
     submitData();
   }, [isExpRecordSubmitted, isUpdated, experience]);
 
@@ -88,7 +91,6 @@ const WritingPage = () => {
         }}
       />
     </Div>
-    
   );
 };
 
@@ -156,4 +158,11 @@ const ConfirmButton = styled.button`
 `;
 
 export default WritingPage;
-export { Div, GoBackArea, MarginTopForGoBackDiv, MarginBottomForGoBackDiv, GoBackDiv, GoBackIcon };
+export {
+  Div,
+  GoBackArea,
+  MarginTopForGoBackDiv,
+  MarginBottomForGoBackDiv,
+  GoBackDiv,
+  GoBackIcon,
+};

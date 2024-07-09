@@ -76,6 +76,7 @@ const StyledClose =styled(Close)`
   left: 386px;
   flex-shrink: 0;
   cursor: pointer;
+  z-index: 99998
 `;
 
 const Container = styled.div`
