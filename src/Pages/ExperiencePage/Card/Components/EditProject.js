@@ -1,23 +1,48 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditProjectModal from "./EditProjectModal";
+import { getOneProjectDataAPI } from "../../../../Axios/ProjectDataApi";
+import { useRecoilState } from "recoil";
+import { recoilUserData } from "../../../../Atom/UserDataAtom";
 
 
 const EditProject = () => {
 
     const [modalOn, setModalOn] = useState(false);
+    const [userData, setUserData] = useRecoilState(recoilUserData);
+    const [projectData, setProjectData] = useState({});
 
-    const handleAddProjectModal = () => {
-        setModalOn((prev) => (!prev));
+
+    const getProjectData = async () => {
+        const response = await getOneProjectDataAPI(userData);
+        console.log(response);
+        setProjectData({
+            user_id: userData.user_id,
+            project_name: response.project_name,
+            description: response.description,
+            part: response.part,
+            start_date: new Date(response.start_date),
+            finish_date: new Date(response.finish_date),
+            project_image: response.project_image,
+        })
+        return 1;
     }
 
-    // console.log(modalOn);
+    const editClickHandler = async () => {
+        const done = await getProjectData();
+        console.log(done);
+        setModalOn(true);
+    }
+
+    console.log(projectData);
+    // console.log(new Date(projectData.finish_date));
+
     return (
         <>
-            <EditProjectButton onClick={() => setModalOn(true)}>
+            <EditProjectButton onClick={editClickHandler}>
                 편집
             </EditProjectButton>
-            {modalOn && <EditProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} />}
+            {modalOn && <EditProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} propsProjectData={projectData} />}
         </>
     );
 };

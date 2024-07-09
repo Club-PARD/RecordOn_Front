@@ -110,7 +110,7 @@ const ExperienceFilter = () => {
     <FilterDiv>
       <FilterLeft>
         <ExperienceSearch>
-          <ExperienceSearchInput onChange={searchInput} />
+          <ExperienceSearchInput onChange={searchInput} placeholder="기록한 경험 입력" />
           <ExperienceSearchInputButton>
             <img src={SearchIcon} />
           </ExperienceSearchInputButton>
