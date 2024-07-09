@@ -12,13 +12,15 @@ import {
 } from "../../../../../Atom/ExpRecordAtom";
 
 const UppderArea = () => {
+  // 리코일 변수
   const [experience, setExperience] = useRecoilState(experienceState);
-  const [expDate, setExpDate] = useState(new Date());
-  const [expTitle, setExpTitle] = useState("");
-
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
+
+  // 임시 변수
+  const [expDate, setExpDate] = useState(new Date());
+  const [expTitle, setExpTitle] = useState("");
 
   // 입력 내용을 임시 변수에 관리
   const handleDateChange = (date) => {
@@ -37,7 +39,7 @@ const UppderArea = () => {
         title: expTitle,
       }));
     }
-  }, [isExpRecordSubmitted]);
+  }, [isExpRecordSubmitted, expDate, expTitle, setExperience]);
 
   return (
     <>

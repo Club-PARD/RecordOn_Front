@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+import {
+  getOneExperienceAPI,
+  deleteOneExperienceAPI,
+} from "../../../Axios/ExperienceApi";
+
+import { useRecoilState } from "recoil";
+import { answerState } from "../../../Atom/ExpRecordAtom";
+
 import UpperArea, {
   StyledTag,
   FixAreaLabel,
@@ -19,10 +28,7 @@ import {
   BookmarkComponent,
 } from "../Writing/Components/ContentComponents/LowerComponents/LowerArea";
 import DeleteModal from "../../../Common/DeleteModal";
-import {
-  getOneExperienceAPI,
-  deleteOneExperienceAPI,
-} from "../../../Axios/ExperienceApi";
+
 
 const ViewPage = () => {
   const keywords = [
@@ -32,6 +38,8 @@ const ViewPage = () => {
     { id: 3, label: "실패", color: "#F25454" },
     { id: 4, label: "배움", color: "#42B887" },
   ];
+
+  const [answer, setAnswer] = useRecoilState(answerState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answerObject, setAnswerObject] = useState({});
 
@@ -50,7 +58,8 @@ const ViewPage = () => {
       try {
         const response = await getOneExperienceAPI();
         console.log(response.success);
-        setAnswerObject(response.response_object);
+        response && setAnswerObject(response.response_object);
+        answerObject && setAnswer(answerObject);
       } catch (error) {
         console.error(error);
       }

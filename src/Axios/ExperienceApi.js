@@ -4,7 +4,7 @@ const server = process.env.REACT_APP_DEV_URL;
 
 // 경험 기록 등록 API
 export const postExperienceAPI = async (data) => {
-    console.log (data.json);
+    console.log (data);
     try {
         const response = await axios.post (`${server}experiences`, data);
         console.log (response.data);
@@ -15,7 +15,7 @@ export const postExperienceAPI = async (data) => {
 
 // 경험 기록 하나 조회 API
 export const getOneExperienceAPI = async () => {
-    const id = 13;
+    const id = 1;
     try {
         const response = await axios.get (`${server}experiences/${id}`);
         if (response.data.success) {

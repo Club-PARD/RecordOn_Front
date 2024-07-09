@@ -9,21 +9,14 @@ import {
 import { ReactComponent as CloseIcon } from "../../../../../../Assets/close.svg";
 
 const LowerArea = () => {
+  // 리코일 변수
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
 
+  // 임시 변수
   const [freeContent, setFreeContent] = useState("");
-
-  // 링크 삭제 핸들러
-  const handleDeleteLink = (index) => {
-    const updatedLinks = [...linkArea];
-    updatedLinks.splice(index, 1);
-    setLinkArea(updatedLinks);
-  };
-
-  // 링크 입력 영역
   const [linkArea, setLinkArea] = useState([
     {
       id: 1,
@@ -31,6 +24,25 @@ const LowerArea = () => {
       isSubmitted: false,
     },
   ]);
+
+  // 자유란 변경 상태 관리
+  const handleFreeChange = (e) => {
+    setFreeContent(e.target.value);
+  };
+
+  // 링크 입력 값 변경 핸들러
+  const handleLinkChange = (index, value) => {
+    const updatedLinks = [...linkArea];
+    updatedLinks[index].linkUrl = value;
+    setLinkArea(updatedLinks);
+  };
+
+  // 링크 삭제 핸들러
+  const handleDeleteLink = (index) => {
+    const updatedLinks = [...linkArea];
+    updatedLinks.splice(index, 1);
+    setLinkArea(updatedLinks);
+  };
 
   // 링크 입력 영역 추가
   const addLinkArea = () => {
@@ -42,18 +54,6 @@ const LowerArea = () => {
         isSubmitted: false,
       },
     ]);
-  };
-
-  // 링크 입력 값 변경 핸들러
-  const handleLinkChange = (index, value) => {
-    const updatedLinks = [...linkArea];
-    updatedLinks[index].linkUrl = value;
-    setLinkArea(updatedLinks);
-  };
-
-  // 자유란 변경 상태 관리
-  const handleFreeChange = (e) => {
-    setFreeContent(e.target.value);
   };
 
   // 붙여넣기 이벤트 핸들러
@@ -84,7 +84,7 @@ const LowerArea = () => {
         reference_links: links,
       }));
     }
-  }, [isExpRecordSubmitted]);
+  }, [isExpRecordSubmitted, freeContent, linkArea, setExperience]);
 
   return (
     <>

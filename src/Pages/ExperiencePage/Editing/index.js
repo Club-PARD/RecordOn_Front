@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import { useRecoilState } from "recoil";
-import DeleteModal from "../../../Common/DeleteModal";
 import {
-  editOneExpereienceAPI,
-} from "../../../Axios/ExperienceApi";
-import { experienceState } from "../../../Atom/ExpRecordAtom";
+  handleExpRecordSubmit,
+  experienceState,
+} from "../../../Atom/ExpRecordAtom";
+
+import { editOneExpereienceAPI } from "../../../Axios/ExperienceApi";
+
+import DeleteModal from "../../../Common/DeleteModal";
 import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
-import { handleExpRecordSubmit } from "../../../Atom/ExpRecordAtom";
-import ContentsArea
- from "./Components/ContentsArea";
+
+import ContentsArea from "./Components/ContentsArea";
 const EditPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
@@ -69,7 +72,7 @@ const EditPage = () => {
         <MarginTopForGoBackDiv />
         <GoBackDiv onClick={openModal}>
           <GoBackIcon />
-          <div>경험 기록 페이지 나가기</div>
+          <div>경험 수정 페이지 나가기</div>
         </GoBackDiv>
         <MarginBottomForGoBackDiv />
       </GoBackArea>
@@ -78,16 +81,16 @@ const EditPage = () => {
       <ContentsArea />
 
       {/* 버튼 */}
-      <ConfirmButton onClick={handleSubmit}>경험기록 작성완료</ConfirmButton>
+      <ConfirmButton onClick={handleSubmit}>경험기록 수정완료</ConfirmButton>
 
       {/* 모달 컴포넌트 */}
       <DeleteModal
         isOpen={isModalOpen}
         onClose={closeModal} // 모달 닫기 함수 설정
-        bigAlertText1="중단하신 기록은"
+        bigAlertText1="수정하신 기록은"
         bigAlertText2="저장되지 않습니다."
-        smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
-        keepButtonText="남아서 기록하기"
+        smallAlertText="수정 페이지에서 정말 나가시겠습니까?"
+        keepButtonText="남아서 수정하기"
         deleteButtonText="나가기"
         keepButtonWidth="151px"
         onKeep={() => {

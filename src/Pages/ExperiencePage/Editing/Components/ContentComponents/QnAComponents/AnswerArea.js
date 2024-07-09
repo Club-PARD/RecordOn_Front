@@ -16,7 +16,7 @@ import {
   handleExpRecordSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 
-const AnswerArea = () => {
+const AnswerArea = ({combinedArray}) => {
   // 리코일 변수
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
@@ -28,20 +28,6 @@ const AnswerArea = () => {
   const [tagIds, setTagIds] = useState([null]);
   const [questionIds, setQuestionIds] = useState([null]);
   const [questionAnswers, setQuestionAnswers] = useState([""]);
-
-  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
-  // useEffect(() => {
-  //   if (isExpRecordSubmitted) {
-  //     setExperience((prev) => ({
-  //       ...prev,
-  //       tag_ids: tagIds.map((tagId) => (tagId !== null ? tagId + 1 : tagId)),
-  //       question_ids: questionIds.map((questionId) =>
-  //         questionId !== null ? questionId + 1 : questionId
-  //       ),
-  //       question_answers: questionAnswers,
-  //     }));
-  //   }
-  // }, [isExpRecordSubmitted]);
 
   // 테스트용
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
