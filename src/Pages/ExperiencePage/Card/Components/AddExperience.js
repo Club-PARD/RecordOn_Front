@@ -1,23 +1,22 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const AddExperience = () => {
 
-    const [modalOn, setModalOn] = useState(false);
+    const navigate = useNavigate();
 
-    const handleAddProjectModal = () => {
-        setModalOn((prev) => (!prev));
+
+    const addExperienceHandler = () => {
+        navigate("/writing");
     }
 
     // console.log(modalOn);
     return (
-        <>
-            <AddProjectButton onClick={() => setModalOn(true)}>
-                + 경험 기록 추가
-            </AddProjectButton>
-            {/* {modalOn && <AddProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} />} */}
-        </>
+        <AddProjectButton onClick={addExperienceHandler}>
+            + 경험 기록 추가
+        </AddProjectButton>
     );
 };
 
