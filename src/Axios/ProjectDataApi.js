@@ -15,6 +15,20 @@ export const getUserProjectDataAPI = async (id) => {
 
 };
 
+// 유저의 한 프로젝트 데이터를 받아옴
+export const getOneProjectDataAPI = async (project_id) => {
+
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_DEV_URL}projects/${project_id}`);
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+        alert("유저 정보 로딩에 실패하였습니다.");
+    }
+
+};
+
 export const getUserProjectDataFilteredAPI = async (filter) => {
     console.log(filter);
     try {
@@ -139,7 +153,8 @@ export const putProjectTagAPI = async (projectData, data) => {
         console.log(`${process.env.REACT_APP_DEV_URL}projects/finish/${projectData.project_id}`);
         const response = await axios.put(`${process.env.REACT_APP_DEV_URL}projects/finish/${projectData.project_id}`, {
             user_id: projectData.user_id
-        , competency_tag_ids : data});
+            , competency_tag_ids: data
+        });
         console.log(response.data)
         return response.data
     } catch (error) {
@@ -148,11 +163,11 @@ export const putProjectTagAPI = async (projectData, data) => {
     }
 }
 export const getAllLink = async (data) => {
-try {
-    const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects/reference`, data);
-    console.log (response.data);
-    return response.data;
-} catch (error) {
-    console.error(error);
-}
+    try {
+        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects/reference`, data);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
 };
