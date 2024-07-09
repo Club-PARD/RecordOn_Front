@@ -5,6 +5,7 @@ import { ReactComponent as GoogleLogo } from "../../../Assets/GoogleLogo.svg"
 import axios from 'axios'
 import { useRecoilState } from "recoil";
 import { isLogined, recoilLoginData, recoilUserData, recoilUserExperienceFilter, recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
+import { experienceState } from "../../../Atom/ExpRecordAtom";
 import { useState, useEffect } from "react";
 import RegisterModal from "./RegisterModal";
 
@@ -14,6 +15,7 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
     const [loginData, setLoginData] = useRecoilState(recoilLoginData);
     const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
+    const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
     const [isNewUser, setIsNewUser] = useState(null);
     const navigate = useNavigate();
     console.log(userData1);
@@ -105,6 +107,10 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
             })
             setExperienceFilter({
                 ...experienceFilter,
+                user_id: response.data.user_id,
+            })
+            setExperienceStateRecoil({
+                ...experienceStateRecoil,
                 user_id: response.data.user_id,
             })
 

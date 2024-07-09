@@ -5,6 +5,7 @@ import ProjectFolder from "../../../Assets/ProjectFolder.png"
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
+import { experienceState } from "../../../Atom/ExpRecordAtom";
 import { useNavigate } from "react-router-dom";
 
 
@@ -15,6 +16,8 @@ const ProjectCard = ({ projectData }) => {
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const navigate = useNavigate();
+    const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
+
 
     const projectCardClickHandler = () => {
         setExperienceFilter({
@@ -31,7 +34,11 @@ const ProjectCard = ({ projectData }) => {
             ...userData,
             project_id: projectData.project_id,
         })
-        navigate("/experience")
+        setExperienceStateRecoil({
+            ...experienceStateRecoil,
+            project_id: projectData.project_id,
+        })
+
     }
 
     // console.log(key);
