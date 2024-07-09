@@ -42,19 +42,21 @@ const AddProjectModal = ({
         })
     ]
 
-    const startDateHandler = (startDate) => [
+    const startDateHandler = (startDate) => {
+        setSelectedStartDate(startDate);
         setProjectData({
             ...projectData,
             start_date: startDate,
         })
-    ]
+    }
 
-    const finishDateHandler = (finishDate) => [
+    const finishDateHandler = (finishDate) => {
+        setSelectedEndDate(finishDate);
         setProjectData({
             ...projectData,
             finish_date: finishDate,
         })
-    ]
+    }
 
     useEffect(() => {
         setProjectData({
@@ -66,7 +68,7 @@ const AddProjectModal = ({
     console.log(projectData);
 
     useEffect(() => {
-        if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0) {
+        if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0 && projectData?.name !== null && projectData?.description !== null && projectData?.part !== null && projectData?.start_date !== null && projectData?.finish_date !== null) {
             setValid(true);
         }
         else {
@@ -89,7 +91,9 @@ const AddProjectModal = ({
 
 
     const handleDivClick = () => {
-        fileInputRef.current.click();
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
     };
 
     const fileUploadHandler = (e) => {
@@ -123,10 +127,15 @@ const AddProjectModal = ({
                 image: picURL,
             })
         }
+        fileInputRef.current.value = null;
     }
 
     const addProjectHandler = async () => {
         if (valid) {
+            if (projectData.start_date > projectData.finish_date) {
+                alert("프로젝트 시작일이 종료일보다 늦습니다. 진행기간을 다시 확인 후, 재설정해주세요.");
+                return 0;
+            }
             try {
                 console.log(projectData);
                 const response = await postNewProjectAPI(projectData);
@@ -218,7 +227,6 @@ const AddProjectModal = ({
                                         locale={ko}
                                         selected={selectedStartDate}
                                         onChange={(date) => {
-                                            setSelectedStartDate(date);
                                             startDateHandler(date);
                                         }}
                                     />
@@ -235,7 +243,6 @@ const AddProjectModal = ({
                                         locale={ko}
                                         selected={selectedEndDate}
                                         onChange={(date) => {
-                                            setSelectedEndDate(date);
                                             finishDateHandler(date);
                                         }}
                                     />
@@ -258,8 +265,10 @@ const AddProjectModal = ({
                                         style={{ width: '18px', height: '18px', objectFit: 'cover', marginRight: "7px" }}
                                     />
                                     {projectData.picture.name}
+                                    <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                 </ModalProjectImageUploadContent>
-                                : <ModalProjectImageUploadContent>  <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
+                                : <ModalProjectImageUploadContent>
+                                    <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                     <ModalProjectImageIcon src={ImageIcon} />
                                     이미지 업로드
                                 </ModalProjectImageUploadContent>}
