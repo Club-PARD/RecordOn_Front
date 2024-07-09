@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { FixArea, FixAreaLabel, TextAreaWidth } from "./LowerComponents/LowerArea";
+import {
+  FixArea,
+  FixAreaLabel,
+  TextAreaWidth,
+} from "./LowerComponents/LowerArea";
 import { useRecoilState } from "recoil";
 import {
   experienceState,
@@ -7,11 +11,13 @@ import {
 } from "../../../../../Atom/ExpRecordAtom";
 
 const FixedArea = () => {
+  // 리코일 변수
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
-
+  
+  // 임시 변수
   const [commonQuestionAnswer, setCommonQuestionAnswer] = useState("");
 
   // 입력 내용을 임시 변수에 관리
@@ -27,18 +33,17 @@ const FixedArea = () => {
         common_question_answer: commonQuestionAnswer,
       }));
     }
-  }, [isExpRecordSubmitted]);
+  }, [isExpRecordSubmitted, commonQuestionAnswer, setExperience]);
 
   return (
     <>
-      {console.log(experience)}
       {/* 고정 질문 영역 */}
       <FixArea>
         <FixAreaLabel>
           Q. 오늘 있었던 경험을 떠올리며, 연상되는 다섯 가지 단어를 적어보세요!
         </FixAreaLabel>
         <TextAreaWidth
-        placeholder="예시) 현직자 멘토링, 굿즈 발주 넣기, 원페이저 작성, 디자이너와의 소통이슈, B2B 전략수립"
+          placeholder="예시) 현직자 멘토링, 굿즈 발주 넣기, 원페이저 작성, 디자이너와의 소통이슈, B2B 전략수립"
           height="88px"
           value={commonQuestionAnswer}
           onChange={handleChange}
