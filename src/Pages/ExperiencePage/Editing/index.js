@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import {
-  handleExpRecordSubmit,
-  experienceState,
-} from "../../../Atom/ExpRecordAtom";
-import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
-import ContentArea from "./Components/ContentsArea";
-import { postExperienceAPI } from "../../../Axios/ExperienceApi";
 import DeleteModal from "../../../Common/DeleteModal";
-
-const WritingPage = () => {
+import {
+  editOneExpereienceAPI,
+} from "../../../Axios/ExperienceApi";
+import { experienceState } from "../../../Atom/ExpRecordAtom";
+import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
+import { handleExpRecordSubmit } from "../../../Atom/ExpRecordAtom";
+import ContentsArea
+ from "./Components/ContentsArea";
+const EditPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
@@ -24,11 +24,11 @@ const WritingPage = () => {
     setIsExpRecordSubmitted(true);
 
     try {
-      await postExperienceAPI(experience);
+      await editOneExpereienceAPI(experience);
       // refreshRecoil();
       // navigate("/experience");
-      console.log  ("경험 데이터가 제출되었습니다.");
-      console.log (experience);
+      console.log("경험 데이터가 제출되었습니다.");
+      console.log(experience);
     } catch (error) {
       console.error("경험 데이터 제출 중 오류가 발생했습니다:", error);
       setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
@@ -58,7 +58,9 @@ const WritingPage = () => {
     setIsModalOpen(false);
   };
 
-  {console.log (experience)}
+  {
+    console.log(experience);
+  }
 
   return (
     <Div>
@@ -73,7 +75,7 @@ const WritingPage = () => {
       </GoBackArea>
 
       {/* 내용 작성 영역 */}
-      <ContentArea />
+      <ContentsArea />
 
       {/* 버튼 */}
       <ConfirmButton onClick={handleSubmit}>경험기록 작성완료</ConfirmButton>
@@ -168,5 +170,4 @@ const ConfirmButton = styled.button`
   cursor: pointer;
 `;
 
-export default WritingPage;
-export { Div, GoBackArea, MarginTopForGoBackDiv, MarginBottomForGoBackDiv, GoBackDiv, GoBackIcon };
+export default EditPage;

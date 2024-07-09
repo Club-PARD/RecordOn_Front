@@ -36,7 +36,7 @@ const ProjectCard = ({ projectData }) => {
         })
         setExperienceStateRecoil({
             ...experienceStateRecoil,
-            project_id: projectData.project_id,
+            projects_id: projectData.project_id,
         })
         navigate("/experience");
     }
