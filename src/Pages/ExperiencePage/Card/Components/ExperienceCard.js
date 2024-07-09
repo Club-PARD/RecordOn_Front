@@ -1,22 +1,28 @@
 import styled from "styled-components"
 // import DefaultCardImg from "../../../Assets/Experience_Default.png"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const ExperienceCard = ({ experienceData }) => {
 
     const [userImg, setUserImg] = useState("");
+    const navigate = useNavigate();
 
     const keyword = [...new Set(experienceData.tag_name)];
 
+    const cardClickHandler = () => {
+        navigate("/view");
+    }
 
     // console.log(key);
     // console.log(experienceData);
     // console.log(keyword);
 
+
     return (
 
-        <Container>
+        <Container onClick={cardClickHandler}>
             <CardContent>
                 <CardDate>
                     {experienceData.exp_date?.substring(0, 10)}
