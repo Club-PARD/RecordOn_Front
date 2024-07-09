@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { ReactComponent as CloseIcon } from "../../../Assets/close.svg";
 import Calendar from "../../../Common/Calendar";
-import ImageIcon from "../../../Assets/ImageIcon.png";
+import ImageIcon from "../../../Assets/ImageIcon.svg";
 import { useRef } from "react";
 import { postNewProjectAPI, postNewProjectImageAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
@@ -93,7 +93,9 @@ const AddProjectModal = ({
     };
 
     const fileUploadHandler = (e) => {
+        // console.log(e.target.files);
         const file = e.target.files[0];
+        // console.log(file);
         if (file) {
 
             const validFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -112,6 +114,8 @@ const AddProjectModal = ({
             e.persist();
 
             const picURL = URL.createObjectURL(file);
+
+            // console.log(picURL);
 
             setProjectData({
                 ...projectData,

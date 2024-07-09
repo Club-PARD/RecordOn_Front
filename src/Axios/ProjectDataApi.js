@@ -16,12 +16,15 @@ export const getUserProjectDataAPI = async (id) => {
 };
 
 // 유저의 한 프로젝트 데이터를 받아옴
-export const getOneProjectDataAPI = async (project_id) => {
-
+export const getOneProjectDataAPI = async (userData) => {
+    console.log(userData);
     try {
-        const response = await axios.get(`${process.env.REACT_APP_DEV_URL}projects/${project_id}`);
+        const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects/${userData.project_id}`,
+            {
+                user_id: userData.user_id
+            });
         console.log(response.data)
-        return response.data
+        return response.data.response_object
     } catch (error) {
         console.error('Error fetching data: ', error);
         alert("유저 정보 로딩에 실패하였습니다.");
@@ -33,8 +36,8 @@ export const getUserProjectDataFilteredAPI = async (filter) => {
     console.log(filter);
     try {
         const response = await axios.post(`${process.env.REACT_APP_DEV_URL}projects/search`, filter);
-        console.log(response.data)
-        return response.data
+        console.log(response.data.response_object)
+        return response.data.response_object
     } catch (error) {
         console.error('Error fetching data: ', error);
         alert("유저 정보 로딩에 실패하였습니다.");
@@ -111,8 +114,8 @@ export const getUserExperienceDataFilteredAPI = async (filter) => {
     try {
         console.log(`${process.env.REACT_APP_DEV_URL}experiences/search`);
         const response = await axios.post(`${process.env.REACT_APP_DEV_URL}experiences/search`, filter);
-        console.log(response.data)
-        return response.data
+        console.log(response.data.response_object)
+        return response.data.response_object
     } catch (error) {
         console.error('Error fetching data: ', error);
         alert("유저 정보 로딩에 실패하였습니다.");

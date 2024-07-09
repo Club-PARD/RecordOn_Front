@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import ImageIcon from "../../../../Assets/ImageIcon.png";
+import ImageIcon from "../../../../Assets/ImageIcon.svg";
 import { useRef } from "react";
 import { postNewProjectImageAPI, updateProjectAPI } from "../../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
@@ -21,16 +21,20 @@ const EditProjectModal = ({
     deleteButtonText,
     onKeep,
     onDelete,
+    propsProjectData,
 }) => {
 
-    const [selectedStartDate, setSelectedStartDate] = useState("");
-    const [selectedEndDate, setSelectedEndDate] = useState("");
+    const [selectedStartDate, setSelectedStartDate] = useState(propsProjectData?.start_date);
+    const [selectedEndDate, setSelectedEndDate] = useState(propsProjectData?.finish_date);
     const fileInputRef = useRef(null);
-    const [projectData, setProjectData] = useState({});
+    const [projectData, setProjectData] = useState(propsProjectData);
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
-    const [valid, setValid] = useState(false);
+    const [imageChanged, setImageChanged] = useState(false);
+    const [valid, setValid] = useState(true);
     const navigate = useNavigate();
+
+    console.log(projectData);
 
     const userInputHandler = (e) => [
         setProjectData({
@@ -53,16 +57,17 @@ const EditProjectModal = ({
         })
     ]
 
-    useEffect(() => {
-        setProjectData({
-            ...projectData,
-            user_id: userData.user_id,
-        })
-    }, [])
+    // useEffect(() => {
+    //     setProjectData({
+    //         ...projectData,
+    //         user_id: userData.user_id,
+    //     })
+    // }, [])
 
-    console.log(projectData);
+
 
     useEffect(() => {
+        console.log(projectData.finish_date?.length !== 0);
         if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0) {
             setValid(true);
         }
@@ -123,14 +128,19 @@ const EditProjectModal = ({
             try {
                 const response = await updateProjectAPI(projectId.project_id, projectData);
                 console.log(response);
-                const formData = new FormData();
-                formData.append('image', projectData.picture);
-                const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
-                console.log(response2);
                 setUserData({
                     ...userData,
                     project_id: response.response_object.id,
                 });
+
+                // 이미지가 수정되었을 경우에만 업로드 
+                if (imageChanged) {
+                    const formData = new FormData();
+                    formData.append('image', projectData.picture);
+                    const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
+                    console.log(response2);
+                }
+
                 handleOverlayClick();
                 navigate("/experience");
             }
@@ -157,7 +167,7 @@ const EditProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectTitleText>
-                        <ModalProjectTitleInput name="name" onChange={userInputHandler} placeholder="15자 이내로 입력해주세요.">
+                        <ModalProjectTitleInput name="name" onChange={userInputHandler} placeholder="15자 이내로 입력해주세요." defaultValue={propsProjectData?.project_name}>
 
                         </ModalProjectTitleInput>
                     </ModalProjectTitle>
@@ -168,7 +178,7 @@ const EditProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectGoalText>
-                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="이번 프로젝트 목표 또는 포부를 한 줄로 짧게 남겨주세요!  50자 이내로 입력해주세요.">
+                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="이번 프로젝트 목표 또는 포부를 한 줄로 짧게 남겨주세요!  50자 이내로 입력해주세요." defaultValue={propsProjectData?.description}>
 
                         </ModalProjectGoalInput>
                     </ModalProjectGoal>
@@ -180,7 +190,7 @@ const EditProjectModal = ({
                                     *
                                 </Asterisk>
                             </ModalProjectRoleText>
-                            <ModalProjectRoleInput name="part" onChange={userInputHandler} placeholder="10자 이내로 입력해주세요.">
+                            <ModalProjectRoleInput name="part" onChange={userInputHandler} placeholder="10자 이내로 입력해주세요." defaultValue={propsProjectData?.part}>
 
                             </ModalProjectRoleInput>
                         </ModalProjectRole>
@@ -246,7 +256,7 @@ const EditProjectModal = ({
                                 </ModalProjectImageUploadContent>
                                 : <ModalProjectImageUploadContent>  <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                     <ModalProjectImageIcon src={ImageIcon} />
-                                    이미지 업로드
+                                    {propsProjectData?.project_image}
                                 </ModalProjectImageUploadContent>}
 
                         </ModalProjectImageUpload>
@@ -254,7 +264,7 @@ const EditProjectModal = ({
                     <ModalProjectButtonDiv>
                         <ModalProjectButtons>
                             <ModalProjectAddButton onClick={editProjectHandler} isValid={valid}>
-                                추가하기
+                                수정하기
                             </ModalProjectAddButton>
                             <ModalProjectCancelButton name="exit" >
                                 취소
