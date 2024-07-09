@@ -38,7 +38,7 @@ const ProjectCard = ({ projectData }) => {
             ...experienceStateRecoil,
             project_id: projectData.project_id,
         })
-
+        navigate("/experience");
     }
 
     // console.log(key);
