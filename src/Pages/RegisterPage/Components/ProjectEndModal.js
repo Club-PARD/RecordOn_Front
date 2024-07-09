@@ -10,8 +10,6 @@ import CheckboxGrid from './CheckBoxGrid.js';
 function ProjectEndModal ({ show, onClose}) {
 
 
-const [selectedJobKeyword, setSelectedJobKeyword] = useState("");
-
   useEffect(() => {
     if(show) {
       document.body.style.overflow = 'hidden';
@@ -79,6 +77,7 @@ const StyledClose =styled(Close)`
   left: 386px;
   flex-shrink: 0;
   cursor: pointer;
+  z-index: 100000;
 `;
 
 const Container = styled.div`

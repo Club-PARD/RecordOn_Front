@@ -104,6 +104,7 @@ const RegisterBtn = styled.button`
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight : ${(props) => props.theme.fontWeights.TextM};
   line-height: normal;
+  cursor: pointer;
 
   &:disabled {
     background: ${(props) => props.theme.color.base6};
@@ -118,6 +119,7 @@ const CheckInput = styled.input`
   height: 30px;
   flex-shrink: 0;
   justify-content: center;
+  cursor: pointer;
 
   
 `;
@@ -135,10 +137,18 @@ flex-shrink: 0;
 color : ${(props) => props.theme.color.black};
   background: ${(props) => props.theme.color.white};
 
+  ${CheckInput}:hover + &{
+  border: 1px solid ${(props) => props.theme.color.main};
+  color : ${(props) => props.theme.color.white};
+  background: ${(props) => props.theme.color.main};
+  cursor: pointer;
+  }
+
 ${CheckInput}:checked + &{
   border: 1px solid ${(props) => props.theme.color.main};
   color : ${(props) => props.theme.color.white};
   background: ${(props) => props.theme.color.main};
+  cursor: pointer;
   }
   
 
