@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 // 컴포넌트
-import DropdownQuestion from "../DropdownQuestion";
-import ExpTag from "../ExpTag";
-import { ReactComponent as DeleteIcon } from "../../../../Assets/DeleteButton.svg";
+import DropdownQuestion from "./DropdownQuestion";
+import ExpTag from "./ExpTag";
+import { ReactComponent as DeleteIcon } from "../../../../../../Assets/DeleteButton.svg";
 
 // Api 문서
-import { getAllTagAndQuestionAPI } from "../../../../Axios/StoredTagInfoApi";
+import { getAllTagAndQuestionAPI } from "../../../../../../Axios/StoredTagInfoApi";
 
 // 리코일
 import { useRecoilState } from "recoil";
 import {
   experienceState,
   handleExpRecordSubmit,
-} from "../../../../Atom/ExpRecordAtom";
+} from "../../../../../../Atom/ExpRecordAtom";
 
 const AnswerArea = () => {
   // 리코일 변수

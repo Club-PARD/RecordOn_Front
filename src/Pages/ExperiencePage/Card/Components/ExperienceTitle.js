@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import AddExperience from "./AddExperience";
 import { useState } from "react";
-import { getUserExperienceDataAPI } from "../../../Axios/ProjectDataApi";
+import { getUserExperienceDataAPI } from "../../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserData, recoilUserProjectNum } from "../../../Atom/UserDataAtom";
+import { recoilUserData } from "../../../../Atom/UserDataAtom";
 import { useEffect } from "react";
-import ArrowGray from "../../../Assets/GoBackIcon.svg"
-import ArrowWhite from "../../../Assets/ArrowWhite.svg"
-import BarIcon from "../../../Assets/BarIcon.svg"
-import Project_Default from "../../../Assets/Project_Default.png"
+import ArrowGray from "../../../../Assets/GoBackIcon.svg"
+import ArrowWhite from "../../../../Assets/ArrowWhite.svg"
+import BarIcon from "../../../../Assets/BarIcon.svg"
+import Project_Default from "../../../../Assets/Project_Default.png"
 import FinishProject from "./FinishProject";
 import RestartProject from "./RestartProject";
 import { useNavigate } from "react-router-dom";

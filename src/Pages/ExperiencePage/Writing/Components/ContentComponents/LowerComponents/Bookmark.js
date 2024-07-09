@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { getUrlMetaData } from "../../../../Axios/ReferenceApi";
+import { getUrlMetaData } from "../../../../../../Axios/ReferenceApi";
 
 const Bookmark = ({ url }) => {
   const [metaData, setMetaData] = useState(null);

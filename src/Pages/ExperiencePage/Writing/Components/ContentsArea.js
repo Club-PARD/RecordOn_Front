@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 import UppderArea from "../Components/ContentComponents/UpperArea";
 import FixedArea from "../Components/ContentComponents/FixedArea";
-import AnswerArea from "../Components/ContentComponents/AnswerArea";
-import LowerArea from "../Components/ContentComponents/LowerArea";
+import AnswerArea from "../Components/ContentComponents/QnAComponents/AnswerArea";
+import LowerArea from "../Components/ContentComponents/LowerComponents/LowerArea";
 
 const ContentsArea = () => {
   return (

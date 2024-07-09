@@ -4,7 +4,7 @@ import styled from "styled-components";
 import UpperArea, {
   StyledTag,
   FixAreaLabel,
-} from "./FinishComponents/UpperArea";
+} from "./Components/UpperArea";
 import {
   Div,
   GoBackArea,
@@ -12,17 +12,18 @@ import {
   MarginBottomForGoBackDiv,
   GoBackDiv,
   GoBackIcon,
-} from "./index";
-import Bookmark from "./Components/ContentComponents/Bookmark";
+} from "../Writing/index";
+
+import Bookmark from "../Writing/Components/ContentComponents/LowerComponents/Bookmark";
 import {
   FixArea,
   BookmarkComponent,
-} from "./Components/ContentComponents/LowerArea";
-import DeleteModal from "../../Common/DeleteModal";
+} from "../Writing/Components/ContentComponents/LowerComponents/LowerArea";
+import DeleteModal from "../../../Common/DeleteModal";
 import {
   getOneExperienceAPI,
   deleteOneExperienceAPI,
-} from "../../Axios/ExperienceApi";
+} from "../../../Axios/ExperienceApi";
 
 const ViewPage = () => {
   const keywords = [

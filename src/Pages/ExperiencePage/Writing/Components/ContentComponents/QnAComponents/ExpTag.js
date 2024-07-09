@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as RightArrow } from "../../../Assets/RightArrow.svg";
+import { ReactComponent as RightArrow } from "../../../../../../Assets/RightArrow.svg";
 
 const ExpTag = ({ onSelect }) => {
   const keywords = [

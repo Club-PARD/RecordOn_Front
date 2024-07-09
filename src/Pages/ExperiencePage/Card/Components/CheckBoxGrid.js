@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 
 import { useRecoilState } from "recoil";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
-import { putProjectTagAPI } from "../../../Axios/ProjectDataApi";
+import { recoilUserData } from "../../../../Atom/UserDataAtom";
+import { putProjectTagAPI } from "../../../../Axios/ProjectDataApi";
 import { useNavigate } from "react-router-dom";
 
 
