@@ -13,7 +13,6 @@ import {
   GoBackDiv,
   GoBackIcon,
 } from "../Writing/index";
-
 import Bookmark from "../Writing/Components/ContentComponents/LowerComponents/Bookmark";
 import {
   FixArea,
