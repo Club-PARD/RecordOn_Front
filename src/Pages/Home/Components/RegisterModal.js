@@ -6,7 +6,7 @@ import { isLogined, recoilLoginData, recoilUserData } from "../../../Atom/UserDa
 import { ReactComponent as Close } from "../../../Assets/close.svg";
 import Check from "../../../Assets/Check.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
-import DropdownJob from "../Components/DropdownJob.js";
+import DropdownJob from "./DropdownJob.js";
 import { registerUserAPI } from '../../../Axios/RegisterApi.js'
 import { useNavigate } from 'react-router-dom';
 
