@@ -7,20 +7,20 @@ import {
 import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import {
+  answerState,
   experienceState,
   handleExpRecordSubmit,
 } from "../../../../../Atom/ExpRecordAtom";
 
 const UppderArea = () => {
-  // 리코일 변수
+  const [answer, setAnswer] = useRecoilState(answerState);
   const [experience, setExperience] = useRecoilState(experienceState);
+  const [expDate, setExpDate] = useState(new Date());
+  const [expTitle, setExpTitle] = useState("");
+
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
-
-  // 임시 변수
-  const [expDate, setExpDate] = useState(new Date());
-  const [expTitle, setExpTitle] = useState("");
 
   // 입력 내용을 임시 변수에 관리
   const handleDateChange = (date) => {
@@ -39,7 +39,7 @@ const UppderArea = () => {
         title: expTitle,
       }));
     }
-  }, [isExpRecordSubmitted, expDate, expTitle, setExperience]);
+  }, [isExpRecordSubmitted]);
 
   return (
     <>
@@ -49,7 +49,7 @@ const UppderArea = () => {
           <StyledLabel>소제목</StyledLabel>
           <StyledInput
             type="text"
-            placeholder="가장 기억에 남는 활동을 중심으로 소제목을 작성해보세요! (15자 이내 공백 미포함)"
+            defaultValue={answer && answer.title}
             onChange={handleTitleChange}
           />
         </UppderPart>
@@ -66,6 +66,7 @@ const UppderArea = () => {
               locale={ko}
               selected={expDate}
               onChange={handleDateChange}
+              defaultValue={answer && answer.exp_date}
             />
           </ProjectDateWrapper>
         </UppderPart>

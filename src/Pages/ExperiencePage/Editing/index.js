@@ -1,55 +1,69 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import { useRecoilState } from "recoil";
 import {
   handleExpRecordSubmit,
   experienceState,
 } from "../../../Atom/ExpRecordAtom";
-import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
-import ContentArea from "./Components/ContentsArea";
-import { postExperienceAPI } from "../../../Axios/ExperienceApi";
-import DeleteModal from "../../../Common/DeleteModal";
-import useModal from "../../../Common/useModal";
-import { resetExperienceState } from "./Components/resetExperienceState";
 
-const WritingPage = () => {
+import { editOneExpereienceAPI } from "../../../Axios/ExperienceApi";
+
+import DeleteModal from "../../../Common/DeleteModal";
+import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
+
+import ContentsArea from "./Components/ContentsArea";
+const EditPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
 
   const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useModal();
-  const [isUpdated, setIsUpdated] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    setIsUpdated(true);
-  };
 
-  const submitData = async () => {
-    if (isExpRecordSubmitted && isUpdated) {
-      {
-        console.log(experience);
-      }
-      try {
-        const response = await postExperienceAPI(experience);
-        console.log("request successful: ", response);
-      } catch (error) {
-        console.error("request failed: ", error);
-      } finally {
-        setIsExpRecordSubmitted(false);
-        setIsUpdated(false);
-        navigate("/experience");
-      }
+    try {
+      await editOneExpereienceAPI(experience);
+      // refreshRecoil();
+      // navigate("/experience");
+      console.log("경험 데이터가 제출되었습니다.");
+      console.log(experience);
+    } catch (error) {
+      console.error("경험 데이터 제출 중 오류가 발생했습니다:", error);
+      setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
     }
   };
 
-  useEffect(() => {
-    submitData();
-  }, [isExpRecordSubmitted, isUpdated, experience]);
+  const refreshRecoil = () => {
+    setIsExpRecordSubmitted(false);
+    setExperience({
+      user_id: "",
+      exp_date: "",
+      exp_title: "",
+      tag_ids: [],
+      free_content: "",
+      question_ids: [],
+      question_answers: [],
+      reference_links: [],
+      common_question_answer: "",
+    });
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  {
+    console.log(experience);
+  }
 
   return (
     <Div>
@@ -58,36 +72,38 @@ const WritingPage = () => {
         <MarginTopForGoBackDiv />
         <GoBackDiv onClick={openModal}>
           <GoBackIcon />
-          <div>경험 기록 페이지 나가기</div>
+          <div>경험 수정 페이지 나가기</div>
         </GoBackDiv>
         <MarginBottomForGoBackDiv />
       </GoBackArea>
 
       {/* 내용 작성 영역 */}
-      <ContentArea />
+      <ContentsArea />
 
       {/* 버튼 */}
-      <ConfirmButton onClick={handleSubmit}>경험기록 작성완료</ConfirmButton>
+      <ConfirmButton onClick={handleSubmit}>경험기록 수정완료</ConfirmButton>
 
       {/* 모달 컴포넌트 */}
       <DeleteModal
         isOpen={isModalOpen}
         onClose={closeModal} // 모달 닫기 함수 설정
-        bigAlertText1="중단하신 기록은"
+        bigAlertText1="수정하신 기록은"
         bigAlertText2="저장되지 않습니다."
-        smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
-        keepButtonText="남아서 기록하기"
+        smallAlertText="수정 페이지에서 정말 나가시겠습니까?"
+        keepButtonText="남아서 수정하기"
         deleteButtonText="나가기"
         keepButtonWidth="151px"
         onKeep={() => {
+          // '계속 작성' 버튼 클릭 시 처리 로직
           console.log("계속 작성");
-          closeModal();
+          closeModal(); // 모달 닫기
         }}
         onDelete={() => {
+          // '나가기' 버튼 클릭 시 처리 로직
           console.log("나가기");
-          resetExperienceState(setExperience, setIsExpRecordSubmitted);
+          // refreshRecoil();
           closeModal(); // 모달 닫기
-          navigate("/exprience");
+          navigate("/experience");
         }}
       />
     </Div>
@@ -157,12 +173,4 @@ const ConfirmButton = styled.button`
   cursor: pointer;
 `;
 
-export default WritingPage;
-export {
-  Div,
-  GoBackArea,
-  MarginTopForGoBackDiv,
-  MarginBottomForGoBackDiv,
-  GoBackDiv,
-  GoBackIcon,
-};
+export default EditPage;
