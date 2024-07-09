@@ -40,9 +40,9 @@ const WritingPage = () => {
       } catch (error) {
         console.error("request failed: ", error);
       } finally {
-        setIsExpRecordSubmitted(false);
-        setIsUpdated(false);
-        navigate("/experience");
+        // setIsExpRecordSubmitted(false);
+        // setIsUpdated(false);
+        // navigate("/experience");
       }
     }
   };

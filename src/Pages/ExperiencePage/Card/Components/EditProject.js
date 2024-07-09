@@ -18,7 +18,7 @@ const EditProject = () => {
         console.log(response);
         setProjectData({
             user_id: userData.user_id,
-            project_name: response.project_name,
+            name: response.project_name,
             description: response.description,
             part: response.part,
             start_date: new Date(response.start_date),

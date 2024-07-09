@@ -43,32 +43,27 @@ const EditProjectModal = ({
         })
     ]
 
-    const startDateHandler = (startDate) => [
+    const startDateHandler = (startDate) => {
+        setSelectedStartDate(startDate);
         setProjectData({
             ...projectData,
             start_date: startDate,
         })
-    ]
+    }
 
-    const finishDateHandler = (finishDate) => [
+    const finishDateHandler = (finishDate) => {
+        setSelectedEndDate(finishDate);
         setProjectData({
             ...projectData,
             finish_date: finishDate,
         })
-    ]
-
-    // useEffect(() => {
-    //     setProjectData({
-    //         ...projectData,
-    //         user_id: userData.user_id,
-    //     })
-    // }, [])
+    }
 
 
 
     useEffect(() => {
         console.log(projectData.finish_date?.length !== 0);
-        if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0) {
+        if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0 && projectData?.name !== null && projectData?.description !== null && projectData?.part !== null && projectData?.start_date !== null && projectData?.finish_date !== null) {
             setValid(true);
         }
         else {
@@ -120,18 +115,19 @@ const EditProjectModal = ({
                 picture: file,
                 image: picURL,
             })
+            setImageChanged(true);
         }
     }
 
     const editProjectHandler = async () => {
         if (valid) {
+            if (projectData.start_date > projectData.finish_date) {
+                alert("프로젝트 시작일이 종료일보다 늦습니다. 진행기간을 다시 확인 후, 재설정해주세요.");
+                return 0;
+            }
             try {
                 const response = await updateProjectAPI(projectId.project_id, projectData);
                 console.log(response);
-                setUserData({
-                    ...userData,
-                    project_id: response.response_object.id,
-                });
 
                 // 이미지가 수정되었을 경우에만 업로드 
                 if (imageChanged) {
@@ -140,6 +136,11 @@ const EditProjectModal = ({
                     const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
                     console.log(response2);
                 }
+                setUserData({
+                    ...userData,
+                    project_id: response.response_object.id,
+                });
+
 
                 handleOverlayClick();
                 navigate("/experience");
@@ -167,7 +168,7 @@ const EditProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectTitleText>
-                        <ModalProjectTitleInput name="name" onChange={userInputHandler} placeholder="15자 이내로 입력해주세요." defaultValue={propsProjectData?.project_name}>
+                        <ModalProjectTitleInput name="name" onChange={userInputHandler} placeholder="15자 이내로 입력해주세요." defaultValue={propsProjectData?.name}>
 
                         </ModalProjectTitleInput>
                     </ModalProjectTitle>
@@ -213,7 +214,6 @@ const EditProjectModal = ({
                                         locale={ko}
                                         selected={selectedStartDate}
                                         onChange={(date) => {
-                                            setSelectedStartDate(date);
                                             startDateHandler(date);
                                         }}
                                     />
@@ -230,7 +230,6 @@ const EditProjectModal = ({
                                         locale={ko}
                                         selected={selectedEndDate}
                                         onChange={(date) => {
-                                            setSelectedEndDate(date);
                                             finishDateHandler(date);
                                         }}
                                     />
@@ -253,8 +252,10 @@ const EditProjectModal = ({
                                         style={{ width: '18px', height: '18px', objectFit: 'cover', marginRight: "7px" }}
                                     />
                                     {projectData.picture.name}
+                                    <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                 </ModalProjectImageUploadContent>
-                                : <ModalProjectImageUploadContent>  <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
+                                : <ModalProjectImageUploadContent>
+                                    <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                     <ModalProjectImageIcon src={ImageIcon} />
                                     {propsProjectData?.project_image}
                                 </ModalProjectImageUploadContent>}

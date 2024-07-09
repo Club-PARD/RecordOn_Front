@@ -10,7 +10,7 @@ export const getUserProjectDataAPI = async (id) => {
         return response.data
     } catch (error) {
         console.error('Error fetching data: ', error);
-        alert("유저 정보 로딩에 실패하였습니다.");
+        // alert("유저 정보 로딩에 실패하였습니다.");
     }
 
 };
@@ -27,7 +27,7 @@ export const getOneProjectDataAPI = async (userData) => {
         return response.data.response_object
     } catch (error) {
         console.error('Error fetching data: ', error);
-        alert("유저 정보 로딩에 실패하였습니다.");
+        // alert("유저 정보 로딩에 실패하였습니다.");
     }
 
 };
@@ -40,7 +40,7 @@ export const getUserProjectDataFilteredAPI = async (filter) => {
         return response.data.response_object
     } catch (error) {
         console.error('Error fetching data: ', error);
-        alert("유저 정보 로딩에 실패하였습니다.");
+        // alert("유저 정보 로딩에 실패하였습니다.");
     }
 };
 
@@ -82,7 +82,7 @@ export const postNewProjectImageAPI = async (formData, project_id) => {
 
 export const updateProjectAPI = async (project_id, data) => {
     try {
-        console.log(`${process.env.REACT_APP_DEV_URL}projects`);
+        console.log(data);
         const response = await axios.put(`${process.env.REACT_APP_DEV_URL}projects/${project_id}`, data);
         console.log(response.data)
         return response.data
@@ -118,7 +118,7 @@ export const getUserExperienceDataFilteredAPI = async (filter) => {
         return response.data.response_object
     } catch (error) {
         console.error('Error fetching data: ', error);
-        alert("유저 정보 로딩에 실패하였습니다.");
+        // alert("유저 정보 로딩에 실패하였습니다.");
     }
 };
 
@@ -131,7 +131,7 @@ export const getUserExperienceDataAPI = async (userKey) => {
         return response.data
     } catch (error) {
         console.error('Error fetching data: ', error);
-        alert("유저 정보 로딩에 실패하였습니다.");
+        // alert("유저 정보 로딩에 실패하였습니다.");
     }
 };
 
@@ -146,7 +146,7 @@ export const restartProjectAPI = async (projectData) => {
         return response.data
     } catch (error) {
         console.error('Error fetching data: ', error);
-        alert("유저 정보 로딩에 실패하였습니다.");
+        // alert("유저 정보 로딩에 실패하였습니다.");
     }
 };
 
@@ -162,7 +162,7 @@ export const putProjectTagAPI = async (projectData, data) => {
         return response.data
     } catch (error) {
         console.error('Error fetching data: ', error);
-        alert("유저 정보 로딩에 실패하였습니다.");
+        // alert("유저 정보 로딩에 실패하였습니다.");
     }
 }
 export const getAllLink = async (data) => {

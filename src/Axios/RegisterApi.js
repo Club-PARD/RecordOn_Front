@@ -11,7 +11,7 @@ export const registerUserAPI = async (loginData) => {
         return response.data
     } catch (error) {
         console.error('Error fetching data: ', error);
-        alert("유저 정보 로딩에 실패하였습니다.");
+        // alert("유저 정보 로딩에 실패하였습니다.");
     }
 
 };
