@@ -7,7 +7,8 @@ export const postExperienceAPI = async (data) => {
     console.log (data);
     try {
         const response = await axios.post (`${server}experiences`, data);
-        console.log (response.data);
+        console.log (response.status);
+        return response;
     } catch (error) {
         console.error(error);
     }

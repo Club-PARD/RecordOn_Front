@@ -31,8 +31,10 @@ const AnswerArea = () => {
     {
       id: 0,
       selectedTag: null,
-      selectedQuestion: null,
-      questionOptions: [],
+      selectedQuestionText: "",
+      selectedQuestionId: null,
+      questionOptionIds: [],
+      questionOptionTexts: [],
       text: "",
       isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
       isQuestionSelected: false, // true일 경우, textarea 배경색이 달라짐.
@@ -60,8 +62,10 @@ const AnswerArea = () => {
         {
           id: newSectionId,
           selectedTag: null,
-          selectedQuestion: null,
-          questionOptions: [],
+          selectedQuestionText: "",
+          selectedQuestionId: null,
+          questionOptionIds: [],
+          questionOptionTexts: [],
           text: "",
           isTagSelected: false,
           isQuestionSelected: false,
@@ -85,19 +89,25 @@ const AnswerArea = () => {
             return {
               ...section,
               selectedTag: null,
-              questionOptions: [],
-              selectedQuestion: null,
+              questionOptionIds: [],
+              questionOptionTexts: [],
+              selectedQuestionText: "",
+              selectedQuestionId: null,
               isTagSelected: false,
               isQuestionSelected: false,
             };
           }
   
-          const newQuestionOptions = tagAndQuestion[tagId]?.questions || [];
+          const newQuestionOptionTexts = tagAndQuestion[tagId]?.questions || [];
+          const newQuestionOptionIds = tagAndQuestion[tagId]?.question_ids || [];
+
           return {
             ...section,
             selectedTag: tagId,
-            questionOptions: newQuestionOptions,
-            selectedQuestion: null,
+            questionOptionTexts: newQuestionOptionTexts,
+            questionOptionIds: newQuestionOptionIds,
+            selectedQuestionText: "",
+            selectedQuestionId: null,
             isTagSelected: true,
             isQuestionSelected: false,
           };
@@ -109,12 +119,12 @@ const AnswerArea = () => {
     };
   
     // 질문 선택 핸들러
-    const handleQuestionSelectInSection = (questionId, id) => {
+    const handleQuestionSelectInSection = (selectedQuestionId, id) => {
       const updatedSections = experienceSections.map((section) =>
         section.id === id
           ? {
               ...section,
-              selectedQuestion: questionId,
+              selectedQuestionId: selectedQuestionId,
               isQuestionSelected: true,
             }
           : section
@@ -139,7 +149,7 @@ const AnswerArea = () => {
             section.selectedTag !== null ? section.selectedTag + 1 : null
           ),
           question_ids: experienceSections.map((section) =>
-            section.selectedQuestion !== null ? section.selectedQuestion + 1 : null
+            section.selectedQuestionId !== null ? section.selectedQuestionId : null
           ),
           question_answers: experienceSections.map((section) => section.text),
         }));
@@ -169,9 +179,10 @@ const AnswerArea = () => {
             />
             <DropdownQuestion
               isTagSelected={section.isTagSelected}
-              options={section.questionOptions}
-              onSelect={(questionId) =>
-                handleQuestionSelectInSection(questionId, section.id)
+              optionTexts={section.questionOptionTexts}
+              optionIds={section.questionOptionIds}
+              onSelect={(selectedQuestionId) =>
+                handleQuestionSelectInSection(selectedQuestionId, section.id)
               }
               selectedTag={section.selectedTag}
             />
