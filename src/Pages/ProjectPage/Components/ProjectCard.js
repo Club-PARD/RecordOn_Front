@@ -2,7 +2,7 @@ import styled from "styled-components"
 import DefaultCardImg from "../../../Assets/Project_Default.png"
 import DefaultCardImg2 from "../../../Assets/Project_Default2.png"
 import ProjectFolder from "../../../Assets/ProjectFolder.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import { experienceState } from "../../../Atom/ExpRecordAtom";
@@ -17,9 +17,10 @@ const ProjectCard = ({ projectData }) => {
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const navigate = useNavigate();
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
+    const [allowNavigate, setAllowNavigate] = useState(false);
 
 
-    const projectCardClickHandler = () => {
+    const projectCardClickHandler = async () => {
         setExperienceFilter({
             ...experienceFilter,
             project_id: projectData.project_id,
@@ -38,8 +39,21 @@ const ProjectCard = ({ projectData }) => {
             ...experienceStateRecoil,
             projects_id: projectData.project_id,
         })
-        navigate("/experience");
+        setAllowNavigate(true);
     }
+
+    useEffect(() => {
+        if (allowNavigate) {
+            navigate("/experience");
+        }
+    }, [allowNavigate])
+
+    // const navigateToExperience = async () => {
+    //     const response = await projectCardClickHandler();
+    //     console.log(response);
+    //     console.log(experienceStateRecoil);
+    //     navigate("/experience");
+    // }
 
     // console.log(key);
     // console.log(projectData);
