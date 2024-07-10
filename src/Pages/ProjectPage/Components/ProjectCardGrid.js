@@ -53,7 +53,7 @@ const ProjectCardGrid = () => {
 };
 const ProjectCardDiv = styled.div`
 width: 1200px;
-height: 565px;
+height: 638px;
 margin-top: 55px;
 /* border: 1px solid black; */
 `
@@ -63,7 +63,7 @@ display: grid;
 grid-template-columns: repeat(3, 1fr);
 grid-template-rows: repeat(2, 1fr);
 width: 1200px;
-height: 565px;
+height: 638px;
 /* border: 1px solid black; */
 
 column-gap: 24px;
