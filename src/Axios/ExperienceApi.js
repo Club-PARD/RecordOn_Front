@@ -32,10 +32,12 @@ export const getOneExperienceAPI = async (expId) => {
 };
 
 // 경험 기록 삭제 API
-export const deleteOneExperienceAPI = async (id) => {
+export const deleteOneExperienceAPI = async (expId, userId) => {
+    console.log (expId, userId);
 try{
-    const response = await axios.get (`${server}experiences/${id}`, "f245d2ac-d421-4cfb-99cf-c544071446ac");
+    const response = await axios.get (`${server}experiences/${expId}`, userId);
 console.log (response.data);
+return response.data;
 }catch(error) {
     console.log (error);
 }
