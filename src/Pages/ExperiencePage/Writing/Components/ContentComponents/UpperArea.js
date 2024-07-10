@@ -41,6 +41,17 @@ const UppderArea = () => {
     }
   }, [isExpRecordSubmitted, expDate, expTitle, setExperience]);
 
+  // 달력 . 없이 입력 허용
+  const handleRawChange = (event) => {
+    const inputValue = event.target.value;
+    // 입력값이 숫자 8자리인지 확인
+    if (/^\d{8}$/.test(inputValue)) {
+      // yyyyMMdd 형식을 yyyy.MM.dd 형식으로 변환
+      const formattedDate = `${inputValue.slice(0, 4)}.${inputValue.slice(4, 6)}.${inputValue.slice(6, 8)}`;
+      event.target.value = formattedDate;
+    }
+  };
+
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}
@@ -66,6 +77,7 @@ const UppderArea = () => {
               locale={ko}
               selected={expDate}
               onChange={handleDateChange}
+              onChangeRaw={handleRawChange}
             />
           </ProjectDateWrapper>
         </UppderPart>
@@ -120,4 +132,4 @@ const StyledInput = styled.input`
 `;
 
 export default UppderArea;
-export {Upper, UppderPart, StyledLabel, StyledInput};
+export { Upper, UppderPart, StyledLabel, StyledInput };
