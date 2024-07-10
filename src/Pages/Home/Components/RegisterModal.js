@@ -39,7 +39,7 @@ function RegisterModal({ show, onClose, defaultName }) {
 
   const openServiceModal = () => {
     setIsServiceModalOpen(true);
-    console.log(isPrivacyModalOpen);
+    console.log(isServiceModalOpen);
   };
   const closeServiceModal = () => setIsServiceModalOpen(false);
   //약관 모달 출력 관련 함수 끝
