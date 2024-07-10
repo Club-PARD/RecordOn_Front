@@ -2,10 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { ReactComponent as Close } from "../../../Assets/close.svg";
 
-const PrivacyPolicyModal = ({
-  isOpen,
-  onClose,
-}) => {
+const PrivacyPolicyModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   //오버레이 영역 선택하면 모달 닫힘
@@ -18,32 +15,40 @@ const PrivacyPolicyModal = ({
   return (
     <Overlay onClick={handleOverlayClick}>
       <Modal>
-      <StyledClose onClick={onClose} />
-{/* 
+        <StyledClose onClick={onClose} />
+        {/* 
       <TextContainer> */}
-      <TitleDiv>개인정보 수집 및 이용 동의</TitleDiv>
-      <ContentDiv>
-      레코드온 서비스는 원활한 서비스 제공을 위해 최소한의 
-범위 내에서 아래와 같이 개인정보를 수집 및 이용합니다.
-<br /><br />
-1. 수집 항목<br />
-- 구글 이메일을 통한 로그인 및 회원가입<br />
-: 구글 이메일, 프로필 사진, 이름<br />
-- 서비스 회원가입<br />
-: 닉네임, 희망직군<br />
-<br />
-2. 수집 및 이용 목적<br />
-- 회원 식별 및 서비스 제공<br />
-<br />
-3. 보유 및 이용기간<br />
-- 서비스 탈퇴 시<br />
-<br />
-귀하는 이와 같이 개인정보를 수집 및 이용하는데 동의를 <br />
-거부할 권리가 있습니다. 다만, 필수 수집 항목에 대한 동의를 <br />
-거절하는 경우 서비스 이용이 제한 될 수 있습니다.
-
-      </ContentDiv>
-      {/* </TextContainer> */}
+        <TitleDiv>개인정보 수집 및 이용 동의</TitleDiv>
+        <ContentDiv>
+          레코드온 서비스는 원활한 서비스 제공을 위해 최소한의 범위 내에서
+          아래와 같이 개인정보를 수집 및 이용합니다.
+          <br />
+          <br />
+          1. 수집 항목
+          <br />
+          - 구글 이메일을 통한 로그인 및 회원가입
+          <br />
+          : 구글 이메일, 프로필 사진, 이름
+          <br />
+          - 서비스 회원가입
+          <br />
+          : 닉네임, 희망직군
+          <br />
+          <br />
+          2. 수집 및 이용 목적
+          <br />
+          - 회원 식별 및 서비스 제공
+          <br />
+          <br />
+          3. 보유 및 이용기간
+          <br />
+          - 서비스 탈퇴 시<br />
+          <br />
+          귀하는 이와 같이 개인정보를 수집 및 이용하는데 동의를 <br />
+          거부할 권리가 있습니다. 다만, 필수 수집 항목에 대한 동의를 <br />
+          거절하는 경우 서비스 이용이 제한 될 수 있습니다.
+        </ContentDiv>
+        {/* </TextContainer> */}
       </Modal>
     </Overlay>
   );
@@ -60,7 +65,7 @@ const Overlay = styled.div`
 `;
 
 const Modal = styled.div`
-   justify-content: center;
+  justify-content: center;
   align-items: center;
   position: absolute;
   top: 50%;
@@ -100,7 +105,7 @@ const TitleDiv = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TextM};
 `;
 
-const  ContentDiv = styled.div`
+const ContentDiv = styled.div`
   position: absolute;
   width: 332px;
   height: 360px;
@@ -109,6 +114,7 @@ const  ContentDiv = styled.div`
   font-size: ${(props) => props.theme.fontSizes.TextS};
   font-weight: ${(props) => props.theme.fontWeights.TextS};
   line-height: 18.2px;
-letter-spacing: -0.28px;
+  letter-spacing: -0.28px;
 `;
+
 export default PrivacyPolicyModal;

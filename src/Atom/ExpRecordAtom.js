@@ -22,7 +22,7 @@ export const answerState = atom({
   key: "answerState",
   default: {
     user_id: "",
-    projects_id: 0,
+    projects_id: 10,
     exp_date: "",
     title: "",
     tag_ids: [],
