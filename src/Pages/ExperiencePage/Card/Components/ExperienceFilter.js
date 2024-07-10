@@ -191,7 +191,7 @@ const ExperienceFilter = () => {
 
           </ExperienceKeywordFilter>
           <ExperienceKeywordList>
-            {selectedKeyword.map(keyword => (
+            {experienceFilter.tag_name.map(keyword => (
               {
                 "도전": (
                   <ExperienceKeywordSelected borderColor="#2ABCDC" key={keyword} onClick={deleteKeyword(keyword)}>

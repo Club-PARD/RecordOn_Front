@@ -58,8 +58,10 @@ const ProjectFilter = () => {
 
   const toggling = () => setIsOpen(!isOpen);
 
+  console.log(isOpen);
+
   const addKeyword = value => () => {
-    if (!selectedKeyword.includes(value)) {
+    if (!selectedKeyword.includes(value) && selectedKeyword.length < 3) {
       setSelectedKeyword(
         [
           ...selectedKeyword,
@@ -237,7 +239,7 @@ const ProjectFilter = () => {
             </ProjectKeywordFilterButton>
           </ProjectKeywordFilter>
           <ProjectKeywordList>
-            {selectedKeyword.map(keyword => (
+            {projectFilter.competency_tag_name.map(keyword => (
               <ProjectKeywordSelected key={keyword} onClick={deleteKeyword(keyword)}>
                 <ProjectKeywordFilterButtonContent>
                   {keyword} <img src={XWhite} />
