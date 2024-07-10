@@ -74,6 +74,15 @@ const ExperienceFilter = () => {
 
   };
 
+  const handleRawChange = (event) => {
+    const inputValue = event.target.value;
+    // 입력값이 숫자 8자리인지 확인
+    if (/^\d{8}$/.test(inputValue)) {
+      // yyyyMMdd 형식을 yyyy.MM.dd 형식으로 변환
+      const formattedDate = `${inputValue.slice(0, 4)}.${inputValue.slice(4, 6)}.${inputValue.slice(6, 8)}`;
+      event.target.value = formattedDate;
+    }
+  };
 
   const resetDate = () => {
     setExperienceFilter({
@@ -110,7 +119,7 @@ const ExperienceFilter = () => {
     <FilterDiv>
       <FilterLeft>
         <ExperienceSearch>
-          <ExperienceSearchInput onChange={searchInput} placeholder="찾고 싶은 경험 속 단어를 검색해보세요" />
+          <ExperienceSearchInput onChange={searchInput} placeholder="찾고 싶은 경험 속 단어를 검색해보세요" value={experienceFilter.search_text} />
           <ExperienceSearchInputButton>
             <img src={SearchIcon} />
           </ExperienceSearchInputButton>
@@ -124,11 +133,11 @@ const ExperienceFilter = () => {
               dateFormat='yyyy.MM.dd'
               shouldCloseOnSelect
               disabledKeyboardNavigation
-              placeholderText="시작 날짜"
+              placeholderText="YYYY.MM.DD"
               minDate={new Date('1980-01-01')}
               maxDate={new Date('2100-12-31')}
               locale={ko}
-              selected={selectedStartDate}
+              selected={experienceFilter.start_date}
               onChange={(date) => {
                 setSelectedStartDate(date);
                 setExperienceFilter({
@@ -136,6 +145,7 @@ const ExperienceFilter = () => {
                   start_date: date,
                 })
               }}
+              onChangeRaw={handleRawChange}
             />
             <ExperienceDateTo>
               ~
@@ -144,11 +154,11 @@ const ExperienceFilter = () => {
               dateFormat='yyyy.MM.dd'
               shouldCloseOnSelect
               disabledKeyboardNavigation
-              placeholderText="마무리 날짜"
+              placeholderText="YYYY.MM.DD"
               minDate={new Date('1980-01-01')}
               maxDate={new Date('2100-12-31')}
               locale={ko}
-              selected={selectedEndDate}
+              selected={experienceFilter.finish_date}
               onChange={(date) => {
                 setSelectedEndDate(date);
                 setExperienceFilter({
@@ -156,6 +166,7 @@ const ExperienceFilter = () => {
                   finish_date: date,
                 })
               }}
+              onChangeRaw={handleRawChange}
             />
           </ExperienceDateWrapper>
           <ExperienceDateApply onClick={resetDate}>
@@ -167,17 +178,16 @@ const ExperienceFilter = () => {
         <ExperienceKeyword>
           <ExperienceKeywordFilter>
             <ExperienceKeywordFilterText>
-              경험태그필터
             </ExperienceKeywordFilterText>
             <ExperienceKeywordFilterButton>
-              <ExperienceKeywordFilterDropdownContainer>
+              <ExperienceKeywordFilterDropdownContainer ref={dropdownRef}>
                 <ExperienceKeywordFilterDropdownHeader onClick={toggling}>
-                  경험태그선택
+                  경험태그필터
                   <ArrowImage src={DropdownArrow} isRotated={isOpen} />
                 </ExperienceKeywordFilterDropdownHeader>
                 {isOpen && (
                   <ExperienceKeywordFilterDropdownListContainer >
-                    <ExperienceKeywordFilterDropdownList ref={dropdownRef}>
+                    <ExperienceKeywordFilterDropdownList >
                       {keywords.map(keyword => (
                         <ExperienceKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
                           {keyword}
@@ -191,7 +201,7 @@ const ExperienceFilter = () => {
 
           </ExperienceKeywordFilter>
           <ExperienceKeywordList>
-            {selectedKeyword.map(keyword => (
+            {experienceFilter.tag_name.map(keyword => (
               {
                 "도전": (
                   <ExperienceKeywordSelected borderColor="#2ABCDC" key={keyword} onClick={deleteKeyword(keyword)}>
@@ -419,7 +429,7 @@ justify-content: start;
   }
 
   .react-datepicker__day--selected {
-    background-color: ${(props) => props.theme.colors.Green}; 
+    background-color: ${(props) => props.theme.color.main}; 
     border-radius: 15px;
     color: white;
   }
@@ -474,6 +484,7 @@ justify-content: center;
 background-color: ${(props) => props.theme.color.white};
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 margin-left: 6px;
+cursor: pointer;
 `
 
 const ResetButton = styled.img`

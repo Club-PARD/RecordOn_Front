@@ -23,7 +23,7 @@ export const recoilUserData = atom({
         user_id: "",
         project_id: 0,
         id: 1, // experience id
-        sort_type: 1,
+        sort_type: 2,
     },
     effects_UNSTABLE: [persistAtom],
 });
@@ -63,7 +63,7 @@ export const recoilUserExperienceFilter = atom({
         start_date: "",
         finish_date: "",
         search_text: "",
-        sort_type: 1,
+        sort_type: 2,
     },
     effects_UNSTABLE: [persistAtom],
 });

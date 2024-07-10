@@ -6,6 +6,7 @@ import {
   handleExpRecordSubmit,
   experienceState,
 } from "../../../Atom/ExpRecordAtom";
+import {recoilUserData} from "../../../Atom/UserDataAtom";
 import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
 import { postExperienceAPI } from "../../../Axios/ExperienceApi";
@@ -18,6 +19,7 @@ const WritingPage = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
+  // const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
 
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -29,32 +31,38 @@ const WritingPage = () => {
     setIsUpdated(true);
   };
 
+  const checkUserAndProjectInfo = async () => {
+    // 유저 ID와 프로젝트 ID를 비동기적으로 확인하는 로직
+    if (experience.user_id && experience.user_id !== "" && experience.projects_id && experience.projects_id !== "") {
+      return true;
+    } else {
+      throw new Error("유저 ID나 프로젝트 ID가 올바르지 않습니다.");
+    }
+  };
+  
   const submitData = async () => {
-    if (
-      isExpRecordSubmitted && 
-      isUpdated && 
-      experience.user_id && 
-      experience.user_id !== "" && 
-      experience.projects_id && 
-      experience.projects_id !== ""
-    ) {
-      console.log("유저 및 프로젝트 정보: ", experience.user_id, experience.projects_id);
+    if (isExpRecordSubmitted && isUpdated) {
       try {
+        await checkUserAndProjectInfo();
+        console.log("유저 및 프로젝트 정보: ", experience.user_id, experience.projects_id);
+
         const response = await postExperienceAPI(experience);
         console.log("request successful: ", response);
       } catch (error) {
         console.error("request failed: ", error);
       } finally {
-        // setIsExpRecordSubmitted(false);
-        // setIsUpdated(false);
+        setIsExpRecordSubmitted(false);
+        setIsUpdated(false);
         navigate("/experience");
       }
     }
   };
+  console.log([isExpRecordSubmitted, isUpdated, experience]);
+
 
   useEffect(() => {
     submitData();
-  }, [isExpRecordSubmitted, isUpdated, experience]);
+  }, [isUpdated]);
 
   return (
     <Div>
