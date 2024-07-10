@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getUserExperienceDataFilteredAPI } from "../../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserExperienceFilter, recoilUserExperienceNum } from "../../../../Atom/UserDataAtom";
+import { recoilUserExperienceFilter, recoilUserExperienceNum, recoilExperiencePagination } from "../../../../Atom/UserDataAtom";
 
 const ExperienceCardGrid = () => {
 
@@ -14,26 +14,20 @@ const ExperienceCardGrid = () => {
     const [visibleCardEnd, setVisibleCardEnd] = useState(6);
     const [experienceNum, setExperienceNum] = useRecoilState(recoilUserExperienceNum);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
+    const [experiencePagination, setExperiencePagination] = useRecoilState(recoilExperiencePagination);
 
 
 
     // console.log(visibleCardStart, visibleCardEnd);
     console.log(userExperienceData);
 
+
+
     useEffect(() => {
-        sessionStorage.setItem('startNum', 0);
-        sessionStorage.setItem('endNum', 6)
+        setVisibleCardStart(experiencePagination.startNum);
+        setVisibleCardEnd(experiencePagination.endNum);
 
-        const handleStorageChange = () => {
-            const startNum = sessionStorage.getItem('startNum') || 0;
-            const endNum = sessionStorage.getItem('endNum') || 6;
-            setVisibleCardStart(Number(startNum));
-            setVisibleCardEnd(Number(endNum));
-        };
-
-        window.addEventListener('storage', handleStorageChange);
-
-    }, [])
+    }, [experiencePagination])
 
     useEffect(() => {
         const getData = async () => {
