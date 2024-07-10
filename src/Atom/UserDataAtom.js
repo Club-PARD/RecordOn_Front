@@ -20,9 +20,10 @@ export const recoilLoginData = atom({
 export const recoilUserData = atom({
     key: "UserData",
     default: {
-        user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+        user_id: "",
         project_id: 0,
-        id: 0, // experience id
+        id: 1, // experience id
+        sort_type: 1,
     },
     effects_UNSTABLE: [persistAtom],
 });
@@ -62,6 +63,7 @@ export const recoilUserExperienceFilter = atom({
         start_date: "",
         finish_date: "",
         search_text: "",
+        sort_type: 1,
     },
     effects_UNSTABLE: [persistAtom],
 });

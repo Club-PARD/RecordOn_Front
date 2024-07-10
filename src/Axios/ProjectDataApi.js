@@ -127,8 +127,8 @@ export const getUserExperienceDataAPI = async (userKey) => {
     try {
         console.log(`${process.env.REACT_APP_DEV_URL}experiences/project`);
         const response = await axios.post(`${process.env.REACT_APP_DEV_URL}experiences/project`, userKey);
-        console.log(response.data)
-        return response.data
+        console.log(response.data.response_object)
+        return response.data.response_object
     } catch (error) {
         console.error('Error fetching data: ', error);
         // alert("유저 정보 로딩에 실패하였습니다.");

@@ -17,7 +17,7 @@ const ProjectBody = () => {
 
 const Container = styled.div`
 width: 100%;
-height: 1024px;
+height: 1157px;
 justify-content: start;
 background-color: ${(props) => props.theme.color.main}; 
 /* border: 1px solid black; */

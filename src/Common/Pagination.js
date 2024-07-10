@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { recoilProjectPagination, recoilUserProjectFilter, recoilUserProjectNum } from "../Atom/UserDataAtom";
-import ArrowImage from "../Assets/DropdownArrow.svg"
+import ArrowImage from "../Assets/PaginationArrow.svg"
+import ArrowImage2 from "../Assets/PaginationArrow2.svg"
 
 const PaginationBar = () => {
 
@@ -62,22 +63,28 @@ const PaginationBar = () => {
     return (
         <PaginationDiv>
             <NavButton onClick={prevCardNum} disabled={projectPagination.pageNum === 1}>
+                <ArrowLeft2 src={ArrowImage2} />
+            </NavButton>
+            <NavButton onClick={prevCardNum} disabled={projectPagination.pageNum === 1}>
                 <ArrowLeft src={ArrowImage} />
             </NavButton>
             {renderPageNumbers()}
             <NavButton onClick={nextCardNum} disabled={projectPagination.pageNum === lastPage}>
-                Next
+                <ArrowRight src={ArrowImage} />
+            </NavButton>
+            <NavButton onClick={nextCardNum} disabled={projectPagination.pageNum === lastPage}>
+                <ArrowRight2 src={ArrowImage2} />
             </NavButton>
         </PaginationDiv>
     );
 };
 
 const PaginationDiv = styled.div`
-    display: flex;
     flex-direction: row;
-    margin-top: 101px;
-    margin-bottom: 151px;
+    margin-top: 78px;
+    margin-bottom: 152px;
     justify-content: center;
+    /* border: 1px solid black; */
 `;
 
 const PageButton = styled.button`
@@ -99,8 +106,9 @@ const PageButton = styled.button`
 const NavButton = styled.button`
     background: none;
     border: none;
-    margin: 0 4px;
+    /* margin: 0 4px; */
     padding: 8px 16px;
+    /* border: 1px solid black; */
     cursor: pointer;
     font-size: ${(props) => props.theme.fontSizes.TextS};
     color: ${(props) => props.theme.color.black};
@@ -112,10 +120,21 @@ const NavButton = styled.button`
 `;
 
 const ArrowLeft = styled.img`
+width: 12px;
+`
+
+const ArrowRight = styled.img`
+width: 12px;
+transform: rotate(180deg);
+`
+
+const ArrowLeft2 = styled.img`
 width: 18px;
-transform: rotate(45);
+`
 
-
+const ArrowRight2 = styled.img`
+width: 18px;
+transform: rotate(180deg);
 `
 
 export default PaginationBar;
