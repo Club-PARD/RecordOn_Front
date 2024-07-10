@@ -160,6 +160,7 @@ font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 color: ${(props) => props.theme.colors.Charcoal};
 cursor: pointer;
+user-select : none;
 `
 
 const ExperienceTitleCenter = styled.div`

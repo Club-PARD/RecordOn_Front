@@ -175,6 +175,7 @@ align-items: center;
 width: 50px;
 height: 50px;
 user-select : none;
+cursor: pointer;
 `;
 
 const UserLogout = styled.div`
