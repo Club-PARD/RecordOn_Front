@@ -20,6 +20,7 @@ function Router() {
         <Route path="/modal" element={<DeleteModal />} />
         <Route path="/view" element={<ViewPage />} />
         <Route path="/edit" element={<EditPage />} />
+        {/* <Route path="/link" element={<link />} */}
         {/* theme 사용 에시 페이지 */}
         <Route path="/theme" element={<ThemeExample />} />
       </Route>
