@@ -13,13 +13,13 @@ const ContentsArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
 
   // 중간 배열 생성
-  const combinedArray =
-    answer.question_text &&
-    answer.question_text.map((_, index) => [
-      answer.tag_ids[index],
-      answer.question_text[index],
-      answer.question_answer[index],
-    ]);
+  const combinedArray = answer;
+    // answer.question_text &&
+    // answer.question_text.map((_, index) => [
+    //   answer.tag_ids[index],
+    //   answer.question_text[index],
+    //   answer.question_answer[index],
+    // ]);
 
 
   return (
