@@ -170,14 +170,14 @@ const ExperienceFilter = () => {
               경험태그필터
             </ExperienceKeywordFilterText>
             <ExperienceKeywordFilterButton>
-              <ExperienceKeywordFilterDropdownContainer>
+              <ExperienceKeywordFilterDropdownContainer ref={dropdownRef}>
                 <ExperienceKeywordFilterDropdownHeader onClick={toggling}>
                   경험태그선택
                   <ArrowImage src={DropdownArrow} isRotated={isOpen} />
                 </ExperienceKeywordFilterDropdownHeader>
                 {isOpen && (
                   <ExperienceKeywordFilterDropdownListContainer >
-                    <ExperienceKeywordFilterDropdownList ref={dropdownRef}>
+                    <ExperienceKeywordFilterDropdownList >
                       {keywords.map(keyword => (
                         <ExperienceKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
                           {keyword}
@@ -419,7 +419,7 @@ justify-content: start;
   }
 
   .react-datepicker__day--selected {
-    background-color: ${(props) => props.theme.colors.Green}; 
+    background-color: ${(props) => props.theme.color.main}; 
     border-radius: 15px;
     color: white;
   }

@@ -7,6 +7,7 @@ import LandingSearch from "../../../Assets/LandingSearch.png";
 import LandingArchive from "../../../Assets/LandingArchive.png";
 import LandingComehere from "../../../Assets/LandingComehere.png";
 import LandingFooterDivImage from "../../../Assets/LandingFooterDiv.png";
+import LandingLine from "../../../Assets/LandingLine.png";
 import LoginButton from "./LoginButton";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
@@ -15,43 +16,62 @@ import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
-    const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            navigate("/project");
-        }
-    }, [isLoggedIn])
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/project");
+    }
+  }, [isLoggedIn])
 
-    return (
-        <Container>
-            <LandingTitle >
-                <img src={LandingToggle} />
-                <CatchPhrase>
-                    Remember Done,
-                </CatchPhrase>
-                <CatchPhrase2>
-                    Record On!
-                </CatchPhrase2>
-                <LandingTitleText>
-                    당신의 경험은 어디에 저장되고 있나요?<br />
-                    기억이 아닌 기록으로 경험을 아카이빙하세요!
-                </LandingTitleText>
-                <LoginButton />
-            </LandingTitle>
-            <img src={LandingFolder} style={{ marginTop: "79px" }} />
-            <img src={LandingProblem} style={{ marginTop: "68px" }} />
-            <img src={LandingGuide} />
-            <img src={LandingSearch} />
-            <img src={LandingArchive} />
-            <LandingFooter>
-                <img src={LandingComehere} style={{ marginTop: "100px" }} />
-                <LoginButton />
-                <img src={LandingFooterDivImage} />
-            </LandingFooter>
-        </Container>
-    );
+  return (
+    <Container>
+      <LandingTitle >
+        <img src={LandingToggle} />
+        <CatchPhrase>
+          Remember Done,
+        </CatchPhrase>
+        <CatchPhrase2>
+          Record On!
+        </CatchPhrase2>
+        <LandingTitleText>
+          당신의 경험은 어디에 저장되고 있나요?<br />
+          기억이 아닌 기록으로 경험을 아카이빙하세요!
+        </LandingTitleText>
+        <LoginButton />
+      </LandingTitle>
+      <LandingFolderDiv>
+        <img src={LandingFolder} style={{ marginTop: "79px" }} />
+      </LandingFolderDiv>
+      <LandingProblemDiv>
+        <img src={LandingProblem} style={{ marginTop: "68px", width: "1440px" }} />
+      </LandingProblemDiv>
+      <LandingImg ></LandingImg>
+      <LandingGuideDiv>
+        <img src={LandingGuide} style={{ width: "1440px" }} />
+      </LandingGuideDiv>
+      <LandingSearchDiv>
+        <img src={LandingSearch} style={{ width: "1440px" }} />
+      </LandingSearchDiv>
+
+      <LandingArchiveDiv>
+        <img src={LandingArchive} style={{ width: "1440px" }} />
+      </LandingArchiveDiv>
+      <LandingFooter>
+        <LandingComehereDiv>
+          <img src={LandingComehere} style={{ width: "1440px" }} />
+        </LandingComehereDiv>
+        <LoginButton />
+        <LandingFooterDivImageDiv>
+          <img src={LandingFooterDivImage} style={{ width: "1440px" }} />
+        </LandingFooterDivImageDiv>
+
+
+
+      </LandingFooter>
+    </Container>
+  );
 };
 
 const Container = styled.div`
@@ -102,19 +122,72 @@ const LandingTitleText = styled.div`
   letter-spacing: -0.48px;
 `;
 
+const LandingFolderDiv = styled.div`
+  width: 100%;
+  /* height: 765px; */
+  /* border: 1px solid black; */
+  background-color: #FBFBFB;
+`;
+
+const LandingProblemDiv = styled.div`
+  width: 100%;
+  /* height: 765px; */
+  /* border: 1px solid black; */
+  background-color: #FFFFFF;
+`;
+
+const LandingGuideDiv = styled.div`
+  width: 100%;
+  /* height: 765px; */
+  /* border: 1px solid black; */
+  background-color: #FFFFFF;
+`;
+
+const LandingSearchDiv = styled.div`
+  width: 100%;
+  /* height: 765px; */
+  /* border: 1px solid black; */
+  background-color: #FBFBFB;
+`;
+
+const LandingArchiveDiv = styled.div`
+  width: 100%;
+  /* height: 765px; */
+  /* border: 1px solid black; */
+  background-color: #FFFFFF;
+`;
+
 const LandingFooter = styled.div`
-  width: 1440px;
-  height: 765px;
+  width: 100%;
+  /* height: 765px; */
   /* border: 1px solid black; */
   background-color: #F5F5F5;
   border-radius: 50px 50px 0 0;
   margin-top: -60px;
 `;
 
-const FooterDiv = styled.div`
-  width: 1440px;
-  height: 184px;
+
+const LandingComehereDiv = styled.div`
+  width: 100%;
+  /* height: 765px; */
   /* border: 1px solid black; */
+  background-color: #F5F5F5;
+  margin-top: 101px;
+`;
+
+const LandingFooterDivImageDiv = styled.div`
+  width: 100%;
+  /* height: 765px; */
+  /* border: 1px solid black; */
+  background-color: #F5F5F5;
+`;
+
+const LandingImg = styled.div`
+  width: 100%;
+  height: 30px;
+  /* border: 1px solid black; */
+  background-image: url(${LandingLine});
+  background-size: cover;
 `;
 
 export default Landing;

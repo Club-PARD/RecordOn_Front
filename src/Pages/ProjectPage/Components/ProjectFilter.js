@@ -56,7 +56,9 @@ const ProjectFilter = () => {
     // applyFilter();
   }
 
-  const toggling = () => setIsOpen(!isOpen);
+  const toggling = () => {
+    setIsOpen(!isOpen);
+  }
 
   console.log(isOpen);
 
@@ -219,14 +221,14 @@ const ProjectFilter = () => {
               핵심역량필터
             </ProjectKeywordFilterText>
             <ProjectKeywordFilterButton>
-              <ProjectKeywordFilterDropdownContainer>
-                <ProjectKeywordFilterDropdownHeader onClick={toggling}>
+              <ProjectKeywordFilterDropdownContainer ref={dropdownRef}>
+                <ProjectKeywordFilterDropdownHeader onClick={() => { setIsOpen(!isOpen) }}>
                   핵심역량선택
                   <ArrowImage src={DropdownArrow} isRotated={isOpen} />
                 </ProjectKeywordFilterDropdownHeader>
                 {isOpen && (
                   <ProjectKeywordFilterDropdownListContainer>
-                    <ProjectKeywordFilterDropdownList ref={dropdownRef}>
+                    <ProjectKeywordFilterDropdownList >
                       {keywords.map(keyword => (
                         <ProjectKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
                           {keyword}
@@ -308,6 +310,7 @@ border-radius: 25px;
 color: ${(props) => props.theme.colors.White};
 /* background-color: ${(props) => props.theme.colors.Black}; */
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+cursor: pointer;
 `
 const ProjectProcessDone = styled.div`
 width: 98px;
@@ -319,6 +322,7 @@ color: ${(props) => props.theme.colors.Black};
 background-color: ${(props) => props.theme.color.Gray};
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 margin-left: 16px;
+cursor: pointer;
 `
 
 const ProjectDate = styled.div`
@@ -453,6 +457,7 @@ align-items: center;
 background-color: ${(props) => props.theme.color.white};
 text-align: center;
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+
 `
 
 
