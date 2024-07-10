@@ -26,9 +26,9 @@ const ProjectCardGrid = () => {
         const getData = async () => {
             const response = await getUserProjectDataFilteredAPI(projectFilter);
             console.log(response);
-            const cardArray = Array.from({ length: response.length }, (_, index) => index);
+            const cardArray = Array.from({ length: response?.length }, (_, index) => index);
             setProjectCardNum(cardArray);
-            setProjectNum(response.length);
+            setProjectNum(response?.length);
             setUserProjectData(response);
         }
         getData();

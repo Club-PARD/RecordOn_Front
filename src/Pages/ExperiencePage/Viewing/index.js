@@ -41,8 +41,16 @@ const ViewPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answerObject, setAnswerObject] = useState({});
   const [expId, setExpId] = useState(null);
+  const [userId, setUserId] = useState("");
 
   const navigate = useNavigate();
+  const handleBack = () => {
+    navigate("/experience");
+  };
+
+  const moveToEdit = () => {
+    navigate("/edit");
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -54,6 +62,8 @@ const ViewPage = () => {
 
   useEffect(() => {
     if (userInfo.id != null) setExpId(userInfo.id);
+    if (userInfo.user_id != "") setUserId(userInfo.userId);
+    console.log (expId, userId);
   }, [userInfo]);
 
   useEffect(() => {
@@ -75,7 +85,7 @@ const ViewPage = () => {
   // answerObject가 업데이트되면 answer 상태를 업데이트
   useEffect(() => {
     if (answerObject !== null) {
-      setAnswer(JSON.stringify(answerObject));
+      setAnswer(answerObject);
     }
   }, [answerObject, setAnswer]);
 
@@ -93,7 +103,7 @@ const ViewPage = () => {
       {/* 뒤로 가기 */}
       <GoBackArea>
         <MarginTopForGoBackDiv />
-        <GoBackDiv onClick={openModal}>
+        <GoBackDiv onClick={handleBack}>
           <GoBackIcon />
           <div>경험 기록 페이지 나가기</div>
         </GoBackDiv>
@@ -153,6 +163,7 @@ const ViewPage = () => {
         <Button
           color={(props) => props.theme.color.white}
           bgColor={(props) => props.theme.color.main}
+          onClick={moveToEdit}
         >
           수정하기
         </Button>
@@ -183,9 +194,10 @@ const ViewPage = () => {
         onDelete={() => {
           // '삭제' 버튼 클릭 시 처리 로직
           console.log("삭제");
-          deleteOneExperienceAPI(13);
+          console.log ("경험: " + expId, "사용자: " + userInfo.user_id);
+          deleteOneExperienceAPI(expId, userInfo.user_id);
           closeModal(); // 모달 닫기
-          navigate("/experience");
+          // navigate("/experience");
         }}
       />
     </Div>
