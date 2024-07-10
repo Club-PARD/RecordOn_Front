@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../Assets/Logo.svg"
-import { useRecoilState } from "recoil";
-import { isLogined, recoilLoginData } from "../Atom/UserDataAtom";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { isLogined, recoilExperiencePagination, recoilLoginData, recoilProjectModal, recoilProjectPagination, recoilUserData, recoilUserExperienceFilter, recoilUserExperienceNum, recoilUserProjectFilter, recoilUserProjectNum } from "../Atom/UserDataAtom";
 import LoginButton from "../Pages/Home/Components/LoginButton";
 import Logout from "../Assets/Logout.svg"
+import { handleRegisterDataSubmit } from "../Atom/RegisterDataAtom";
+import { answerState, experienceState, handleExpRecordSubmit } from "../Atom/ExpRecordAtom";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
@@ -13,6 +15,24 @@ const Header = () => {
   const [loginData, setLoginData] = useRecoilState(recoilLoginData);
   const [profileClicked, setProfileClicked] = useState(false);
   const profileRef = useRef(null);
+
+
+  const resetIsLogined = useResetRecoilState(isLogined);
+  const resetRecoilLoginData = useResetRecoilState(recoilLoginData);
+  const resetRecoilUserData = useResetRecoilState(recoilUserData);
+  const resetRecoilUserProjectNum = useResetRecoilState(recoilUserProjectNum);
+  const resetRecoilUserProjectFilter = useResetRecoilState(recoilUserProjectFilter);
+  const resetRecoilProjectModal = useResetRecoilState(recoilProjectModal);
+  const resetRecoilUserExperienceNum = useResetRecoilState(recoilUserExperienceNum);
+  const resetRecoilUserExperienceFilter = useResetRecoilState(recoilUserExperienceFilter);
+  const resetRecoilProjectPagination = useResetRecoilState(recoilProjectPagination);
+  const resetRecoilExperiencePagination = useResetRecoilState(recoilExperiencePagination);
+  const resetHandleRegisterDataSubmit = useResetRecoilState(handleRegisterDataSubmit);
+  const resetExperienceState = useResetRecoilState(experienceState);
+  const resetAnswerState = useResetRecoilState(answerState);
+  const resetHandleExpRecordSubmit = useResetRecoilState(handleExpRecordSubmit);
+
+
 
 
   const navigate = useNavigate();
@@ -32,7 +52,7 @@ const Header = () => {
     };
   }, []);
 
-// 프로필 외부 클릭시 UserLogout 컴포넌트 닫기
+  // 프로필 외부 클릭시 UserLogout 컴포넌트 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -56,8 +76,22 @@ const Header = () => {
     console.log(loginData.imageUrl);
   }
 
+
   const logoutHandler = () => {
-    localStorage.clear();
+    resetIsLogined();
+    resetRecoilLoginData();
+    resetRecoilUserData();
+    resetRecoilUserProjectNum();
+    resetRecoilUserProjectFilter();
+    resetRecoilProjectModal();
+    resetRecoilUserExperienceNum();
+    resetRecoilUserExperienceFilter();
+    resetRecoilProjectPagination();
+    resetRecoilExperiencePagination();
+    resetHandleRegisterDataSubmit();
+    resetExperienceState();
+    resetAnswerState();
+    resetHandleExpRecordSubmit();
     setIsLoggedIn(false);
   };
 
