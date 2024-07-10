@@ -87,7 +87,7 @@ const WritingPage = () => {
           console.log("나가기");
           resetExperienceState(setExperience, setIsExpRecordSubmitted);
           closeModal(); // 모달 닫기
-          navigate("/exprience");
+          navigate("/experience");
         }}
       />
     </Div>

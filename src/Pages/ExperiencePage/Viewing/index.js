@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 import {
   getOneExperienceAPI,
   deleteOneExperienceAPI,
@@ -9,6 +8,7 @@ import {
 
 import { useRecoilState } from "recoil";
 import { answerState } from "../../../Atom/ExpRecordAtom";
+import { recoilUserData } from "../../../Atom/UserDataAtom";
 
 import UpperArea, {
   StyledTag,
@@ -39,6 +39,7 @@ const ViewPage = () => {
     { id: 4, label: "배움", color: "#42B887" },
   ];
 
+  const [expId, setExpId] = useRecoilState(recoilUserData);
   const [answer, setAnswer] = useRecoilState(answerState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answerObject, setAnswerObject] = useState({});
@@ -54,9 +55,9 @@ const ViewPage = () => {
   };
 
   useEffect(() => {
-    const getRecord = async () => {
+    const getRecord = async (expId) => {
       try {
-        const response = await getOneExperienceAPI();
+        const response = await getOneExperienceAPI(expId);
         console.log(response.success);
         response && setAnswerObject(response.response_object);
         answerObject && setAnswer(answerObject);
@@ -64,7 +65,7 @@ const ViewPage = () => {
         console.error(error);
       }
     };
-    getRecord();
+    getRecord(expId);
   }, []);
 
   // 중간 배열 생성
