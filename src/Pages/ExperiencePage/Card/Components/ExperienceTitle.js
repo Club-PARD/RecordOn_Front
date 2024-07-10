@@ -14,15 +14,20 @@ import RestartProject from "./RestartProject";
 import { useNavigate } from "react-router-dom";
 import EditProject from "./EditProject";
 import DeleteProject from "./DeleteProject";
+import { experienceState } from "../../../../Atom/ExpRecordAtom";
 
 const ExperienceTitle = () => {
 
     const [userData, setUserData] = useRecoilState(recoilUserData);
+    const [experienceData, setExperienceData] = useRecoilState(experienceState);
+
     const [projectData, setProjectData] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
         console.log(userData);
+        console.log(experienceData);
+
         const getData = async () => {
 
             const response = await getUserExperienceDataAPI(userData);

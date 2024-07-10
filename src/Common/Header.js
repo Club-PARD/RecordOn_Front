@@ -78,20 +78,20 @@ const Header = () => {
 
 
   const logoutHandler = () => {
-    resetIsLogined();
-    resetRecoilLoginData();
-    resetRecoilUserData();
-    resetRecoilUserProjectNum();
-    resetRecoilUserProjectFilter();
-    resetRecoilProjectModal();
-    resetRecoilUserExperienceNum();
-    resetRecoilUserExperienceFilter();
-    resetRecoilProjectPagination();
-    resetRecoilExperiencePagination();
-    resetHandleRegisterDataSubmit();
-    resetExperienceState();
-    resetAnswerState();
-    resetHandleExpRecordSubmit();
+    // resetIsLogined();
+    // resetRecoilLoginData();
+    // resetRecoilUserData();
+    // resetRecoilUserProjectNum();
+    // resetRecoilUserProjectFilter();
+    // resetRecoilProjectModal();
+    // resetRecoilUserExperienceNum();
+    // resetRecoilUserExperienceFilter();
+    // resetRecoilProjectPagination();
+    // resetRecoilExperiencePagination();
+    // resetHandleRegisterDataSubmit();
+    // resetExperienceState();
+    // resetAnswerState();
+    // resetHandleExpRecordSubmit();
     setIsLoggedIn(false);
   };
 
