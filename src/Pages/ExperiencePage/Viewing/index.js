@@ -194,7 +194,7 @@ const ViewPage = () => {
         onDelete={() => {
           // '삭제' 버튼 클릭 시 처리 로직
           console.log("삭제");
-          console.log (expId, userInfo.user_id);
+          console.log ("경험: " + expId, "사용자: " + userInfo.user_id);
           deleteOneExperienceAPI(expId, userInfo.user_id);
           closeModal(); // 모달 닫기
           // navigate("/experience");
