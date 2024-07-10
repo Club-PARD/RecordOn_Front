@@ -44,6 +44,9 @@ const ViewPage = () => {
   const [userId, setUserId] = useState("");
 
   const navigate = useNavigate();
+  const handleBack = () => {
+    navigate("/experience");
+  };
 
   const moveToEdit = () => {
     navigate("/edit");
@@ -100,7 +103,7 @@ const ViewPage = () => {
       {/* 뒤로 가기 */}
       <GoBackArea>
         <MarginTopForGoBackDiv />
-        <GoBackDiv onClick={openModal}>
+        <GoBackDiv onClick={handleBack}>
           <GoBackIcon />
           <div>경험 기록 페이지 나가기</div>
         </GoBackDiv>
