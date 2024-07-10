@@ -35,6 +35,18 @@ const PaginationExperience = () => {
         }
     };
 
+    const startCardNum = () => {
+        if (experiencePagination.pageNum > 1) {
+            handlePageChange(1);
+        }
+    };
+
+    const endCardNum = () => {
+        if (experiencePagination.pageNum < lastPage) {
+            handlePageChange(lastPage);
+        }
+    };
+
     useEffect(() => {
         setExperiencePagination({
             startNum: 0,
@@ -62,7 +74,7 @@ const PaginationExperience = () => {
 
     return (
         <PaginationDiv>
-            <NavButton onClick={prevCardNum} disabled={experiencePagination.pageNum === 1}>
+            <NavButton onClick={startCardNum} disabled={experiencePagination.pageNum === 1}>
                 <ArrowLeft2 src={ArrowImage2} />
             </NavButton>
             <NavButton onClick={prevCardNum} disabled={experiencePagination.pageNum === 1}>
@@ -72,12 +84,15 @@ const PaginationExperience = () => {
             <NavButton onClick={nextCardNum} disabled={experiencePagination.pageNum === lastPage}>
                 <ArrowRight src={ArrowImage} />
             </NavButton>
-            <NavButton onClick={nextCardNum} disabled={experiencePagination.pageNum === lastPage}>
+            <NavButton onClick={endCardNum} disabled={experiencePagination.pageNum === lastPage}>
                 <ArrowRight2 src={ArrowImage2} />
             </NavButton>
         </PaginationDiv>
     );
 };
+
+
+
 
 const PaginationDiv = styled.div`
     flex-direction: row;
