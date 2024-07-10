@@ -419,7 +419,7 @@ justify-content: start;
   }
 
   .react-datepicker__day--selected {
-    background-color: ${(props) => props.theme.colors.Green}; 
+    background-color: ${(props) => props.theme.color.main}; 
     border-radius: 15px;
     color: white;
   }

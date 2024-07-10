@@ -310,6 +310,7 @@ border-radius: 25px;
 color: ${(props) => props.theme.colors.White};
 /* background-color: ${(props) => props.theme.colors.Black}; */
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+cursor: pointer;
 `
 const ProjectProcessDone = styled.div`
 width: 98px;
@@ -321,6 +322,7 @@ color: ${(props) => props.theme.colors.Black};
 background-color: ${(props) => props.theme.color.Gray};
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 margin-left: 16px;
+cursor: pointer;
 `
 
 const ProjectDate = styled.div`
@@ -455,6 +457,7 @@ align-items: center;
 background-color: ${(props) => props.theme.color.white};
 text-align: center;
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+
 `
 
 

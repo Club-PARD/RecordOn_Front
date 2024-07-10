@@ -128,6 +128,7 @@ justify-content: center;
 background-image: url(${(props) => props.backGroundImg});
 background-size: cover;
 background-position: center;
+cursor: pointer;
 `
 const CardContent = styled.div`
 width: 334px;
