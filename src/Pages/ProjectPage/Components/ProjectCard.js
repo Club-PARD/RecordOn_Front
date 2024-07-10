@@ -20,7 +20,7 @@ const ProjectCard = ({ projectData }) => {
     const [allowNavigate, setAllowNavigate] = useState(false);
 
 
-    const projectCardClickHandler = async () => {
+    const projectCardClickHandler = () => {
         setExperienceFilter({
             ...experienceFilter,
             project_id: projectData.project_id,
