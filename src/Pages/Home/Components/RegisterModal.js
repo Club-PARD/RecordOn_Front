@@ -9,7 +9,7 @@ import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
 import DropdownJob from "./DropdownJob.js";
 import { registerUserAPI } from '../../../Axios/RegisterApi.js'
 import { useNavigate } from 'react-router-dom';
-import PrivacyPolicyModal from './privacyPolicyModal.js';
+import PrivacyPolicyModal from './PrivacyPolicyModal.js';
 import ServicePolicyModal from './ServicePolicyModal.js';
 
 
@@ -25,7 +25,7 @@ function RegisterModal({ show, onClose, defaultName }) {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
   const navigate = useNavigate();
 
-  
+  //약관 모달
   //약관 모달 출력 관련 함수 시작
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
