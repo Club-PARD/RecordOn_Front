@@ -6,9 +6,12 @@ import { isLogined, recoilLoginData, recoilUserData } from "../../../Atom/UserDa
 import { ReactComponent as Close } from "../../../Assets/close.svg";
 import Check from "../../../Assets/Check.svg";
 import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
-import DropdownJob from "../Components/DropdownJob.js";
+import DropdownJob from "./DropdownJob.js";
 import { registerUserAPI } from '../../../Axios/RegisterApi.js'
 import { useNavigate } from 'react-router-dom';
+import PrivacyPolicyModal from './privacyPolicyModal.js';
+import ServicePolicyModal from './ServicePolicyModal.js';
+
 
 
 function RegisterModal({ show, onClose, defaultName }) {
@@ -21,6 +24,27 @@ function RegisterModal({ show, onClose, defaultName }) {
   const [registerData, setRegisterData] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
   const navigate = useNavigate();
+
+  
+  //약관 모달 출력 관련 함수 시작
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+
+  const openPrivacyModal = () => {
+    setIsPrivacyModalOpen(true);
+    console.log(isPrivacyModalOpen);
+  };
+  const closePrivacyModal = () => setIsPrivacyModalOpen(false);
+
+
+  const openServiceModal = () => {
+    setIsServiceModalOpen(true);
+    console.log(isPrivacyModalOpen);
+  };
+  const closeServiceModal = () => setIsServiceModalOpen(false);
+  //약관 모달 출력 관련 함수 끝
+
+  
 
   const handleSubmit = async () => {
     // setIsRegisterDataSubmitted(true);
@@ -75,19 +99,20 @@ function RegisterModal({ show, onClose, defaultName }) {
   const [isBox2Checked, setIsBox2Checked] = useState(false);
   const isFormValid = (isBox1Checked) && (isBox2Checked) && (selectedJobKeyword !== "");
 
-
-
   if (!show) {
     return null;
   }
   console.log(isBox1Checked);
   console.log(isBox2Checked);
   console.log(isFormValid);
-
-
-  const boxChecking = () => {
+  const box1Checking = () => {
     setIsBox1Checked((prev) => (!prev));
     console.log(isBox1Checked);
+  }
+
+  const box2Checking = () => {
+    setIsBox2Checked((prev) => (!prev));
+    console.log(isBox2Checked);
   }
 
   return (
@@ -124,22 +149,22 @@ function RegisterModal({ show, onClose, defaultName }) {
               <PolicyLeftDiv >
                 <CheckboxDiv >
                   <Checkbox type='checkbox' checked={isBox1Checked} onChange={() => { setIsBox1Checked((prev) => !prev) }} />
-                  {isBox1Checked && <img src={Check} style={{ position: "fixed", justifyContent: "center", marginTop: "4px" }} />}
+                  {isBox1Checked && <img src={Check} style={{ position: "fixed", justifyContent: "center", marginTop: "4px", cursor: "pointer"}} onClick={box1Checking} />}
                 </CheckboxDiv>
                 <PolicyNameDiv>이용약관 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
-              <PolicyRightDiv>자세히 보기</PolicyRightDiv>
+              <PolicyRightDiv onClick={openPrivacyModal}>자세히 보기</PolicyRightDiv>
             </PolicyDataDiv>
 
             <PolicyDataDiv>
               <PolicyLeftDiv>
                 <CheckboxDiv >
                   <Checkbox type='checkbox' checked={isBox2Checked} onChange={() => { setIsBox2Checked((prev) => !prev) }} />
-                  {isBox2Checked && <img src={Check} style={{ position: "fixed", justifyContent: "center", marginTop: "4px" }} />}
+                  {isBox2Checked && <img src={Check} style={{ position: "fixed", justifyContent: "center", marginTop: "4px", cursor: "pointer" }} onClick={box2Checking} />}
                 </CheckboxDiv>
                 <PolicyNameDiv>개인정보 수집 및 이용 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
-              <PolicyRightDiv>자세히 보기</PolicyRightDiv>
+              <PolicyRightDiv onClick={openServiceModal}>자세히 보기</PolicyRightDiv>
             </PolicyDataDiv>
 
           </PolicyDiv>
@@ -147,6 +172,8 @@ function RegisterModal({ show, onClose, defaultName }) {
           <RegisterBtn onClick={handleSubmit} disabled={!isFormValid}>회원가입</RegisterBtn>
         </Container>
       </OutContainer>
+      <PrivacyPolicyModal isOpen={isPrivacyModalOpen} onClose={closePrivacyModal} />
+      <ServicePolicyModal isOpen={isServiceModalOpen} onClose={closeServiceModal} />
     </Background >
   );
 };
@@ -299,8 +326,8 @@ height: 20px;
 `;
 
 const CheckboxDiv = styled.div`
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
   justify-content: space-between;
   display: flex;
   align-items: center;
@@ -308,10 +335,11 @@ const CheckboxDiv = styled.div`
 `;
 
 const Checkbox = styled.input`
-  width: 19px;
-  height: 19px;
+  width: 20px;
+  height: 20px;
   border: 0.8px solid black;
   border-radius: 2px;
+  cursor: pointer;
 `;
 
 const PolicyNameDiv = styled.div`
@@ -329,7 +357,8 @@ display: flex;
 align-items: center;
 font-size: ${(props) => props.theme.fontSizes.TextS};
 font-weight : ${(props) => props.theme.fontWeights.TextS};
-color: ${(props) => props.theme.colors.Gray};;
+color: ${(props) => props.theme.colors.Gray};
+cursor: pointer;
 `;
 
 
