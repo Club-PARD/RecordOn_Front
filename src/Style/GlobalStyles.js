@@ -58,6 +58,10 @@ div, input, label, button, h1, h2, h3, h4, textarea{
     align-items: center;
 }
 
+button {
+  user-select : none;
+}
+
 /* 클래스가 없는 기본 a 태그 요소는 기본 스타일을 가져옵니다. */
 a:not([class]) {
   text-decoration-skip-ink: auto;

@@ -284,6 +284,7 @@ flex-direction: row;
 border-radius: 10px;
 background-color: ${(props) => props.theme.color.white};
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+user-select : none;
 `
 const ExperienceSearchInput = styled.input`
 width: 340px;
@@ -292,6 +293,7 @@ height: 40px;
 align-items: start;
 justify-content: center;
 padding-left: 20px;
+
 
 `
 
@@ -327,6 +329,7 @@ width: 420px;
 height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
+user-select : none;
 `
 
 const ExperienceDateText = styled.div`
@@ -501,6 +504,7 @@ height: 143px;
 flex-direction: row;
 justify-content: space-between;
 align-items:start;
+user-select : none;
 `
 
 const ExperienceKeywordFilter = styled.div`

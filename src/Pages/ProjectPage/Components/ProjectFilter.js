@@ -313,6 +313,7 @@ flex-direction: row;
 width: 212px;
 height: 40px;
 /* border: 1px solid black; */
+user-select : none;
 `
 
 const ProjectProcessOngoing = styled.div`
@@ -344,6 +345,7 @@ width: 420px;
 height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
+user-select : none;
 `
 
 const ProjectDateText = styled.div`
@@ -502,6 +504,7 @@ justify-content: center;
 background-color: ${(props) => props.theme.color.white};
 margin-left: 6px;
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
+cursor: pointer;
 `
 
 const ResetButton = styled.img`
@@ -537,6 +540,7 @@ const ProjectKeywordFilterButton = styled.div`
 width: 164px;
 height: 40px;
 /* border: 1px solid black; */
+user-select : none;
 `
 
 
