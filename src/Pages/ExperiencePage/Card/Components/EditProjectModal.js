@@ -179,7 +179,7 @@ const EditProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectGoalText>
-                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="이번 프로젝트 목표 또는 포부를 한 줄로 짧게 남겨주세요!  50자 이내로 입력해주세요." defaultValue={propsProjectData?.description}>
+                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="프로젝트 내 팀의 목표 또는 개인의 목표를 짧게 남겨주세요! &#13;&#10;50자 이내로 입력해주세요." defaultValue={propsProjectData?.description}>
 
                         </ModalProjectGoalInput>
                     </ModalProjectGoal>
@@ -398,6 +398,7 @@ font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 &::placeholder {
     color: ${(props) => props.theme.color.base6};
+    white-space: pre-wrap;
   }
 `;
 
