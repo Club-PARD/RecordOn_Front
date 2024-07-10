@@ -30,18 +30,23 @@ const WritingPage = () => {
   };
 
   const submitData = async () => {
-    if (isExpRecordSubmitted && isUpdated) {
-      {
-        console.log(experience);
-      }
+    if (
+      isExpRecordSubmitted && 
+      isUpdated && 
+      experience.user_id && 
+      experience.user_id !== "" && 
+      experience.projects_id && 
+      experience.projects_id !== ""
+    ) {
+      console.log("유저 및 프로젝트 정보: ", experience.user_id, experience.projects_id);
       try {
         const response = await postExperienceAPI(experience);
         console.log("request successful: ", response);
       } catch (error) {
         console.error("request failed: ", error);
       } finally {
-        setIsExpRecordSubmitted(false);
-        setIsUpdated(false);
+        // setIsExpRecordSubmitted(false);
+        // setIsUpdated(false);
         navigate("/experience");
       }
     }
