@@ -7,8 +7,8 @@ const { persistAtom } = recoilPersist();
 export const experienceState = atom({
   key: "experienceState",
   default: {
-    user_id: "2e36c965-f524-445e-ba01-680b8e67f613",
-    projects_id: 10,
+    user_id: "",
+    projects_id: null,
     exp_date: "",
     title: "",
     tag_ids: [],
