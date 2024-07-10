@@ -6,7 +6,7 @@ import {
   handleExpRecordSubmit,
   experienceState,
 } from "../../../Atom/ExpRecordAtom";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
+import {recoilUserData} from "../../../Atom/UserDataAtom";
 import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
 import { postExperienceAPI } from "../../../Axios/ExperienceApi";
@@ -19,7 +19,7 @@ const WritingPage = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
-  const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
+  // const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
 
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -39,7 +39,7 @@ const WritingPage = () => {
       throw new Error("유저 ID나 프로젝트 ID가 올바르지 않습니다.");
     }
   };
-
+  
   const submitData = async () => {
     if (isExpRecordSubmitted && isUpdated) {
       try {
@@ -51,24 +51,14 @@ const WritingPage = () => {
       } catch (error) {
         console.error("request failed: ", error);
       } finally {
-        // setIsExpRecordSubmitted(false);
-        // setIsUpdated(false);
-        // navigate("/experience");
+        setIsExpRecordSubmitted(false);
+        setIsUpdated(false);
+        navigate("/experience");
       }
     }
   };
   console.log([isExpRecordSubmitted, isUpdated, experience]);
 
-
-  useEffect(() => {
-    if (isExpRecordSubmitted) {
-      setExperience((prev) => ({
-        ...prev,
-        user_id: userInfo.user_id,
-        projects_id: userInfo.projects_id,
-      }));
-    }
-  }, [isExpRecordSubmitted, userInfo, setExperience]);
 
   useEffect(() => {
     submitData();
