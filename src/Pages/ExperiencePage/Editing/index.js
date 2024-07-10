@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import {
   handleExpRecordSubmit,
   experienceState,
+  answerState,
 } from "../../../Atom/ExpRecordAtom";
 
 import { editOneExpereienceAPI } from "../../../Axios/ExperienceApi";
@@ -14,11 +15,13 @@ import DeleteModal from "../../../Common/DeleteModal";
 import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 
 import ContentsArea from "./Components/ContentsArea";
+
 const EditPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
+  const [answer, setAnswer] = useRecoilState(answerState);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,28 +33,17 @@ const EditPage = () => {
       await editOneExpereienceAPI(experience);
       // refreshRecoil();
       // navigate("/experience");
-      console.log("경험 데이터가 제출되었습니다.");
-      console.log(experience);
+      console.log("경험 데이터가 수정되었습니다.");
     } catch (error) {
-      console.error("경험 데이터 제출 중 오류가 발생했습니다:", error);
+      console.error("경험 데이터 수정 중 오류가 발생했습니다:", error);
       setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
     }
   };
 
-  const refreshRecoil = () => {
-    setIsExpRecordSubmitted(false);
-    setExperience({
-      user_id: "",
-      exp_date: "",
-      exp_title: "",
-      tag_ids: [],
-      free_content: "",
-      question_ids: [],
-      question_answers: [],
-      reference_links: [],
-      common_question_answer: "",
-    });
-  };
+  useEffect(() => {
+    answer && console.log ("answer type: ", typeof(answer));
+    answer && console.log("answer: ", answer);
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -60,10 +52,6 @@ const EditPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  {
-    console.log(experience);
-  }
 
   return (
     <Div>
@@ -101,7 +89,6 @@ const EditPage = () => {
         onDelete={() => {
           // '나가기' 버튼 클릭 시 처리 로직
           console.log("나가기");
-          // refreshRecoil();
           closeModal(); // 모달 닫기
           navigate("/experience");
         }}

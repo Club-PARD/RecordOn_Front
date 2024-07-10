@@ -1,4 +1,7 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 // 제출 내용 관리
 export const experienceState = atom({
@@ -33,6 +36,7 @@ export const answerState = atom({
     reference_links: [],
     common_question_answer: "",
   },
+  effects_UNSTABLE: [persistAtom],
 });
 
 // 제출 동작 관리

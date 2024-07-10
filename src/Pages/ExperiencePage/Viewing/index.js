@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 import {
   getOneExperienceAPI,
   deleteOneExperienceAPI,
@@ -9,11 +8,9 @@ import {
 
 import { useRecoilState } from "recoil";
 import { answerState } from "../../../Atom/ExpRecordAtom";
+import { recoilUserData } from "../../../Atom/UserDataAtom";
 
-import UpperArea, {
-  StyledTag,
-  FixAreaLabel,
-} from "./Components/UpperArea";
+import UpperArea, { StyledTag, FixAreaLabel } from "./Components/UpperArea";
 import {
   Div,
   GoBackArea,
@@ -29,7 +26,6 @@ import {
 } from "../Writing/Components/ContentComponents/LowerComponents/LowerArea";
 import DeleteModal from "../../../Common/DeleteModal";
 
-
 const ViewPage = () => {
   const keywords = [
     { id: 0, label: "도전", color: "#2ABCDC" },
@@ -39,9 +35,12 @@ const ViewPage = () => {
     { id: 4, label: "배움", color: "#42B887" },
   ];
 
+  const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
   const [answer, setAnswer] = useRecoilState(answerState);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answerObject, setAnswerObject] = useState({});
+  const [expId, setExpId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -54,18 +53,31 @@ const ViewPage = () => {
   };
 
   useEffect(() => {
-    const getRecord = async () => {
+    if (userInfo.id != null) setExpId(userInfo.id);
+  }, [userInfo]);
+
+  useEffect(() => {
+    const getRecord = async (id) => {
+      console.log(id);
       try {
-        const response = await getOneExperienceAPI();
+        const response = await getOneExperienceAPI(id);
         console.log(response.success);
-        response && setAnswerObject(response.response_object);
-        answerObject && setAnswer(answerObject);
+        if (response) {
+          setAnswerObject(response.response_object);
+        }
       } catch (error) {
         console.error(error);
       }
     };
-    getRecord();
-  }, []);
+    if (expId) getRecord(expId);
+  }, [expId]);
+
+  // answerObject가 업데이트되면 answer 상태를 업데이트
+  useEffect(() => {
+    if (answerObject !== null) {
+      setAnswer(JSON.stringify(answerObject));
+    }
+  }, [answerObject, setAnswer]);
 
   // 중간 배열 생성
   const combinedArray =
@@ -121,20 +133,21 @@ const ViewPage = () => {
         </>
       )}
 
-      {answerObject.reference_link && answerObject.reference_link.length != 0 && (
-        <>
-          <StyledHr />
-          <FixArea>
-            <FixAreaLabel>관련 자료 링크</FixAreaLabel>
-            {answerObject.reference_link &&
-              answerObject.reference_link.map((link, index) => (
-                <BookmarkComponent key={index}>
-                  <Bookmark url={link} />
-                </BookmarkComponent>
-              ))}
-          </FixArea>
-        </>
-      )}
+      {answerObject.reference_link &&
+        answerObject.reference_link.length != 0 && (
+          <>
+            <StyledHr />
+            <FixArea>
+              <FixAreaLabel>관련 자료 링크</FixAreaLabel>
+              {answerObject.reference_link &&
+                answerObject.reference_link.map((link, index) => (
+                  <BookmarkComponent key={index}>
+                    <Bookmark url={link} />
+                  </BookmarkComponent>
+                ))}
+            </FixArea>
+          </>
+        )}
 
       <ButtonArea>
         <Button
@@ -194,7 +207,7 @@ const FixAreaWrapper = styled.div`
 `;
 
 const FixAnswer = styled.div`
-min-height: 46px;
+  min-height: 46px;
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight: 400px;
   line-height: 23.4px;

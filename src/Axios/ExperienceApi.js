@@ -15,10 +15,10 @@ export const postExperienceAPI = async (data) => {
 };
 
 // 경험 기록 하나 조회 API
-export const getOneExperienceAPI = async () => {
-    const id = 10;
+export const getOneExperienceAPI = async (expId) => {
+    console.log (expId);
     try {
-        const response = await axios.get (`${server}experiences/${id}`);
+        const response = await axios.get (`${server}experiences/${expId}`);
         if (response.data.success) {
             console.log (response.data.response_object);
         } else {
