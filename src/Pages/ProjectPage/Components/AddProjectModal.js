@@ -167,8 +167,19 @@ const AddProjectModal = ({
 
     }
 
+
+    const handleRawChange = (event) => {
+        const inputValue = event.target.value;
+        // 입력값이 숫자 8자리인지 확인
+        if (/^\d{8}$/.test(inputValue)) {
+            // yyyyMMdd 형식을 yyyy.MM.dd 형식으로 변환
+            const formattedDate = `${inputValue.slice(0, 4)}.${inputValue.slice(4, 6)}.${inputValue.slice(6, 8)}`;
+            event.target.value = formattedDate;
+        }
+    };
+
     return (
-        <Overlay onClick={handleOverlayClick}>
+        <Overlay >
             <Modal>
                 <ModalContentDiv>
                     <ModalText>
@@ -229,6 +240,7 @@ const AddProjectModal = ({
                                         onChange={(date) => {
                                             startDateHandler(date);
                                         }}
+                                        onChangeRaw={handleRawChange}
                                     />
                                     <ProjectDateTo>
                                         ~
@@ -245,6 +257,7 @@ const AddProjectModal = ({
                                         onChange={(date) => {
                                             finishDateHandler(date);
                                         }}
+                                        onChangeRaw={handleRawChange}
                                     />
                                 </ProjectDateWrapper>
 
@@ -280,7 +293,7 @@ const AddProjectModal = ({
                             <ModalProjectAddButton onClick={addProjectHandler} isValid={valid}>
                                 추가하기
                             </ModalProjectAddButton>
-                            <ModalProjectCancelButton name="exit" >
+                            <ModalProjectCancelButton name="exit" onClick={handleOverlayClick}>
                                 취소
                             </ModalProjectCancelButton>
                         </ModalProjectButtons>
@@ -701,6 +714,7 @@ color: ${(props) => props.theme.colors.White};
 background-color: ${(props) => (props.isValid ? props.theme.color.main : props.theme.color.base6)};
 justify-content: center;
 border-radius: 10px;
+cursor: pointer;
 `;
 
 const ModalProjectCancelButton = styled.button`
@@ -713,7 +727,7 @@ color: ${(props) => props.theme.color.base6};
 background-color: ${(props) => props.theme.color.base3};
 justify-content: center;
 border-radius: 10px;
-
+cursor: pointer;
 `;
 
 const Asterisk = styled.div`
