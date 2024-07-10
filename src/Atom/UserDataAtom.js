@@ -65,3 +65,20 @@ export const recoilUserExperienceFilter = atom({
     },
     effects_UNSTABLE: [persistAtom],
 });
+export const recoilProjectPagination = atom({
+    key: "projectPagination",
+    default: {
+        startNum: 0,
+        endNum: 6,
+        pageNum: 1,
+    },
+    effects_UNSTABLE: [persistAtom],
+});
+export const recoilExperiencePagination = atom({
+    key: "experiencePagination",
+    default: {
+        startNum: 0,
+        endNum: 6,
+    },
+    effects_UNSTABLE: [persistAtom],
+});

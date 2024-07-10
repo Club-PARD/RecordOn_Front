@@ -12,6 +12,7 @@ const ExperienceCard = ({ experienceData }) => {
     const keyword = [...new Set(experienceData.tag_name)];
 
     const cardClickHandler = () => {
+
         navigate("/view");
     }
 
