@@ -49,7 +49,7 @@ const UppderArea = () => {
           <StyledLabel>소제목</StyledLabel>
           <StyledInput
             type="text"
-            defaultValue={answer && answer.title}
+            defaultValue={answer && answer.experience_name}
             onChange={handleTitleChange}
           />
         </UppderPart>

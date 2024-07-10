@@ -75,7 +75,7 @@ const ViewPage = () => {
   // answerObject가 업데이트되면 answer 상태를 업데이트
   useEffect(() => {
     if (answerObject !== null) {
-      setAnswer(JSON.stringify(answerObject));
+      setAnswer(answerObject);
     }
   }, [answerObject, setAnswer]);
 
