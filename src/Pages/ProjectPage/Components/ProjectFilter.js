@@ -24,7 +24,7 @@ const ProjectFilter = () => {
   const keywords = ['신뢰성', '전문성', '책임감', '열정', '실행력', '창의성', '성실성', '정직', '소통/협력'];
 
 
-  const processOnChange = () => {
+  const processOffChange = () => {
 
     if (projectFilter.is_finished == 2) {
       setProjectFilter({
@@ -40,7 +40,7 @@ const ProjectFilter = () => {
     }
   }
 
-  const processOffChange = () => {
+  const processOnChange = () => {
     if (projectFilter.is_finished == 2) {
       setProjectFilter({
         ...projectFilter,
@@ -95,6 +95,16 @@ const ProjectFilter = () => {
 
   };
 
+  const handleRawChange = (event) => {
+    const inputValue = event.target.value;
+    // 입력값이 숫자 8자리인지 확인
+    if (/^\d{8}$/.test(inputValue)) {
+      // yyyyMMdd 형식을 yyyy.MM.dd 형식으로 변환
+      const formattedDate = `${inputValue.slice(0, 4)}.${inputValue.slice(4, 6)}.${inputValue.slice(6, 8)}`;
+      event.target.value = formattedDate;
+    }
+  };
+
 
   const resetDate = () => {
     setProjectFilter({
@@ -145,6 +155,8 @@ const ProjectFilter = () => {
               </ProjectProcessOnOff>
             ),
             1: (
+
+
               <ProjectProcessOnOff>
                 <ProjectProcessOngoing style={{ backgroundColor: "white", color: "#303030" }} onClick={processOnChange}>
                   진행중
@@ -156,10 +168,10 @@ const ProjectFilter = () => {
             ),
             2: (
               <ProjectProcessOnOff>
-                <ProjectProcessOngoing style={{ backgroundColor: "#303030", color: "white" }} onClick={processOnChange}>
+                <ProjectProcessOngoing style={{ backgroundColor: "white", color: "#303030" }} onClick={processOnChange}>
                   진행중
                 </ProjectProcessOngoing>
-                <ProjectProcessDone style={{ backgroundColor: "#303030", color: "white" }} onClick={processOffChange}>
+                <ProjectProcessDone style={{ backgroundColor: "white", color: "#303030" }} onClick={processOffChange}>
                   진행완료
                 </ProjectProcessDone>
               </ProjectProcessOnOff>
@@ -175,11 +187,11 @@ const ProjectFilter = () => {
               dateFormat='yyyy.MM.dd'
               shouldCloseOnSelect
               disabledKeyboardNavigation
-              placeholderText="시작 날짜"
+              placeholderText="YYYY.MM.DD"
               minDate={new Date('1980-01-01')}
               maxDate={new Date('2100-12-31')}
               locale={ko}
-              selected={selectedStartDate}
+              selected={projectFilter.start_date}
               onChange={(date) => {
                 setSelectedStartDate(date);
                 setProjectFilter({
@@ -187,6 +199,7 @@ const ProjectFilter = () => {
                   start_date: date,
                 })
               }}
+              onChangeRaw={handleRawChange}
             />
             <ProjectDateTo>
               ~
@@ -195,11 +208,11 @@ const ProjectFilter = () => {
               dateFormat='yyyy.MM.dd'
               shouldCloseOnSelect
               disabledKeyboardNavigation
-              placeholderText="마무리 날짜"
+              placeholderText="YYYY.MM.DD"
               minDate={new Date('1980-01-01')}
               maxDate={new Date('2100-12-31')}
               locale={ko}
-              selected={selectedEndDate}
+              selected={projectFilter.finish_date}
               onChange={(date) => {
                 setSelectedEndDate(date);
                 setProjectFilter({
@@ -207,6 +220,7 @@ const ProjectFilter = () => {
                   finish_date: date,
                 })
               }}
+              onChangeRaw={handleRawChange}
             />
           </ProjectDateWrapper>
           <ProjectDateApply onClick={resetDate}>
@@ -218,12 +232,12 @@ const ProjectFilter = () => {
         <ProjectKeyword>
           <ProjectKeywordFilter>
             <ProjectKeywordFilterText>
-              핵심역량필터
+
             </ProjectKeywordFilterText>
             <ProjectKeywordFilterButton>
               <ProjectKeywordFilterDropdownContainer ref={dropdownRef}>
                 <ProjectKeywordFilterDropdownHeader onClick={() => { setIsOpen(!isOpen) }}>
-                  핵심역량선택
+                  핵심역량필터
                   <ArrowImage src={DropdownArrow} isRotated={isOpen} />
                 </ProjectKeywordFilterDropdownHeader>
                 {isOpen && (
