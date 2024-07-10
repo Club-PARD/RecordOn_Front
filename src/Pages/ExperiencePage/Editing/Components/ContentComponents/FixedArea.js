@@ -20,6 +20,12 @@ const FixedArea = () => {
 
   const [commonQuestionAnswer, setCommonQuestionAnswer] = useState("");
 
+  useEffect(() => {
+    if (answer && answer.common_question_answer) {
+      setCommonQuestionAnswer(answer.common_question_answer);
+    }
+  }, [answer]);
+
   // 입력 내용을 임시 변수에 관리
   const handleChange = (e) => {
     setCommonQuestionAnswer(e.target.value);
@@ -38,13 +44,14 @@ const FixedArea = () => {
   return (
     <>
       {/* 고정 질문 영역 */}
+      {console.log(commonQuestionAnswer)}
       <FixArea>
         <FixAreaLabel>
           Q. 오늘 있었던 경험을 떠올리며, 연상되는 다섯 가지 단어를 적어보세요!
         </FixAreaLabel>
         <TextAreaWidth
           height="88px"
-          defaultValue={answer && answer.common_question_answer}
+          value={commonQuestionAnswer}
           onChange={handleChange}
         />
       </FixArea>
