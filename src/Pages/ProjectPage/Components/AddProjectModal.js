@@ -203,7 +203,7 @@ const AddProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectGoalText>
-                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="이번 프로젝트 목표 또는 포부를 한 줄로 짧게 남겨주세요!  50자 이내로 입력해주세요.">
+                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="프로젝트 내 팀의 목표 또는 개인의 목표를 짧게 남겨주세요! &#13;&#10;50자 이내로 입력해주세요.">
 
                         </ModalProjectGoalInput>
                     </ModalProjectGoal>
@@ -420,6 +420,7 @@ padding: 11px 16px;
 box-sizing: border-box;
 &::placeholder {
     color: ${(props) => props.theme.color.base6};
+    white-space: pre-wrap;
   }
 `;
 

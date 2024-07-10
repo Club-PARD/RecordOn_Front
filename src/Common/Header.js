@@ -175,6 +175,7 @@ align-items: center;
 width: 50px;
 height: 50px;
 user-select : none;
+cursor: pointer;
 `;
 
 const UserLogout = styled.div`
@@ -204,7 +205,7 @@ const LogInButton = styled.div`
   align-items: center;
 
   width: 132px;
-  height: 40px;
+  height: 30px;
 
   border-radius: 10px;
   background-color: ${(props) => props.theme.color.base7};

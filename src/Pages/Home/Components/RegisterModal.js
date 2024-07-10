@@ -202,6 +202,7 @@ const OutContainer = styled.div`
   flex-shrink: 0;
   border-radius: 16px;
   background-color: ${(props) => props.theme.colors.White};
+  user-select : none;
 `;
 
 const StyledClose = styled(Close)`
@@ -379,6 +380,7 @@ const RegisterBtn = styled.button`
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight : ${(props) => props.theme.fontWeights.TextM};
   line-height: normal;
+  cursor: pointer;
 
   &:disabled {
     background: ${(props) => props.theme.colors.Gray};

@@ -60,7 +60,7 @@ const UppderArea = () => {
           <StyledLabel>소제목</StyledLabel>
           <StyledInput
             type="text"
-            placeholder="가장 기억에 남는 활동을 중심으로 소제목을 작성해보세요! (15자 이내 공백 미포함)"
+            placeholder="가장 기억에 남는 활동 중심으로 소제목을 작성해보세요! (15자 이내 공백 미포함)"
             onChange={handleTitleChange}
           />
         </UppderPart>

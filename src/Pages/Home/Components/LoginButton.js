@@ -171,7 +171,7 @@ const LoginButtonDiv = styled.div`
   gap: 5.31px;
 
   width: 228px;
-  height: 45px;
+  height: 40px;
 
   background-color: ${(props) => props.theme.color.main};
   border-radius: 7.5px;
