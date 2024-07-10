@@ -25,7 +25,7 @@ function RegisterModal({ show, onClose, defaultName }) {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
   const navigate = useNavigate();
 
-  
+  //약관 모달
   //약관 모달 출력 관련 함수 시작
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);

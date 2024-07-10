@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { ReactComponent as Close } from "../../../Assets/close.svg";
-
+  //개인정보 수정 모달
 const PrivacyPolicyModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
