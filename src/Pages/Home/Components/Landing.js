@@ -80,6 +80,7 @@ const Container = styled.div`
   justify-content: start;
   background-color: ${(props) => props.theme.color.base1};
   /* gap: 60px; */
+  user-select : none;
 `;
 
 const LandingTitle = styled.div`
@@ -87,6 +88,7 @@ const LandingTitle = styled.div`
   height: 365px;
   /* border: 1px solid black; */
   margin-top: 100px;
+  user-select : none;
 `;
 
 const CatchPhrase = styled.div`
