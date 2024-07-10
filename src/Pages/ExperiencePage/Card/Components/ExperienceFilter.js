@@ -170,14 +170,14 @@ const ExperienceFilter = () => {
               경험태그필터
             </ExperienceKeywordFilterText>
             <ExperienceKeywordFilterButton>
-              <ExperienceKeywordFilterDropdownContainer>
+              <ExperienceKeywordFilterDropdownContainer ref={dropdownRef}>
                 <ExperienceKeywordFilterDropdownHeader onClick={toggling}>
                   경험태그선택
                   <ArrowImage src={DropdownArrow} isRotated={isOpen} />
                 </ExperienceKeywordFilterDropdownHeader>
                 {isOpen && (
                   <ExperienceKeywordFilterDropdownListContainer >
-                    <ExperienceKeywordFilterDropdownList ref={dropdownRef}>
+                    <ExperienceKeywordFilterDropdownList >
                       {keywords.map(keyword => (
                         <ExperienceKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
                           {keyword}
