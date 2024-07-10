@@ -2,8 +2,8 @@ import styled from "styled-components";
 import AddProject from "./AddProject";
 import { useState } from "react";
 import { getUserProjectDataAPI } from "../../../Axios/ProjectDataApi";
-import { useRecoilState } from "recoil";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import ProjectTitleFolder from "../../../Assets/ProjectTitleFolder.png"
 import { experienceState } from "../../../Atom/ExpRecordAtom";
@@ -14,6 +14,7 @@ const ProjectTitle = () => {
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [userName, setUserName] = useState("");
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
+    const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
 
     // console.log(userData);
     console.log("experienceStateRecoil", experienceStateRecoil);
@@ -30,7 +31,14 @@ const ProjectTitle = () => {
             setUserName(response?.user_name);
         }
         getData();
-
+        setExperienceFilter({
+            ...experienceFilter,
+            tag_name: [],
+            start_date: "",
+            finish_date: "",
+            search_text: "",
+            sort_type: 1,
+        });
     }, [])
 
 
