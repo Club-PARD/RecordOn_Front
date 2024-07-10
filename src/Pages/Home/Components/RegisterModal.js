@@ -9,7 +9,7 @@ import { ReactComponent as Profile } from "../../../Assets/Profile.svg";
 import DropdownJob from "./DropdownJob.js";
 import { registerUserAPI } from '../../../Axios/RegisterApi.js'
 import { useNavigate } from 'react-router-dom';
-import PrivacyPolicyModal from './privacyPolicyModal.js';
+import PrivacyPolicyModal from './PrivacyPolicyModal.js';
 import ServicePolicyModal from './ServicePolicyModal.js';
 
 
