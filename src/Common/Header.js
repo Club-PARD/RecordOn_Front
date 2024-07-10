@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../Assets/Logo.svg"
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { isLogined, recoilExperiencePagination, recoilLoginData, recoilProjectModal, recoilProjectPagination, recoilUserData, recoilUserExperienceFilter, recoilUserExperienceNum, recoilUserProjectFilter, recoilUserProjectNum } from "../Atom/UserDataAtom";
@@ -15,6 +15,8 @@ const Header = () => {
   const [loginData, setLoginData] = useRecoilState(recoilLoginData);
   const [profileClicked, setProfileClicked] = useState(false);
   const profileRef = useRef(null);
+
+
 
 
   const resetIsLogined = useResetRecoilState(isLogined);
@@ -55,7 +57,7 @@ const Header = () => {
   // 프로필 외부 클릭시 UserLogout 컴포넌트 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
+      if (profileRef.current && !profileRef.current.contains(event.target) && isLoggedIn) {
         setProfileClicked(false);
       }
     };
@@ -76,7 +78,7 @@ const Header = () => {
     console.log(loginData.imageUrl);
   }
 
-
+  // 로그아웃할 떄 recoil 초기화
   const logoutHandler = () => {
     resetIsLogined();
     resetRecoilLoginData();
@@ -92,6 +94,7 @@ const Header = () => {
     resetExperienceState();
     resetAnswerState();
     resetHandleExpRecordSubmit();
+    setProfileClicked(false)
     setIsLoggedIn(false);
   };
 
@@ -101,6 +104,8 @@ const Header = () => {
       navigate("/");
     }
   }, [isLoggedIn])
+
+  console.log(profileClicked);
 
   return (
     <HeaderContainer $scrolled={isScrolled}>
@@ -119,10 +124,11 @@ const Header = () => {
 
           </UserProfileDiv>
 
-        ) : (
-          <LoginButton buttonText="기록 시작하기" buttonWidth="132px" buttonColor="#303030" />
-          // <LogInButton onClick={loginHandler}>기록 시작하기</LogInButton>
-        )}
+        )
+          :
+          (
+            <LoginButton buttonText="기록 시작하기" buttonWidth="132px" buttonColor="#303030" onClick={() => { setProfileClicked(false) }} />
+          )}
       </Div>
     </HeaderContainer>
   );
@@ -168,6 +174,7 @@ align-items: center;
 /* border: 1px solid black; */
 width: 50px;
 height: 50px;
+user-select : none;
 `;
 
 const UserLogout = styled.div`

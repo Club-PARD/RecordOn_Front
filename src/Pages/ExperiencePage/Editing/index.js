@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { useRecoilState } from "recoil";
@@ -53,6 +53,12 @@ const EditPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const { location } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <Div>

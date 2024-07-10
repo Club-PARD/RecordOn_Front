@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   getOneExperienceAPI,
@@ -63,7 +63,7 @@ const ViewPage = () => {
   useEffect(() => {
     if (userInfo.id != null) setExpId(userInfo.id);
     if (userInfo.user_id != "") setUserId(userInfo.userId);
-    console.log (expId, userId);
+    console.log(expId, userId);
   }, [userInfo]);
 
   useEffect(() => {
@@ -97,6 +97,12 @@ const ViewPage = () => {
       answerObject.question_text[index],
       answerObject.question_answer[index],
     ]);
+
+  const { location } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <Div>
@@ -194,7 +200,7 @@ const ViewPage = () => {
         onDelete={() => {
           // '삭제' 버튼 클릭 시 처리 로직
           console.log("삭제");
-          console.log ("경험: " + expId, "사용자: " + userInfo.user_id);
+          console.log("경험: " + expId, "사용자: " + userInfo.user_id);
           deleteOneExperienceAPI(expId, userInfo.user_id);
           closeModal(); // 모달 닫기
           // navigate("/experience");
@@ -232,6 +238,7 @@ const ButtonArea = styled.div`
 
   margin-top: 60px;
   margin-bottom: 136px;
+  user-select : none;
 `;
 
 const Button = styled.div`
