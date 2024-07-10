@@ -18,6 +18,20 @@ const LowerArea = () => {
 
   const [freeContent, setFreeContent] = useState("");
 
+  useEffect(() => {
+    // answer.reference_link 배열에서 기본 값을 가져와서 링크 입력 영역 초기 상태로 설정
+    if (answer.reference_link && answer.reference_link.length > 0) {
+      const initialLinks = answer.reference_link.map((link, index) => ({
+        id: index + 1,
+        linkUrl: link,
+        isSubmitted: true,
+      }));
+      setLinkArea(initialLinks);
+    } else {
+      setLinkArea([{ id: 1, linkUrl: "", isSubmitted: false }]);
+    }
+  }, [answer]);
+
   // 링크 삭제 핸들러
   const handleDeleteLink = (index) => {
     const updatedLinks = [...linkArea];
@@ -98,9 +112,8 @@ const LowerArea = () => {
           <FixAreaLabel>자유란</FixAreaLabel>
           <TextAreaWidth
             height="150px"
-            value={freeContent}
+            value={answer && answer.free_content}
             onChange={handleFreeChange}
-            defaultValue={answer && answer.free_content}
           />
           <DivForMargin height={"60px"} />
         </FixArea>
