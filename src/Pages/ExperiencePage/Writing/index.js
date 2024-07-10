@@ -57,6 +57,18 @@ const WritingPage = () => {
       }
     }
   };
+  console.log([isExpRecordSubmitted, isUpdated, experience]);
+
+
+  useEffect(() => {
+    if (isExpRecordSubmitted) {
+      setExperience((prev) => ({
+        ...prev,
+        user_id: userInfo.user_id,
+        projects_id: userInfo.projects_id,
+      }));
+    }
+  }, [isExpRecordSubmitted, userInfo, setExperience]);
 
   useEffect(() => {
     if (isExpRecordSubmitted) {
