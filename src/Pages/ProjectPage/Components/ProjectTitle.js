@@ -62,6 +62,7 @@ height: 280px;
 margin-top: 62px;
 /* border: 1px solid black; */
 justify-content: start;
+user-select : none;
 `
 
 const ProjectTitleImage = styled.img`

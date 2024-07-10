@@ -181,6 +181,7 @@ const LoginButtonDiv = styled.div`
 
   white-space: nowrap;
   cursor: pointer;
+  user-select : none;
 `;
 
 const ModalButton1 = styled.div`

@@ -98,6 +98,7 @@ background-color: ${(props) => props.theme.color.white};
 justify-content: center;
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 cursor: pointer;
+user-select : none;
 `
 const CardContent = styled.div`
 width: 312px;

@@ -22,7 +22,7 @@ function Router() {
         <Route path="/edit" element={<EditPage />} />
         {/* <Route path="/link" element={<link />} */}
         {/* theme 사용 에시 페이지 */}
-        <Route path="/theme" element={<ThemeExample />} />
+        {/* <Route path="/theme" element={<ThemeExample />} /> */}
       </Route>
     </Routes>
   );
