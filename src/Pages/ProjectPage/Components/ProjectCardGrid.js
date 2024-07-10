@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getUserProjectDataAPI, getUserProjectDataFilteredAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserProjectFilter, recoilUserProjectNum } from "../../../Atom/UserDataAtom";
+import { recoilProjectPagination, recoilUserProjectFilter, recoilUserProjectNum } from "../../../Atom/UserDataAtom";
 
 const ProjectCardGrid = () => {
 
@@ -14,26 +14,13 @@ const ProjectCardGrid = () => {
     const [visibleCardEnd, setVisibleCardEnd] = useState(6);
     const [projectNum, setProjectNum] = useRecoilState(recoilUserProjectNum);
     const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
-
-
-
-    // console.log(visibleCardStart, visibleCardEnd);
-    // console.log(userProjectData);
+    const [projectPagination, setProjectPagination] = useRecoilState(recoilProjectPagination);
 
     useEffect(() => {
-        sessionStorage.setItem('startNum', 0);
-        sessionStorage.setItem('endNum', 6)
+        setVisibleCardStart(projectPagination.startNum);
+        setVisibleCardEnd(projectPagination.endNum);
 
-        const handleStorageChange = () => {
-            const startNum = sessionStorage.getItem('startNum') || 0;
-            const endNum = sessionStorage.getItem('endNum') || 6;
-            setVisibleCardStart(Number(startNum));
-            setVisibleCardEnd(Number(endNum));
-        };
-
-        window.addEventListener('storage', handleStorageChange);
-
-    }, [])
+    }, [projectPagination])
 
     useEffect(() => {
         const getData = async () => {

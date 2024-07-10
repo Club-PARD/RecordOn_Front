@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useRef, useState } from "react";
 import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
-import { recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
+import { recoilProjectPagination, recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
 import ResetIcon from "../../../Assets/ResetIcon.svg"
 import DropdownArrow from "../../../Assets/DropdownArrow.svg"
 import XWhite from "../../../Assets/XWhite.svg"
@@ -17,10 +17,12 @@ const ProjectFilter = () => {
   const [selectedEndDate, setSelectedEndDate] = useState("");
 
   const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
+  const [projectPagination, setProjectPagination] = useRecoilState(recoilProjectPagination);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState([]);
   const keywords = ['신뢰성', '전문성', '책임감', '열정', '실행력', '창의성', '성실성', '정직', '소통/협력'];
+
 
   const processOnChange = () => {
 
