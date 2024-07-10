@@ -42,6 +42,8 @@ const ExperienceTitle = () => {
 
     }
 
+    console.log(experienceData);
+
     return (
         <ExperienceTitleDiv>
             <ExperienceTitleLeft>

@@ -6,14 +6,17 @@ import { useRecoilState } from "recoil";
 import { recoilUserData } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import ProjectTitleFolder from "../../../Assets/ProjectTitleFolder.png"
+import { experienceState } from "../../../Atom/ExpRecordAtom";
 
 
 const ProjectTitle = () => {
 
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [userName, setUserName] = useState("");
+    const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
 
     // console.log(userData);
+    console.log("experienceStateRecoil", experienceStateRecoil);
 
     useEffect(() => {
         if (userData.user_id == null) {

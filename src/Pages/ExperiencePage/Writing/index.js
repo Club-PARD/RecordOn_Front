@@ -31,11 +31,11 @@ const WritingPage = () => {
 
   const submitData = async () => {
     if (
-      isExpRecordSubmitted && 
-      isUpdated && 
-      experience.user_id && 
-      experience.user_id !== "" && 
-      experience.projects_id && 
+      isExpRecordSubmitted &&
+      isUpdated &&
+      experience.user_id &&
+      experience.user_id !== "" &&
+      experience.projects_id &&
       experience.projects_id !== ""
     ) {
       console.log("유저 및 프로젝트 정보: ", experience.user_id, experience.projects_id);
@@ -51,10 +51,12 @@ const WritingPage = () => {
       }
     }
   };
+  console.log([isExpRecordSubmitted, isUpdated, experience]);
+
 
   useEffect(() => {
     submitData();
-  }, [isExpRecordSubmitted, isUpdated, experience]);
+  }, [isUpdated]);
 
   return (
     <Div>

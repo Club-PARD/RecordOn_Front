@@ -18,6 +18,7 @@ export const experienceState = atom({
     reference_links: [],
     common_question_answer: "",
   },
+  effects_UNSTABLE: [persistAtom],
 });
 
 // 서버에서 받아온 저장 내용 관리
