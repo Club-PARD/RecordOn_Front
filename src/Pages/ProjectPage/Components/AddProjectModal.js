@@ -275,40 +275,37 @@ const AddProjectModal = ({
                         <ModalProjectImageText>
                             프로젝트 대표 이미지
                         </ModalProjectImageText>
-                        <ModalProjectImageUpload name="picture" onClick={handleDivClick}>{
+                        <ModalProjectImageUpload name="picture" >{
                             projectData.image ?
                                 <ModalProjectImageUploadLeft>
-                                    <ModalProjectImageUploadContent>
+                                    <ModalProjectImageUploadContent onClick={handleDivClick}>
                                         <img
                                             src={projectData.image}
                                             alt="프로젝트 대표 사진"
-                                            style={{ width: '18px', height: '18px', objectFit: 'cover', marginRight: "7px" }}
+                                            style={{ width: '18px', height: '18px', objectFit: 'cover', marginLeft: "24px", marginRight: "7px" }}
                                         />
                                         <ModalProjectImageNameDiv>
-                                            <ModalProjectImageName>
-                                                {projectData.picture.name}
-                                            </ModalProjectImageName>
-                                            <ModalProjectImageDelete onClick={() => {
-                                                setProjectData({
-                                                    ...projectData,
-                                                    picture: undefined,
-                                                    image: undefined,
-
-                                                });
-                                            }}>
-
-                                            </ModalProjectImageDelete>
+                                            {projectData.picture.name}
                                         </ModalProjectImageNameDiv>
                                         <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                     </ModalProjectImageUploadContent>
-                                    <img src={CloseIcon} style={{ width: "12px" }} />
+                                    <ModalProjectImageDelete onClick={() => {
+                                        setProjectData({
+                                            ...projectData,
+                                            picture: undefined,
+                                            image: undefined,
+
+                                        });
+                                    }}>
+                                        <img src={CloseIcon} style={{ width: "12px" }} />
+                                    </ModalProjectImageDelete>
                                 </ModalProjectImageUploadLeft>
                                 :
-                                <ModalProjectImageUploadContent>
+                                <ModalProjectImageUploadContent2 onClick={handleDivClick}>
                                     <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                     <ModalProjectImageIcon src={ImageIcon} />
                                     이미지 업로드
-                                </ModalProjectImageUploadContent>}
+                                </ModalProjectImageUploadContent2>}
 
                         </ModalProjectImageUpload>
                     </ModalProjectImage>
@@ -676,7 +673,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextM};
 const ModalProjectImageUpload = styled.div`
 width: 306px;
 height: 40px;
-border: 1px solid black;
+/* border: 1px solid black; */
 background-color: ${(props) => props.theme.color.base2};
 border-radius: 10px;
 flex-direction: row;
@@ -684,56 +681,69 @@ justify-content: start;
 box-sizing: border-box;
 font-size: ${(props) => props.theme.fontSizes.TextS};
 font-weight: ${(props) => props.theme.fontWeights.TextS};
-cursor: pointer;
+
 text-overflow: ellipsis;
 `;
 
 const ModalProjectImageUploadLeft = styled.div`
-width: 270px;
+width: 306px;
 height: 40px;
-border: 1px solid black;
+/* border: 1px solid black; */
 flex-direction: row;
 justify-content: start;
-box-sizing: content-box;
 font-size: ${(props) => props.theme.fontSizes.TextS};
 font-weight: ${(props) => props.theme.fontWeights.TextS};
-margin-left: 24px;
+/* margin-left: 24px; */
 `
 
 const ModalProjectImageUploadContent = styled.div`
-width: 270px;
-height: 18px;
+width: 260px;
+height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 justify-content: start;
 box-sizing: content-box;
 font-size: ${(props) => props.theme.fontSizes.TextS};
 font-weight: ${(props) => props.theme.fontWeights.TextS};
-margin-left: 24px;
+cursor: pointer;
+
+`
+
+const ModalProjectImageUploadContent2 = styled.div`
+width: 306px;
+height: 40px;
+/* border: 1px solid black; */
+flex-direction: row;
+justify-content: start;
+box-sizing: content-box;
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
+cursor: pointer;
+
 `
 
 const ModalProjectImageNameDiv = styled.div`
-width: 240px;
+width: 236px;
 height: 18px;
 flex-direction: row;
 /* border: 1px solid black; */
 align-items: start;
 justify-content: space-between;
+white-space: nowrap; 
+overflow: hidden;
+text-overflow: ellipsis;
 `
 const ModalProjectImageName = styled.div`
 width: 210px;
 height: 18px;
 flex-direction: row;
-border: 1px solid black;
+/* border: 1px solid black; */
 align-items: center;
-white-space: nowrap; 
-overflow: hidden;
-text-overflow: ellipsis;
 `;
 
 const ModalProjectImageDelete = styled.div`
-width: 18px;
-height: 18px;
+width: 40px;
+height: 40px;
 /* border: 1px solid black; */
 align-items: center;
 justify-content: center;
@@ -748,6 +758,7 @@ const ModalProjectImageIcon = styled.img`
 width: 18px;
 height: 18px;
 /* border: 1px solid black; */
+margin-left: 24px;
 margin-right: 7px;
 `;
 
