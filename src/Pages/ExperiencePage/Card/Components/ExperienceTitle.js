@@ -159,6 +159,8 @@ justify-content:start;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 color: ${(props) => props.theme.colors.Charcoal};
+cursor: pointer;
+user-select : none;
 `
 
 const ExperienceTitleCenter = styled.div`
@@ -174,6 +176,7 @@ height: 126px;
 /* border: 1px solid black; */
 margin-top: 60px;
 justify-content: center;
+user-select : none;
 `
 
 const ProjectProcessDate = styled.div`
@@ -347,6 +350,8 @@ background-color: ${(props) => props.theme.color.base7};
 justify-content:center;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
+cursor: pointer;
+user-select : none;
 `
 const DeleteProjectDiv = styled.div`
 width: 178px;

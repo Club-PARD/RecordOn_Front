@@ -109,7 +109,7 @@ const LowerArea = () => {
         <StyledHr />
 
         <FixArea>
-          <FixAreaLabel>자유란</FixAreaLabel>
+          <FixAreaLabel>자유 작성란</FixAreaLabel>
           <TextAreaWidth
             height="150px"
             value={answer && answer.free_content}

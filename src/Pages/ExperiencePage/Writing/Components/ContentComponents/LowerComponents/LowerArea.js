@@ -93,9 +93,9 @@ const LowerArea = () => {
         <StyledHr />
 
         <FixArea>
-          <FixAreaLabel>자유란</FixAreaLabel>
+          <FixAreaLabel>자유 작성란</FixAreaLabel>
           <TextAreaWidth
-            placeholder="질문을 통해 다 작성하지 못한 내용을 자유란에 작성해보세요. 하지만 자유란만 작성하는 것은 불가능해요. 최소 질문 한 가지에 답하고 와주세요:)"
+            placeholder="상단 질문을 통해 다 작성하지 못한 내용을 자유 작성란에 작성해보세요.&#13;&#10;하지만 자유 작성란만 작성하는 것은 불가능해요. 최소 질문 한 가지에 답하고 와주세요:)"
             height="150px"
             value={freeContent}
             onChange={handleFreeChange}
@@ -229,6 +229,7 @@ const TextAreaWidth = styled.textarea`
 
   &::placeholder {
     color: ${(props) => props.theme.color.base6};
+    white-space: pre-wrap;
   }
 `;
 

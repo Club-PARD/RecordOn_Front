@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import {
   handleExpRecordSubmit,
   experienceState,
 } from "../../../Atom/ExpRecordAtom";
-import {recoilUserData} from "../../../Atom/UserDataAtom";
+import { recoilUserData } from "../../../Atom/UserDataAtom";
 import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
 import { postExperienceAPI } from "../../../Axios/ExperienceApi";
@@ -39,7 +39,7 @@ const WritingPage = () => {
       throw new Error("유저 ID나 프로젝트 ID가 올바르지 않습니다.");
     }
   };
-  
+
   const submitData = async () => {
     if (isExpRecordSubmitted && isUpdated) {
       try {
@@ -63,6 +63,12 @@ const WritingPage = () => {
   useEffect(() => {
     submitData();
   }, [isUpdated]);
+
+  const { location } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <Div>
@@ -144,6 +150,7 @@ const GoBackDiv = styled.div`
     font-size: ${(props) => props.theme.fontSizes.TextM};
     color: ${(props) => props.theme.color.base6};
   }
+  user-select : none;
 `;
 
 const MarginBottomForGoBackDiv = styled.div`

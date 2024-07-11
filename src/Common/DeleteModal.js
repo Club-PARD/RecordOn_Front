@@ -78,6 +78,7 @@ const Modal = styled.div`
 
   border-radius: 16px;
   background-color: ${(props) => props.theme.colors.White};
+  user-select : none;
 `;
 
 const DesignArea = styled.div`
