@@ -1,18 +1,47 @@
 import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { getAllLink } from "../../Axios/ProjectDataApi";
+import { getAllLink } from "../../../../Axios/ProjectDataApi";
+import { recoilUserData, recoilUserExperienceFilter } from "../../../../Atom/UserDataAtom";
+import Clip from "../../../../Assets/Clip.svg"
+import Favicon from "../../../../Assets/faviconRO.svg"
 
-const LinkPage = ({ onClose }) => {
+const LinkPage = ({ isOpen, onClose }) => {
+  
   const [metaData, setMetaData] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const defaultImageUrl = "https://i.ibb.co/hCHb2ZJ/logo512.png";
+  const defaultImageUrl = Favicon;
+  const [userData] = useRecoilState(recoilUserData);
+  const [projectID, setProjectID] = useRecoilState(recoilUserExperienceFilter);
+
+
+  // useEffect(() => {
+  //   const getAllLinks = async () => {
+  //     const data = {
+  //       user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+  //       project_id: 1,
+  //     };
+  //     try {
+  //       const response = await getAllLink(data);
+  //       setMetaData(response);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   getAllLinks();
+  // }, []);
 
   useEffect(() => {
     const getAllLinks = async () => {
+      if (!userData || !userData.user_id || !projectID) {
+        return;
+      }
+  
       const data = {
-        user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
-        project_id: 1,
+        user_id: userData.user_id,
+        project_id: projectID.project_id,
       };
+      console.log(data);
       try {
         const response = await getAllLink(data);
         setMetaData(response);
@@ -20,23 +49,24 @@ const LinkPage = ({ onClose }) => {
         console.error(error);
       }
     };
+  
     getAllLinks();
-  }, []);
+  }, [userData]);
 
   //오버레이 영역 선택하면 모달 닫힘
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
-      onClose();
+        onClose();
     }
-  };
-
+};
+if (!isOpen) return null;
   return (
     <Overlay onClick={handleOverlayClick}>
       <Modal>
         <Body>
-          <Title>📎 관련 자료 링크</Title>
+          <Title><img src={Clip} style={{ width: "30px", height: "30px", marginRight:"5px"}} />관련 자료 링크</Title>
           <LinkArea>
-            {metaData.map((link, index) => (
+            {metaData && metaData.map((link, index) => (
               <StyledA
                 key={index}
                 href={link.url}
@@ -51,7 +81,7 @@ const LinkPage = ({ onClose }) => {
                 <div>{link.title}</div>
               </StyledA>
             ))}
-            {!metaData.length && <div>데이터를 로딩 중입니다...</div>}
+            {metaData && !metaData.length && <div>데이터를 로딩 중입니다...</div>}
           </LinkArea>
         </Body>
         {/* 그동안 각 경험 기록에 저장한 링크들을 한꺼번에 보여드리는 페이지입니다. */}
@@ -110,6 +140,7 @@ const LinkArea = styled.div`
   gap: 20px;
 `;
 const Title = styled.div`
+flex-direction: row;
   font-size: ${(props) => props.theme.fontSizes.TitleS};
   font-weight: ${(props) => props.theme.fontWeights.TitleS};
   margin-bottom: 30px;
