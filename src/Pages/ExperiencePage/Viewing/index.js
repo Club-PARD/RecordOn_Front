@@ -203,7 +203,7 @@ const ViewPage = () => {
           console.log("경험: " + expId, "사용자: " + userInfo.user_id);
           deleteOneExperienceAPI(expId, userInfo.user_id);
           closeModal(); // 모달 닫기
-          // navigate("/experience");
+          navigate("/experience");
         }}
       />
     </Div>

@@ -8,13 +8,13 @@ import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import {
   answerState,
-  experienceState,
+  expEditState,
   handleExpRecordEditSubmit,
 } from "../../../../../Atom/ExpRecordAtom";
 
 const UppderArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(experienceState);
+  const [experience, setExperience] = useRecoilState(expEditState);
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
