@@ -1,6 +1,6 @@
 import styled from "styled-components"
 // import DefaultCardImg from "../../../Assets/Experience_Default.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { recoilUserData } from "../../../../Atom/UserDataAtom";
@@ -11,6 +11,7 @@ const ExperienceCard = ({ experienceData }) => {
     const [userImg, setUserImg] = useState("");
     const navigate = useNavigate();
     const [userData, setUserData] = useRecoilState(recoilUserData);
+    const [allowNavigate, setAllowNavigate] = useState(false);
 
     const keyword = [...new Set(experienceData.tag_name)];
 
@@ -19,8 +20,14 @@ const ExperienceCard = ({ experienceData }) => {
             ...userData,
             id: experienceData.experience_id,
         })
-        navigate("/view");
+        setAllowNavigate(true);
     }
+
+    useEffect(() => {
+        if (allowNavigate) {
+            navigate("/view");
+        }
+    }, [allowNavigate])
 
     // console.log(key);
     // console.log(experienceData);
