@@ -8,6 +8,7 @@ import {
   experienceState,
   answerState,
 } from "../../../Atom/ExpRecordAtom";
+import { recoilUserData } from "../../../Atom/UserDataAtom";
 
 import { editOneExpereienceAPI } from "../../../Axios/ExperienceApi";
 
@@ -22,19 +23,21 @@ const EditPage = () => {
     handleExpRecordSubmit
   );
   const [answer, setAnswer] = useRecoilState(answerState);
+  const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [expId, setExpId] = useState(null);
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
 
     try {
-      await editOneExpereienceAPI(experience);
+      await editOneExpereienceAPI(expId, experience);
       // refreshRecoil();
       // navigate("/experience");
       console.log("경험 데이터가 수정되었습니다.");
-      navigate("/experience");
+      // navigate("/experience");
     } catch (error) {
       console.error("경험 데이터 수정 중 오류가 발생했습니다:", error);
       setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
@@ -42,9 +45,8 @@ const EditPage = () => {
   };
 
   useEffect(() => {
-    answer && console.log("answer type: ", typeof answer);
-    answer && console.log("answer: ", answer);
-  }, []);
+    userInfo && setExpId(userInfo.id);
+  }, [userInfo]);
 
   const openModal = () => {
     setIsModalOpen(true);
