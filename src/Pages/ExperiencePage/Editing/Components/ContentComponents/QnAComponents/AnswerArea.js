@@ -13,43 +13,37 @@ import { getAllTagAndQuestionAPI } from "../../../../../../Axios/StoredTagInfoAp
 import { useRecoilState } from "recoil";
 import {
   experienceState,
-  handleExpRecordSubmit,
+  handleExpRecordEditSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 
-const AnswerArea = ({combinedArray}) => {
+const AnswerArea = ({ combinedArray }) => {
   // 리코일 변수
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
-    handleExpRecordSubmit
+    handleExpRecordEditSubmit
   );
 
   //임시 변수들
   // 별도의 배열로 관리하는 상태
-  const [tagIds, setTagIds] = useState([null]);
-  const [questionIds, setQuestionIds] = useState([null]);
-  const [questionAnswers, setQuestionAnswers] = useState([""]);
-
-  // 테스트용
-  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
-  useEffect(() => {
-    if (isExpRecordSubmitted) {
-      setExperience((prev) => ({
-        ...prev,
-        tag_ids: tagIds.map((tagId) => (tagId !== null ? tagId + 1 : tagId)),
-        question_ids: questionIds.map((questionId) =>
-          questionId !== null ? questionId + 26 : questionId
-        ),
-        question_answers: questionAnswers,
-      }));
-    }
-  }, [isExpRecordSubmitted]);
+  const [tagIds, setTagIds] = useState(
+    combinedArray.map(([tagId]) => (tagId !== null ? tagId - 1 : null))
+  );
+  const [questionIds, setQuestionIds] = useState(
+    combinedArray.map(([, questionId]) =>
+      questionId !== null ? questionId - 1 : null
+    )
+  );
+  const [questionAnswers, setQuestionAnswers] = useState(
+    combinedArray.map(([, , , answer]) => answer || "")
+  );
 
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
   const [experienceSections, setExperienceSections] = useState([
     {
       id: 0,
       selectedTag: null,
-      selectedQuestion: null,
+      selectedQuestionId: null,
+      selectedQuestionText: "",
       questionOptions: [],
       text: "",
       isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
@@ -73,6 +67,73 @@ const AnswerArea = ({combinedArray}) => {
     fetchData();
   }, []);
 
+  // 태그와 질문 데이터가 로드된 후 경험 섹션 초기화
+  useEffect(() => {
+    if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
+      const initialExperienceSections = combinedArray.map(
+        ([tagId, questionId, questionText, answer], index) => ({
+          id: index,
+          selectedTag: tagId !== null ? tagId - 1 : null,
+          selectedQuestionIdId: questionId !== null ? questionId - 1 : null,
+          selectedQuestionText: questionText !== "" ? questionText : "",
+          questionOptions:
+            tagId !== null && tagAndQuestion[tagId - 1]
+              ? tagAndQuestion[tagId - 1].questions
+              : [],
+          text: answer || "",
+          isTagSelected: tagId !== null,
+          isQuestionSelected: questionId !== null,
+        })
+      );
+
+      setExperienceSections(initialExperienceSections);
+      setTagIds(
+        combinedArray.map(([tagId]) => (tagId !== null ? tagId - 1 : null))
+      );
+      setQuestionIds(
+        combinedArray.map(([, questionId]) =>
+          questionId !== null ? questionId - 1 : null
+        )
+      );
+      setQuestionAnswers(combinedArray.map(([, , , answer]) => answer || ""));
+    }
+  }, [tagAndQuestion, combinedArray]);
+
+  useEffect(() => {
+    if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
+      const updatedSections = combinedArray.map(
+        ([tagId, questionId, questionText, answer], index) => ({
+          ...experienceSections[index],
+          selectedTag: tagId !== null ? tagId - 1 : null,
+          selectedQuestionId: questionId !== null ? questionId - 1 : null,
+          selectedQuestionText: questionText !== "" ? questionText : "",
+          questionOptions:
+            tagId !== null && tagAndQuestion[tagId - 1]
+              ? tagAndQuestion[tagId - 1].questions
+              : [],
+          text: answer || "",
+          isTagSelected: tagId !== null,
+          isQuestionSelected: questionId !== null,
+        })
+      );
+      setExperienceSections(updatedSections);
+    }
+  }, [tagAndQuestion, combinedArray]);
+
+  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
+  useEffect(() => {
+    if (isExpRecordSubmitted) {
+      setExperience((prev) => ({
+        ...prev,
+        tag_ids: tagIds.map((tagId) => (tagId !== null ? tagId + 1 : tagId)),
+        question_ids: questionIds.map((questionId) =>
+          questionId !== null ? questionId + 1 : questionId
+        ),
+        question_answers: questionAnswers,
+      }));
+    }
+  }, [isExpRecordSubmitted]);
+
   // 경험 섹션 추가
   const addExperienceSection = () => {
     const newSectionId = experienceSections.length;
@@ -81,7 +142,8 @@ const AnswerArea = ({combinedArray}) => {
       {
         id: newSectionId,
         selectedTag: null,
-        selectedQuestion: null,
+        selectedQuestionIdId: null,
+        selectedQuestionText: "",
         questionOptions: [],
         text: "",
         isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
@@ -124,7 +186,8 @@ const AnswerArea = ({combinedArray}) => {
             ...section,
             selectedTag: null,
             questionOptions: [],
-            selectedQuestion: null,
+            selectedQuestionId: null,
+            selectedQuestionText: "",
             isTagSelected: false,
             isQuestionSelected: false,
           };
@@ -139,7 +202,8 @@ const AnswerArea = ({combinedArray}) => {
           ...section,
           selectedTag: tagId,
           questionOptions: newQuestionOptions,
-          selectedQuestion: null,
+          selectedQuestionId: null,
+          selectedQuestionText: "",
           isTagSelected: true,
           isQuestionSelected: false,
         };
@@ -160,13 +224,14 @@ const AnswerArea = ({combinedArray}) => {
   };
 
   // 질문 선택 핸들러
-  const handleQuestionSelectInSection = (questionId, id) => {
+  const handleQuestionSelectInSection = (questionId, questionText, id) => {
     console.log(`QuestionId selected: ${questionId} for section id: ${id}`);
     const updatedSections = experienceSections.map((section) =>
       section.id === id
         ? {
             ...section,
-            selectedQuestion: questionId,
+            selectedQuestionId: questionId,
+            selectedQuestionText: questionText,
             isQuestionSelected: true,
           }
         : section
@@ -222,14 +287,20 @@ const AnswerArea = ({combinedArray}) => {
           <SelectArea>
             <ExpTag
               onSelect={(index) => handleTagSelectInSection(index, section.id)}
+              selectedTag={section.selectedTag}
             />
             <DropdownQuestion
               isTagSelected={section.isTagSelected}
               options={section.questionOptions}
-              onSelect={(questionId) =>
-                handleQuestionSelectInSection(questionId, section.id)
+              onSelect={(questionId, questionText) =>
+                handleQuestionSelectInSection(
+                  questionId,
+                  questionText,
+                  section.id
+                )
               }
               selectedTag={section.selectedTag}
+              selectedQuestion={section.selectedQuestionText}
             />
           </SelectArea>
           {/* 답변란 */}
@@ -240,13 +311,18 @@ const AnswerArea = ({combinedArray}) => {
               handleTextChangeInSection(e.target.value, section.id)
             }
             disabled={!section.isQuestionSelected}
-            placeholder={section.id === 0 ? "첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!" : ""}
+            placeholder={
+              section.id === 0
+                ? "첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!"
+                : ""
+            }
           />{" "}
         </SectionWrapper>
       ))}
 
       {/* 경험 추가 버튼 */}
       <AddButton onClick={addExperienceSection}>+ 경험 추가</AddButton>
+      {console.log("지금찍어보는 겁니다: ", experience)}
     </>
   );
 };
@@ -290,7 +366,7 @@ const TextAreaWidth = styled.textarea`
   line-height: 1.5;
 
   &::placeholder {
-    color: ${({isQuestionSelected, theme}) => 
+    color: ${({ isQuestionSelected, theme }) =>
       isQuestionSelected ? theme.color.base6 : theme.color.base3};
   }
 `;

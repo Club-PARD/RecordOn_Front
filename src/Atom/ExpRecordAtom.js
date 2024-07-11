@@ -3,7 +3,7 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-// 제출 내용 관리
+// 제출 내용 관리 (추가)
 export const experienceState = atom({
   key: "experienceState",
   default: {
@@ -38,8 +38,15 @@ export const answerState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-// 제출 동작 관리
+
+// 제출 동작 관리 (추가)
 export const handleExpRecordSubmit = atom({
   key: "handleExpRecordSubmit",
   default: false,
 });
+
+// 제출 동작 관리 (수정)
+export const handleExpRecordEditSubmit = atom({
+  key: "handleExpRecordEditSubmit",
+  default: false,
+})

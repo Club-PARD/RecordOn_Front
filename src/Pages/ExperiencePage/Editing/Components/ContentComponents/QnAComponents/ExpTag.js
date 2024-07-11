@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as RightArrow } from "../../../../../../Assets/RightArrow.svg";
 
-const ExpTag = ({ onSelect }) => {
+const ExpTag = ({ selectedTag, onSelect }) => {
   const keywords = [
     { id: 0, label: "도전", color: "#2ABCDC" },
     { id: 1, label: "어려움", color: "#FF971D" },
@@ -12,7 +12,11 @@ const ExpTag = ({ onSelect }) => {
   ];
 
   // 선택된 경험 태그의 인덱스를 저장
-  const [clickedButtonIndex, setClickedButtonIndex] = useState(null);
+  const [clickedButtonIndex, setClickedButtonIndex] = useState(selectedTag);
+
+  useEffect(() => {
+    setClickedButtonIndex(selectedTag);
+  },[selectedTag]);
 
   const handleButtonClick = (index) => {
     if (clickedButtonIndex === index) {

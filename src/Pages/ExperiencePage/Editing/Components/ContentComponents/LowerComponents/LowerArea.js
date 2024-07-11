@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import {
   answerState,
   experienceState,
-  handleExpRecordSubmit,
+  handleExpRecordEditSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 import { ReactComponent as CloseIcon } from "../../../../../../Assets/close.svg";
 
@@ -13,19 +13,10 @@ const LowerArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
-    handleExpRecordSubmit
+    handleExpRecordEditSubmit
   );
 
   const [freeContent, setFreeContent] = useState("");
-
-  // 링크 삭제 핸들러
-  const handleDeleteLink = (index) => {
-    const updatedLinks = [...linkArea];
-    updatedLinks.splice(index, 1);
-    setLinkArea(updatedLinks);
-  };
-
-  // 링크 입력 영역
   const [linkArea, setLinkArea] = useState([
     {
       id: 1,
@@ -34,28 +25,54 @@ const LowerArea = () => {
     },
   ]);
 
+  useEffect(() => {
+    if (answer) {
+      setFreeContent(answer.free_content || "");
+
+      if (answer.reference_link && answer.reference_link.length > 0) {
+        const initialLinks = answer.reference_link.map((link, index) => ({
+          id: index + 1,
+          linkUrl: link,
+          isSubmitted: true,
+        }));
+        setLinkArea(initialLinks);
+      } else {
+        setLinkArea([{ id: 1, linkUrl: "", isSubmitted: false }]);
+      }
+    }
+  }, [answer]);
+
+  // 자유란 변경 상태 관리
+  const handleFreeChange = (e) => {
+    setFreeContent(e.target.value);
+  };
+
+  // 링크 입력 값 변경 핸들러
+  const handleLinkChange = (index, value) => {
+    setLinkArea((prevLinks) => {
+      const updatedLinks = [...prevLinks];
+      updatedLinks[index].linkUrl = value;
+      return updatedLinks;
+    });
+  };
   // 링크 입력 영역 추가
   const addLinkArea = () => {
-    setLinkArea([
-      ...linkArea,
+    setLinkArea((prevLinks) => [
+      ...prevLinks,
       {
-        id: linkArea.length + 1,
+        id: prevLinks.length + 1,
         linkUrl: "",
         isSubmitted: false,
       },
     ]);
   };
-
-  // 링크 입력 값 변경 핸들러
-  const handleLinkChange = (index, value) => {
-    const updatedLinks = [...linkArea];
-    updatedLinks[index].linkUrl = value;
-    setLinkArea(updatedLinks);
-  };
-
-  // 자유란 변경 상태 관리
-  const handleFreeChange = (e) => {
-    setFreeContent(e.target.value);
+  // 링크 삭제 핸들러
+  const handleDeleteLink = (index) => {
+    setLinkArea((prevLinks) => {
+      const updatedLinks = [...prevLinks];
+      updatedLinks.splice(index, 1);
+      return updatedLinks;
+    });
   };
 
   // 붙여넣기 이벤트 핸들러
@@ -69,11 +86,13 @@ const LowerArea = () => {
 
   // 붙여넣기가 완료되면 호출될 함수
   const handlePasteComplete = (index) => {
-    const updatedLinks = [...linkArea];
-    if (updatedLinks[index].linkUrl) {
-      updatedLinks[index].isSubmitted = true;
-      setLinkArea(updatedLinks);
-    }
+    setLinkArea((prevLinks) => {
+      const updatedLinks = [...prevLinks];
+      if (updatedLinks[index].linkUrl) {
+        updatedLinks[index].isSubmitted = true;
+      }
+      return updatedLinks;
+    });
   };
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
@@ -86,7 +105,7 @@ const LowerArea = () => {
         reference_links: links,
       }));
     }
-  }, [isExpRecordSubmitted]);
+  }, [isExpRecordSubmitted, freeContent, linkArea, setExperience]);
 
   return (
     <>
@@ -100,7 +119,6 @@ const LowerArea = () => {
             height="150px"
             value={freeContent}
             onChange={handleFreeChange}
-            defaultValue={answer && answer.free_content}
           />
           <DivForMargin height={"60px"} />
         </FixArea>
@@ -181,11 +199,6 @@ const FixAreaLabel = styled.label`
   word-break: keep-all;
 `;
 
-const LinkField = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-`;
 const BookmarkComponent = styled.div`
   box-sizing: border-box;
   display: flex;
