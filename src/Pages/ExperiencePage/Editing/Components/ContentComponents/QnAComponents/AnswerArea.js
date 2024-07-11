@@ -141,7 +141,7 @@ const AnswerArea = () => {
       section.id === id
         ? {
             ...section,
-            selectedQuestionId: selectedQuestionId +1,
+            selectedQuestionId: selectedQuestionId,
             selectedQuestionText: selectedQuestionText,
             isQuestionSelected: true,
           }
@@ -168,7 +168,7 @@ const AnswerArea = () => {
         ),
         question_ids: experienceSections.map((section) =>
           section.selectedQuestionId !== null
-            ? section.selectedQuestionId
+            ? section.selectedQuestionId + 1
             : null
         ),
         question_answers: experienceSections.map((section) => section.text),
