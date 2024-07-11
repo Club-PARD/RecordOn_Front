@@ -4,14 +4,14 @@ import Bookmark from "./Bookmark";
 import { useRecoilState } from "recoil";
 import {
   answerState,
-  experienceState,
+  expEditState,
   handleExpRecordEditSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 import { ReactComponent as CloseIcon } from "../../../../../../Assets/close.svg";
 
 const LowerArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(experienceState);
+  const [experience, setExperience] = useRecoilState(expEditState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );

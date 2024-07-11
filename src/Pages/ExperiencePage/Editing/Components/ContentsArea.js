@@ -10,18 +10,6 @@ import AnswerArea from "../Components/ContentComponents/QnAComponents/AnswerArea
 import LowerArea from "../Components/ContentComponents/LowerComponents/LowerArea";
 
 const ContentsArea = () => {
-  const [answer, setAnswer] = useRecoilState(answerState);
-
-  // 중간 배열 생성
-  const combinedArray =
-    answer.question_text &&
-    answer.question_text.map((_, index) => [
-      answer.tag_id[index],
-      answer.question_id[index],
-      answer.question_text[index],
-      answer.question_answer[index],
-    ]);
-
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}
@@ -33,7 +21,7 @@ const ContentsArea = () => {
         <FixedArea />
 
         {/* 태그별 질문 답변 영역 */}
-        <AnswerArea combinedArray={combinedArray} />
+        <AnswerArea />
 
         {/* 하단 영역 : 자유란과 관련 자료 링크 */}
         <LowerArea />

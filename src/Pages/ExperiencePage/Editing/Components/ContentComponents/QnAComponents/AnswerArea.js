@@ -11,7 +11,7 @@ import { getAllTagAndQuestionAPI } from "../../../../../../Axios/StoredTagInfoAp
 // 리코일
 import { useRecoilState } from "recoil";
 import {
-  experienceState,
+  expEditState,
   handleExpRecordEditSubmit,
   answerState,
 } from "../../../../../../Atom/ExpRecordAtom";
@@ -19,7 +19,7 @@ import {
 const AnswerArea = () => {
   // 리코일 변수
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(experienceState);
+  const [experience, setExperience] = useRecoilState(expEditState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
