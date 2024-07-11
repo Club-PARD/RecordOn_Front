@@ -21,7 +21,7 @@ const Header = () => {
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const { height } = useWindowSize();
-  console.log(height);
+  // console.log(height);
 
 
 
@@ -113,7 +113,7 @@ const Header = () => {
     }
   }, [isLoggedIn])
 
-  console.log(profileClicked);
+  // console.log(profileClicked);
 
   useEffect(() => {
     if (snack.projectAdd) {

@@ -7,7 +7,7 @@ import {
   expEditState,
   handleExpRecordEditSubmit,
 } from "../../../Atom/ExpRecordAtom";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
+import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
 
 import { editOneExpereienceAPI } from "../../../Axios/ExperienceApi";
 
@@ -27,16 +27,22 @@ const EditPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expId, setExpId] = useState(null);
 
+  const [snack, setSnack] = useRecoilState(recoilSnack);
+
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
 
     try {
       await editOneExpereienceAPI(expId, experience);
       console.log("경험 데이터가 수정되었습니다.");
+      setSnack({
+        ...snack,
+        experienceEdit: true,
+      })
       navigate("/view");
     } catch (error) {
       console.error("경험 데이터 수정 중 오류가 발생했습니다:", error);
-      setIsExpRecordSubmitted(false); 
+      setIsExpRecordSubmitted(false);
     }
   };
 

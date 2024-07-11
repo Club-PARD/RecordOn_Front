@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
-import { experienceState } from "../../../Atom/ExpRecordAtom";
+import { expEditState, experienceState } from "../../../Atom/ExpRecordAtom";
 
 
 
@@ -36,6 +36,7 @@ const AddProjectModal = ({
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
+    const [expEditStateRecoil, setExpEditStateRecoil] = useRecoilState(expEditState);
     const [snack, setSnack] = useRecoilState(recoilSnack);
 
     const [valid, setValid] = useState(false);
@@ -160,6 +161,10 @@ const AddProjectModal = ({
                 setExperienceStateRecoil({
                     ...experienceStateRecoil,
                     projects_id: response.response_object.id,
+                })
+                setExpEditStateRecoil({
+                    ...expEditStateRecoil,
+                    projects_id: projectData.project_id,
                 })
                 console.log(experienceFilter);
                 if (projectData.picture !== undefined) {
