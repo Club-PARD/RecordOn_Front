@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { ReactComponent as CloseIcon } from "../../../Assets/close.svg";
+import CloseIcon from "../../../Assets/close.svg";
 import Calendar from "../../../Common/Calendar";
 import ImageIcon from "../../../Assets/ImageIcon.svg";
 import { useRef } from "react";
@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
+import { experienceState } from "../../../Atom/ExpRecordAtom";
 
 const AddProjectModal = ({
     isOpen,
@@ -32,6 +33,7 @@ const AddProjectModal = ({
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
+    const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
     const [valid, setValid] = useState(false);
     const navigate = useNavigate();
 
@@ -149,6 +151,10 @@ const AddProjectModal = ({
                 setExperienceFilter({
                     ...experienceFilter,
                     project_id: response.response_object.id,
+                })
+                setExperienceStateRecoil({
+                    ...experienceStateRecoil,
+                    projects_id: response.response_object.id,
                 })
                 console.log(experienceFilter);
                 const formData = new FormData();
@@ -271,16 +277,34 @@ const AddProjectModal = ({
                         </ModalProjectImageText>
                         <ModalProjectImageUpload name="picture" onClick={handleDivClick}>{
                             projectData.image ?
+                                <ModalProjectImageUploadLeft>
+                                    <ModalProjectImageUploadContent>
+                                        <img
+                                            src={projectData.image}
+                                            alt="프로젝트 대표 사진"
+                                            style={{ width: '18px', height: '18px', objectFit: 'cover', marginRight: "7px" }}
+                                        />
+                                        <ModalProjectImageNameDiv>
+                                            <ModalProjectImageName>
+                                                {projectData.picture.name}
+                                            </ModalProjectImageName>
+                                            <ModalProjectImageDelete onClick={() => {
+                                                setProjectData({
+                                                    ...projectData,
+                                                    picture: undefined,
+                                                    image: undefined,
+
+                                                });
+                                            }}>
+
+                                            </ModalProjectImageDelete>
+                                        </ModalProjectImageNameDiv>
+                                        <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
+                                    </ModalProjectImageUploadContent>
+                                    <img src={CloseIcon} style={{ width: "12px" }} />
+                                </ModalProjectImageUploadLeft>
+                                :
                                 <ModalProjectImageUploadContent>
-                                    <img
-                                        src={projectData.image}
-                                        alt="프로젝트 대표 사진"
-                                        style={{ width: '18px', height: '18px', objectFit: 'cover', marginRight: "7px" }}
-                                    />
-                                    {projectData.picture.name}
-                                    <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
-                                </ModalProjectImageUploadContent>
-                                : <ModalProjectImageUploadContent>
                                     <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                     <ModalProjectImageIcon src={ImageIcon} />
                                     이미지 업로드
@@ -652,7 +676,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextM};
 const ModalProjectImageUpload = styled.div`
 width: 306px;
 height: 40px;
-/* border: 1px solid black; */
+border: 1px solid black;
 background-color: ${(props) => props.theme.color.base2};
 border-radius: 10px;
 flex-direction: row;
@@ -664,8 +688,20 @@ cursor: pointer;
 text-overflow: ellipsis;
 `;
 
+const ModalProjectImageUploadLeft = styled.div`
+width: 270px;
+height: 40px;
+border: 1px solid black;
+flex-direction: row;
+justify-content: start;
+box-sizing: content-box;
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
+margin-left: 24px;
+`
+
 const ModalProjectImageUploadContent = styled.div`
-width: 306px;
+width: 270px;
 height: 18px;
 /* border: 1px solid black; */
 flex-direction: row;
@@ -673,11 +709,36 @@ justify-content: start;
 box-sizing: content-box;
 font-size: ${(props) => props.theme.fontSizes.TextS};
 font-weight: ${(props) => props.theme.fontWeights.TextS};
-overflow:hidden;
-white-space:nowrap;
-text-overflow: ellipsis;
 margin-left: 24px;
 `
+
+const ModalProjectImageNameDiv = styled.div`
+width: 240px;
+height: 18px;
+flex-direction: row;
+/* border: 1px solid black; */
+align-items: start;
+justify-content: space-between;
+`
+const ModalProjectImageName = styled.div`
+width: 210px;
+height: 18px;
+flex-direction: row;
+border: 1px solid black;
+align-items: center;
+white-space: nowrap; 
+overflow: hidden;
+text-overflow: ellipsis;
+`;
+
+const ModalProjectImageDelete = styled.div`
+width: 18px;
+height: 18px;
+/* border: 1px solid black; */
+align-items: center;
+justify-content: center;
+cursor: pointer;
+`;
 
 const ModalProjectImageInput = styled.input`
 display:none;
