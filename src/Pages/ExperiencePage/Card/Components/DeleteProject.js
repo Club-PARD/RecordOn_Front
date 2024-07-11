@@ -3,20 +3,32 @@ import { useState } from "react";
 import DeleteModal from "../../../../Common/DeleteModal";
 import { deleteProjectAPI } from "../../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserData } from "../../../../Atom/UserDataAtom";
+import { recoilSnack, recoilUserData } from "../../../../Atom/UserDataAtom";
 import { useNavigate } from "react-router-dom";
 
 const DeleteProject = () => {
 
     const [modalOn, setModalOn] = useState(false);
     const [userData, setUserData] = useRecoilState(recoilUserData);
+    const [snack, setSnack] = useRecoilState(recoilSnack);
     const navigate = useNavigate();
 
     const handleDeleteProject = async () => {
-        const response = await deleteProjectAPI(userData);
-        console.log(response);
-        setModalOn(false);
-        navigate("/project");
+        try {
+            const response = await deleteProjectAPI(userData);
+            console.log(response);
+            setModalOn(false);
+            setSnack({
+                ...snack,
+                projectDelete: true,
+            })
+            navigate("/project");
+        }
+        catch (error) {
+            console.log(error);
+        }
+
+
     }
 
     console.log(modalOn);

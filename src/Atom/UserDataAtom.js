@@ -84,3 +84,16 @@ export const recoilExperiencePagination = atom({
     },
     effects_UNSTABLE: [persistAtom],
 });
+
+export const recoilSnack = atom({
+    key: "snackAddProject",
+    default: {
+        projectAdd: false,
+        projectEdit: false,
+        projectDelete: false,
+        experienceAdd: false,
+        experienceEdit: false,
+        experienceDelete: false,
+    },
+    effects_UNSTABLE: [persistAtom],
+});

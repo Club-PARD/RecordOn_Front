@@ -5,7 +5,7 @@ import CloseIcon from "../../../../Assets/close.svg";
 import { useRef } from "react";
 import { postNewProjectImageAPI, updateProjectAPI } from "../../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserData, recoilUserExperienceFilter } from "../../../../Atom/UserDataAtom";
+import { recoilSnack, recoilUserData, recoilUserExperienceFilter } from "../../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
@@ -33,6 +33,7 @@ const EditProjectModal = ({
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
     const [imageChanged, setImageChanged] = useState(false);
     const [valid, setValid] = useState(true);
+    const [snack, setSnack] = useRecoilState(recoilSnack);
     const navigate = useNavigate();
 
     console.log(projectData);
@@ -142,7 +143,10 @@ const EditProjectModal = ({
                     project_id: response.response_object.id,
                 });
 
-
+                setSnack({
+                    ...snack,
+                    projectEdit: true,
+                })
                 handleOverlayClick();
                 navigate("/experience");
             }

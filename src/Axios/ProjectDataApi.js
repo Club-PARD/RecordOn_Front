@@ -63,6 +63,7 @@ export const postNewProjectImageAPI = async (formData, project_id) => {
         console.log("이미지 업로드 안함");
         return 0;
     }
+    console.log(formData.length);
     try {
         console.log(`${process.env.REACT_APP_DEV_URL}s3/${project_id}`);
         console.log(formData);
