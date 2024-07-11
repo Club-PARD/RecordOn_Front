@@ -6,7 +6,7 @@ import {
   handleExpRecordSubmit,
   experienceState,
 } from "../../../Atom/ExpRecordAtom";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
+import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
 import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
 import { postExperienceAPI } from "../../../Axios/ExperienceApi";
@@ -24,6 +24,7 @@ const WritingPage = () => {
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
   const [isUpdated, setIsUpdated] = useState(false);
+  const [snack, setSnack] = useRecoilState(recoilSnack);
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
@@ -48,6 +49,10 @@ const WritingPage = () => {
 
         const response = await postExperienceAPI(experience);
         console.log("request successful: ", response);
+        setSnack({
+          ...snack,
+          experienceAdd: true,
+        })
       } catch (error) {
         console.error("request failed: ", error);
       } finally {

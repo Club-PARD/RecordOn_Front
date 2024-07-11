@@ -6,14 +6,14 @@ import ImageIcon from "../../../Assets/ImageIcon.svg";
 import { useRef } from "react";
 import { postNewProjectAPI, postNewProjectImageAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
+import { recoilSnack, recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
-import { experienceState } from "../../../Atom/ExpRecordAtom";
-import Toast from "../../../Common/Toast";
+import { expEditState, experienceState } from "../../../Atom/ExpRecordAtom";
+
 
 
 const AddProjectModal = ({
@@ -36,9 +36,12 @@ const AddProjectModal = ({
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
+    const [expEditStateRecoil, setExpEditStateRecoil] = useRecoilState(expEditState);
+    const [snack, setSnack] = useRecoilState(recoilSnack);
+
     const [valid, setValid] = useState(false);
     const navigate = useNavigate();
-    const [toast, setToast] = useState(false);
+
 
     const userInputHandler = (e) => [
         setProjectData({
@@ -159,13 +162,22 @@ const AddProjectModal = ({
                     ...experienceStateRecoil,
                     projects_id: response.response_object.id,
                 })
+                setExpEditStateRecoil({
+                    ...expEditStateRecoil,
+                    projects_id: projectData.project_id,
+                })
                 console.log(experienceFilter);
-                const formData = new FormData();
-                formData.append('image', projectData.picture);
-                const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
-                console.log(response2);
+                if (projectData.picture !== undefined) {
+                    const formData = new FormData();
+                    formData.append('image', projectData.picture);
+                    const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
+                    console.log(response2);
+                }
                 handleOverlayClick();
-                setToast(true);
+                setSnack({
+                    ...snack,
+                    projectAdd: true,
+                });
                 navigate("/experience");
             }
             catch (error) {
@@ -325,13 +337,6 @@ const AddProjectModal = ({
                     </ModalProjectButtonDiv>
                 </ModalContentDiv>
             </Modal>
-            {toast && (
-                <Toast
-                    setToast={setToast}
-                    message={'⚠️ 공백으로만 입력할 수 없습니다.'}
-                    position="bottom"
-                />
-            )}
         </Overlay>
     );
 };

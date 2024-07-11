@@ -3,11 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../Assets/Logo.svg"
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { isLogined, recoilExperiencePagination, recoilLoginData, recoilProjectModal, recoilProjectPagination, recoilUserData, recoilUserExperienceFilter, recoilUserExperienceNum, recoilUserProjectFilter, recoilUserProjectNum } from "../Atom/UserDataAtom";
+import { isLogined, recoilExperiencePagination, recoilLoginData, recoilProjectModal, recoilProjectPagination, recoilSnack, recoilUserData, recoilUserExperienceFilter, recoilUserExperienceNum, recoilUserProjectFilter, recoilUserProjectNum } from "../Atom/UserDataAtom";
 import LoginButton from "../Pages/Home/Components/LoginButton";
 import Logout from "../Assets/Logout.svg"
 import { handleRegisterDataSubmit } from "../Atom/RegisterDataAtom";
 import { answerState, experienceState, handleExpRecordSubmit } from "../Atom/ExpRecordAtom";
+import Toast from "./Toast";
+import useWindowSize from "./useWindowSize";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
@@ -15,6 +17,11 @@ const Header = () => {
   const [loginData, setLoginData] = useRecoilState(recoilLoginData);
   const [profileClicked, setProfileClicked] = useState(false);
   const profileRef = useRef(null);
+  const [snack, setSnack] = useRecoilState(recoilSnack);
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const { height } = useWindowSize();
+  // console.log(height);
 
 
 
@@ -102,10 +109,62 @@ const Header = () => {
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/");
+
     }
   }, [isLoggedIn])
 
-  console.log(profileClicked);
+  // console.log(profileClicked);
+
+  useEffect(() => {
+    if (snack.projectAdd) {
+      setToastMessage("프로젝트가 생성되었습니다")
+      setToast(true);
+      setSnack({
+        ...snack,
+        projectAdd: false,
+      });
+    }
+    else if (snack.projectEdit) {
+      setToastMessage("프로젝트가 수정되었습니다")
+      setToast(true);
+      setSnack({
+        ...snack,
+        projectEdit: false,
+      });
+    }
+    else if (snack.projectDelete) {
+      setToastMessage("프로젝트가 삭제되었습니다")
+      setToast(true);
+      setSnack({
+        ...snack,
+        projectDelete: false,
+      });
+    }
+    else if (snack.experienceAdd) {
+      setToastMessage("경험기록이 생성되었습니다")
+      setToast(true);
+      setSnack({
+        ...snack,
+        experienceAdd: false,
+      });
+    }
+    else if (snack.experienceEdit) {
+      setToastMessage("경험기록이 수정되었습니다")
+      setToast(true);
+      setSnack({
+        ...snack,
+        experienceEdit: false,
+      });
+    }
+    else if (snack.experienceDelete) {
+      setToastMessage("경험기록이 삭제되었습니다")
+      setToast(true);
+      setSnack({
+        ...snack,
+        experienceDelete: false,
+      });
+    }
+  }, [snack])
 
   return (
     <HeaderContainer $scrolled={isScrolled}>
@@ -130,6 +189,13 @@ const Header = () => {
             <LoginButton buttonText="기록 시작하기" buttonWidth="132px" buttonColor="#303030" onClick={() => { setProfileClicked(false) }} />
           )}
       </Div>
+      {toast && (
+        <Toast
+          setToast={setToast}
+          message={toastMessage}
+          height={`${height}px`}
+        />
+      )}
     </HeaderContainer>
   );
 };

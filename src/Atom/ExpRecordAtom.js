@@ -53,6 +53,7 @@ export const expEditState = atom({
     question_answers: [],
     reference_links: [],
   },
+  effects_UNSTABLE: [persistAtom],
 });
 
 // 제출 동작 관리 (추가)
