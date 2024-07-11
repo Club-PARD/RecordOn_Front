@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+import api from './axiosConfig.mjs';
 
 const server = process.env.REACT_APP_DEV_URL;
 
@@ -7,7 +8,7 @@ export const getAllTagAndQuestionAPI = async () => {
     const requestUrl = `${server}question/get`;
     console.log (requestUrl);
   try {
-    const response = await axios.get(requestUrl);
+    const response = await api.get(requestUrl);
     console.log (response.data);
     return response.data;
   } catch (error) {
