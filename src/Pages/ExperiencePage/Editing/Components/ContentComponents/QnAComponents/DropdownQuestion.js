@@ -28,7 +28,8 @@ const DropdownQuestion = ({
   };
 
   const handleSelect = (optionId, index) => {
-    setTmpText(optionTexts[index]);
+    const selectedText = optionTexts[index];
+    setTmpText(selectedText);
     setTmpId(optionId);
     setIsQuestionOpen(false); // 옵션 선택 후 드롭다운 닫기
     onSelect(tmpId, tmpText);
@@ -42,11 +43,13 @@ const DropdownQuestion = ({
     }
   }, [tmpId, tmpText]);
 
-  useEffect(() => {
-    setIsQuestionOpen(false);
-    setTmpId(null);
-    setTmpText("");
-  }, [isTagSelected, selectedTag]);
+  // useEffect(() => {
+  //   if (!isTagSelected || selectedTag !== null) {
+  //     setTmpId(null);
+  //     setTmpText("");
+  //     setIsQuestionOpen(false);
+  //   }
+  // }, [isTagSelected, selectedTag]);
 
   return (
     <DropdownContainer>

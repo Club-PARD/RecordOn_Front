@@ -141,7 +141,7 @@ const AnswerArea = () => {
       section.id === id
         ? {
             ...section,
-            selectedQuestionId: selectedQuestionId,
+            selectedQuestionId: selectedQuestionId +1,
             selectedQuestionText: selectedQuestionText,
             isQuestionSelected: true,
           }
