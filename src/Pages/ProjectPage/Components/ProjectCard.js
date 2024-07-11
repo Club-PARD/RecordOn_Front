@@ -167,8 +167,11 @@ width: 221px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-font-size: ${(props) => props.theme.fontSizes.TextS};
-/* font-weight: 400; */
+color: ${(props) => props.theme.color.black};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight: ${(props) => props.theme.fontWeights.TextM};
+line-height: 23.4px;
+letter-spacing: -0.36px;
 `
 
 const CardDateText = styled.div`
@@ -176,10 +179,7 @@ width: 193px;
 height: 40px;
 align-items: start;
 /* border: 1px solid black; */
-color: ${(props) => props.theme.color.black};
-font-size: ${(props) => props.theme.fontSizes.TextM};
-font-weight: ${(props) => props.theme.fontWeights.TextM};
-/* font-weight: 400; */
+color: ${(props) => props.theme.color.base6};
 `
 
 const CardDate = styled.div`

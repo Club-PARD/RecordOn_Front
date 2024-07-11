@@ -219,7 +219,7 @@ const EditProjectModal = ({
                                         dateFormat='yyyy.MM.dd'
                                         shouldCloseOnSelect
                                         disabledKeyboardNavigation
-                                        placeholderText="시작 날짜"
+                                        placeholderText="YYYY.MM.DD"
                                         minDate={new Date('1980-01-01')}
                                         maxDate={new Date('2100-12-31')}
                                         locale={ko}
@@ -236,7 +236,7 @@ const EditProjectModal = ({
                                         dateFormat='yyyy.MM.dd'
                                         shouldCloseOnSelect
                                         disabledKeyboardNavigation
-                                        placeholderText="마무리 날짜"
+                                        placeholderText="YYYY.MM.DD"
                                         minDate={new Date('1980-01-01')}
                                         maxDate={new Date('2100-12-31')}
                                         locale={ko}
@@ -415,8 +415,10 @@ border-radius: 10px;
 background-color: ${(props) => props.theme.color.base2};
 padding: 11px 16px;
 box-sizing: border-box;
-font-size: ${(props) => props.theme.fontSizes.TextM};
-font-weight: ${(props) => props.theme.fontWeights.TextM};
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
+line-height: 18.2px;
+letter-spacing: -0.28px;
 &::placeholder {
     color: ${(props) => props.theme.color.base6};
   }
@@ -451,8 +453,10 @@ border-radius: 10px;
 background-color: ${(props) => props.theme.color.base2};
 padding: 11px 16px;
 box-sizing: border-box;
-font-size: ${(props) => props.theme.fontSizes.TextM};
-font-weight: ${(props) => props.theme.fontWeights.TextM};
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
+line-height: 18.2px;
+letter-spacing: -0.28px;
 &::placeholder {
     color: ${(props) => props.theme.color.base6};
     white-space: pre-wrap;
@@ -495,8 +499,10 @@ const ModalProjectRoleInput = styled.input.attrs({
     height: 40px;
     border-radius: 10px;
     background-color: ${(props) => props.theme.color.base2};
-    font-size: ${(props) => props.theme.fontSizes.TextM};
-    font-weight: ${(props) => props.theme.fontWeights.TextM};
+    font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
+line-height: 18.2px;
+letter-spacing: -0.28px;
     padding: 11px 16px;
     box-sizing: border-box;
     &::placeholder {
@@ -641,7 +647,6 @@ justify-content: start;
 
 
 `
-
 const ProjectDateStart = styled(DatePicker)`
 width: 126px;
 height: 40px;
@@ -649,13 +654,24 @@ height: 40px;
 border-radius: 10px;
 align-items: center;
 background-color: ${(props) => props.theme.color.base2};
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
+line-height: 18.2px;
+letter-spacing: -0.28px;
 text-align: center;
+&::placeholder {
+      color: ${(props) => props.theme.color.base6};
+    }
 `
 
 
 const ProjectDateTo = styled.div`
 width: 34px;
 height: 25px;
+font-size: ${(props) => props.theme.fontSizes.TextL};
+font-weight: ${(props) => props.theme.fontWeights.TextL};
+line-height: 26px;
+letter-spacing: -0.4px;
 /* border: 1px solid black; */
 `
 
@@ -666,7 +682,14 @@ height: 40px;
 border-radius: 10px;
 align-items: center;
 background-color: ${(props) => props.theme.color.base2};
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
+line-height: 18.2px;
+letter-spacing: -0.28px;
 text-align: center;
+&::placeholder {
+      color: ${(props) => props.theme.color.base6};
+    }
 `
 
 const ModalProjectImage = styled.div`
@@ -855,7 +878,7 @@ cursor: pointer;
 const Asterisk = styled.div`
 width: 10px;
 height: 23px;
-color: ${(props) => props.theme.color.main};
+color: ${(props) => props.theme.color.fail};
 justify-content: center;
 `
 
