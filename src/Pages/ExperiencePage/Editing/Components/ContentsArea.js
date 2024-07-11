@@ -17,6 +17,7 @@ const ContentsArea = () => {
   answer.question_text &&
     answer.question_text.map((_, index) => [
       answer.tag_id[index],
+      answer.question_id[index],
       answer.question_text[index],
       answer.question_answer[index],
     ]);

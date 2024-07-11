@@ -25,16 +25,17 @@ const AnswerArea = ({ combinedArray }) => {
 
   //임시 변수들
   // 별도의 배열로 관리하는 상태
-  const [tagIds, setTagIds] = useState([null]);
-  const [questionIds, setQuestionIds] = useState([null]);
-  const [questionAnswers, setQuestionAnswers] = useState([""]);
+  const [tagIds, setTagIds] = useState(combinedArray.map(([tagId]) => tagId !== null ? tagId - 1 : null));
+  const [questionIds, setQuestionIds] = useState(combinedArray.map(([, questionId]) => questionId !== null ? questionId - 26 : null));
+  const [questionAnswers, setQuestionAnswers] = useState(combinedArray.map(([, , , answer]) => answer || ''));
 
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
   const [experienceSections, setExperienceSections] = useState([
     {
       id: 0,
       selectedTag: null,
-      selectedQuestion: null,
+      selectedQuestionId: null,
+      selectedQuestionText: "",
       questionOptions: [],
       text: "",
       isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
@@ -45,6 +46,27 @@ const AnswerArea = ({ combinedArray }) => {
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
 
+ // 태그와 질문 데이터가 로드된 후 경험 섹션 초기화
+ useEffect(() => {
+  if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
+    const initialExperienceSections = combinedArray.map(([tagId, questionId, questionText, answer], index) => ({
+      id: index,
+      selectedTag: tagId !== null ? tagId - 1 : null,
+      selectedQuestionIdId: questionId !== null ? questionId - 1 : null,
+      selectedQuestionText: questionText !== "" ? questionText : "",
+      questionOptions: tagId !== null && tagAndQuestion[tagId - 1] ? tagAndQuestion[tagId - 1].questions : [],
+      text: answer || '',
+      isTagSelected: tagId !== null,
+      isQuestionSelected: questionId !== null,
+    }));
+
+    setExperienceSections(initialExperienceSections);
+    setTagIds(combinedArray.map(([tagId]) => (tagId !== null ? tagId - 1 : null)));
+    setQuestionIds(combinedArray.map(([, questionId]) => (questionId !== null ? questionId - 1 : null)));
+    setQuestionAnswers(combinedArray.map(([, , , answer]) => answer || ''));
+  }
+}, [tagAndQuestion, combinedArray]);
+
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
     if (isExpRecordSubmitted) {
@@ -52,11 +74,12 @@ const AnswerArea = ({ combinedArray }) => {
         ...prev,
         tag_ids: tagIds.map((tagId) => (tagId !== null ? tagId + 1 : tagId)),
         question_ids: questionIds.map((questionId) =>
-          questionId !== null ? questionId + 26 : questionId
+          questionId !== null ? questionId + 1 : questionId
         ),
         question_answers: questionAnswers,
       }));
     }
+
   }, [isExpRecordSubmitted]);
 
   // 서버에서 태그와 질문을 받아오는 API
@@ -80,7 +103,8 @@ const AnswerArea = ({ combinedArray }) => {
       {
         id: newSectionId,
         selectedTag: null,
-        selectedQuestion: null,
+        selectedQuestionIdId: null,
+        selectedQuestionText: "",
         questionOptions: [],
         text: "",
         isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
@@ -123,7 +147,8 @@ const AnswerArea = ({ combinedArray }) => {
             ...section,
             selectedTag: null,
             questionOptions: [],
-            selectedQuestion: null,
+            selectedQuestionId: null,
+            selectedQuestionText: "",
             isTagSelected: false,
             isQuestionSelected: false,
           };
@@ -138,7 +163,8 @@ const AnswerArea = ({ combinedArray }) => {
           ...section,
           selectedTag: tagId,
           questionOptions: newQuestionOptions,
-          selectedQuestion: null,
+          selectedQuestionId: null,
+          selectedQuestionText: "",
           isTagSelected: true,
           isQuestionSelected: false,
         };
@@ -159,13 +185,14 @@ const AnswerArea = ({ combinedArray }) => {
   };
 
   // 질문 선택 핸들러
-  const handleQuestionSelectInSection = (questionId, id) => {
+  const handleQuestionSelectInSection = (questionId, questionText, id) => {
     console.log(`QuestionId selected: ${questionId} for section id: ${id}`);
     const updatedSections = experienceSections.map((section) =>
       section.id === id
         ? {
             ...section,
-            selectedQuestion: questionId,
+            selectedQuestionId: questionId,
+            selectedQuestionText: questionText,
             isQuestionSelected: true,
           }
         : section
@@ -221,7 +248,7 @@ const AnswerArea = ({ combinedArray }) => {
           <SelectArea>
             <ExpTag
               onSelect={(index) => handleTagSelectInSection(index, section.id)}
-              combinedArray={combinedArray}
+              selectedTag={section.selectedTag}
             />
             <DropdownQuestion
               isTagSelected={section.isTagSelected}
@@ -230,7 +257,7 @@ const AnswerArea = ({ combinedArray }) => {
                 handleQuestionSelectInSection(questionId, section.id)
               }
               selectedTag={section.selectedTag}
-              combinedArray={combinedArray}
+              selectedQuestion={section.selectedQuestionText}
             />
           </SelectArea>
           {/* 답변란 */}

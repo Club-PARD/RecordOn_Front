@@ -60,7 +60,7 @@ export const deleteOneExperienceAPI = async (expId, user_id) => {
   };
 
 // 경험 기록 수정 API
-export const editOneExpereienceAPI = async (id = 10, data) => {
+export const editOneExpereienceAPI = async (id, data) => {
   try {
     const response = await axios.put(`${server}experiences/${id}`, data);
     console.log(response.data);
