@@ -10,13 +10,15 @@ const DropdownQuestion = ({
   optionTexts,
   optionIds,
   onSelect,
+  selectedQuestionId,
+  selectedQuestionText,
 }) => {
   // 드롭다운 열림 상태
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
   // 선택된 질문을 저장하는 상태 (임시변수)
-  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
-  const [selectedQuestionText, setSelectedQuestionText] = useState("");
+  const [tmpId, setTmpId] = useState(selectedQuestionId);
+  const [tmpText, setTmpText] = useState(selectedQuestionText);
 
   // 호버 상태 관리
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -25,31 +27,33 @@ const DropdownQuestion = ({
     if (isTagSelected) setIsQuestionOpen(!isQuestionOpen);
   };
 
-  const handleSelect = (questionText, index) => {
-    setSelectedQuestionText(questionText);
-    setSelectedQuestionId(optionIds[index]);
+  const handleSelect = (optionId, index) => {
+    setTmpText(optionTexts[index]);
+    setTmpId(optionId);
     setIsQuestionOpen(false); // 옵션 선택 후 드롭다운 닫기
+    onSelect(tmpId, tmpText);
   };
 
   useEffect(() => {
+    console.log("selectedQuesitonId: ", tmpId);
     if (selectedQuestionId !== null) {
-      console.log("handleSelect: " + selectedQuestionId);
-      onSelect(selectedQuestionId);
+      console.log("handleSelect: " + tmpText);
+      onSelect(tmpId, tmpText);
     }
-  }, [selectedQuestionId]);
+  }, [tmpId, tmpText]);
 
   useEffect(() => {
     setIsQuestionOpen(false);
-    setSelectedQuestionId(null);
-    setSelectedQuestionText("");
+    setTmpId(null);
+    setTmpText("");
   }, [isTagSelected, selectedTag]);
 
   return (
     <DropdownContainer>
       <SelectQuestion onClick={toggleDropdown} isTagSelected={isTagSelected}>
-        {selectedQuestionText ? (
+        {tmpText ? (
           <>
-            <SelectedQuestion>{selectedQuestionText}</SelectedQuestion>
+            <SelectedQuestion>{tmpText}</SelectedQuestion>
             <StyledQArrow
               isTagSelected={isTagSelected}
               isOpen={isQuestionOpen}
@@ -69,15 +73,15 @@ const DropdownQuestion = ({
       </SelectQuestion>
       {isQuestionOpen && (
         <List>
-          {optionTexts &&
-            optionTexts.map((questionText, index) => (
+          {optionIds &&
+            optionIds.map((optionId, index) => (
               <ListItemWrapper
                 key={index}
-                onClick={() => handleSelect(questionText, index)}
+                onClick={() => handleSelect(optionId, index)}
                 onMouseEnter={() => setHoveredItem(index)}
                 onMouseLeave={() => setHoveredItem(null)}
               >
-                <ListItem>{questionText}</ListItem>
+                <ListItem>{optionTexts[index]}</ListItem>
                 <IconWrapper isVisible={hoveredItem === index}>
                   <BigCheck />
                 </IconWrapper>
