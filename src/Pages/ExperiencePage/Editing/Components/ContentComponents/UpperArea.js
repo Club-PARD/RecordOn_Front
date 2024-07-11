@@ -18,7 +18,9 @@ const UppderArea = () => {
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
-  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(handleExpRecordEditSubmit);
+  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
+    handleExpRecordEditSubmit
+  );
 
   // 서버에서 초기값 설정
   useEffect(() => {
@@ -27,6 +29,13 @@ const UppderArea = () => {
       setExpTitle(answer.experience_name || "");
     }
   }, [answer]);
+
+  // 날짜 포맷
+  const normalizeDate = (date) => {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+    return normalizedDate;
+  };
 
   // 입력 내용을 임시 변수에 관리
   const handleDateChange = (date) => {
@@ -39,14 +48,15 @@ const UppderArea = () => {
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
+    const normalizedExpDate = normalizeDate(expDate);
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        exp_date: expDate,
+        exp_date: normalizedExpDate,
         title: expTitle,
       }));
     }
-  }, [isExpRecordSubmitted, expDate, expTitle]);
+  }, [isExpRecordSubmitted, expDate, expTitle, setExperience]);
 
   return (
     <>
@@ -81,7 +91,6 @@ const UppderArea = () => {
     </>
   );
 };
-
 
 const Upper = styled.div`
   display: flex;
@@ -129,4 +138,4 @@ const StyledInput = styled.input`
 `;
 
 export default UppderArea;
-export {Upper, UppderPart, StyledLabel, StyledInput};
+export { Upper, UppderPart, StyledLabel, StyledInput };
