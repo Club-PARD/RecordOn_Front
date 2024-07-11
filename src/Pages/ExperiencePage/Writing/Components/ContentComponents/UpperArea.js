@@ -22,7 +22,7 @@ const UppderArea = () => {
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
-  // Normalize date to midnight
+  // 날짜 포맷
   const normalizeDate = (date) => {
     const normalizedDate = new Date(date);
     normalizedDate.setHours(0, 0, 0, 0);
@@ -30,8 +30,8 @@ const UppderArea = () => {
   };
 
   // 입력 내용을 임시 변수에 관리
-  const handleDateChange = (e) => {
-    setExpTitle(e.target.value);
+  const handleDateChange = (date) => {
+    setExpDate(date);
   };
 
   const handleTitleChange = (e) => {
