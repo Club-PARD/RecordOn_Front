@@ -188,7 +188,7 @@ const ExperienceFilter = () => {
                 {isOpen && (
                   <ExperienceKeywordFilterDropdownListContainer >
                     <ExperienceKeywordFilterDropdownList >
-                      {keywords.map(keyword => (
+                      {keywords.filter(keyword => !experienceFilter.tag_name.includes(keyword)).map(keyword => (
                         <ExperienceKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
                           {keyword}
                         </ExperienceKeywordFilterListItem>
