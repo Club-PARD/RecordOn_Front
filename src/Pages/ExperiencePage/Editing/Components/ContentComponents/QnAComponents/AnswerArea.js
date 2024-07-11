@@ -12,22 +12,30 @@ import { getAllTagAndQuestionAPI } from "../../../../../../Axios/StoredTagInfoAp
 // 리코일
 import { useRecoilState } from "recoil";
 import {
-  ExperienceEditState,
+  experienceState,
   handleExpRecordEditSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 
 const AnswerArea = ({ combinedArray }) => {
   // 리코일 변수
-  const [experience, setExperience] = useRecoilState(ExperienceEditState);
+  const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
 
   //임시 변수들
   // 별도의 배열로 관리하는 상태
-  const [tagIds, setTagIds] = useState(combinedArray.map(([tagId]) => tagId !== null ? tagId - 1 : null));
-  const [questionIds, setQuestionIds] = useState(combinedArray.map(([, questionId]) => questionId !== null ? questionId - 26 : null));
-  const [questionAnswers, setQuestionAnswers] = useState(combinedArray.map(([, , , answer]) => answer || ''));
+  const [tagIds, setTagIds] = useState(
+    combinedArray.map(([tagId]) => (tagId !== null ? tagId - 1 : null))
+  );
+  const [questionIds, setQuestionIds] = useState(
+    combinedArray.map(([, questionId]) =>
+      questionId !== null ? questionId - 26 : null
+    )
+  );
+  const [questionAnswers, setQuestionAnswers] = useState(
+    combinedArray.map(([, , , answer]) => answer || "")
+  );
 
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
   const [experienceSections, setExperienceSections] = useState([
@@ -46,26 +54,37 @@ const AnswerArea = ({ combinedArray }) => {
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
 
- // 태그와 질문 데이터가 로드된 후 경험 섹션 초기화
- useEffect(() => {
-  if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
-    const initialExperienceSections = combinedArray.map(([tagId, questionId, questionText, answer], index) => ({
-      id: index,
-      selectedTag: tagId !== null ? tagId - 1 : null,
-      selectedQuestionIdId: questionId !== null ? questionId - 1 : null,
-      selectedQuestionText: questionText !== "" ? questionText : "",
-      questionOptions: tagId !== null && tagAndQuestion[tagId - 1] ? tagAndQuestion[tagId - 1].questions : [],
-      text: answer || '',
-      isTagSelected: tagId !== null,
-      isQuestionSelected: questionId !== null,
-    }));
+  // 태그와 질문 데이터가 로드된 후 경험 섹션 초기화
+  useEffect(() => {
+    if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
+      const initialExperienceSections = combinedArray.map(
+        ([tagId, questionId, questionText, answer], index) => ({
+          id: index,
+          selectedTag: tagId !== null ? tagId - 1 : null,
+          selectedQuestionIdId: questionId !== null ? questionId - 1 : null,
+          selectedQuestionText: questionText !== "" ? questionText : "",
+          questionOptions:
+            tagId !== null && tagAndQuestion[tagId - 1]
+              ? tagAndQuestion[tagId - 1].questions
+              : [],
+          text: answer || "",
+          isTagSelected: tagId !== null,
+          isQuestionSelected: questionId !== null,
+        })
+      );
 
-    setExperienceSections(initialExperienceSections);
-    setTagIds(combinedArray.map(([tagId]) => (tagId !== null ? tagId - 1 : null)));
-    setQuestionIds(combinedArray.map(([, questionId]) => (questionId !== null ? questionId - 1 : null)));
-    setQuestionAnswers(combinedArray.map(([, , , answer]) => answer || ''));
-  }
-}, [tagAndQuestion, combinedArray]);
+      setExperienceSections(initialExperienceSections);
+      setTagIds(
+        combinedArray.map(([tagId]) => (tagId !== null ? tagId - 1 : null))
+      );
+      setQuestionIds(
+        combinedArray.map(([, questionId]) =>
+          questionId !== null ? questionId - 1 : null
+        )
+      );
+      setQuestionAnswers(combinedArray.map(([, , , answer]) => answer || ""));
+    }
+  }, [tagAndQuestion, combinedArray]);
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
@@ -79,7 +98,6 @@ const AnswerArea = ({ combinedArray }) => {
         question_answers: questionAnswers,
       }));
     }
-
   }, [isExpRecordSubmitted]);
 
   // 서버에서 태그와 질문을 받아오는 API

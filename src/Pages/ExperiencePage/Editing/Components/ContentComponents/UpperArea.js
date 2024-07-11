@@ -8,13 +8,13 @@ import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import {
   answerState,
-  ExperienceEditState,
+  experienceState,
   handleExpRecordEditSubmit,
 } from "../../../../../Atom/ExpRecordAtom";
 
 const UppderArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(ExperienceEditState);
+  const [experience, setExperience] = useRecoilState(experienceState);
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
@@ -42,7 +42,7 @@ const UppderArea = () => {
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        exp_date: expDate.toISOString(),
+        exp_date: expDate,
         title: expTitle,
       }));
     }

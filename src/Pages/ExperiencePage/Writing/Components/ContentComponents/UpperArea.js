@@ -22,9 +22,18 @@ const UppderArea = () => {
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
+    // Normalize date to midnight
+    const normalizeDate = (date) => {
+      const normalizedDate = new Date(date);
+      normalizedDate.setHours(0, 0, 0, 0);
+      return normalizedDate;
+    };
+
   // 입력 내용을 임시 변수에 관리
   const handleDateChange = (date) => {
-    setExpDate(date);
+  const normalizedDate = normalizeDate(date);
+    setExpDate(normalizedDate);
+    console.log(normalizedDate);
   };
   const handleTitleChange = (e) => {
     setExpTitle(e.target.value);
@@ -35,7 +44,7 @@ const UppderArea = () => {
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        exp_date: expDate.toISOString(),
+        exp_date: expDate,
         title: expTitle,
       }));
     }

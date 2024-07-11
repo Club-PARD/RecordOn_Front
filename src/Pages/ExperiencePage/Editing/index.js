@@ -4,9 +4,8 @@ import styled from "styled-components";
 
 import { useRecoilState } from "recoil";
 import {
+  experienceState,
   handleExpRecordEditSubmit,
-  ExperienceEditState,
-  answerState,
 } from "../../../Atom/ExpRecordAtom";
 import { recoilUserData } from "../../../Atom/UserDataAtom";
 
@@ -18,11 +17,10 @@ import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentsArea from "./Components/ContentsArea";
 
 const EditPage = () => {
-  const [experience, setExperience] = useRecoilState(ExperienceEditState);
+  const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
-  const [answer, setAnswer] = useRecoilState(answerState);
   const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
 
   const navigate = useNavigate();
