@@ -22,10 +22,6 @@ const ContentsArea = () => {
       answer.question_answer[index],
     ]);
 
-  {
-    console.log("타입: " + JSON.stringify(combinedArray));
-  }
-
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}

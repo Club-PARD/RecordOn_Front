@@ -41,120 +41,122 @@ const AnswerArea = () => {
     },
   ]);
 
-    // 태그 및 질문 정보 가져오기
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await getAllTagAndQuestionAPI();
-          setTagAndQuestion(response);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      fetchData();
-    }, []);
-  
-    // 경험 섹션 추가
-    const addExperienceSection = () => {
-      const newSectionId = experienceSections.length;
-      setExperienceSections((prevSections) => [
-        ...prevSections,
-        {
-          id: newSectionId,
-          selectedTag: null,
-          selectedQuestionText: "",
-          selectedQuestionId: null,
-          questionOptionIds: [],
-          questionOptionTexts: [],
-          text: "",
-          isTagSelected: false,
-          isQuestionSelected: false,
-        },
-      ]);
+  // 태그 및 질문 정보 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllTagAndQuestionAPI();
+        setTagAndQuestion(response);
+      } catch (error) {
+        console.error(error);
+      }
     };
-  
-    // 경험 섹션 삭제
-    const removeExperienceSection = (id) => {
-      setExperienceSections((prevSections) =>
-        prevSections.filter((section) => section.id !== id)
-      );
-    };
-  
-    // 태그 선택 핸들러
-    const handleTagSelectInSection = (index, id) => {
-      const tagId = index;
-      const updatedSections = experienceSections.map((section) => {
-        if (section.id === id) {
-          if (section.selectedTag === tagId) {
-            return {
-              ...section,
-              selectedTag: null,
-              questionOptionIds: [],
-              questionOptionTexts: [],
-              selectedQuestionText: "",
-              selectedQuestionId: null,
-              isTagSelected: false,
-              isQuestionSelected: false,
-            };
-          }
-  
-          const newQuestionOptionTexts = tagAndQuestion[tagId]?.questions || [];
-          const newQuestionOptionIds = tagAndQuestion[tagId]?.question_ids || [];
+    fetchData();
+  }, []);
 
+  // 경험 섹션 추가
+  const addExperienceSection = () => {
+    const newSectionId = experienceSections.length;
+    setExperienceSections((prevSections) => [
+      ...prevSections,
+      {
+        id: newSectionId,
+        selectedTag: null,
+        selectedQuestionText: "",
+        selectedQuestionId: null,
+        questionOptionIds: [],
+        questionOptionTexts: [],
+        text: "",
+        isTagSelected: false,
+        isQuestionSelected: false,
+      },
+    ]);
+  };
+
+  // 경험 섹션 삭제
+  const removeExperienceSection = (id) => {
+    setExperienceSections((prevSections) =>
+      prevSections.filter((section) => section.id !== id)
+    );
+  };
+
+  // 태그 선택 핸들러
+  const handleTagSelectInSection = (index, id) => {
+    const tagId = index;
+    const updatedSections = experienceSections.map((section) => {
+      if (section.id === id) {
+        if (section.selectedTag === tagId) {
           return {
             ...section,
-            selectedTag: tagId,
-            questionOptionTexts: newQuestionOptionTexts,
-            questionOptionIds: newQuestionOptionIds,
+            selectedTag: null,
+            questionOptionIds: [],
+            questionOptionTexts: [],
             selectedQuestionText: "",
             selectedQuestionId: null,
-            isTagSelected: true,
+            isTagSelected: false,
             isQuestionSelected: false,
           };
         }
-        return section;
-      });
-  
-      setExperienceSections(updatedSections);
-    };
-  
-    // 질문 선택 핸들러
-    const handleQuestionSelectInSection = (selectedQuestionId, id) => {
-      const updatedSections = experienceSections.map((section) =>
-        section.id === id
-          ? {
-              ...section,
-              selectedQuestionId: selectedQuestionId,
-              isQuestionSelected: true,
-            }
-          : section
-      );
-      setExperienceSections(updatedSections);
-    };
-  
-    // 텍스트 변경 핸들러
-    const handleTextChangeInSection = (text, id) => {
-      const updatedSections = experienceSections.map((section) =>
-        section.id === id ? { ...section, text } : section
-      );
-      setExperienceSections(updatedSections);
-    };
-  
-    // 제출 처리
-    useEffect(() => {
-      if (isExpRecordSubmitted) {
-        setExperience((prev) => ({
-          ...prev,
-          tag_ids: experienceSections.map((section) =>
-            section.selectedTag !== null ? section.selectedTag + 1 : null
-          ),
-          question_ids: experienceSections.map((section) =>
-            section.selectedQuestionId !== null ? section.selectedQuestionId : null
-          ),
-          question_answers: experienceSections.map((section) => section.text),
-        }));
+
+        const newQuestionOptionTexts = tagAndQuestion[tagId]?.questions || [];
+        const newQuestionOptionIds = tagAndQuestion[tagId]?.question_ids || [];
+
+        return {
+          ...section,
+          selectedTag: tagId,
+          questionOptionTexts: newQuestionOptionTexts,
+          questionOptionIds: newQuestionOptionIds,
+          selectedQuestionText: "",
+          selectedQuestionId: null,
+          isTagSelected: true,
+          isQuestionSelected: false,
+        };
       }
-    }, [isExpRecordSubmitted, experienceSections, setExperience]);
+      return section;
+    });
+
+    setExperienceSections(updatedSections);
+  };
+
+  // 질문 선택 핸들러
+  const handleQuestionSelectInSection = (selectedQuestionId, id) => {
+    const updatedSections = experienceSections.map((section) =>
+      section.id === id
+        ? {
+            ...section,
+            selectedQuestionId: selectedQuestionId,
+            isQuestionSelected: true,
+          }
+        : section
+    );
+    setExperienceSections(updatedSections);
+  };
+
+  // 텍스트 변경 핸들러
+  const handleTextChangeInSection = (text, id) => {
+    const updatedSections = experienceSections.map((section) =>
+      section.id === id ? { ...section, text } : section
+    );
+    setExperienceSections(updatedSections);
+  };
+
+  // 제출 처리
+  useEffect(() => {
+    if (isExpRecordSubmitted) {
+      setExperience((prev) => ({
+        ...prev,
+        tag_ids: experienceSections.map((section) =>
+          section.selectedTag !== null ? section.selectedTag + 1 : null
+        ),
+        question_ids: experienceSections.map((section) =>
+          section.selectedQuestionId !== null
+            ? section.selectedQuestionId
+            : null
+        ),
+        question_answers: experienceSections.map((section) => section.text),
+      }));
+    }
+  }, [isExpRecordSubmitted, experienceSections, setExperience]);
 
   return (
     <>
