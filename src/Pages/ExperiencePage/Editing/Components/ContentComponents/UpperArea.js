@@ -28,6 +28,13 @@ const UppderArea = () => {
     }
   }, [answer]);
 
+   // 날짜 포맷
+   const normalizeDate = (date) => {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+    return normalizedDate;
+  };
+
   // 입력 내용을 임시 변수에 관리
   const handleDateChange = (date) => {
     setExpDate(date);
@@ -42,7 +49,7 @@ const UppderArea = () => {
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        exp_date: expDate,
+        exp_date: normalizeDate(expDate),
         title: expTitle,
       }));
     }
