@@ -37,7 +37,7 @@ const ProjectTitle = () => {
             start_date: "",
             finish_date: "",
             search_text: "",
-            sort_type: 1,
+            sort_type: 2,
         });
     }, [])
 
