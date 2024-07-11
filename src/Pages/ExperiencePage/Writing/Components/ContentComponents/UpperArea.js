@@ -22,19 +22,18 @@ const UppderArea = () => {
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
-    // Normalize date to midnight
-    const normalizeDate = (date) => {
-      const normalizedDate = new Date(date);
-      normalizedDate.setHours(0, 0, 0, 0);
-      return normalizedDate;
-    };
+  // Normalize date to midnight
+  const normalizeDate = (date) => {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+    return normalizedDate;
+  };
 
   // 입력 내용을 임시 변수에 관리
-  const handleDateChange = (date) => {
-  const normalizedDate = normalizeDate(date);
-    setExpDate(normalizedDate);
-    console.log(normalizedDate);
+  const handleDateChange = (e) => {
+    setExpTitle(e.target.value);
   };
+
   const handleTitleChange = (e) => {
     setExpTitle(e.target.value);
   };
@@ -44,7 +43,7 @@ const UppderArea = () => {
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        exp_date: expDate,
+        exp_date: normalizeDate(expDate),
         title: expTitle,
       }));
     }
@@ -56,7 +55,10 @@ const UppderArea = () => {
     // 입력값이 숫자 8자리인지 확인
     if (/^\d{8}$/.test(inputValue)) {
       // yyyyMMdd 형식을 yyyy.MM.dd 형식으로 변환
-      const formattedDate = `${inputValue.slice(0, 4)}.${inputValue.slice(4, 6)}.${inputValue.slice(6, 8)}`;
+      const formattedDate = `${inputValue.slice(0, 4)}.${inputValue.slice(
+        4,
+        6
+      )}.${inputValue.slice(6, 8)}`;
       event.target.value = formattedDate;
     }
   };
@@ -77,7 +79,8 @@ const UppderArea = () => {
         <UppderPart width={"227px"}>
           <StyledLabel>경험한 날</StyledLabel>
           <ProjectDateWrapper>
-            <ProjectDateStart calWidth={"126px"}
+            <ProjectDateStart
+              calWidth={"126px"}
               dateFormat="yyyy.MM.dd"
               shouldCloseOnSelect
               disabledKeyboardNavigation

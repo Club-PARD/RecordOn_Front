@@ -83,7 +83,6 @@ const AnswerArea = ({ combinedArray }) => {
   // 태그 선택 핸들러
   const handleTagSelectInSection = (index, id) => {
     const tagId = index;
-    console.log(`TagId selected: ${tagId} for section id: ${id}`);
 
     const updatedSections = experienceSections.map((section) => {
       if (section.id === id) {
@@ -123,14 +122,12 @@ const AnswerArea = ({ combinedArray }) => {
     setExperienceSections(updatedSections);
   };
   // 질문 선택 핸들러
-  const handleQuestionSelectInSection = (questionId, questionText, id) => {
-    console.log(`QuestionId selected: ${questionId} for section id: ${id}`);
+  const handleQuestionSelectInSection = (selectedQuestionId, id) => {
     const updatedSections = experienceSections.map((section) =>
       section.id === id
         ? {
             ...section,
-            selectedQuestionId: questionId,
-            selectedQuestionText: questionText,
+            selectedQuestionId: selectedQuestionId,
             isQuestionSelected: true,
           }
         : section
@@ -145,29 +142,6 @@ const AnswerArea = ({ combinedArray }) => {
     );
     setExperienceSections(updatedSections);
   };
-
-  //  태그와 질문 데이터가 로드된 후 경험 섹션 초기화
-  useEffect(() => {
-    if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
-      const initialExperienceSections = combinedArray.map(
-        ([tagId, questionId, questionText, answer], index) => ({
-          id: index,
-          selectedTag: tagId !== null ? tagId - 1 : null,
-          selectedQuestionIdId: questionId !== null ? questionId - 1 : null,
-          selectedQuestionText: questionText !== "" ? questionText : "",
-          questionOptions:
-            tagId !== null && tagAndQuestion[tagId - 1]
-              ? tagAndQuestion[tagId - 1].questions
-              : [],
-          text: answer || "",
-          isTagSelected: tagId !== null,
-          isQuestionSelected: questionId !== null,
-        })
-      );
-
-      setExperienceSections(initialExperienceSections);
-    }
-  }, [tagAndQuestion, combinedArray]);
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
@@ -187,27 +161,30 @@ const AnswerArea = ({ combinedArray }) => {
     }
   }, [isExpRecordSubmitted, experienceSections, setExperience]);
 
-  // useEffect(() => {
-  //   if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
-  //     const updatedSections = combinedArray.map(
-  //       ([tagId, questionId, questionText, answer], index) => ({
-  //         ...experienceSections[index],
-  //         selectedTag: tagId !== null ? tagId - 1 : null,
-  //         selectedQuestionId: questionId !== null ? questionId - 1 : null,
-  //         selectedQuestionText: questionText !== "" ? questionText : "",
-  //         questionOptions:
-  //           tagId !== null && tagAndQuestion[tagId - 1]
-  //             ? tagAndQuestion[tagId - 1].questions
-  //             : [],
-  //         text: answer || "",
-  //         isTagSelected: tagId !== null,
-  //         isQuestionSelected: questionId !== null,
-  //       })
-  //     );
-  //     setExperienceSections(updatedSections);
-  //   }
-  // }, [tagAndQuestion, combinedArray]);
+    //  태그와 질문 데이터가 로드된 후 경험 섹션 초기화
+  useEffect(() => {
+    if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
+      const initialExperienceSections = combinedArray.map(
+        ([tagId, questionId, questionText, answer], index) => ({
+          id: index,
+          selectedTag: tagId !== null ? tagId - 1 : null,
+          selectedQuestionId: questionId !== null ? questionId - 1 : null,
+          selectedQuestionText: questionText || "",
+          questionOptionsTexts:
+            tagId !== null && tagAndQuestion[tagId - 1]
+              ? tagAndQuestion[tagId - 1].questions
+              : [],
+              questionOptionIds: tagId !== null && tagAndQuestion[tagId-1]
+              ? tagAndQuestion[tagId-1].question_ids:[],
+          text: answer || "",
+          isTagSelected: tagId !== null,
+          isQuestionSelected: questionId !== null,
+        })
+      );
 
+      setExperienceSections(initialExperienceSections);
+    }
+  }, [tagAndQuestion, combinedArray]);
 
   return (
     <>
@@ -260,7 +237,7 @@ const AnswerArea = ({ combinedArray }) => {
 
       {/* 경험 추가 버튼 */}
       <AddButton onClick={addExperienceSection}>+ 경험 추가</AddButton>
-      {console.log("지금찍어보는 겁니다: ", experience)}
+      {/* {console.log("지금찍어보는 겁니다: ", experience)} */}
     </>
   );
 };

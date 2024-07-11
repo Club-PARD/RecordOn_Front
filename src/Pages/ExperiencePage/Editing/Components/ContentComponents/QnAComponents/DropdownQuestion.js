@@ -7,7 +7,7 @@ import { ReactComponent as BigCheck } from "../../../../../../Assets/BigCheck.sv
 const DropdownQuestion = ({
   selectedTag,
   isTagSelected,
-  optionsTexts,
+  optionTexts,
   optionIds,
   onSelect,
 }) => {
@@ -38,6 +38,12 @@ const DropdownQuestion = ({
     }
   }, [selectedQuestionId]);
 
+  useEffect(() => {
+    setIsQuestionOpen(false);
+    setSelectedQuestionId(null);
+    setSelectedQuestionText("");
+  }, [isTagSelected, selectedTag]);
+
   return (
     <DropdownContainer>
       <SelectQuestion onClick={toggleDropdown} isTagSelected={isTagSelected}>
@@ -63,19 +69,20 @@ const DropdownQuestion = ({
       </SelectQuestion>
       {isQuestionOpen && (
         <List>
-          {optionsTexts.map((questionText, index) => (
-            <ListItemWrapper
-              key={index}
-              onClick={() => handleSelect(questionText, index)}
-              onMouseEnter={() => setHoveredItem(index)}
-              onMouseLeave={() => setHoveredItem(null)}
-            >
-              <ListItem>{questionText}</ListItem>
-              <IconWrapper isVisible={hoveredItem === index}>
-                <BigCheck />
-              </IconWrapper>
-            </ListItemWrapper>
-          ))}
+          {optionTexts &&
+            optionTexts.map((questionText, index) => (
+              <ListItemWrapper
+                key={index}
+                onClick={() => handleSelect(questionText, index)}
+                onMouseEnter={() => setHoveredItem(index)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <ListItem>{questionText}</ListItem>
+                <IconWrapper isVisible={hoveredItem === index}>
+                  <BigCheck />
+                </IconWrapper>
+              </ListItemWrapper>
+            ))}
         </List>
       )}
     </DropdownContainer>
