@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+import api from './axiosConfig.mjs';
 
 const server = process.env.REACT_APP_DEV_URL;
 
@@ -6,7 +7,7 @@ const server = process.env.REACT_APP_DEV_URL;
 export const postExperienceAPI = async (data) => {
   console.log(data);
   try {
-    const response = await axios.post(`${server}experiences`, data);
+    const response = await api.post(`${server}experiences`, data);
     console.log(response.status);
     return response;
   } catch (error) {
@@ -18,7 +19,7 @@ export const postExperienceAPI = async (data) => {
 export const getOneExperienceAPI = async (expId) => {
   console.log(expId);
   try {
-    const response = await axios.get(`${server}experiences/${expId}`);
+    const response = await api.get(`${server}experiences/${expId}`);
     if (response.data.success) {
       console.log(response.data.response_object);
     } else {
@@ -35,7 +36,7 @@ export const getOneExperienceAPI = async (expId) => {
 export const deleteOneExperienceAPI = async (expId, user_id) => {
     console.log(`Attempting to delete experience with ID: ${expId} for user ID: ${user_id}`);
     try {
-      const response = await axios.delete(`${server}experiences/${expId}`, {
+      const response = await api.delete(`${server}experiences/${expId}`, {
         data: { user_id }
       });
       console.log('Delete successful:', response.data);
@@ -62,7 +63,7 @@ export const deleteOneExperienceAPI = async (expId, user_id) => {
 // 경험 기록 수정 API
 export const editOneExpereienceAPI = async (id = 10, data) => {
   try {
-    const response = await axios.put(`${server}experiences/${id}`, data);
+    const response = await api.put(`${server}experiences/${id}`, data);
     console.log(response.data);
   } catch (error) {
     console.error(error);
