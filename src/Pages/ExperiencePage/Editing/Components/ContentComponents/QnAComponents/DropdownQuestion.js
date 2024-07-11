@@ -6,6 +6,7 @@ import { ReactComponent as BigCheck } from "../../../../../../Assets/BigCheck.sv
 
 const DropdownQuestion = ({
   selectedTag,
+  selectedQuestion,
   isTagSelected,
   options,
   onSelect,
@@ -14,7 +15,7 @@ const DropdownQuestion = ({
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
   // 선택된 질문을 저장하는 상태 (임시변수)
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  // const [selectedQuestion, setSelectedQuestion] = useState("");
 
   // 호버 상태 관리
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -25,14 +26,12 @@ const DropdownQuestion = ({
 
   const handleSelect = (question, index) => {
     console.log("handleSelect" + index);
-    setSelectedQuestion(question);
-    onSelect(index);
+    onSelect(index, question);
     setIsQuestionOpen(false); // 옵션 선택 후 드롭다운 닫기
   };
 
   useEffect(() => {
     setIsQuestionOpen(false);
-    setSelectedQuestion("");
   }, [isTagSelected, selectedTag]);
 
   return (

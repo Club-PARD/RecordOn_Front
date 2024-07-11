@@ -7,7 +7,7 @@ import {
 import { useRecoilState } from "recoil";
 import {
   experienceState,
-  handleExpRecordSubmit,
+  handleExpRecordEditSubmit,
   answerState,
 } from "../../../../../Atom/ExpRecordAtom";
 
@@ -15,7 +15,7 @@ const FixedArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
-    handleExpRecordSubmit
+    handleExpRecordEditSubmit
   );
 
   const [commonQuestionAnswer, setCommonQuestionAnswer] = useState("");
@@ -39,15 +39,15 @@ const FixedArea = () => {
         common_question_answer: commonQuestionAnswer,
       }));
     }
-  }, [isExpRecordSubmitted]);
+  }, [isExpRecordSubmitted, commonQuestionAnswer]);
 
   return (
     <>
       {/* 고정 질문 영역 */}
-      {console.log(commonQuestionAnswer)}
       <FixArea>
         <FixAreaLabel>
-          Q. 오늘 있었던 경험을 되돌아보며, 연상되는 단어를 최소 3가지 이상 적어보세요!
+          Q. 오늘 있었던 경험을 되돌아보며, 연상되는 단어를 최소 3가지 이상
+          적어보세요!
         </FixAreaLabel>
         <TextAreaWidth
           height="88px"
