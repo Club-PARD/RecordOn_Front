@@ -5,6 +5,7 @@ import { ReactComponent as QArrow } from "../../../../../../Assets/QdropdownArro
 import { ReactComponent as BigCheck } from "../../../../../../Assets/BigCheck.svg";
 
 const DropdownQuestion = ({
+  combinedArray,
   selectedTag,
   isTagSelected,
   options,

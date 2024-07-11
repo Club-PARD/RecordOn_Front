@@ -16,7 +16,7 @@ import {
   handleExpRecordSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 
-const AnswerArea = ({combinedArray}) => {
+const AnswerArea = ({ combinedArray }) => {
   // 리코일 변수
   const [experience, setExperience] = useRecoilState(experienceState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
@@ -28,21 +28,6 @@ const AnswerArea = ({combinedArray}) => {
   const [tagIds, setTagIds] = useState([null]);
   const [questionIds, setQuestionIds] = useState([null]);
   const [questionAnswers, setQuestionAnswers] = useState([""]);
-
-  // 테스트용
-  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
-  useEffect(() => {
-    if (isExpRecordSubmitted) {
-      setExperience((prev) => ({
-        ...prev,
-        tag_ids: tagIds.map((tagId) => (tagId !== null ? tagId + 1 : tagId)),
-        question_ids: questionIds.map((questionId) =>
-          questionId !== null ? questionId + 26 : questionId
-        ),
-        question_answers: questionAnswers,
-      }));
-    }
-  }, [isExpRecordSubmitted]);
 
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
   const [experienceSections, setExperienceSections] = useState([
@@ -59,6 +44,20 @@ const AnswerArea = ({combinedArray}) => {
 
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
+
+  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
+  useEffect(() => {
+    if (isExpRecordSubmitted) {
+      setExperience((prev) => ({
+        ...prev,
+        tag_ids: tagIds.map((tagId) => (tagId !== null ? tagId + 1 : tagId)),
+        question_ids: questionIds.map((questionId) =>
+          questionId !== null ? questionId + 26 : questionId
+        ),
+        question_answers: questionAnswers,
+      }));
+    }
+  }, [isExpRecordSubmitted]);
 
   // 서버에서 태그와 질문을 받아오는 API
   useEffect(() => {
@@ -222,6 +221,7 @@ const AnswerArea = ({combinedArray}) => {
           <SelectArea>
             <ExpTag
               onSelect={(index) => handleTagSelectInSection(index, section.id)}
+              combinedArray={combinedArray}
             />
             <DropdownQuestion
               isTagSelected={section.isTagSelected}
@@ -230,6 +230,7 @@ const AnswerArea = ({combinedArray}) => {
                 handleQuestionSelectInSection(questionId, section.id)
               }
               selectedTag={section.selectedTag}
+              combinedArray={combinedArray}
             />
           </SelectArea>
           {/* 답변란 */}
@@ -240,7 +241,11 @@ const AnswerArea = ({combinedArray}) => {
               handleTextChangeInSection(e.target.value, section.id)
             }
             disabled={!section.isQuestionSelected}
-            placeholder={section.id === 0 ? "첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!" : ""}
+            placeholder={
+              section.id === 0
+                ? "첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!"
+                : ""
+            }
           />{" "}
         </SectionWrapper>
       ))}
@@ -290,7 +295,7 @@ const TextAreaWidth = styled.textarea`
   line-height: 1.5;
 
   &::placeholder {
-    color: ${({isQuestionSelected, theme}) => 
+    color: ${({ isQuestionSelected, theme }) =>
       isQuestionSelected ? theme.color.base6 : theme.color.base3};
   }
 `;
