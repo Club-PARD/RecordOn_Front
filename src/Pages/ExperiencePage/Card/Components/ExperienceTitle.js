@@ -11,6 +11,7 @@ import BarIcon from "../../../../Assets/BarIcon.svg"
 import Project_Default from "../../../../Assets/Project_Default.png"
 import FinishProject from "./FinishProject";
 import RestartProject from "./RestartProject";
+import LinkPage from "./Link";
 import { useNavigate } from "react-router-dom";
 import EditProject from "./EditProject";
 import DeleteProject from "./DeleteProject";
@@ -20,6 +21,7 @@ const ExperienceTitle = () => {
 
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [experienceData, setExperienceData] = useRecoilState(experienceState);
+
 
     const [projectData, setProjectData] = useState({});
     const navigate = useNavigate();
@@ -41,7 +43,16 @@ const ExperienceTitle = () => {
     const handleProjectEdit = () => {
 
     }
+    //링크 모달 관련
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+    
+    const linkClickHandler = async () => {
+        setIsModalOpen(true);
+    }
+    
     console.log(experienceData);
 
     return (
@@ -121,7 +132,7 @@ const ExperienceTitle = () => {
                 </ExperienceButtons>
             </ExperienceTitleCenter>
             <ExperienceTitleRight>
-                <OpenExperienceLinkModal>
+                <OpenExperienceLinkModal onClick={linkClickHandler}>
                     관련 자료 링크
                     <img src={ArrowWhite} style={{ width: "10px", marginLeft: "7px" }} />
                 </OpenExperienceLinkModal>
@@ -131,9 +142,9 @@ const ExperienceTitle = () => {
                     </DeleteProjectText>
                 </DeleteProjectDiv>
             </ExperienceTitleRight>
-
+            {isModalOpen && <LinkPage isOpen={isModalOpen} onClose={closeModal} />}
         </ExperienceTitleDiv>
-    );
+        );
 };
 
 const ExperienceTitleDiv = styled.div`

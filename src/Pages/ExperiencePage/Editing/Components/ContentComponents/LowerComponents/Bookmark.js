@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getUrlMetaData } from "../../../../../../Axios/ReferenceApi";
+import Favicon from "../../../../../../Assets/faviconRO.svg"
 
 const Bookmark = ({ url }) => {
   const [metaData, setMetaData] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const defaultImageUrl = "https://i.ibb.co/hCHb2ZJ/logo512.png";
+  const defaultImageUrl = Favicon;
 
   // 서버로부터 데이터 받아오는 로직
   useEffect(() => {

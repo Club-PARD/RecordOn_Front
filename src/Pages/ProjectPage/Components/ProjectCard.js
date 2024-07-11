@@ -168,7 +168,7 @@ height: 40px;
 align-items: start;
 /* border: 1px solid black; */
 font-size: ${(props) => props.theme.fontSizes.TextS};
-/* font-weight: 400; */
+font-weight: ${(props) => props.theme.fontWeights.TextS};
 `
 
 const CardDateText = styled.div`
