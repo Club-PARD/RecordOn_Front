@@ -13,6 +13,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
 import { experienceState } from "../../../Atom/ExpRecordAtom";
+import Toast from "../../../Common/Toast";
+
 
 const AddProjectModal = ({
     isOpen,
@@ -36,6 +38,7 @@ const AddProjectModal = ({
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
     const [valid, setValid] = useState(false);
     const navigate = useNavigate();
+    const [toast, setToast] = useState(false);
 
     const userInputHandler = (e) => [
         setProjectData({
@@ -162,6 +165,7 @@ const AddProjectModal = ({
                 const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
                 console.log(response2);
                 handleOverlayClick();
+                setToast(true);
                 navigate("/experience");
             }
             catch (error) {
@@ -321,6 +325,13 @@ const AddProjectModal = ({
                     </ModalProjectButtonDiv>
                 </ModalContentDiv>
             </Modal>
+            {toast && (
+                <Toast
+                    setToast={setToast}
+                    message={'⚠️ 공백으로만 입력할 수 없습니다.'}
+                    position="bottom"
+                />
+            )}
         </Overlay>
     );
 };
