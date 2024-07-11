@@ -13,14 +13,18 @@ const ContentsArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
 
   // 중간 배열 생성
-  const combinedArray = answer;
-    // answer.question_text &&
-    // answer.question_text.map((_, index) => [
-    //   answer.tag_ids[index],
-    //   answer.question_text[index],
-    //   answer.question_answer[index],
-    // ]);
+  const combinedArray =
+    answer.question_text &&
+    answer.question_text.map((_, index) => [
+      answer.tag_id[index],
+      answer.question_id[index],
+      answer.question_text[index],
+      answer.question_answer[index],
+    ]);
 
+  {
+    console.log("타입: " + JSON.stringify(combinedArray));
+  }
 
   return (
     <>
@@ -33,7 +37,7 @@ const ContentsArea = () => {
         <FixedArea />
 
         {/* 태그별 질문 답변 영역 */}
-        <AnswerArea combinedArray={combinedArray}/>
+        <AnswerArea combinedArray={combinedArray} />
 
         {/* 하단 영역 : 자유란과 관련 자료 링크 */}
         <LowerArea />
