@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL,
     withCredentials: true,
@@ -18,13 +19,14 @@ const onRefreshed = (token) => {
 };
 
 const refreshToken = async () => {
+
     try {
         await api.post(`${process.env.REACT_APP_DEV_URL}auth/refresh`);
     } catch (err) {
         console.error('Refresh token request failed', err);
         Cookies.remove('access_token');
         Cookies.remove('refresh_token');
-        // window.location.href = '/login';
+        window.location.href = '/';
         return Promise.reject(err);
     }
 };
@@ -33,7 +35,7 @@ api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-
+        console(error);
         if (error.response.status === 401 && !originalRequest._retry) {
             if (!isRefreshing) {
                 isRefreshing = true;
