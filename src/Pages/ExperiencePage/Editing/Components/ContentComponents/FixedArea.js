@@ -6,16 +6,16 @@ import {
 } from "./LowerComponents/LowerArea";
 import { useRecoilState } from "recoil";
 import {
-  experienceState,
-  handleExpRecordSubmit,
+  ExperienceEditState,
+  handleExpRecordEditSubmit,
   answerState,
 } from "../../../../../Atom/ExpRecordAtom";
 
 const FixedArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(experienceState);
+  const [experience, setExperience] = useRecoilState(ExperienceEditState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
-    handleExpRecordSubmit
+    handleExpRecordEditSubmit
   );
 
   const [commonQuestionAnswer, setCommonQuestionAnswer] = useState("");

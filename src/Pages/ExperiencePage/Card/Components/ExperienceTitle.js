@@ -55,17 +55,17 @@ const ExperienceTitle = () => {
             <ExperienceTitleCenter>
                 <ProjectImageDiv>
                     {
-                        projectData.project_image == null
+                        projectData?.project_image == null
                             ?
                             <img src={Project_Default} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
                             :
-                            <img src={projectData.project_image} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
+                            <img src={projectData?.project_image} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
                     }
 
                 </ProjectImageDiv>
                 <ProjectProcessDate>
                     {
-                        projectData.is_finished == 1
+                        projectData?.is_finished == 1
                             ?
                             <ProjectProcess>
                                 진행완료
@@ -78,13 +78,13 @@ const ExperienceTitle = () => {
                         <img src={BarIcon} style={{ height: "15px" }} />
                     </ProjectProcessDateBar>
                     <ProjectDate>
-                        {projectData.start_date?.substring(0, 10)}~{projectData.finish_date?.substring(0, 10)}
+                        {projectData?.start_date?.substring(0, 10)}~{projectData?.finish_date?.substring(0, 10)}
                     </ProjectDate>
                 </ProjectProcessDate>
                 <ExperienceTitleText>
                     <ProjectEdit></ProjectEdit>
                     <ExperienceTitleTextDiv>
-                        {projectData.project_name}
+                        {projectData?.project_name}
                     </ExperienceTitleTextDiv>
                     <EditProject />
                 </ExperienceTitleText>
@@ -93,7 +93,7 @@ const ExperienceTitle = () => {
                         프로젝트 목표
                     </ProjectGoalText>
                     <ProjectGoalContents>
-                        {projectData.description}
+                        {projectData?.description}
                     </ProjectGoalContents>
                 </ProjectGoalDiv>
                 <ProjectRole>
@@ -101,12 +101,12 @@ const ExperienceTitle = () => {
                         역할
                     </ProjectRoleText>
                     <ProjectRoleContent>
-                        {projectData.part}
+                        {projectData?.part}
                     </ProjectRoleContent>
                 </ProjectRole>
                 <ExperienceButtons>
                     {
-                        projectData.is_finished == 1
+                        projectData?.is_finished == 1
                             ?
                             <ExperienceButtonsDivDone>
                                 <RestartProject />

@@ -8,24 +8,31 @@ import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import {
   answerState,
-  experienceState,
-  handleExpRecordSubmit,
+  ExperienceEditState,
+  handleExpRecordEditSubmit,
 } from "../../../../../Atom/ExpRecordAtom";
 
 const UppderArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(experienceState);
+  const [experience, setExperience] = useRecoilState(ExperienceEditState);
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
-  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
-    handleExpRecordSubmit
-  );
+  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(handleExpRecordEditSubmit);
+
+  // 서버에서 초기값 설정
+  useEffect(() => {
+    if (answer) {
+      setExpDate(new Date(answer.exp_date));
+      setExpTitle(answer.experience_name || "");
+    }
+  }, [answer]);
 
   // 입력 내용을 임시 변수에 관리
   const handleDateChange = (date) => {
     setExpDate(date);
   };
+
   const handleTitleChange = (e) => {
     setExpTitle(e.target.value);
   };
@@ -39,7 +46,7 @@ const UppderArea = () => {
         title: expTitle,
       }));
     }
-  }, [isExpRecordSubmitted]);
+  }, [isExpRecordSubmitted, expDate, expTitle]);
 
   return (
     <>
@@ -49,7 +56,7 @@ const UppderArea = () => {
           <StyledLabel>소제목</StyledLabel>
           <StyledInput
             type="text"
-            defaultValue={answer && answer.experience_name}
+            value={expTitle}
             onChange={handleTitleChange}
           />
         </UppderPart>
@@ -57,7 +64,8 @@ const UppderArea = () => {
         <UppderPart width={"227px"}>
           <StyledLabel>경험한 날</StyledLabel>
           <ProjectDateWrapper>
-            <ProjectDateStart calWidth={"126px"}
+            <ProjectDateStart
+              calWidth={"126px"}
               dateFormat="yyyy.MM.dd"
               shouldCloseOnSelect
               disabledKeyboardNavigation
@@ -66,7 +74,6 @@ const UppderArea = () => {
               locale={ko}
               selected={expDate}
               onChange={handleDateChange}
-              defaultValue={answer && answer.exp_date}
             />
           </ProjectDateWrapper>
         </UppderPart>
@@ -74,6 +81,7 @@ const UppderArea = () => {
     </>
   );
 };
+
 
 const Upper = styled.div`
   display: flex;

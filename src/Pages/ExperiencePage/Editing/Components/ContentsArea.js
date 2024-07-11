@@ -13,8 +13,8 @@ const ContentsArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
 
   // 중간 배열 생성
-  const combinedArray = 
-  answer.question_text &&
+  const combinedArray =
+    answer.question_text &&
     answer.question_text.map((_, index) => [
       answer.tag_id[index],
       answer.question_id[index],
@@ -22,7 +22,9 @@ const ContentsArea = () => {
       answer.question_answer[index],
     ]);
 
-   { console.log ("타입: " + JSON.stringify(combinedArray))}
+  {
+    console.log("타입: " + JSON.stringify(combinedArray));
+  }
 
   return (
     <>
