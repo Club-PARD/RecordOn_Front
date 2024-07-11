@@ -32,8 +32,6 @@ const EditPage = () => {
 
     try {
       await editOneExpereienceAPI(expId, experience);
-      // refreshRecoil();
-      // navigate("/experience");
       console.log("경험 데이터가 수정되었습니다.");
       // navigate("/experience");
     } catch (error) {

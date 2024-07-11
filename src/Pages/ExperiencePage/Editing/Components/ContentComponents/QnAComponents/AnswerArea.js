@@ -30,7 +30,7 @@ const AnswerArea = ({ combinedArray }) => {
   );
   const [questionIds, setQuestionIds] = useState(
     combinedArray.map(([, questionId]) =>
-      questionId !== null ? questionId - 26 : null
+      questionId !== null ? questionId - 1 : null
     )
   );
   const [questionAnswers, setQuestionAnswers] = useState(
@@ -53,6 +53,19 @@ const AnswerArea = ({ combinedArray }) => {
 
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
+
+  // 서버에서 태그와 질문을 받아오는 API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllTagAndQuestionAPI();
+        setTagAndQuestion(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   // 태그와 질문 데이터가 로드된 후 경험 섹션 초기화
   useEffect(() => {
@@ -86,6 +99,27 @@ const AnswerArea = ({ combinedArray }) => {
     }
   }, [tagAndQuestion, combinedArray]);
 
+  useEffect(() => {
+    if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
+      const updatedSections = combinedArray.map(
+        ([tagId, questionId, questionText, answer], index) => ({
+          ...experienceSections[index],
+          selectedTag: tagId !== null ? tagId - 1 : null,
+          selectedQuestionId: questionId !== null ? questionId - 1 : null,
+          selectedQuestionText: questionText !== "" ? questionText : "",
+          questionOptions:
+            tagId !== null && tagAndQuestion[tagId - 1]
+              ? tagAndQuestion[tagId - 1].questions
+              : [],
+          text: answer || "",
+          isTagSelected: tagId !== null,
+          isQuestionSelected: questionId !== null,
+        })
+      );
+      setExperienceSections(updatedSections);
+    }
+  }, [tagAndQuestion, combinedArray]);
+
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
     if (isExpRecordSubmitted) {
@@ -99,19 +133,6 @@ const AnswerArea = ({ combinedArray }) => {
       }));
     }
   }, [isExpRecordSubmitted]);
-
-  // 서버에서 태그와 질문을 받아오는 API
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getAllTagAndQuestionAPI();
-        setTagAndQuestion(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
 
   // 경험 섹션 추가
   const addExperienceSection = () => {
@@ -271,8 +292,12 @@ const AnswerArea = ({ combinedArray }) => {
             <DropdownQuestion
               isTagSelected={section.isTagSelected}
               options={section.questionOptions}
-              onSelect={(questionId) =>
-                handleQuestionSelectInSection(questionId, section.id)
+              onSelect={(questionId, questionText) =>
+                handleQuestionSelectInSection(
+                  questionId,
+                  questionText,
+                  section.id
+                )
               }
               selectedTag={section.selectedTag}
               selectedQuestion={section.selectedQuestionText}
@@ -297,6 +322,7 @@ const AnswerArea = ({ combinedArray }) => {
 
       {/* 경험 추가 버튼 */}
       <AddButton onClick={addExperienceSection}>+ 경험 추가</AddButton>
+      {console.log("지금찍어보는 겁니다: ", experience)}
     </>
   );
 };

@@ -26,14 +26,12 @@ const DropdownQuestion = ({
 
   const handleSelect = (question, index) => {
     console.log("handleSelect" + index);
-    // setSelectedQuestion(question);
-    onSelect(index);
+    onSelect(index, question);
     setIsQuestionOpen(false); // 옵션 선택 후 드롭다운 닫기
   };
 
   useEffect(() => {
     setIsQuestionOpen(false);
-    // setSelectedQuestion("");
   }, [isTagSelected, selectedTag]);
 
   return (
