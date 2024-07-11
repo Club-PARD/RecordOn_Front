@@ -38,6 +38,22 @@ export const answerState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+// 제출 내용 관리 (수정)
+export const expEditState = atom({
+  key: "expEditState",
+  default: {
+    user_id: "",
+    projects_id: 0,
+    title: "",
+    exp_date: "",
+    free_content: "",
+    common_question_answer: "",
+    tag_ids: [],
+    question_ids: [],
+    question_answers: [],
+    reference_links: [],
+  },
+});
 
 // 제출 동작 관리 (추가)
 export const handleExpRecordSubmit = atom({
@@ -49,4 +65,4 @@ export const handleExpRecordSubmit = atom({
 export const handleExpRecordEditSubmit = atom({
   key: "handleExpRecordEditSubmit",
   default: false,
-})
+});
