@@ -32,10 +32,10 @@ const EditPage = () => {
 
     try {
       await editOneExpereienceAPI(expId, experience);
-      console.log("경험 데이터가 수정되었습니다.");
+      // console.log("경험 데이터가 수정되었습니다.");
       // navigate("/experience");
     } catch (error) {
-      console.error("경험 데이터 수정 중 오류가 발생했습니다:", error);
+      // console.error("경험 데이터 수정 중 오류가 발생했습니다:", error);
       setIsExpRecordSubmitted(false); // 오류 발생 시 제출 상태를 초기화해야 할 수도 있습니다.
     }
   };

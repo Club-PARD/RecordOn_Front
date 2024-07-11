@@ -25,7 +25,6 @@ const DropdownQuestion = ({
     if (isTagSelected) setIsQuestionOpen(!isQuestionOpen);
   };
 
-
   const handleSelect = (questionText, index) => {
     setSelectedQuestionText(questionText);
     setSelectedQuestionId(optionIds[index]);
@@ -38,7 +37,6 @@ const DropdownQuestion = ({
       onSelect(selectedQuestionId);
     }
   }, [selectedQuestionId]);
-
 
   useEffect(() => {
     setIsQuestionOpen(false);
