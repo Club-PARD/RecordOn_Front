@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 
 import { useRecoilState } from "recoil";
-import { recoilUserData } from "../../../../Atom/UserDataAtom";
+import { recoilUserData, recoilUserProjectFilter } from "../../../../Atom/UserDataAtom";
 import { putProjectTagAPI } from "../../../../Axios/ProjectDataApi";
 import { useNavigate } from "react-router-dom";
 
@@ -11,18 +11,26 @@ const CheckboxGrid = () => {
   const [checkedItems, setCheckedItems] = useState([]);
 
   const [userData, setUserData] = useRecoilState(recoilUserData);
+  const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
   const navigate = useNavigate();
 
-    const putProjectTagHandler = async () => {
-      try {
-        const response = await putProjectTagAPI(userData, checkedItems);
-        console.log('Checkboxes Put:', checkedItems);
-        console.log(response + "///");
-        navigate("/project");
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
+  const putProjectTagHandler = async () => {
+    try {
+      const response = await putProjectTagAPI(userData, checkedItems);
+      console.log('Checkboxes Put:', checkedItems);
+      console.log(response + "///");
+      setProjectFilter({
+        ...projectFilter,
+        competency_tag_name: [],
+        start_date: "",
+        finish_date: "",
+        is_finished: 2,
+      })
+      navigate("/project");
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
@@ -41,14 +49,14 @@ const CheckboxGrid = () => {
   useEffect(() => {
     console.log('Selected checkboxes:', checkedItems);
   }, [checkedItems]);
-  
+
   const isFormValid = (checkedItems.length === 0);
-  
+
   const checkboxes = [
-  '소통', '신뢰성', '전문성', 
-  '책임감', '열정', '실행력', 
-  '창의성', '성실성', '정직'
-];
+    '소통', '신뢰성', '전문성',
+    '책임감', '열정', '실행력',
+    '창의성', '성실성', '정직'
+  ];
   return (
     <Div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
@@ -57,9 +65,9 @@ const CheckboxGrid = () => {
             <CheckInput
               type="checkbox"
               name={`checkbox-${index + 1}`}
-      checked={checkedItems.includes(index + 1)}
-      onChange={handleCheckboxChange}
-      disabled={!checkedItems.includes(index + 1) && checkedItems.length >= 3}
+              checked={checkedItems.includes(index + 1)}
+              onChange={handleCheckboxChange}
+              disabled={!checkedItems.includes(index + 1) && checkedItems.length >= 3}
             />
             <TagDiv checked={checkedItems.includes(index + 1)}>{checkbox}</TagDiv>
           </label>
