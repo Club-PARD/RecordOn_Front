@@ -257,30 +257,56 @@ const EditProjectModal = ({
                             프로젝트 대표 이미지
                         </ModalProjectImageText>
                         <ModalProjectImageUpload name="picture">{
-                            projectData.image ?
-                                // projectData.project_image ?
-                                <ModalProjectImageUploadLeft>
-                                    <ModalProjectImageUploadContent onClick={handleDivClick}>
-                                        <img
-                                            src={projectData.image}
-                                            alt="프로젝트 대표 사진"
-                                            style={{ width: '18px', height: '18px', objectFit: 'cover', marginLeft: "24px", marginRight: "7px" }}
-                                        />
-                                        <ModalProjectImageNameDiv>
-                                            {projectData.picture.name}
-                                        </ModalProjectImageNameDiv>
-                                        <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
-                                    </ModalProjectImageUploadContent>
-                                    <ModalProjectImageDelete onClick={() => {
-                                        setProjectData({
-                                            ...projectData,
-                                            picture: undefined,
-                                            image: undefined,
+                            projectData.project_image || projectData.image ?
 
-                                        });
-                                    }}>
-                                        <img src={CloseIcon} style={{ width: "12px" }} />
-                                    </ModalProjectImageDelete>
+                                <ModalProjectImageUploadLeft>
+                                    {
+                                        projectData.image ?
+                                            <ModalProjectImageUploadInner>
+                                                <ModalProjectImageUploadContent onClick={handleDivClick}>
+                                                    <img
+                                                        src={projectData.image}
+                                                        alt="프로젝트 대표 사진"
+                                                        style={{ width: '18px', height: '18px', objectFit: 'cover', marginLeft: "24px", marginRight: "7px" }}
+                                                    />
+                                                    <ModalProjectImageNameDiv>
+                                                        {projectData.picture.name}
+                                                    </ModalProjectImageNameDiv>
+                                                    <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
+                                                </ModalProjectImageUploadContent>
+                                                <ModalProjectImageDelete onClick={() => {
+                                                    setProjectData({
+                                                        ...projectData,
+                                                        picture: undefined,
+                                                        image: undefined,
+
+                                                    });
+                                                }}>
+                                                    <img src={CloseIcon} style={{ width: "12px" }} />
+                                                </ModalProjectImageDelete>
+                                            </ModalProjectImageUploadInner>
+                                            :
+                                            <ModalProjectImageUploadInner>
+                                                <ModalProjectImageUploadContent onClick={handleDivClick}>
+                                                    <ModalProjectImageNameDiv2>
+                                                        {projectData.project_image}
+                                                    </ModalProjectImageNameDiv2>
+                                                    <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
+                                                </ModalProjectImageUploadContent>
+                                                <ModalProjectImageDelete onClick={() => {
+                                                    setProjectData({
+                                                        ...projectData,
+                                                        picture: undefined,
+                                                        image: undefined,
+                                                        project_image: undefined,
+
+                                                    });
+                                                }}>
+                                                    <img src={CloseIcon} style={{ width: "12px" }} />
+                                                </ModalProjectImageDelete>
+                                            </ModalProjectImageUploadInner>
+                                    }
+
                                 </ModalProjectImageUploadLeft>
                                 :
                                 <ModalProjectImageUploadContent2 onClick={handleDivClick}>
@@ -689,6 +715,17 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 /* margin-left: 24px; */
 `
 
+const ModalProjectImageUploadInner = styled.div`
+width: 306px;
+height: 40px;
+/* border: 1px solid black; */
+flex-direction: row;
+justify-content: start;
+font-size: ${(props) => props.theme.fontSizes.TextS};
+font-weight: ${(props) => props.theme.fontWeights.TextS};
+/* margin-left: 24px; */
+`
+
 const ModalProjectImageUploadContent = styled.div`
 width: 306px;
 height: 18px;
@@ -726,6 +763,19 @@ justify-content: space-between;
 white-space: nowrap; 
 overflow: hidden;
 text-overflow: ellipsis;
+`
+
+const ModalProjectImageNameDiv2 = styled.div`
+width: 236px;
+height: 18px;
+flex-direction: row;
+/* border: 1px solid black; */
+align-items: start;
+justify-content: space-between;
+white-space: nowrap; 
+overflow: hidden;
+text-overflow: ellipsis;
+margin-left: 24px;
 `
 
 const ModalProjectImageInput = styled.input`
