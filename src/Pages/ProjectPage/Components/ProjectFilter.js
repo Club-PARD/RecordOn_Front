@@ -8,6 +8,7 @@ import { recoilProjectPagination, recoilUserProjectFilter } from "../../../Atom/
 import ResetIcon from "../../../Assets/ResetIcon.svg"
 import DropdownArrow from "../../../Assets/DropdownArrow.svg"
 import XWhite from "../../../Assets/XWhite.svg"
+import CheckWhite from "../../../Assets/CheckWhite.svg"
 import { useEffect } from "react";
 import { getUserProjectDataFilteredAPI } from "../../../Axios/ProjectDataApi";
 
@@ -26,13 +27,13 @@ const ProjectFilter = () => {
 
   const processOffChange = () => {
 
-    if (projectFilter.is_finished == 2) {
+    if (projectFilter.is_finished == 2 || projectFilter.is_finished == 0) {
       setProjectFilter({
         ...projectFilter,
         is_finished: 1,
       })
     }
-    else if (projectFilter.is_finished == 1) {
+    else {
       setProjectFilter({
         ...projectFilter,
         is_finished: 2,
@@ -41,13 +42,13 @@ const ProjectFilter = () => {
   }
 
   const processOnChange = () => {
-    if (projectFilter.is_finished == 2) {
+    if (projectFilter.is_finished == 2 || projectFilter.is_finished == 1) {
       setProjectFilter({
         ...projectFilter,
         is_finished: 0,
       })
     }
-    else if (projectFilter.is_finished == 0) {
+    else {
       setProjectFilter({
         ...projectFilter,
         is_finished: 2,
@@ -148,6 +149,7 @@ const ProjectFilter = () => {
               <ProjectProcessOnOff>
                 <ProjectProcessOngoing style={{ backgroundColor: "#303030", color: "white" }} onClick={processOnChange}>
                   진행중
+                  <img src={CheckWhite} style={{ marginLeft: "7px" }} />
                 </ProjectProcessOngoing>
                 <ProjectProcessDone style={{ backgroundColor: "white", color: "#303030" }} onClick={processOffChange}>
                   진행완료
@@ -163,6 +165,7 @@ const ProjectFilter = () => {
                 </ProjectProcessOngoing>
                 <ProjectProcessDone style={{ backgroundColor: "#303030", color: "white" }} onClick={processOffChange}>
                   진행완료
+                  <img src={CheckWhite} style={{ marginLeft: "7px" }} />
                 </ProjectProcessDone>
               </ProjectProcessOnOff>
             ),
@@ -293,7 +296,7 @@ height: 143px;
 `
 
 const ProjectProcess = styled.div`
-width: 290px;
+width: 330px;
 height: 40px;
 /* border: 1px solid black; */
 align-items: center;
@@ -310,17 +313,19 @@ justify-content: center;
 
 const ProjectProcessOnOff = styled.div`
 flex-direction: row;
-width: 212px;
+width: 252px;
 height: 40px;
 /* border: 1px solid black; */
 user-select : none;
 `
 
 const ProjectProcessOngoing = styled.div`
-width: 98px;
+flex-direction: row;
+width: 118px;
 height: 40px;
 /* border: 1px solid black; */
 justify-content: center;
+align-items: center;
 border-radius: 25px;
 color: ${(props) => props.theme.colors.White};
 /* background-color: ${(props) => props.theme.colors.Black}; */
@@ -328,7 +333,8 @@ box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 cursor: pointer;
 `
 const ProjectProcessDone = styled.div`
-width: 98px;
+flex-direction: row;
+width: 118px;
 height: 40px;
 /* border: 1px solid black; */
 justify-content: center;
