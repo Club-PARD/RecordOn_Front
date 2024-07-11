@@ -246,7 +246,7 @@ const ProjectFilter = () => {
                 {isOpen && (
                   <ProjectKeywordFilterDropdownListContainer>
                     <ProjectKeywordFilterDropdownList >
-                      {keywords.map(keyword => (
+                      {keywords.filter(keyword => !selectedKeyword.includes(keyword)).map(keyword => (
                         <ProjectKeywordFilterListItem onClick={addKeyword(keyword)} key={keyword}>
                           {keyword}
                         </ProjectKeywordFilterListItem>

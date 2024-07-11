@@ -21,8 +21,6 @@ const ExperienceTitle = () => {
 
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [experienceData, setExperienceData] = useRecoilState(experienceState);
-
-
     const [projectData, setProjectData] = useState({});
     const navigate = useNavigate();
 
@@ -40,19 +38,16 @@ const ExperienceTitle = () => {
 
     }, [userData])
 
-    const handleProjectEdit = () => {
-
-    }
     //링크 모달 관련
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
-    
+
     const linkClickHandler = async () => {
         setIsModalOpen(true);
     }
-    
+
     console.log(experienceData);
 
     return (
@@ -68,9 +63,9 @@ const ExperienceTitle = () => {
                     {
                         projectData?.project_image == null
                             ?
-                            <img src={Project_Default} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
+                            <img src={Project_Default} style={{ width: "126px", height: "126px", border: "1px solid #DCDCDC", borderRadius: "100px" }} />
                             :
-                            <img src={projectData?.project_image} style={{ width: "126px", height: "126px", borderRadius: "100px" }} />
+                            <img src={projectData?.project_image} style={{ width: "126px", height: "126px", border: "1px solid #DCDCDC", borderRadius: "100px" }} />
                     }
 
                 </ProjectImageDiv>
@@ -124,8 +119,18 @@ const ExperienceTitle = () => {
                             </ExperienceButtonsDivDone>
                             :
                             <ExperienceButtonsDiv>
-                                <AddExperience />
-                                <FinishProject />
+                                {projectData?.experiences?.length > 0
+                                    ?
+                                    <ExperienceButtonsDiv2>
+                                        <AddExperience />
+                                        <FinishProject />
+                                    </ExperienceButtonsDiv2>
+                                    :
+                                    <ExperienceButtonsDiv3>
+                                        <AddExperience />
+                                    </ExperienceButtonsDiv3>
+                                }
+
                             </ExperienceButtonsDiv>
                     }
 
@@ -144,7 +149,7 @@ const ExperienceTitle = () => {
             </ExperienceTitleRight>
             {isModalOpen && <LinkPage isOpen={isModalOpen} onClose={closeModal} />}
         </ExperienceTitleDiv>
-        );
+    );
 };
 
 const ExperienceTitleDiv = styled.div`
@@ -342,6 +347,22 @@ height: 50px;
 /* border: 1px solid black; */
 flex-direction: row;
 justify-content: space-between;
+`
+
+const ExperienceButtonsDiv2 = styled.div`
+width: 465px;
+height: 50px;
+/* border: 1px solid black; */
+flex-direction: row;
+justify-content: space-between;
+`
+
+const ExperienceButtonsDiv3 = styled.div`
+width: 465px;
+height: 50px;
+/* border: 1px solid black; */
+flex-direction: row;
+justify-content: center;
 `
 
 const ExperienceTitleRight = styled.div`
