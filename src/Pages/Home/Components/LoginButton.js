@@ -3,11 +3,13 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as GoogleLogo } from "../../../Assets/GoogleLogo.svg"
 import axios from 'axios'
+import api from '../../../Axios/axiosConfig.mjs';
 import { useRecoilState } from "recoil";
 import { isLogined, recoilLoginData, recoilUserData, recoilUserExperienceFilter, recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
 import { experienceState } from "../../../Atom/ExpRecordAtom";
 import { useState, useEffect } from "react";
 import RegisterModal from "./RegisterModal";
+import Cookies from 'js-cookie';
 
 const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
 
@@ -83,7 +85,7 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
             const jsonUserData = JSON.stringify(userData);
             console.log(`${process.env.REACT_APP_DEV_URL}auth/login`);
             console.log(jsonUserData);
-            const response = await axios.post(
+            const response = await api.post(
                 `${process.env.REACT_APP_DEV_URL}auth/login`,
                 jsonUserData,
                 {
@@ -93,6 +95,10 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
                 }
             );
             console.log("서버 응답2:", response.data);
+            // 쿠키에 토큰이 제대로 설정되는지 확인
+            console.log('Access Token:', Cookies.get('access_token'));
+            console.log('Refresh Token:', Cookies.get('refresh_token'));
+
             setIsNewUser(response.data.is_new_user);
             // console.log(userData1);
             setLoginData(userData);

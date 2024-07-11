@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+import api from './axiosConfig.mjs';
 
 const server = process.env.REACT_APP_DEV_URL;
 
@@ -9,7 +10,7 @@ export const getUrlMetaData = async (url) => {
   const encodedUrl = encodeURIComponent(url);
   console.log(encodedUrl);
   try {
-    const response = await axios.post(`${server}reference`, { url: encodedUrl });
+    const response = await api.post(`${server}reference`, { url: encodedUrl });
     // const response = await axios.get(`${server}reference/get`, {
     //   params: { url: url },
     // });
