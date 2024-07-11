@@ -6,16 +6,17 @@ import { ReactComponent as BigCheck } from "../../../../../../Assets/BigCheck.sv
 
 const DropdownQuestion = ({
   selectedTag,
-  selectedQuestion,
   isTagSelected,
-  options,
+  optionsTexts,
+  optionIds,
   onSelect,
 }) => {
   // 드롭다운 열림 상태
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
 
   // 선택된 질문을 저장하는 상태 (임시변수)
-  // const [selectedQuestion, setSelectedQuestion] = useState("");
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+  const [selectedQuestionText, setSelectedQuestionText] = useState("");
 
   // 호버 상태 관리
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -24,22 +25,25 @@ const DropdownQuestion = ({
     if (isTagSelected) setIsQuestionOpen(!isQuestionOpen);
   };
 
-  const handleSelect = (question, index) => {
-    console.log("handleSelect" + index);
-    onSelect(index, question);
+  const handleSelect = (questionText, index) => {
+    setSelectedQuestionText(questionText);
+    setSelectedQuestionId(optionIds[index]);
     setIsQuestionOpen(false); // 옵션 선택 후 드롭다운 닫기
   };
 
   useEffect(() => {
-    setIsQuestionOpen(false);
-  }, [isTagSelected, selectedTag]);
+    if (selectedQuestionId !== null) {
+      console.log("handleSelect: " + selectedQuestionId);
+      onSelect(selectedQuestionId);
+    }
+  }, [selectedQuestionId]);
 
   return (
     <DropdownContainer>
       <SelectQuestion onClick={toggleDropdown} isTagSelected={isTagSelected}>
-        {selectedQuestion ? (
+        {selectedQuestionText ? (
           <>
-            <SelectedQuestion>{selectedQuestion}</SelectedQuestion>
+            <SelectedQuestion>{selectedQuestionText}</SelectedQuestion>
             <StyledQArrow
               isTagSelected={isTagSelected}
               isOpen={isQuestionOpen}
@@ -59,14 +63,14 @@ const DropdownQuestion = ({
       </SelectQuestion>
       {isQuestionOpen && (
         <List>
-          {options.map((question, index) => (
+          {optionsTexts.map((questionText, index) => (
             <ListItemWrapper
               key={index}
-              onClick={() => handleSelect(question, index)}
+              onClick={() => handleSelect(questionText, index)}
               onMouseEnter={() => setHoveredItem(index)}
               onMouseLeave={() => setHoveredItem(null)}
             >
-              <ListItem>{question}</ListItem>
+              <ListItem>{questionText}</ListItem>
               <IconWrapper isVisible={hoveredItem === index}>
                 <BigCheck />
               </IconWrapper>
