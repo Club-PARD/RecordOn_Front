@@ -15,12 +15,14 @@ import { resetExperienceState } from "./Components/resetExperienceState";
 
 const WritingPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
+
+  const navigate = useNavigate();
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [snack, setSnack] = useRecoilState(recoilSnack);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
 
-  const [isUpdated, setIsUpdated] = useState(false);
-  const [snack, setSnack] = useRecoilState(recoilSnack);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
@@ -30,8 +32,6 @@ const WritingPage = () => {
     setIsModalOpen(false);
     setIsExpRecordSubmitted(false);
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
@@ -117,11 +117,11 @@ const WritingPage = () => {
   const validateReferenceLinks = (referenceLinks, errors) => {
     const urlPattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
       "i"
     ); // fragment locator
     if (!Array.isArray(referenceLinks)) {
@@ -161,7 +161,11 @@ const WritingPage = () => {
         // 유효성 검사 추가
         const errors = validateExperience(experience);
         if (errors.length > 0) {
-          alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
+          // alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
+          setSnack({
+            ...snack,
+            experienceValidation: true,
+          })
           setIsExpRecordSubmitted(false);
           setIsUpdated(false);
           return;
