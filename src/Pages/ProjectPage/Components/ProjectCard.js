@@ -23,6 +23,9 @@ const ProjectCard = ({ projectData }) => {
     const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
     const [allowNavigate, setAllowNavigate] = useState(false);
 
+    console.log("답변 상태", answerStateRecoil);
+
+
     const projectCardClickHandler = () => {
         setExperienceFilter({
             ...experienceFilter,
