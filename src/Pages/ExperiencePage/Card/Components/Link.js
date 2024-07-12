@@ -30,7 +30,14 @@ const LinkPage = ({ isOpen, onClose }) => {
   //   };
   //   getAllLinks();
   // }, []);
-
+  const disableScroll = () => {
+    document.body.style.overflow = 'hidden';
+  };
+  
+  const enableScroll = () => {
+    document.body.style.overflow = 'auto';
+  };
+  
   useEffect(() => {
     const getAllLinks = async () => {
       if (!userData || !userData.user_id || !projectID) {
@@ -44,9 +51,18 @@ const LinkPage = ({ isOpen, onClose }) => {
       console.log(data);
       try {
         const response = await getAllLink(data);
-        setMetaData(response);
-        if (response.length == 0){
-        isSetMetaDataLoaded(true);
+        // URL 디코딩 추가
+        const decodedResponse = response.map(link => {
+          const decodedUrl = decodeURIComponent(link.url);
+          console.log("Decoded URL:", decodedUrl);
+          return {
+            ...link,
+            url: decodedUrl,
+          };
+        });
+        setMetaData(decodedResponse);
+        if (response.length === 0) {
+          isSetMetaDataLoaded(true);
         }
       } catch (error) {
         console.error(error);
@@ -54,7 +70,18 @@ const LinkPage = ({ isOpen, onClose }) => {
     };
   
     getAllLinks();
-  }, [userData]);
+  }, [userData, projectID]);
+
+  useEffect(() => {
+    if (isOpen) {
+      disableScroll();
+    } else {
+      enableScroll();
+    }
+
+    return () => enableScroll();
+  }, [isOpen]);
+  
 
   //오버레이 영역 선택하면 모달 닫힘
   const handleOverlayClick = (e) => {
@@ -111,6 +138,7 @@ const Overlay = styled.div`
   height: 100%;
 
   background: rgba(0, 0, 0, 0.5);
+  overflow: hidden; /* 스크롤 방지 */
 `;
 
 const Modal = styled.div`
@@ -122,11 +150,11 @@ const Modal = styled.div`
   /* width: 42%; */
   height: 100vh;
   z-index: 999999;
-
   right: 0;
 
   border-radius: 30px 0 0 30px;
   background-color: ${(props) => props.theme.colors.White};
+  overflow-y: auto; /* 모달 내용 스크롤 가능 */
 `;
 
 const Body = styled.div`
@@ -174,6 +202,8 @@ const StyledA = styled.a`
   }
 
   cursor: pointer;
+
+  overflow-x: hidden;
 `;
 
 export default LinkPage;
