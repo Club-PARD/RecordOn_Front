@@ -7,7 +7,7 @@ import { isFirstLogin, isLogined, recoilExperiencePagination, recoilLoginData, r
 import LoginButton from "../Pages/Home/Components/LoginButton";
 import Logout from "../Assets/Logout.svg"
 import { handleRegisterDataSubmit } from "../Atom/RegisterDataAtom";
-import { answerState, experienceState, handleExpRecordEditSubmit, handleExpRecordSubmit,handleExpRecordEditSubmit } from "../Atom/ExpRecordAtom";
+import { answerState, experienceState, handleExpRecordEditSubmit, handleExpRecordSubmit } from "../Atom/ExpRecordAtom";
 import Toast from "./Toast";
 import useWindowSize from "./useWindowSize";
 import DeleteModal from "./DeleteModal";
