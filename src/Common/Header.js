@@ -3,13 +3,15 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../Assets/Logo.svg"
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { isLogined, recoilExperiencePagination, recoilLoginData, recoilProjectModal, recoilProjectPagination, recoilSnack, recoilUserData, recoilUserExperienceFilter, recoilUserExperienceNum, recoilUserProjectFilter, recoilUserProjectNum } from "../Atom/UserDataAtom";
+import { isFirstLogin, isLogined, recoilExperiencePagination, recoilLoginData, recoilProjectModal, recoilProjectPagination, recoilSnack, recoilUserData, recoilUserExperienceFilter, recoilUserExperienceNum, recoilUserProjectFilter, recoilUserProjectNum } from "../Atom/UserDataAtom";
 import LoginButton from "../Pages/Home/Components/LoginButton";
 import Logout from "../Assets/Logout.svg"
 import { handleRegisterDataSubmit } from "../Atom/RegisterDataAtom";
-import { answerState, experienceState, handleExpRecordSubmit } from "../Atom/ExpRecordAtom";
+import { answerState, experienceState, handleExpRecordEditSubmit, handleExpRecordSubmit } from "../Atom/ExpRecordAtom";
 import Toast from "./Toast";
 import useWindowSize from "./useWindowSize";
+import WelcomeModal from "../Pages/Home/Components/WelcomeModal";
+
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
@@ -39,7 +41,10 @@ const Header = () => {
   const resetHandleRegisterDataSubmit = useResetRecoilState(handleRegisterDataSubmit);
   const resetExperienceState = useResetRecoilState(experienceState);
   const resetAnswerState = useResetRecoilState(answerState);
+  const resetIsFirstLogin = useResetRecoilState(isFirstLogin);
+  const resetRecoilSnack = useResetRecoilState(recoilSnack);
   const resetHandleExpRecordSubmit = useResetRecoilState(handleExpRecordSubmit);
+  const resetHandleExpRecordEditSubmit = useResetRecoilState(handleExpRecordEditSubmit);
 
 
 
@@ -101,6 +106,9 @@ const Header = () => {
     resetExperienceState();
     resetAnswerState();
     resetHandleExpRecordSubmit();
+    resetIsFirstLogin();
+    resetRecoilSnack();
+    resetHandleExpRecordEditSubmit();
     setProfileClicked(false)
     setIsLoggedIn(false);
   };
@@ -165,11 +173,19 @@ const Header = () => {
       });
     }
     else if (snack.experienceValidation) {
-      setToastMessage("필수 항목을 모두 입력해주세요!")
+      setToastMessage("필수항목을 모두 입력해주세요!")
       setToast(true);
       setSnack({
         ...snack,
         experienceValidation: false,
+      });
+    }
+    else if (snack.dateValidation) {
+      setToastMessage("진행기간을 확인해주세요")
+      setToast(true);
+      setSnack({
+        ...snack,
+        dateValidation: false,
       });
     }
   }, [snack])
