@@ -135,10 +135,12 @@ const EditPage = () => {
 
   const openModal = () => {
     setIsModalOpen(true);
+    setIsExpRecordSubmitted(false);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsExpRecordSubmitted(false);
   };
 
   const { location } = useLocation();

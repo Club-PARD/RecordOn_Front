@@ -7,9 +7,10 @@ import { isLogined, recoilExperiencePagination, recoilLoginData, recoilProjectMo
 import LoginButton from "../Pages/Home/Components/LoginButton";
 import Logout from "../Assets/Logout.svg"
 import { handleRegisterDataSubmit } from "../Atom/RegisterDataAtom";
-import { answerState, experienceState, handleExpRecordSubmit } from "../Atom/ExpRecordAtom";
+import { answerState, experienceState, handleExpRecordSubmit,handleExpRecordEditSubmit } from "../Atom/ExpRecordAtom";
 import Toast from "./Toast";
 import useWindowSize from "./useWindowSize";
+import DeleteModal from "./DeleteModal";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
@@ -22,8 +23,6 @@ const Header = () => {
   const [toastMessage, setToastMessage] = useState("");
   const { height } = useWindowSize();
   // console.log(height);
-
-
 
 
   const resetIsLogined = useResetRecoilState(isLogined);
@@ -45,6 +44,52 @@ const Header = () => {
 
 
   const navigate = useNavigate();
+
+  /* 여기부터 예은이가 한 부분 */
+
+  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
+    handleExpRecordSubmit
+  );
+  const [isExpRecordEditSubmitted, setIsExpRecordEditSubmitted] = useRecoilState(
+    handleExpRecordEditSubmit
+  );
+  const [experience, setExperience] = useRecoilState(experienceState);
+
+  const location = useLocation();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsDeleteModalOpen(true);
+    setIsExpRecordSubmitted(false);
+  };
+  const closeModal = () => {
+    setIsDeleteModalOpen(false);
+    setIsExpRecordSubmitted(false);
+  };
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+    setIsExpRecordEditSubmitted(false);
+  }
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setIsExpRecordEditSubmitted(false);
+  }
+
+  const handleLogoClick = () => {
+    if (location.pathname === "/writing") {
+      openModal();
+    } 
+    else if (location.pathname === "/edit") {
+      openEditModal();
+    }
+    else {
+      navigate("/project");
+    }
+  };
+ /* 여기까지 예은이가 한 부분 */
 
   // 스크롤시 box shadow 나타나게 함
   useEffect(() => {
@@ -76,9 +121,6 @@ const Header = () => {
   }, [profileRef]);
 
 
-  const logoClickHandler = () => {
-    navigate("/project");
-  }
 
   const profileClickHandler = () => {
     setProfileClicked((prev) => !prev);
@@ -177,7 +219,7 @@ const Header = () => {
   return (
     <HeaderContainer $scrolled={isScrolled}>
       <Div>
-        <LogoDiv onClick={logoClickHandler}>logo</LogoDiv>
+        <LogoDiv onClick={handleLogoClick}>logo</LogoDiv>
         {isLoggedIn ? (
           // 구글 로그인 구현시 프로필 사진 삽입 가능한 원형으로 수정
           <UserProfileDiv ref={profileRef}>
@@ -204,6 +246,47 @@ const Header = () => {
           height={`${height}px`}
         />
       )}
+     {/* 글 작성 중 로고 클릭할 경우 */}
+      {isDeleteModalOpen && (
+        <DeleteModal isOpen={isDeleteModalOpen}
+        onClose={closeModal} // 모달 닫기 함수 설정
+        bigAlertText1="중단하신 기록은"
+        bigAlertText2="저장되지 않습니다."
+        smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
+        keepButtonText="남아서 기록하기"
+        deleteButtonText="나가기"
+        keepButtonWidth="151px"
+        onKeep={() => {
+          console.log("계속 작성");
+          closeModal();
+        }}
+        onDelete={() => {
+          console.log("나가기");
+          resetExperienceState(setExperience, setIsExpRecordSubmitted);
+          closeModal(); // 모달 닫기
+          navigate("/experience");
+        }}/>
+      )} 
+      {/* 글 수정 중 로고 클릭할 경우 */}
+      {isEditModalOpen && (
+        <DeleteModal isOpen={isEditModalOpen}
+        onClose={closeEditModal} // 모달 닫기 함수 설정
+        bigAlertText1="중단하신 기록은"
+        bigAlertText2="저장되지 않습니다."
+        smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
+        keepButtonText="남아서 기록하기"
+        deleteButtonText="나가기"
+        keepButtonWidth="151px"
+        onKeep={() => {
+          console.log("계속 작성");
+          closeEditModal();
+        }}
+        onDelete={() => {
+          console.log("나가기");
+          closeEditModal(); // 모달 닫기
+          navigate("/experience");
+        }}/>
+      )} 
     </HeaderContainer>
   );
 };

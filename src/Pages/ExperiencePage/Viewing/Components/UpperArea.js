@@ -42,23 +42,22 @@ const UpperArea = ({ answerObject }) => {
         </UppderPart>
 
         <UppderPart width={"713px"}>
-        <StyledLabel>경험태그</StyledLabel>
-<StyledTagArea>
-  {answerObject.tag_ids &&
-    [...new Set(answerObject.tag_ids)].map((tagId, index) => {
-      const keyword = keywords.find((k) => k.id + 1 === tagId);
-      return (
-        <StyledTag
-          key={index}
-          borderColor={keyword ? keyword.color : "#000"}
-          color={keyword ? keyword.color : "#000"}
-        >
-          {keyword ? keyword.label : ""}
-        </StyledTag>
-      );
-    })}
-</StyledTagArea>
-
+          <StyledLabel>경험태그</StyledLabel>
+          <StyledTagArea>
+            {answerObject.tag_ids &&
+              [...new Set(answerObject.tag_ids)].map((tagId, index) => {
+                const keyword = keywords.find((k) => k.id + 1 === tagId);
+                return (
+                  <StyledTag
+                    key={index}
+                    borderColor={keyword ? keyword.color : "#000"}
+                    color={keyword ? keyword.color : "#000"}
+                  >
+                    {keyword ? keyword.label : ""}
+                  </StyledTag>
+                );
+              })}
+          </StyledTagArea>
         </UppderPart>
 
         <UppderPart width={"239px"}>
