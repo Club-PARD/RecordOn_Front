@@ -11,7 +11,6 @@ import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
 import { postExperienceAPI } from "../../../Axios/ExperienceApi";
 import DeleteModal from "../../../Common/DeleteModal";
-import useModal from "../../../Common/useModal";
 import { resetExperienceState } from "./Components/resetExperienceState";
 
 const WritingPage = () => {
@@ -19,12 +18,20 @@ const WritingPage = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
-  // const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
 
-  const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useModal();
   const [isUpdated, setIsUpdated] = useState(false);
   const [snack, setSnack] = useRecoilState(recoilSnack);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsExpRecordSubmitted(false);
+  };
+
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
@@ -34,36 +41,146 @@ const WritingPage = () => {
 
   const checkUserAndProjectInfo = async () => {
     // 유저 ID와 프로젝트 ID를 비동기적으로 확인하는 로직
-    if (experience.user_id && experience.user_id !== "" && experience.projects_id && experience.projects_id !== "") {
+    if (
+      experience.user_id &&
+      experience.user_id !== "" &&
+      experience.projects_id &&
+      experience.projects_id !== ""
+    ) {
       return true;
     } else {
       throw new Error("유저 ID나 프로젝트 ID가 올바르지 않습니다.");
     }
   };
 
+  // 유효성 검사
+  const validateUserId = (userId, errors) => {
+    if (!userId || typeof userId !== "string" || userId.trim() === "") {
+      errors.push("유효하지 않은 유저 ID입니다.");
+    }
+  };
+
+  const validateProjectsId = (projectsId, errors) => {
+    if (projectsId === null || projectsId === undefined) {
+      errors.push("유효하지 않은 프로젝트 ID입니다.");
+    }
+  };
+
+  const validateTitle = (title, errors) => {
+    if (!title || typeof title !== "string" || title.trim() === "") {
+      errors.push("제목을 입력해 주세요.");
+    }
+  };
+
+  const validateTagIds = (tagIds, errors) => {
+    if (!Array.isArray(tagIds)) {
+      errors.push("유효하지 않은 태그 ID 배열입니다.");
+    } else {
+      tagIds.forEach((tagId) => {
+        if (typeof tagId !== "number") {
+          errors.push("경험태그를 선택해 주세요.");
+        }
+      });
+    }
+  };
+
+  const validateQuestionIds = (questionIds, errors) => {
+    if (!Array.isArray(questionIds)) {
+      errors.push("유효하지 않은 질문 ID 배열입니다.");
+    } else {
+      questionIds.forEach((questionId) => {
+        if (typeof questionId !== "number") {
+          errors.push("답변을 작성할 질문을 선택해 주세요.");
+        }
+      });
+    }
+  };
+
+  const validateQuestionAnswers = (questionAnswers, errors) => {
+    if (!Array.isArray(questionAnswers)) {
+      errors.push("유효하지 않은 질문 답변 배열입니다.");
+    } else {
+      questionAnswers.forEach((answer) => {
+        if (typeof answer !== "string" || answer.trim() === "") {
+          errors.push("선택하신 질문에 대한 답변을 입력해 주세요.");
+        }
+      });
+    }
+  };
+
+  const validateCommonQuestionAnswer = (commonQuestionAnswer, errors) => {
+    if (typeof commonQuestionAnswer !== "string") {
+      errors.push("연상되는 단어를 입력해 주세요.");
+    }
+  };
+
+  const validateReferenceLinks = (referenceLinks, errors) => {
+    const urlPattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
+      "i"
+    ); // fragment locator
+    if (!Array.isArray(referenceLinks)) {
+      errors.push("유효하지 않은 참조 링크 배열입니다.");
+    } else {
+      referenceLinks.forEach((link) => {
+        if (!urlPattern.test(link)) {
+          errors.push("유효하지 않은 URL 형식입니다: " + link);
+        }
+      });
+    }
+  };
+
+  const validateExperience = (experience) => {
+    let errors = [];
+    validateUserId(experience.user_id, errors);
+    validateProjectsId(experience.projects_id, errors);
+    validateTitle(experience.title, errors);
+    validateTagIds(experience.tag_ids, errors);
+    validateQuestionIds(experience.question_ids, errors);
+    validateQuestionAnswers(experience.question_answers, errors);
+    validateCommonQuestionAnswer(experience.common_question_answer, errors);
+    validateReferenceLinks(experience.reference_links, errors);
+    return errors;
+  };
+
   const submitData = async () => {
     if (isExpRecordSubmitted && isUpdated) {
       try {
         await checkUserAndProjectInfo();
-        console.log("유저 및 프로젝트 정보: ", experience.user_id, experience.projects_id);
+        console.log(
+          "유저 및 프로젝트 정보: ",
+          experience.user_id,
+          experience.projects_id
+        );
+
+        // 유효성 검사 추가
+        const errors = validateExperience(experience);
+        if (errors.length > 0) {
+          alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
+          setIsExpRecordSubmitted(false);
+          setIsUpdated(false);
+          return;
+        }
 
         const response = await postExperienceAPI(experience);
         console.log("request successful: ", response);
-        setSnack({
-          ...snack,
+        setSnack((prevSnack) => ({
+          ...prevSnack,
           experienceAdd: true,
-        })
+        }));
+        navigate("/experience");
       } catch (error) {
         console.error("request failed: ", error);
-      } finally {
         setIsExpRecordSubmitted(false);
         setIsUpdated(false);
-        navigate("/experience");
       }
     }
   };
-  console.log([isExpRecordSubmitted, isUpdated, experience]);
-
 
   useEffect(() => {
     submitData();
@@ -155,7 +272,7 @@ const GoBackDiv = styled.div`
     font-size: ${(props) => props.theme.fontSizes.TextM};
     color: ${(props) => props.theme.color.base6};
   }
-  user-select : none;
+  user-select: none;
 `;
 
 const MarginBottomForGoBackDiv = styled.div`

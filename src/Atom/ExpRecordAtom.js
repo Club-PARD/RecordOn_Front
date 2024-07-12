@@ -43,7 +43,7 @@ export const expEditState = atom({
   key: "expEditState",
   default: {
     user_id: "",
-    projects_id: 0,
+    projects_id: null,
     title: "",
     exp_date: "",
     free_content: "",

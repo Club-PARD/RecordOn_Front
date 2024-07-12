@@ -31,13 +31,28 @@ const FixedArea = () => {
     setCommonQuestionAnswer(e.target.value);
   };
 
+  const validateCommonQuestionAnswer = (commonQuestionAnswer) => {
+    const errors = [];
+    if (commonQuestionAnswer.trim().split(' ').length < 3) {
+      errors.push("연상되는 단어를 최소 3가지 이상 적어주세요.");
+    }
+    return errors;
+  };
+
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
     if (isExpRecordSubmitted) {
-      setExperience((prev) => ({
-        ...prev,
-        common_question_answer: commonQuestionAnswer,
-      }));
+      const errors = validateCommonQuestionAnswer(commonQuestionAnswer);
+
+      if (errors.length === 0) {
+        setExperience((prev) => ({
+          ...prev,
+          common_question_answer: commonQuestionAnswer,
+        }));
+      } else {
+        setIsExpRecordSubmitted(false);
+        alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
+      }
     }
   }, [isExpRecordSubmitted, commonQuestionAnswer]);
 
