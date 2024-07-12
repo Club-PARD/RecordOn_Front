@@ -46,10 +46,10 @@ const ProjectTitle = () => {
         <ProjectTitleDiv>
             <ProjectTitleImage src={ProjectTitleFolder} />
             <ProjectTitleText>
-                {userName}님이
+                {userName}님의
             </ProjectTitleText>
             <ProjectTitleText2>
-                해낸 프로젝트들이에요!
+                프로젝트가 쌓이는 공간이에요!
             </ProjectTitleText2>
             <AddProject />
         </ProjectTitleDiv>
