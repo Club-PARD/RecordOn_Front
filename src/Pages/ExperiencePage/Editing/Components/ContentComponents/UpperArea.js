@@ -58,7 +58,7 @@ const UppderArea = () => {
     })
   };
   // console.log("expTitle", expTitle);
-  // console.log("tempInput", tempInput);
+  console.log("tempInput", tempInput);
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   // useEffect(() => {

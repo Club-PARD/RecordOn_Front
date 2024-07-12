@@ -98,16 +98,25 @@ const EditPage = () => {
     return urlPattern.test(url);
   };
 
+  console.log("userInfo", userInfo);
+  console.log("expId", expId);
   const handleSubmit = () => {
     setIsExpRecordSubmitted(true);
 
     if (validateTempInput(tempInput)) {
+      console.log("expId", expId);
+      console.log("tempInput", tempInput);
       setIsAllValid(true);
       editOneExpereienceAPI(expId, tempInput)
         .then(() => {
           // 성공 시 처리 로직
           // setSnack({ message: "경험이 수정되었습니다.", severity: "success" });
-          alert("대성공");
+          // alert("대성공");
+          setSnack({
+            ...snack,
+            experienceEdit: true,
+          })
+          navigate("/experience");
         })
         .catch((error) => {
           // 실패 시 처리 로직
