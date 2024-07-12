@@ -8,6 +8,7 @@ import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import {
   answerState,
+  tempInputState,
   handleExpRecordEditSubmit,
 } from "../../../../../Atom/ExpRecordAtom";
 
@@ -19,6 +20,7 @@ const UppderArea = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
 
   // 서버에서 초기값 설정
   useEffect(() => {
@@ -48,7 +50,7 @@ const UppderArea = () => {
   useEffect(() => {
     const normalizedExpDate = normalizeDate(expDate);
     if (isExpRecordSubmitted) {
-      setAnswer((prev) => ({
+      setTempInput((prev) => ({
         ...prev,
         exp_date: normalizedExpDate,
         title: expTitle,

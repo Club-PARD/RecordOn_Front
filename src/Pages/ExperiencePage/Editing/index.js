@@ -5,7 +5,8 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import {
   handleExpRecordEditSubmit,
-  answerState
+  answerState,
+  tempInputState,
 } from "../../../Atom/ExpRecordAtom";
 import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
 
@@ -22,19 +23,29 @@ const EditPage = () => {
     handleExpRecordEditSubmit
   );
   const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
+  const [snack, setSnack] = useRecoilState(recoilSnack);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expId, setExpId] = useState(null);
+  const [isValid, setIsValid] = useState(false);
 
-  const [snack, setSnack] = useRecoilState(recoilSnack);
 
-  const handleSubmit = async () => {
+  useEffect (() => {
+    if (!isValid) {
+      setTempInput(answer);
+      tempInput && console.log (tempInput);
+    }
+  }, [isValid]);
+
+  const handleValidCheck = async () => {
     setIsExpRecordSubmitted(true);
     try {
+      await console.log ("tmp: ", tempInput)
       // const errors = validateExperience(answer);
       // if (errors.length > 0) {
-        // alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
+      // alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
       //   setSnack((prevSnack) => ({
       //     ...prevSnack,
       //     experienceValidation: true,
@@ -43,7 +54,7 @@ const EditPage = () => {
       //   return;
       // }
 
-      await resolveAfter2Seconds();
+      // await resolveAfter2Seconds();
       await editOneExpereienceAPI(expId, answer);
       console.log("경험 데이터가 수정되었습니다.");
       setSnack((prevSnack) => ({
@@ -57,13 +68,13 @@ const EditPage = () => {
     }
   };
 
-  const resolveAfter2Seconds = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 2000);
-    });
-  };
+  // const resolveAfter2Seconds = () => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve();
+  //     }, 2000);
+  //   });
+  // };
 
   useEffect(() => {
     userInfo && setExpId(userInfo.id);
@@ -86,6 +97,7 @@ const EditPage = () => {
   return (
     <Div>
       {/* 뒤로 가기 */}
+      {console.log ("tempInput: ", tempInput)}
       <GoBackArea>
         <MarginTopForGoBackDiv />
         <GoBackDiv onClick={openModal}>
@@ -99,7 +111,7 @@ const EditPage = () => {
       <ContentsArea />
 
       {/* 버튼 */}
-      <ConfirmButton onClick={handleSubmit}>경험기록 수정완료</ConfirmButton>
+      <ConfirmButton onClick={handleValidCheck}>경험기록 수정완료</ConfirmButton>
 
       {/* 모달 컴포넌트 */}
       <DeleteModal

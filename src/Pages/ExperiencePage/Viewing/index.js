@@ -7,7 +7,7 @@ import {
 } from "../../../Axios/ExperienceApi";
 
 import { useRecoilState } from "recoil";
-import { answerState } from "../../../Atom/ExpRecordAtom";
+import { answerState, tempInputState } from "../../../Atom/ExpRecordAtom";
 import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
 
 import UpperArea, { StyledTag, FixAreaLabel } from "./Components/UpperArea";
@@ -37,6 +37,7 @@ const ViewPage = () => {
 
   const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
   const [answer, setAnswer] = useRecoilState(answerState);
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answerObject, setAnswerObject] = useState({});
@@ -76,6 +77,7 @@ const ViewPage = () => {
         console.log(response.success);
         if (response) {
           setAnswerObject(response.response_object);
+          setTempInput(response.response_object);
         }
       } catch (error) {
         console.error(error);
@@ -204,19 +206,20 @@ const ViewPage = () => {
           console.log("삭제");
           console.log("경험: " + expId, "사용자: " + userInfo.user_id);
           try {
-            const response = await deleteOneExperienceAPI(expId, userInfo.user_id);
+            const response = await deleteOneExperienceAPI(
+              expId,
+              userInfo.user_id
+            );
             console.log(response);
             setSnack({
               ...snack,
               experienceDelete: true,
-            })
-          }
-          catch (error) {
+            });
+          } catch (error) {
             console.log(error);
           }
           closeModal(); // 모달 닫기
           navigate("/experience");
-
         }}
       />
     </Div>
@@ -251,7 +254,7 @@ const ButtonArea = styled.div`
 
   margin-top: 60px;
   margin-bottom: 136px;
-  user-select : none;
+  user-select: none;
 `;
 
 const Button = styled.div`

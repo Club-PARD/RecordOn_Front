@@ -3,17 +3,18 @@ import styled from "styled-components";
 import Bookmark from "./Bookmark";
 import { useRecoilState } from "recoil";
 import {
+  tempInputState,
   answerState,
   handleExpRecordEditSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 import { ReactComponent as CloseIcon } from "../../../../../../Assets/close.svg";
 
 const LowerArea = () => {
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
   const [answer, setAnswer] = useRecoilState(answerState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
-
   const [freeContent, setFreeContent] = useState("");
   const [linkArea, setLinkArea] = useState([
     {
@@ -97,13 +98,13 @@ const LowerArea = () => {
   useEffect(() => {
     if (isExpRecordSubmitted) {
       const links = linkArea.map((link) => link.linkUrl).filter(Boolean);
-      setAnswer((prev) => ({
+      setTempInput((prev) => ({
         ...prev,
         free_content: freeContent,
         reference_links: links,
       }));
     }
-  }, [isExpRecordSubmitted, freeContent, linkArea, setAnswer]);
+  }, [isExpRecordSubmitted, freeContent, linkArea, setTempInput]);
 
   return (
     <>

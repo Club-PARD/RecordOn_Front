@@ -11,13 +11,14 @@ import { getAllTagAndQuestionAPI } from "../../../../../../Axios/StoredTagInfoAp
 // 리코일
 import { useRecoilState } from "recoil";
 import {
-  expEditState,
   handleExpRecordEditSubmit,
   answerState,
+  tempInputState,
 } from "../../../../../../Atom/ExpRecordAtom";
 
 const AnswerArea = () => {
   // 리코일 변수
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
   const [answer, setAnswer] = useRecoilState(answerState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
@@ -160,7 +161,7 @@ const AnswerArea = () => {
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
     if (isExpRecordSubmitted) {
-      setAnswer((prev) => ({
+      setTempInput((prev) => ({
         ...prev,
         tag_ids: experienceSections.map((section) =>
           section.selectedTag !== null ? section.selectedTag + 1 : null
@@ -173,7 +174,7 @@ const AnswerArea = () => {
         question_answers: experienceSections.map((section) => section.text),
       }));
     }
-  }, [isExpRecordSubmitted, experienceSections, setAnswer]);
+  }, [isExpRecordSubmitted, experienceSections, setTempInput]);
 
   return (
     <>

@@ -27,7 +27,6 @@ export const answerState = atom({
   default: {
     user_id: "",
     projects_id: null,
-
     exp_date: "",
     title: "",
     tag_ids: [],
@@ -35,6 +34,22 @@ export const answerState = atom({
     question_ids: [],
     question_answers: [],
     question_texts: [],
+    reference_links: [],
+    common_question_answer: "",
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 수정용 임시 리코일 관리
+export const tempInputState = atom({
+  key: "tempInputState",
+  default: {
+    exp_date: "",
+    title: "",
+    tag_ids: [],
+    free_content: "",
+    question_ids: [],
+    question_answers: [],
     reference_links: [],
     common_question_answer: "",
   },
