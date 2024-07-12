@@ -56,7 +56,7 @@ const UppderArea = () => {
         title: expTitle,
       }));
     }
-  }, [isExpRecordSubmitted, expDate, expTitle, setAnswer]);
+  }, [isExpRecordSubmitted, expDate, expTitle, setTempInput]);
 
   return (
     <>

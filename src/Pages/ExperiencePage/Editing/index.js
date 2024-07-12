@@ -31,53 +31,14 @@ const EditPage = () => {
   const [expId, setExpId] = useState(null);
   const [isValid, setIsValid] = useState(false);
 
-
-  useEffect (() => {
-    if (!isValid) {
-      setTempInput(answer);
-      tempInput && console.log (tempInput);
-    }
-  }, [isValid]);
-
-  const handleValidCheck = async () => {
-    setIsExpRecordSubmitted(true);
-    try {
-      await console.log ("tmp: ", tempInput)
-      // const errors = validateExperience(answer);
-      // if (errors.length > 0) {
-      // alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
-      //   setSnack((prevSnack) => ({
-      //     ...prevSnack,
-      //     experienceValidation: true,
-      //   }));
-      //   setIsExpRecordSubmitted(false);
-      //   return;
-      // }
-
-      // await resolveAfter2Seconds();
-      await editOneExpereienceAPI(expId, answer);
-      console.log("경험 데이터가 수정되었습니다.");
-      setSnack((prevSnack) => ({
-        ...prevSnack,
-        experienceEdit: true,
-      }));
-      navigate("/view");
-    } catch (error) {
-      console.error("경험 데이터 수정 중 오류가 발생했습니다:", error);
-      setIsExpRecordSubmitted(false);
-    }
+  const handleSubmit = () => {
+    editOneExpereienceAPI(expId, answer);
   };
 
-  // const resolveAfter2Seconds = () => {
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       resolve();
-  //     }, 2000);
-  //   });
-  // };
-
   useEffect(() => {
-    userInfo && setExpId(userInfo.id);
+    if (userInfo) {
+      setExpId(userInfo.id);
+    }
   }, [userInfo]);
 
   const openModal = () => {
@@ -94,10 +55,12 @@ const EditPage = () => {
     window.scrollTo(0, 0);
   }, [location]);
 
+  console.log("answer: ", answer);
+  console.log("tempInput: ", tempInput);
   return (
     <Div>
       {/* 뒤로 가기 */}
-      {console.log ("tempInput: ", tempInput)}
+
       <GoBackArea>
         <MarginTopForGoBackDiv />
         <GoBackDiv onClick={openModal}>
@@ -111,7 +74,7 @@ const EditPage = () => {
       <ContentsArea />
 
       {/* 버튼 */}
-      <ConfirmButton onClick={handleValidCheck}>경험기록 수정완료</ConfirmButton>
+      <ConfirmButton onClick={handleSubmit}>경험기록 수정완료</ConfirmButton>
 
       {/* 모달 컴포넌트 */}
       <DeleteModal

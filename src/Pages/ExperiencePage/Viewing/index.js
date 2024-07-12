@@ -65,9 +65,14 @@ const ViewPage = () => {
 
   useEffect(() => {
     if (userInfo.id != null) setExpId(userInfo.id);
-    if (userInfo.user_id != "") setUserId(userInfo.userId);
-    console.log(expId, userId);
+    if (userInfo.user_id != "") setUserId(userInfo.user_id);
+    console.log("line 69: ", userInfo.id, userInfo.user_id);
   }, [userInfo]);
+
+  //temp
+  useEffect(() => {
+    setTempInput(answer);
+  }, [setAnswer, answer]);
 
   useEffect(() => {
     const getRecord = async (id) => {
@@ -76,8 +81,10 @@ const ViewPage = () => {
         const response = await getOneExperienceAPI(id);
         console.log(response.success);
         if (response) {
+          console.log(response);
           setAnswerObject(response.response_object);
-          setTempInput(response.response_object);
+
+          // setTempInput(response.response_object);
         }
       } catch (error) {
         console.error(error);
@@ -89,7 +96,18 @@ const ViewPage = () => {
   // answerObject가 업데이트되면 answer 상태를 업데이트
   useEffect(() => {
     if (answerObject !== null) {
-      setAnswer(answerObject);
+      setAnswer({
+        ...answer,
+        exp_date: answerObject.exp_date,
+        title: answerObject.title,
+        tag_ids: answerObject.tag_ids,
+        free_content: answerObject.free_content,
+        question_ids: answerObject.question_ids,
+        question_answers: answerObject.question_answers,
+        question_texts: answerObject.question_texts,
+        reference_links: answerObject.reference_links,
+        common_question_answer: answerObject.common_question_answer,
+      });
     }
   }, [answerObject, setAnswer]);
 

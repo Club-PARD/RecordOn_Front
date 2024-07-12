@@ -70,6 +70,7 @@ export const editOneExpereienceAPI = async (id, data) => {
   try {
     const response = await api.put(`${server}experiences/${id}`, data);
     console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error(error);
   }

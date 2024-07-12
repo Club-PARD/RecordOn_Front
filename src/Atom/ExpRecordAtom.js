@@ -44,6 +44,8 @@ export const answerState = atom({
 export const tempInputState = atom({
   key: "tempInputState",
   default: {
+    user_id: "",
+    projects_id: null,
     exp_date: "",
     title: "",
     tag_ids: [],

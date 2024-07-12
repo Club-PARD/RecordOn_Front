@@ -69,7 +69,7 @@ const UpperArea = ({ answerObject }) => {
         <FixAreaLabel>
           Q. 오늘 있었던 경험을 떠올리며, 연상되는 다섯 가지 단어를 적어보세요!
         </FixAreaLabel>
-        <FixAnswer>{answerObject && answerObject.common_question_answers}</FixAnswer>
+        <FixAnswer>{answerObject && answerObject.common_question_answer}</FixAnswer>
       </FixArea>
     </>
   );
