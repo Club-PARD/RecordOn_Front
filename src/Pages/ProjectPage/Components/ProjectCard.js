@@ -5,126 +5,126 @@ import ProjectFolder from "../../../Assets/ProjectFolder.png";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import {
-  recoilUserData,
-  recoilUserExperienceFilter,
+    recoilUserData,
+    recoilUserExperienceFilter,
 } from "../../../Atom/UserDataAtom";
 import { answerState, experienceState } from "../../../Atom/ExpRecordAtom";
 import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({ projectData }) => {
-  const keyword = [...new Set(projectData.competency_tag_name)];
-  const [experienceFilter, setExperienceFilter] = useRecoilState(
-    recoilUserExperienceFilter
-  );
-  const [userData, setUserData] = useRecoilState(recoilUserData);
-  const navigate = useNavigate();
-  const [experienceStateRecoil, setExperienceStateRecoil] =
-    useRecoilState(experienceState);
-  const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
-  const [allowNavigate, setAllowNavigate] = useState(false);
+    const keyword = [...new Set(projectData.competency_tag_name)];
+    const [experienceFilter, setExperienceFilter] = useRecoilState(
+        recoilUserExperienceFilter
+    );
+    const [userData, setUserData] = useRecoilState(recoilUserData);
+    const navigate = useNavigate();
+    const [experienceStateRecoil, setExperienceStateRecoil] =
+        useRecoilState(experienceState);
+    const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
+    const [allowNavigate, setAllowNavigate] = useState(false);
 
-  const projectCardClickHandler = () => {
-    setExperienceFilter({
-      ...experienceFilter,
-      project_id: projectData.project_id,
-    });
-    console.log(userData);
-    console.log({
-      ...userData,
-      project_id: projectData.project_id,
-    });
-    console.log(userData);
-    setUserData({
-      ...userData,
-      project_id: projectData.project_id,
-    });
-    setExperienceStateRecoil({
-      ...experienceStateRecoil,
-      projects_id: projectData.project_id,
-    });
-    setAnswerStateRecoil({
-      ...answerStateRecoil,
-      projects_id: projectData.project_id,
-    });
-    setAllowNavigate(true);
-  };
+    const projectCardClickHandler = () => {
+        setExperienceFilter({
+            ...experienceFilter,
+            project_id: projectData.project_id,
+        });
+        console.log(userData);
+        console.log({
+            ...userData,
+            project_id: projectData.project_id,
+        });
+        console.log(userData);
+        setUserData({
+            ...userData,
+            project_id: projectData.project_id,
+        });
+        setExperienceStateRecoil({
+            ...experienceStateRecoil,
+            projects_id: projectData.project_id,
+        });
+        setAnswerStateRecoil({
+            ...answerStateRecoil,
+            projects_id: projectData.project_id,
+        });
+        setAllowNavigate(true);
+    };
 
-  useEffect(() => {
-    if (allowNavigate) {
-      navigate("/experience");
-    }
-  }, [allowNavigate]);
+    useEffect(() => {
+        if (allowNavigate) {
+            navigate("/experience");
+        }
+    }, [allowNavigate]);
 
-  // const navigateToExperience = async () => {
-  //     const response = await projectCardClickHandler();
-  //     console.log(response);
-  //     console.log(experienceStateRecoil);
-  //     navigate("/experience");
-  // }
+    // const navigateToExperience = async () => {
+    //     const response = await projectCardClickHandler();
+    //     console.log(response);
+    //     console.log(experienceStateRecoil);
+    //     navigate("/experience");
+    // }
 
-  // console.log(key);
-  // console.log(projectData);
-  // console.log(keyword);
+    // console.log(key);
+    // console.log(projectData);
+    // console.log(keyword);
 
-  return (
-    <Container backGroundImg={ProjectFolder} onClick={projectCardClickHandler}>
-      {projectData.is_finished == 1 ? (
-        <CardContent>
-          <CardTopDiv>
-            <CardImageDiv>
-              <CardImage
-                src={
-                  projectData.project_image == null ||
-                  projectData.project_image == ""
-                    ? DefaultCardImg2
-                    : projectData.project_image
-                }
-              />
-            </CardImageDiv>
-            <CardDateDiv>
-              <CardDateText>프로젝트 진행 기간</CardDateText>
-              <CardDate>
-                {projectData.start_date?.substring(0, 10)} ~{" "}
-                {projectData.finish_date?.substring(0, 10)}
-              </CardDate>
-            </CardDateDiv>
-          </CardTopDiv>
-          <CardTitle>{projectData.project_name}</CardTitle>
-          <ProjectKeywordDiv>
-            {keyword.slice(0, 3).map((tag) => (
-              <ProjectKeyword>{tag}</ProjectKeyword>
-            ))}
-          </ProjectKeywordDiv>
-        </CardContent>
-      ) : (
-        <CardContent>
-          <CardTopDiv>
-            <CardImageDiv>
-              <CardImage
-                src={
-                  projectData.project_image == null ||
-                  projectData.project_image == ""
-                    ? DefaultCardImg
-                    : projectData.project_image
-                }
-              />
-            </CardImageDiv>
-            <CardDateDiv>
-              <CardDateText>프로젝트 진행 기간</CardDateText>
-              <CardDate>
-                {projectData.start_date?.substring(0, 10)} ~{" "}
-                {projectData.finish_date?.substring(0, 10)}
-              </CardDate>
-            </CardDateDiv>
-          </CardTopDiv>
-          <CardTitle>{projectData.project_name}</CardTitle>
-          <ProjectKeywordDiv2>
-            # 당신의 멋진 프로젝트가 기록되는 중입니다!
-          </ProjectKeywordDiv2>
-        </CardContent>
-      )}
-    </Container>
-  );
+    return (
+        <Container backGroundImg={ProjectFolder} onClick={projectCardClickHandler}>
+            {projectData.is_finished == 1 ? (
+                <CardContent>
+                    <CardTopDiv>
+                        <CardImageDiv>
+                            <CardImage
+                                src={
+                                    projectData.project_image == null ||
+                                        projectData.project_image == ""
+                                        ? DefaultCardImg2
+                                        : projectData.project_image
+                                }
+                            />
+                        </CardImageDiv>
+                        <CardDateDiv>
+                            <CardDateText>프로젝트 진행 기간</CardDateText>
+                            <CardDate>
+                                {projectData.start_date?.substring(0, 10)} ~{" "}
+                                {projectData.finish_date?.substring(0, 10)}
+                            </CardDate>
+                        </CardDateDiv>
+                    </CardTopDiv>
+                    <CardTitle>{projectData.project_name}</CardTitle>
+                    <ProjectKeywordDiv>
+                        {keyword.slice(0, 3).map((tag) => (
+                            <ProjectKeyword>{tag}</ProjectKeyword>
+                        ))}
+                    </ProjectKeywordDiv>
+                </CardContent>
+            ) : (
+                <CardContent>
+                    <CardTopDiv>
+                        <CardImageDiv>
+                            <CardImage
+                                src={
+                                    projectData.project_image == null ||
+                                        projectData.project_image == ""
+                                        ? DefaultCardImg
+                                        : projectData.project_image
+                                }
+                            />
+                        </CardImageDiv>
+                        <CardDateDiv>
+                            <CardDateText>프로젝트 진행 기간</CardDateText>
+                            <CardDate>
+                                {projectData.start_date?.substring(0, 10)} ~{" "}
+                                {projectData.finish_date?.substring(0, 10)}
+                            </CardDate>
+                        </CardDateDiv>
+                    </CardTopDiv>
+                    <CardTitle>{projectData.project_name}</CardTitle>
+                    <ProjectKeywordDiv2>
+                        # 당신의 멋진 프로젝트가 기록되는 중입니다!
+                    </ProjectKeywordDiv2>
+                </CardContent>
+            )}
+        </Container>
+    );
 };
 
 const Container = styled.div`

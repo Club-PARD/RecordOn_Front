@@ -32,7 +32,7 @@ const EditPage = () => {
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
     try {
-      const errors = validateExperience(experience);
+      const errors = validateExperience(answer);
       if (errors.length > 0) {
         // alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
         setSnack((prevSnack) => ({
