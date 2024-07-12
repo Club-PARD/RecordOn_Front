@@ -10,8 +10,9 @@ const Bookmark = ({ url }) => {
 
   // 서버로부터 데이터 받아오는 로직
   useEffect(() => {
-    const getMetaData = async (url) => {
-      const data = await getUrlMetaData(url);
+    const getMetaData = async (encodedUrl) => {
+      const decodedUrl = decodeURIComponent(encodedUrl);
+      const data = await getUrlMetaData(decodedUrl);
       setMetaData(data);
     };
     getMetaData(url);
@@ -32,7 +33,7 @@ const Bookmark = ({ url }) => {
   if (!metaData) return <MariginDiv></MariginDiv>;
 
   return (
-    <StyledA href={url} target="_blank" rel="noopener noreferrer">
+    <StyledA href={decodeURIComponent(url)} target="_blank" rel="noopener noreferrer">
       <img src={metaData.imageUrl || defaultImageUrl} alt={metaData.title} style={{ display: imageLoaded ? "block" : "none" }} />
       {!imageLoaded && <MariginDiv></MariginDiv>}
       <div>{metaData.title}</div>
