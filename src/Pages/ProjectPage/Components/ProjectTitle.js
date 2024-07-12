@@ -16,7 +16,6 @@ const ProjectTitle = () => {
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
 
-    // console.log(userData);
     console.log("experienceStateRecoil", experienceStateRecoil);
 
     useEffect(() => {
@@ -37,7 +36,7 @@ const ProjectTitle = () => {
             start_date: "",
             finish_date: "",
             search_text: "",
-            sort_type: 1,
+            sort_type: 2,
         });
     }, [])
 
@@ -51,7 +50,6 @@ const ProjectTitle = () => {
             <ProjectTitleText2>
                 해낸 프로젝트들이에요!
             </ProjectTitleText2>
-
             <AddProject />
         </ProjectTitleDiv>
     );

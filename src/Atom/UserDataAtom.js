@@ -36,7 +36,7 @@ export const recoilUserProjectNum = atom({
 export const recoilUserProjectFilter = atom({
     key: "projectFilter",
     default: {
-        user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+        user_id: "",
         competency_tag_name: [],
         start_date: "",
         finish_date: "",
@@ -57,7 +57,7 @@ export const recoilUserExperienceNum = atom({
 export const recoilUserExperienceFilter = atom({
     key: "experienceFilter",
     default: {
-        user_id: "f245d2ac-d421-4cfb-99cf-c544071446ac",
+        user_id: "",
         project_id: 1,
         tag_name: [],
         start_date: "",
@@ -81,6 +81,19 @@ export const recoilExperiencePagination = atom({
     default: {
         startNum: 0,
         endNum: 6,
+    },
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const recoilSnack = atom({
+    key: "snackAddProject",
+    default: {
+        projectAdd: false,
+        projectEdit: false,
+        projectDelete: false,
+        experienceAdd: false,
+        experienceEdit: false,
+        experienceDelete: false,
     },
     effects_UNSTABLE: [persistAtom],
 });

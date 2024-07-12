@@ -14,7 +14,7 @@ const FinishProject = () => {
 
     const handleProjectEndModal = () => {
         setShowProjectEndModal(true);
-      };
+    };
 
     // console.log(modalOn);
     return (
@@ -22,7 +22,7 @@ const FinishProject = () => {
             <AddProjectButton onClick={handleProjectEndModal}>
                 프로젝트 완료하기
             </AddProjectButton>
-            <ProjectEndModal  show={showProjectEndModal} onClose={() => setShowProjectEndModal(false)} />
+            <ProjectEndModal show={showProjectEndModal} onClose={() => setShowProjectEndModal(false)} />
             {/* {modalOn && <AddProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} />} */}
         </>
     );

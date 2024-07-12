@@ -8,38 +8,48 @@ import { ReactComponent as DeleteIcon } from "../../../../../../Assets/DeleteBut
 
 // Api 문서
 import { getAllTagAndQuestionAPI } from "../../../../../../Axios/StoredTagInfoApi";
-
 // 리코일
 import { useRecoilState } from "recoil";
 import {
-  experienceState,
+  expEditState,
   handleExpRecordEditSubmit,
+  answerState,
 } from "../../../../../../Atom/ExpRecordAtom";
 
-const AnswerArea = ({ combinedArray }) => {
+const AnswerArea = () => {
   // 리코일 변수
-  const [experience, setExperience] = useRecoilState(experienceState);
+  const [answer, setAnswer] = useRecoilState(answerState);
+  const [experience, setExperience] = useRecoilState(expEditState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
 
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
-
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
-  const [experienceSections, setExperienceSections] = useState([
-    {
-      id: 0,
-      selectedTag: null,
-      selectedQuestionText: "",
-      selectedQuestionId: null,
-      questionOptionIds: [],
-      questionOptionTexts: [],
-      text: "",
-      isTagSelected: false, //true일 경우, 질문 드롭다운 스타일이 달라짐
-      isQuestionSelected: false, // true일 경우, textarea 배경색이 달라짐.
-    },
-  ]);
+  const [experienceSections, setExperienceSections] = useState([]);
+
+  // 경험 섹션 초기값 설정
+  useEffect(() => {
+    if (answer && tagAndQuestion.length > 0) {
+      const initialSections = answer.tag_id.map((_, index) => ({
+        id: index,
+        selectedTag: answer.tag_id[index] - 1,
+        selectedQuestionText: answer.question_text[index],
+        selectedQuestionId: answer.question_id[index] - 1,
+        questionOptionIds:
+          tagAndQuestion[answer.tag_id[index] - 1]?.question_ids || [],
+        questionOptionTexts:
+          tagAndQuestion[answer.tag_id[index] - 1]?.questions || [],
+        text: answer.question_answer[index],
+        isTagSelected: true, // true일 경우, 질문 드롭다운 스타일이 달라짐
+        isQuestionSelected: true, // true일 경우, textarea 배경색이 달라짐
+      }));
+
+      setExperienceSections(initialSections);
+      console.log("지금: ", initialSections);
+    }
+  }, [answer, tagAndQuestion]);
 
   // 서버에서 태그와 질문을 받아오는 API
   useEffect(() => {
@@ -81,11 +91,11 @@ const AnswerArea = ({ combinedArray }) => {
   };
 
   // 태그 선택 핸들러
-  const handleTagSelectInSection = (index, id) => {
+  const handleTagSelectInSection = (index, sectionId) => {
     const tagId = index;
 
     const updatedSections = experienceSections.map((section) => {
-      if (section.id === id) {
+      if (section.id === sectionId) {
         // 이미 선택된 태그인 경우 선택 해제
         if (section.selectedTag === tagId) {
           return {
@@ -122,12 +132,17 @@ const AnswerArea = ({ combinedArray }) => {
     setExperienceSections(updatedSections);
   };
   // 질문 선택 핸들러
-  const handleQuestionSelectInSection = (selectedQuestionId, id) => {
+  const handleQuestionSelectInSection = (
+    selectedQuestionId,
+    selectedQuestionText,
+    id
+  ) => {
     const updatedSections = experienceSections.map((section) =>
       section.id === id
         ? {
             ...section,
             selectedQuestionId: selectedQuestionId,
+            selectedQuestionText: selectedQuestionText,
             isQuestionSelected: true,
           }
         : section
@@ -153,38 +168,13 @@ const AnswerArea = ({ combinedArray }) => {
         ),
         question_ids: experienceSections.map((section) =>
           section.selectedQuestionId !== null
-            ? section.selectedQuestionId
+            ? section.selectedQuestionId + 1
             : null
         ),
         question_answers: experienceSections.map((section) => section.text),
       }));
     }
   }, [isExpRecordSubmitted, experienceSections, setExperience]);
-
-    //  태그와 질문 데이터가 로드된 후 경험 섹션 초기화
-  useEffect(() => {
-    if (tagAndQuestion.length > 0 && combinedArray.length > 0) {
-      const initialExperienceSections = combinedArray.map(
-        ([tagId, questionId, questionText, answer], index) => ({
-          id: index,
-          selectedTag: tagId !== null ? tagId - 1 : null,
-          selectedQuestionId: questionId !== null ? questionId - 1 : null,
-          selectedQuestionText: questionText || "",
-          questionOptionsTexts:
-            tagId !== null && tagAndQuestion[tagId - 1]
-              ? tagAndQuestion[tagId - 1].questions
-              : [],
-              questionOptionIds: tagId !== null && tagAndQuestion[tagId-1]
-              ? tagAndQuestion[tagId-1].question_ids:[],
-          text: answer || "",
-          isTagSelected: tagId !== null,
-          isQuestionSelected: questionId !== null,
-        })
-      );
-
-      setExperienceSections(initialExperienceSections);
-    }
-  }, [tagAndQuestion, combinedArray]);
 
   return (
     <>
@@ -212,10 +202,16 @@ const AnswerArea = ({ combinedArray }) => {
               isTagSelected={section.isTagSelected}
               optionTexts={section.questionOptionTexts}
               optionIds={section.questionOptionIds}
-              onSelect={(selectedQuestionId) =>
-                handleQuestionSelectInSection(selectedQuestionId, section.id)
+              onSelect={(selectedQuestionId, selectedQuestionText) =>
+                handleQuestionSelectInSection(
+                  selectedQuestionId,
+                  selectedQuestionText,
+                  section.id
+                )
               }
               selectedTag={section.selectedTag}
+              selectedQuestionId={section.selectedQuestionId}
+              selectedQuestionText={section.selectedQuestionText}
             />
           </SelectArea>
           {/* 답변란 */}

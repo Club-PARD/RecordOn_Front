@@ -8,7 +8,7 @@ import {
 
 import { useRecoilState } from "recoil";
 import { answerState } from "../../../Atom/ExpRecordAtom";
-import { recoilUserData } from "../../../Atom/UserDataAtom";
+import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
 
 import UpperArea, { StyledTag, FixAreaLabel } from "./Components/UpperArea";
 import {
@@ -42,6 +42,8 @@ const ViewPage = () => {
   const [answerObject, setAnswerObject] = useState({});
   const [expId, setExpId] = useState(null);
   const [userId, setUserId] = useState("");
+
+  const [snack, setSnack] = useRecoilState(recoilSnack);
 
   const navigate = useNavigate();
   const handleBack = () => {
@@ -197,13 +199,24 @@ const ViewPage = () => {
           console.log("유지");
           closeModal(); // 모달 닫기
         }}
-        onDelete={() => {
+        onDelete={async () => {
           // '삭제' 버튼 클릭 시 처리 로직
           console.log("삭제");
           console.log("경험: " + expId, "사용자: " + userInfo.user_id);
-          deleteOneExperienceAPI(expId, userInfo.user_id);
+          try {
+            const response = await deleteOneExperienceAPI(expId, userInfo.user_id);
+            console.log(response);
+            setSnack({
+              ...snack,
+              experienceDelete: true,
+            })
+          }
+          catch (error) {
+            console.log(error);
+          }
           closeModal(); // 모달 닫기
-          // navigate("/experience");
+          navigate("/experience");
+
         }}
       />
     </Div>

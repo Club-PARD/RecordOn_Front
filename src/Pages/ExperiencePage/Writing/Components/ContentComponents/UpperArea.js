@@ -40,10 +40,11 @@ const UppderArea = () => {
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
+    const normalizedExpDate = normalizeDate(expDate);
     if (isExpRecordSubmitted) {
       setExperience((prev) => ({
         ...prev,
-        exp_date: normalizeDate(expDate),
+        exp_date: normalizedExpDate,
         title: expTitle,
       }));
     }

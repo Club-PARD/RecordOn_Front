@@ -1,9 +1,12 @@
 import { useEffect } from "react";
+import styled, { keyframes } from "styled-components";
+
+
 
 export default function Toast({
     message,
     setToast,
-    position,
+    height,
 }) {
 
     useEffect(() => {
@@ -16,10 +19,49 @@ export default function Toast({
     }, [setToast]);
 
     return (
-        <div
-            className={`fixed z-20 flex h-[4rem] w-[90%] max-w-[73rem] items-center justify-center rounded-[1rem] bg-green-50 opacity-[97%] shadow-[0px_2px_8px_rgba(0,0,0,0.25)] ${position === 'top' ? 'animate-toast-top' : 'animate-toast-bottom'
-                }`}>
-            <p className="text-Body text-white">{message}</p>
-        </div>
+        <Container height={height}>
+            <p>{message}</p>
+        </Container>
     );
 }
+
+
+const slideTop = keyframes` 
+  0% {
+    opacity: 0%;
+    -webkit-transform: translate(-50%, -50%) translateY(0);
+            transform: translate(-50%, -50%) translateY(0);
+  }
+  100% {
+    opacity: 100%;
+    -webkit-transform: translate(-50%, -50%) translateY(-80px);
+            transform: translate(-50%, -50%) translateY(-80px);
+  }
+`;
+
+
+const disappear = keyframes` 
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+`;
+
+
+const Container = styled.div`
+width: 300px;
+height: 50px;
+border: 1px solid black;
+border-radius: 30px;
+color: ${(props) => props.theme.color.white};
+background-color: ${(props) => props.theme.color.black};
+position: absolute;
+left: 50%;
+top: ${(props) => props.height};
+transform:translate(-50%,-50%);
+justify-content: center;
+align-items: center;
+animation: ${slideTop} 0.3s forwards, ${disappear} 0.3s forwards 2s;
+`

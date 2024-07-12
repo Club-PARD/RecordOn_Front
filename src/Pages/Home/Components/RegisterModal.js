@@ -44,12 +44,18 @@ function RegisterModal({ show, onClose, defaultName }) {
   const closeServiceModal = () => setIsServiceModalOpen(false);
   //약관 모달 출력 관련 함수 끝
 
-  
+
 
   const handleSubmit = async () => {
     // setIsRegisterDataSubmitted(true);
-    const response = await registerUserAPI(registerData);
-    console.log(response);
+    try {
+      const response = await registerUserAPI(registerData);
+      console.log(response);
+    }
+    catch (error) {
+      console.log(error);
+    }
+
     setIsLoggedIn(true);
     // navigate("/project");
   };
@@ -149,7 +155,7 @@ function RegisterModal({ show, onClose, defaultName }) {
               <PolicyLeftDiv >
                 <CheckboxDiv >
                   <Checkbox type='checkbox' checked={isBox1Checked} onChange={() => { setIsBox1Checked((prev) => !prev) }} />
-                  {isBox1Checked && <img src={Check} style={{ position: "fixed", justifyContent: "center", marginTop: "4px", cursor: "pointer"}} onClick={box1Checking} />}
+                  {isBox1Checked && <img src={Check} style={{ position: "fixed", justifyContent: "center", marginTop: "4px", cursor: "pointer" }} onClick={box1Checking} />}
                 </CheckboxDiv>
                 <PolicyNameDiv>이용약관 (필수)</PolicyNameDiv>
               </PolicyLeftDiv>
