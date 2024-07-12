@@ -63,17 +63,11 @@ const PaginationBar = () => {
     return (
         <PaginationDiv>
             <NavButton onClick={prevCardNum} disabled={projectPagination.pageNum === 1}>
-                <ArrowLeft2 src={ArrowImage2} />
-            </NavButton>
-            <NavButton onClick={prevCardNum} disabled={projectPagination.pageNum === 1}>
                 <ArrowLeft src={ArrowImage} />
             </NavButton>
             {renderPageNumbers()}
             <NavButton onClick={nextCardNum} disabled={projectPagination.pageNum === lastPage}>
                 <ArrowRight src={ArrowImage} />
-            </NavButton>
-            <NavButton onClick={nextCardNum} disabled={projectPagination.pageNum === lastPage}>
-                <ArrowRight2 src={ArrowImage2} />
             </NavButton>
         </PaginationDiv>
     );
