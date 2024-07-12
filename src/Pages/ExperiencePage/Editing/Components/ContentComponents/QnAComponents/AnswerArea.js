@@ -141,10 +141,6 @@ const AnswerArea = () => {
       ...tempInput,
       tag_ids: selectedTagIds,
     });
-    // setTempInput({
-    //   ...tempInput,
-    //   tag_ids: (updatedSections.selectedTag)-1,
-    // })
   };
 
   // 질문 선택 핸들러
@@ -164,9 +160,15 @@ const AnswerArea = () => {
         : section
     );
     setExperienceSections(updatedSections);
+
+
+    const selectedQuestionIds = updatedSections
+      .filter((section) => section.selectedQuestionId !== null)
+      .map((section) => section.selectedQuestionId + 1); // 태그 ID는 그대로 사용
+
     setTempInput({
       ...tempInput,
-      question_ids: updatedSections.selectedQuestionId - 1,
+      question_ids: selectedQuestionIds,
     });
   };
 
