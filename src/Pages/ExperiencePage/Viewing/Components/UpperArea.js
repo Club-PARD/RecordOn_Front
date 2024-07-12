@@ -14,7 +14,7 @@ const UpperArea = ({ answerObject }) => {
     { id: 3, label: "실패", color: "#F25454" },
     { id: 4, label: "배움", color: "#42B887" },
   ];
-  
+
   const [formattedExpDate, setFormattedExpDate] = useState("");
   useEffect(() => {
     const formatDate = (dateString) => {
@@ -42,21 +42,23 @@ const UpperArea = ({ answerObject }) => {
         </UppderPart>
 
         <UppderPart width={"713px"}>
-          <StyledLabel>경험태그</StyledLabel>
-          <StyledTagArea>
-            {answerObject.tag_ids && answerObject.tag_ids.map((tagId, index) => {
-              const keyword = keywords.find(k => k.id +1 === tagId);
-              return (
-                <StyledTag
-                  key={index}
-                  borderColor={keyword ? keyword.color : "#000"}
-                  color = {keyword ? keyword.color: "#000"}
-                >
-                  {keyword ? keyword.label : ""}
-                </StyledTag>
-              );
-            })}
-          </StyledTagArea>
+        <StyledLabel>경험태그</StyledLabel>
+<StyledTagArea>
+  {answerObject.tag_ids &&
+    [...new Set(answerObject.tag_ids)].map((tagId, index) => {
+      const keyword = keywords.find((k) => k.id + 1 === tagId);
+      return (
+        <StyledTag
+          key={index}
+          borderColor={keyword ? keyword.color : "#000"}
+          color={keyword ? keyword.color : "#000"}
+        >
+          {keyword ? keyword.label : ""}
+        </StyledTag>
+      );
+    })}
+</StyledTagArea>
+
         </UppderPart>
 
         <UppderPart width={"239px"}>
@@ -69,7 +71,9 @@ const UpperArea = ({ answerObject }) => {
         <FixAreaLabel>
           Q. 오늘 있었던 경험을 떠올리며, 연상되는 다섯 가지 단어를 적어보세요!
         </FixAreaLabel>
-        <FixAnswer>{answerObject && answerObject.common_question_answer}</FixAnswer>
+        <FixAnswer>
+          {answerObject && answerObject.common_question_answer}
+        </FixAnswer>
       </FixArea>
     </>
   );
