@@ -11,6 +11,7 @@ import XWhite from "../../../Assets/XWhite.svg"
 import CheckWhite from "../../../Assets/CheckWhite.svg"
 import { useEffect } from "react";
 import { getUserProjectDataFilteredAPI } from "../../../Axios/ProjectDataApi";
+import Loading from "../../../Common/Loading";
 
 const ProjectFilter = () => {
 
@@ -23,6 +24,7 @@ const ProjectFilter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState([]);
   const keywords = ['신뢰성', '전문성', '책임감', '열정', '실행력', '창의성', '성실성', '정직', '소통'];
+
 
 
   const processOffChange = () => {
@@ -139,6 +141,7 @@ const ProjectFilter = () => {
 
   return (
     <FilterDiv>
+
       <FilterLeft>
         <ProjectProcess>
           <ProjectProcessText>

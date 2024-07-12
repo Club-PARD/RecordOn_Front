@@ -9,6 +9,7 @@ import ArrowGray from "../../../../Assets/GoBackIcon.svg"
 import ArrowWhite from "../../../../Assets/ArrowWhite.svg"
 import BarIcon from "../../../../Assets/BarIcon.svg"
 import Project_Default from "../../../../Assets/Project_Default.png"
+import Project_Default2 from "../../../../Assets/Project_Default2.svg"
 import FinishProject from "./FinishProject";
 import RestartProject from "./RestartProject";
 import LinkPage from "./Link";
@@ -65,7 +66,7 @@ const ExperienceTitle = () => {
                     {
                         projectData?.project_image == null
                             ?
-                            <img src={Project_Default} style={{ width: "126px", height: "126px", border: "1px solid #DCDCDC", borderRadius: "100px" }} />
+                            <img src={Project_Default2} style={{ width: "126px", height: "126px", border: "1px solid #DCDCDC", borderRadius: "100px" }} />
                             :
                             <img src={projectData?.project_image} style={{ width: "126px", height: "126px", border: "1px solid #DCDCDC", borderRadius: "100px" }} />
                     }

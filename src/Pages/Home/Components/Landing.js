@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import LandingToggle from "../../../Assets/LandingToggle.svg";
-import LandingFolder from "../../../Assets/LandingFolder.png";
-import LandingProblem from "../../../Assets/LandingProblem.png";
-import LandingGuide from "../../../Assets/LandingGuide.png";
-import LandingSearch from "../../../Assets/LandingSearch.png";
-import LandingArchive from "../../../Assets/LandingArchive.png";
+import LandingFolder3 from "../../../Assets/LandingFolder3.png";
 import LandingComehere from "../../../Assets/LandingComehere.png";
-import LandingFooterDivImage from "../../../Assets/LandingFooterDiv.png";
 import LandingLine from "../../../Assets/LandingLine.png";
+import Landing1 from "../../../Assets/Landing1.png";
+import Landing2 from "../../../Assets/Landing2.png";
+import Landing3 from "../../../Assets/Landing3.png";
+import Landing4 from "../../../Assets/Landing4.png";
+import Landing5 from "../../../Assets/Landing5.png";
+import Landing6 from "../../../Assets/Landing6.png";
 import LoginButton from "./LoginButton";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
@@ -42,33 +43,33 @@ const Landing = () => {
         <LoginButton />
       </LandingTitle>
       <LandingFolderDiv>
-        <img src={LandingFolder} style={{ marginTop: "79px" }} />
+        <img src={LandingFolder3} style={{ marginTop: "79px" }} />
       </LandingFolderDiv>
       <LandingProblemDiv>
-        <img src={LandingProblem} style={{ marginTop: "68px", width: "1440px" }} />
+        <img src={Landing1} style={{ marginTop: "68px", width: "1440px" }} />
       </LandingProblemDiv>
       <LandingImg ></LandingImg>
       <LandingGuideDiv>
-        <img src={LandingGuide} style={{ width: "1440px" }} />
+        <img src={Landing2} style={{ width: "1440px" }} />
       </LandingGuideDiv>
       <LandingSearchDiv>
-        <img src={LandingSearch} style={{ width: "1440px" }} />
+        <img src={Landing3} style={{ width: "1440px" }} />
       </LandingSearchDiv>
-
+      <LandingImg ></LandingImg>
       <LandingArchiveDiv>
-        <img src={LandingArchive} style={{ width: "1440px" }} />
+        <img src={Landing4} style={{ width: "1440px" }} />
       </LandingArchiveDiv>
+      <LandingArchiveDiv2>
+        <img src={Landing5} style={{ width: "1440px" }} />
+      </LandingArchiveDiv2>
       <LandingFooter>
         <LandingComehereDiv>
           <img src={LandingComehere} style={{ width: "1440px" }} />
         </LandingComehereDiv>
         <LoginButton />
         <LandingFooterDivImageDiv>
-          <img src={LandingFooterDivImage} style={{ width: "1440px" }} />
+          <img src={Landing6} style={{ width: "1440px" }} />
         </LandingFooterDivImageDiv>
-
-
-
       </LandingFooter>
     </Container>
   );
@@ -129,6 +130,7 @@ const LandingFolderDiv = styled.div`
   /* height: 765px; */
   /* border: 1px solid black; */
   background-color: #FBFBFB;
+  margin-top: 50px;
 `;
 
 const LandingProblemDiv = styled.div`
@@ -159,11 +161,18 @@ const LandingArchiveDiv = styled.div`
   background-color: #FFFFFF;
 `;
 
+const LandingArchiveDiv2 = styled.div`
+  width: 100%;
+  /* height: 765px; */
+  /* border: 1px solid black; */
+  background-color: #FBFBFB;
+`;
+
 const LandingFooter = styled.div`
   width: 100%;
   /* height: 765px; */
   /* border: 1px solid black; */
-  background-color: #F5F5F5;
+  background-color: #EAF5F0;
   border-radius: 50px 50px 0 0;
   margin-top: -60px;
 `;
@@ -173,7 +182,7 @@ const LandingComehereDiv = styled.div`
   width: 100%;
   /* height: 765px; */
   /* border: 1px solid black; */
-  background-color: #F5F5F5;
+  background-color: #EAF5F0;
   margin-top: 101px;
 `;
 
@@ -181,7 +190,7 @@ const LandingFooterDivImageDiv = styled.div`
   width: 100%;
   /* height: 765px; */
   /* border: 1px solid black; */
-  background-color: #F5F5F5;
+  background-color: #EAF5F0;
 `;
 
 const LandingImg = styled.div`
