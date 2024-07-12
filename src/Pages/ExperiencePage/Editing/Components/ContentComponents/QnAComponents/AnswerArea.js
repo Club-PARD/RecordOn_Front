@@ -26,6 +26,7 @@ const AnswerArea = () => {
   );
   const [isValid, setIsValid] = useRecoilState(isValidState);
 
+
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)
@@ -109,9 +110,9 @@ const AnswerArea = () => {
             selectedQuestionId: null,
             isTagSelected: false,
             isQuestionSelected: false,
+            text:"",
           };
         }
-        console.log (section.selectedTag);
         // 새로운 태그를 선택한 경우
         const newQuestionOptionTexts = tagAndQuestion[tagId]?.questions || [];
         const newQuestionOptionIds = tagAndQuestion[tagId]?.question_ids || [];
@@ -125,17 +126,23 @@ const AnswerArea = () => {
           selectedQuestionId: null,
           isTagSelected: true,
           isQuestionSelected: false,
+          text:"",
         };
       }
 
       return section;
     });
-    
+
     setExperienceSections(updatedSections);
+    // 선택된 태그 아이디들을 모아 tempInput에 설정
+    const selectedTagIds = updatedSections
+      .filter((section) => section.selectedTag !== null)
+      .map((section) => section.selectedTag + 1); // 태그 ID는 그대로 사용
+
     setTempInput({
       ...tempInput,
-      tag_ids: (updatedSections.selectedTag)-1,
-    })
+      tag_ids: selectedTagIds,
+    });
   };
 
   // 질문 선택 핸들러
@@ -155,10 +162,16 @@ const AnswerArea = () => {
         : section
     );
     setExperienceSections(updatedSections);
+
+
+    const selectedQuestionIds = updatedSections
+      .filter((section) => section.selectedQuestionId !== null)
+      .map((section) => section.selectedQuestionId); // 태그 ID는 그대로 사용
+
     setTempInput({
       ...tempInput,
-      question_ids:(updatedSections.selectedQuestionId)-1,
-    })
+      question_ids: selectedQuestionIds,
+    });
   };
 
   // 텍스트 변경 핸들러
@@ -167,35 +180,25 @@ const AnswerArea = () => {
       section.id === id ? { ...section, text } : section
     );
     setExperienceSections(updatedSections);
+
+    const questionAnswers = updatedSections
+      .filter((section) => section.text !== null)
+      .map((section) => section.text); // 태그 ID는 그대로 사용
+
     setTempInput({
       ...tempInput,
-      question_answers: updatedSections,
-    })
+      question_answers: questionAnswers,
+    });
   };
-
-  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
-  useEffect(() => {
-    if (isExpRecordSubmitted) {
-      setTempInput((prev) => ({
-        ...prev,
-        tag_ids: experienceSections.map((section) =>
-          section.selectedTag !== null ? section.selectedTag + 1 : null
-        ),
-        question_ids: experienceSections.map((section) =>
-          section.selectedQuestionId !== null
-            ? section.selectedQuestionId + 1
-            : null
-        ),
-        question_answers: experienceSections.map((section) => section.text),
-      }));
-    }
-  }, [isExpRecordSubmitted, experienceSections, setTempInput]);
 
   console.log("tempInput", tempInput);
 
   return (
     <>
-      <Guide>Tip. 각 경험태그의 첫 번째 질문부터 답하면 경험을 정리하는데 도움이 될거예요!</Guide>
+      <Guide>
+        Tip. 각 경험태그의 첫 번째 질문부터 답하면 경험을 정리하는데 도움이
+        될거예요!
+      </Guide>
       {/* 한 세트 */}
       {experienceSections.map((section) => (
         <SectionWrapper key={section.id}>
