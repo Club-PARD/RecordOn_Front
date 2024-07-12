@@ -118,7 +118,7 @@ const SelectQuestion = styled.div`
   border: 1px solid;
   border-radius: 5px;
   border-color: ${(props) =>
-    props.isTagSelected ? "none" : props.theme.color.base3};
+    props.isTagSelected ? "none" : props.theme.color.base4};
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   font-size: ${(props) => props.theme.fontSizes.TextL};
 
@@ -141,7 +141,7 @@ const PreQuestion = styled.div`
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   font-size: ${(props) => props.theme.fontSizes.TextL};
   color: ${(props) =>
-    props.isTagSelected ? props.theme.color.black : props.theme.color.base3};
+    props.isTagSelected ? props.theme.color.black : props.theme.color.base5};
   word-break: keep-all;
 `;
 

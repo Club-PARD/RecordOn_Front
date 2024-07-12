@@ -253,7 +253,7 @@ const TextAreaWidth = styled.textarea`
   line-height: 1.5;
 
   &::placeholder {
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base5};
     white-space: pre-wrap;
   }
 `;

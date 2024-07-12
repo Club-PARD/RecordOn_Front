@@ -253,7 +253,7 @@ const TextAreaWidth = styled.textarea`
 
   &::placeholder {
     color: ${({ isQuestionSelected, theme }) =>
-    isQuestionSelected ? theme.color.base5 : theme.color.base4};
+    isQuestionSelected ? theme.color.base5 : theme.color.base3};
   }
 `;
 
