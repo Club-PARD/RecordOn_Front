@@ -32,10 +32,98 @@ const EditPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expId, setExpId] = useState(null);
 
+  const validateTempInput = (input) => {
+    // 유효성 검사 로직 추가
+    const {
+      user_id,
+      projects_id,
+      exp_date,
+      title,
+      question_answers,
+      question_ids,
+      tag_ids,
+      reference_links,
+      common_question_answer,
+    } = input;
+
+    // 필수 필드 null 또는 빈 문자열 검사
+    if (
+      !user_id ||
+      !projects_id ||
+      !exp_date ||
+      !title ||
+      title.trim() === "" ||
+      common_question_answer.trim() === ""
+    ) {
+      return false;
+    }
+
+    // reference_links 유효성 검사
+    if (!isValidURL(reference_links)) {
+      return false;
+    }
+    // question_answers 배열 유효성 검사
+    if (
+      !Array.isArray(question_answers) ||
+      question_answers.length === 0 ||
+      question_answers.some((answer) => !answer.trim())
+    ) {
+      return false;
+    }
+
+    // question_ids 배열 유효성 검사
+    if (
+      !Array.isArray(question_ids) ||
+      question_ids.length === 0 ||
+      question_ids.some((id) => !Number.isInteger(id))
+    ) {
+      return false;
+    }
+
+    // tag_ids 배열 유효성 검사
+    if (
+      !Array.isArray(tag_ids) ||
+      tag_ids.length === 0 ||
+      tag_ids.some((id) => !Number.isInteger(id))
+    ) {
+      return false;
+    }
+    return true;
+  };
+
+  const isValidURL = (url) => {
+    // URL 유효성 검사 함수
+    const urlPattern =
+      /^((http|https):\/\/)?([^\s/:]+\.[^\s/:]+(?:\/[^\s/:]*)*)?$/;
+    return urlPattern.test(url);
+  };
+
   const handleSubmit = () => {
     setIsExpRecordSubmitted(true);
-    if (isAllValid) {
-      editOneExpereienceAPI(expId, tempInput);
+
+    if (validateTempInput(tempInput)) {
+      setIsAllValid(true);
+      editOneExpereienceAPI(expId, tempInput)
+        .then(() => {
+          // 성공 시 처리 로직
+          // setSnack({ message: "경험이 수정되었습니다.", severity: "success" });
+          alert("대성공");
+        })
+        .catch((error) => {
+          // 실패 시 처리 로직
+          // setSnack({
+          //   message: "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+          //   severity: "error",
+          // });
+          alert("서버 에러");
+        });
+    } else {
+      setIsAllValid(false);
+      // setSnack({
+      //   message: "필수 항목을 모두 채워주세요.",
+      //   severity: "warning",
+      // });
+      alert("유효성 검사");
     }
   };
 
@@ -59,7 +147,7 @@ const EditPage = () => {
     window.scrollTo(0, 0);
   }, [location]);
 
-  console.log("answer: ", answer);
+  // console.log("answer: ", answer);
 
   return (
     <Div>

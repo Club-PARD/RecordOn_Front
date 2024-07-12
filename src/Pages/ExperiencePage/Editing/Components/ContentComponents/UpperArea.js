@@ -46,7 +46,7 @@ const UppderArea = () => {
     setExpDate(date);
     setTempInput({
       ...tempInput,
-      exp_date: date,
+      exp_date: normalizeDate(date),
     })
   };
 
