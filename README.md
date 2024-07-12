@@ -49,7 +49,7 @@
   <p align="center">
     기억이 아닌 기록에 의한 경험을 담아보세요.!
         <br />
-            <a href="https://github.com/Club-PARD/Record_ON_BE/blob/main/README.md"><strong>Explore the docs »</strong></a>
+            <a href="https://github.com/Club-PARD/RecordOn_Front/blob/main/README.md"><strong>Explore the docs »</strong></a>
         <br />
     <br />
   </p>
@@ -162,10 +162,10 @@
 ## Deployment Link
 
 >- Frontend Link
-   >  -  https://example.com
+   >    -  https://recordon.today/
 
 >- Backend Link
-   >    -  https://example.com
+   >    -  https://recordon.today/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -217,9 +217,9 @@
 ## Stack
 ### 🌟 Frontend(Web)
 
->Language : JavaScript
->Library & Framework : React, Styled-Components, Axios, Recoil, React-Quill, React-Rnd, React-To-Pdf
->Deploy: Netlify
+>Language : JavaScript    
+>Library & Framework : React, Styled-Components, Axios, Recoil    
+>Deploy: Firebase    
 
 
 ### 💻 Backend
