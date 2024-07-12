@@ -49,7 +49,7 @@ const StyledA = styled.a`
   flex-direction: row;
   align-items: center;
   gap: 10px;
-
+  overflow-x: clip;
   width: 750px;
 
   img {
