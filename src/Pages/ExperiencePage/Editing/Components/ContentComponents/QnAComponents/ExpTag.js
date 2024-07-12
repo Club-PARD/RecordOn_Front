@@ -38,7 +38,7 @@ const ExpTag = ({ selectedTag, onSelect }) => {
       <Div>
         {/* "경험태그 > " */}
         <TitleButton>
-          <div>경험태그</div>
+        <TitleDiv>경험태그<Asterisk>*</Asterisk></TitleDiv>
           <RightArrow />
         </TitleButton>
 
@@ -107,5 +107,17 @@ const StyledButton = styled.button`
   color: ${({ isClicked, color }) =>
     isClicked ? color : "${(props) => props.theme.color.black"};
 `;
+
+const TitleDiv = styled.div`
+flex-direction: row;
+`
+
+const Asterisk = styled.div`
+width: 10px;
+height: 23px;
+color: ${(props) => props.theme.color.fail};
+justify-content: center;
+margin-left: 2px;
+`
 
 export default ExpTag;

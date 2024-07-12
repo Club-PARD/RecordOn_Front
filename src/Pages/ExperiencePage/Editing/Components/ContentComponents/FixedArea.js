@@ -10,7 +10,7 @@ import {
   handleExpRecordEditSubmit,
   answerState,
 } from "../../../../../Atom/ExpRecordAtom";
-
+import styled from "styled-components";
 const FixedArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
   const [experience, setExperience] = useRecoilState(experienceState);
@@ -47,7 +47,7 @@ const FixedArea = () => {
       <FixArea>
         <FixAreaLabel>
           Q. 오늘 있었던 경험을 되돌아보며, 연상되는 단어를 최소 3가지 이상
-          적어보세요!
+          적어보세요!<Asterisk>*</Asterisk>
         </FixAreaLabel>
         <TextAreaWidth
           height="88px"
@@ -58,5 +58,13 @@ const FixedArea = () => {
     </>
   );
 };
+
+const Asterisk = styled.div`
+width: 10px;
+height: 23px;
+color: ${(props) => props.theme.color.fail};
+justify-content: center;
+margin-left: 2px;
+`
 
 export default FixedArea;

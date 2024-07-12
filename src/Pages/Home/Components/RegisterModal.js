@@ -125,13 +125,13 @@ function RegisterModal({ show, onClose, defaultName }) {
 
           <UserDiv>
             <UserDataDiv>
-              <NameDiv>이름</NameDiv>
+              <NameDiv>이름 <Asterisk> *</Asterisk></NameDiv>
               <BoxDiv>
                 <AnswerDiv type='text' id="userName" defaultValue={loginData.name} onChange={handleNameInput}  ></AnswerDiv>
               </BoxDiv>
             </UserDataDiv>
             <UserDataDiv>
-              <NameDiv>희망직군</NameDiv>
+              <NameDiv>희망직군<Asterisk> *</Asterisk></NameDiv>
               <BoxDiv>
                 <DropdownJob
                   options={jobKeywords}
@@ -263,6 +263,7 @@ const UserDataDiv = styled.div`
 
 const NameDiv = styled.div`
   display: flex;
+  flex-direction: row;
   font-size: ${(props) => props.theme.fontSizes.TextM};
   font-weight : ${(props) => props.theme.fontWeights.TextM};
   align-items: center;
@@ -388,5 +389,12 @@ const RegisterBtn = styled.button`
   }
 `;
 
+const Asterisk = styled.div`
+width: 10px;
+height: 23px;
+padding-left: 2px;
+color: ${(props) => props.theme.color.fail};
+justify-content: center;
+`;
 
 export default RegisterModal;
