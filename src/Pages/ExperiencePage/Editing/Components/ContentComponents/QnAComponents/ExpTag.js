@@ -75,7 +75,7 @@ const TitleButton = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  width: 113px;
+  width: 120px;
 
   font-size: ${(props) => props.theme.fontSizes.TextXL};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
@@ -100,6 +100,11 @@ const StyledButton = styled.button`
   font-size: ${(props) => props.theme.fontSizes.TextL};
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   cursor: pointer;
+  
+  &:hover {
+    border-color: ${({ color }) => color};
+    color: ${({ color }) => color};
+  }
 
   //항상 맨 아래에 둬야 함!
   border-color: ${({ isClicked, color }) =>

@@ -13,7 +13,7 @@ const LinkPage = ({ isOpen, onClose }) => {
   const defaultImageUrl = Favicon;
   const [userData] = useRecoilState(recoilUserData);
   const [projectID, setProjectID] = useRecoilState(recoilUserExperienceFilter);
-
+  const [isMetaDataLoaded, isSetMetaDataLoaded] = useState(false);
 
   // useEffect(() => {
   //   const getAllLinks = async () => {
@@ -45,6 +45,9 @@ const LinkPage = ({ isOpen, onClose }) => {
       try {
         const response = await getAllLink(data);
         setMetaData(response);
+        if (response.length == 0){
+        isSetMetaDataLoaded(true);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -66,7 +69,8 @@ if (!isOpen) return null;
         <Body>
           <Title><img src={Clip} style={{ width: "30px", height: "30px", marginRight:"5px"}} />관련 자료 링크</Title>
           <LinkArea>
-            {metaData && metaData.map((link, index) => (
+          {metaData && metaData.length > 0 ? (
+              metaData.map((link, index) => (
               <StyledA
                 key={index}
                 href={link.url}
@@ -80,8 +84,10 @@ if (!isOpen) return null;
                 />
                 <div>{link.title}</div>
               </StyledA>
-            ))}
-            {metaData && !metaData.length && <div>데이터를 로딩 중입니다...</div>}
+            ))) : (
+              <div></div>
+            )}
+            {isMetaDataLoaded && !metaData.length && <div>괸련 링크가 존재하지 않습니다.</div>}
           </LinkArea>
         </Body>
         {/* 그동안 각 경험 기록에 저장한 링크들을 한꺼번에 보여드리는 페이지입니다. */}

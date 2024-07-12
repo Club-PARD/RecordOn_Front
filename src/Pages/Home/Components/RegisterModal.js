@@ -367,6 +367,7 @@ font-size: ${(props) => props.theme.fontSizes.TextS};
 font-weight : ${(props) => props.theme.fontWeights.TextS};
 color: ${(props) => props.theme.colors.Gray};
 cursor: pointer;
+text-decoration: underline;
 `;
 
 

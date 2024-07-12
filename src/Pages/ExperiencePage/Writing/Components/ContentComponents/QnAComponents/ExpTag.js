@@ -97,11 +97,20 @@ const StyledButton = styled.button`
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   cursor: pointer;
 
+  &:hover {
+    border-color: ${({ color }) => color};
+    color: ${({ color }) => color};
+  }
+
   //항상 맨 아래에 둬야 함!
   border-color: ${({ isClicked, color }) =>
     isClicked ? color : "${(props) => props.theme.color.black"};
+    
   color: ${({ isClicked, color }) =>
     isClicked ? color : "${(props) => props.theme.color.black"};
+
+
+
 `;
 const TitleDiv = styled.div`
 flex-direction: row;
@@ -113,7 +122,6 @@ height: 23px;
 color: ${(props) => props.theme.color.fail};
 justify-content: center;
 margin-left: 2px;
-
 `
 
 
