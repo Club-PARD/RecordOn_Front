@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import EditProject from "./EditProject";
 import DeleteProject from "./DeleteProject";
 import { answerState, experienceState } from "../../../../Atom/ExpRecordAtom";
+import Example from "./Example";
 
 const ExperienceTitle = () => {
 
@@ -43,6 +44,14 @@ const ExperienceTitle = () => {
 
     //링크 모달 관련
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDModalOpen, setDModalOpen] = useState(false);
+
+    const openDmodal = () => {
+        setDModalOpen(true);
+    };
+    const closeDModal = () => {
+        setDModalOpen(false);
+    };
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -50,6 +59,11 @@ const ExperienceTitle = () => {
     const linkClickHandler = async () => {
         setIsModalOpen(true);
     }
+    // 편집 삭제 버튼 관련
+    const [toolBoxClicked, setToolBoxClicked] = useState(false);
+    const toolBoxClickHandler = () => {
+        setToolBoxClicked((prev) => !prev);
+      }
 
     // console.log(experienceData);
 
@@ -95,7 +109,7 @@ const ExperienceTitle = () => {
                     <ExperienceTitleTextDiv>
                         {projectData?.project_name}
                     </ExperienceTitleTextDiv>
-                    <EditProject />
+                    {/* <EditProject /> */}
                 </ExperienceTitleText>
                 <ProjectGoalDiv>
                     <ProjectGoalText>
@@ -144,16 +158,39 @@ const ExperienceTitle = () => {
                     관련 자료 링크
                     <img src={ArrowWhite} style={{ width: "10px", marginLeft: "7px" }} />
                 </OpenExperienceLinkModal>
-                <DeleteProjectDiv>
-                    <DeleteProjectText>
-                        <DeleteProject />
-                    </DeleteProjectText>
+                <ExperienceTitleRightDiv>
+                <DeleteProjectDiv >
+           
+                    <DeleteProjectText  onClick={toolBoxClickHandler}>
+                프로젝트 삭제/편집
+            </DeleteProjectText>
                 </DeleteProjectDiv>
+                {toolBoxClicked && (
+           <Example />
+            )}
+            </ExperienceTitleRightDiv>
             </ExperienceTitleRight>
+            
             {isModalOpen && <LinkPage isOpen={isModalOpen} onClose={closeModal} />}
+            
         </ExperienceTitleDiv>
+        
     );
 };
+
+const ToolBoxDiv = styled.div `
+flex-direction: column;
+/* position: fixed; */
+justify-content: start;
+align-items: center;
+/* border: 1px solid black; */
+border-radius: 5px;
+margin-top: 3px;
+width: 126px;
+height: 80px;
+color: ${(props) => props.theme.color.black};
+background-color: ${(props) => props.theme.color.base2};
+`
 
 const ExperienceTitleDiv = styled.div`
 width: 1200px;
@@ -257,7 +294,7 @@ margin-top: 4px;
 `
 
 const ProjectEdit = styled.div`
-width: 42px;
+/* width: 42px; */
 height: 32px;
 /* border: 1px solid black; */
 color: ${(props) => props.theme.color.main};
@@ -389,15 +426,26 @@ font-weight: ${(props) => props.theme.fontWeights.TextM};
 cursor: pointer;
 user-select : none;
 `
+const ExperienceTitleRightDiv = styled.div`
+width: 178px;
+height: 397px;
+/* border: 1px solid black; */
+align-items: center;
+`
+
 const DeleteProjectDiv = styled.div`
 width: 178px;
 height: 25px;
 /* border: 1px solid black; */
-margin-top: 14px;
+margin-top: 16px;
+color: ${(props) => props.theme.color.base6};
+letter-spacing: -0.36px;
+text-decoration: underline;
 `
 const DeleteProjectText = styled.div`
 width: 147px;
 height: 25px;
+cursor: pointer;
 /* border: 1px solid black; */
 text-decoration: underline;
 color: #7f7f7f;

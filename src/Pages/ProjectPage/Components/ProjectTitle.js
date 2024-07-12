@@ -63,7 +63,7 @@ const ProjectTitle = () => {
                 {userName}님의
             </ProjectTitleText>
             <ProjectTitleText2>
-                프로젝트가 쌓이는 공간이에요!
+                프로젝트 저장소예요!
             </ProjectTitleText2>
             <AddProject />
 

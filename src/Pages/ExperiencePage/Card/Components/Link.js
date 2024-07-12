@@ -114,7 +114,7 @@ const LinkPage = ({ isOpen, onClose }) => {
               ))) : (
               <div></div>
             )}
-            {isMetaDataLoaded && !metaData.length && <div>괸련 링크가 존재하지 않습니다.</div>}
+            {isMetaDataLoaded && !metaData.length && <div>관련 자료가 존재하지 않습니다.</div>}
           </LinkArea>
         </Body>
         {/* 그동안 각 경험 기록에 저장한 링크들을 한꺼번에 보여드리는 페이지입니다. */}
