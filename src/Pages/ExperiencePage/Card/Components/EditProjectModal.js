@@ -199,7 +199,7 @@ const EditProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectGoalText>
-                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="프로젝트 내 팀의 목표 또는 개인의 목표를 짧게 남겨주세요! &#13;&#10;50자 이내로 입력해주세요." defaultValue={propsProjectData?.description}>
+                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="프로젝트 내 팀의 목표 또는 개인의 목표를 짧게 남겨주세요! &#13;&#10;70자 이내로 입력해주세요." defaultValue={propsProjectData?.description}>
 
                         </ModalProjectGoalInput>
                     </ModalProjectGoal>
@@ -436,7 +436,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 &::placeholder {
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base5};
   }
 `;
 
@@ -474,7 +474,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 &::placeholder {
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base5};
     white-space: pre-wrap;
   }
 `;
@@ -522,7 +522,7 @@ letter-spacing: -0.28px;
     padding: 11px 16px;
     box-sizing: border-box;
     &::placeholder {
-      color: ${(props) => props.theme.color.base6};
+      color: ${(props) => props.theme.color.base5};
     }
   `;
 

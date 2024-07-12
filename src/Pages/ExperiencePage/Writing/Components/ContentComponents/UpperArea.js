@@ -77,8 +77,8 @@ const UppderArea = () => {
           />
         </UppderPart>
 
-        <UppderPart width={"227px"}>
-          <StyledLabel>경험한 날</StyledLabel>
+        <UppderPart width={"263px"}>
+          <StyledLabel>경험한 날<Asterisk>*</Asterisk></StyledLabel>
           <ProjectDateWrapper>
             <ProjectDateStart
               calWidth={"126px"}
@@ -113,13 +113,14 @@ const UppderPart = styled.div`
   flex-direction: row;
   align-self: flex-start;
   justify-content: space-between;
-
+  gap
   width: ${({ width }) => width};
 `;
 
 const StyledLabel = styled.label`
   box-sizing: border-box;
-
+  width: 102px;
+  margin-right: 24px;
   white-space: nowrap;
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
@@ -130,7 +131,7 @@ const StyledInput = styled.input`
   box-sizing: border-box;
   padding-left: 25px;
 
-  width: 740px;
+  width: 714px;
   height: 50px;
 
   background-color: ${(props) => props.theme.color.base2};

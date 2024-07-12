@@ -33,7 +33,7 @@ const Calendar = ({ calWidth, setSelectedDate }) => {
 
 const ProjectDateWrapper = styled.div`
 width: ${(props) => props.calWidth};
-height: 40px;
+height: 50px;
 flex-direction: row;
 justify-content: start;
 cursor: pointer;
@@ -140,11 +140,13 @@ cursor: pointer;
 
 const ProjectDateStart = styled(DatePicker)`
 width: ${(props) => props.calWidth};
-height: 40px;
+height: 50px;
 /* border: 1px solid black; */
 border-radius: 10px;
 align-items: center;
 background-color: ${(props) => props.theme.colors.BoxGray};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight : ${(props) => props.theme.fontWeights.TextM};
 text-align: center;
 `
 
@@ -162,6 +164,8 @@ height: 40px;
 border-radius: 10px;
 align-items: center;
 background-color: ${(props) => props.theme.colors.Gray};
+font-size: ${(props) => props.theme.fontSizes.TextM};
+font-weight : ${(props) => props.theme.fontWeights.TextM};
 text-align: center;
 `
 
