@@ -266,6 +266,7 @@ const FixAnswer = styled.div`
   font-weight: 400px;
   line-height: 23.4px;
   color: ${(props) => props.theme.color.black};
+  white-space: pre-wrap;
 `;
 
 const ButtonArea = styled.div`

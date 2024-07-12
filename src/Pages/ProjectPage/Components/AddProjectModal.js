@@ -251,7 +251,7 @@ const AddProjectModal = ({
                                     *
                                 </Asterisk>
                             </ModalProjectRoleText>
-                            <ModalProjectRoleInput name="part" onChange={userInputHandler} placeholder="10자 이내로 입력해주세요.">
+                            <ModalProjectRoleInput name="part" onChange={userInputHandler} placeholder="10자 이내로 입력해주세요. 예시) 개발자, 디자이너">
 
                             </ModalProjectRoleInput>
                         </ModalProjectRole>

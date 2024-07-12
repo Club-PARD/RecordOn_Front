@@ -1,8 +1,4 @@
-import { useState, useEffect } from "react";
 import styled from "styled-components";
-
-import { useRecoilState } from "recoil";
-import { answerState } from "../../../../Atom/ExpRecordAtom";
 
 import UppderArea from "../Components/ContentComponents/UpperArea";
 import FixedArea from "../Components/ContentComponents/FixedArea";

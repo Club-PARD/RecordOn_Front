@@ -111,7 +111,7 @@ const AnswerArea = () => {
             isQuestionSelected: false,
           };
         }
-
+        console.log (section.selectedTag);
         // 새로운 태그를 선택한 경우
         const newQuestionOptionTexts = tagAndQuestion[tagId]?.questions || [];
         const newQuestionOptionIds = tagAndQuestion[tagId]?.question_ids || [];
@@ -130,13 +130,14 @@ const AnswerArea = () => {
 
       return section;
     });
-
+    
     setExperienceSections(updatedSections);
     setTempInput({
       ...tempInput,
       tag_ids: (updatedSections.selectedTag)-1,
     })
   };
+
   // 질문 선택 핸들러
   const handleQuestionSelectInSection = (
     selectedQuestionId,
@@ -194,7 +195,7 @@ const AnswerArea = () => {
 
   return (
     <>
-      <Guide>* 경험태그 선택 후, 질문을 선택해 주세요.</Guide>
+      <Guide>Tip. 각 경험태그의 첫 번째 질문부터 답하면 경험을 정리하는데 도움이 될거예요!</Guide>
       {/* 한 세트 */}
       {experienceSections.map((section) => (
         <SectionWrapper key={section.id}>
