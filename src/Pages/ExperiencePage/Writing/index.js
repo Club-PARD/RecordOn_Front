@@ -22,9 +22,10 @@ const WritingPage = () => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [snack, setSnack] = useRecoilState(recoilSnack);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const openModal = () => {
     setIsModalOpen(true);
-    setIsModalOpen(false);
+    setIsExpRecordSubmitted(false);
   };
   const closeModal = () => {
     setIsModalOpen(false);
