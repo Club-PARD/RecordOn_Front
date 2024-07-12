@@ -9,22 +9,28 @@ import { useRecoilState } from "recoil";
 import {
   answerState,
   handleExpRecordEditSubmit,
+  isValidState,
+  isAllValidState,
+  tempInputState,
 } from "../../../../../Atom/ExpRecordAtom";
 
 const UppderArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
+  const [isValid, setIsValid] = useRecoilState(isValidState);
+  const [isAllValid, setIsAllValid] = useRecoilState(isAllValidState);
 
   // 서버에서 초기값 설정
   useEffect(() => {
     if (answer) {
       setExpDate(new Date(answer.exp_date));
-      setExpTitle(answer.experience_name || "");
+      setExpTitle(answer.title || "");
     }
   }, [answer]);
 
@@ -38,24 +44,44 @@ const UppderArea = () => {
   // 입력 내용을 임시 변수에 관리
   const handleDateChange = (date) => {
     setExpDate(date);
+    setTempInput({
+      ...tempInput,
+      exp_date: normalizeDate(date),
+    })
   };
 
   const handleTitleChange = (e) => {
     setExpTitle(e.target.value);
+    setTempInput({
+      ...tempInput,
+      title: e.target.value,
+    })
   };
+  console.log("expTitle", expTitle);
+  console.log("tempInput", tempInput);
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
-  useEffect(() => {
-    const normalizedExpDate = normalizeDate(expDate);
-    if (isExpRecordSubmitted) {
-      setAnswer((prev) => ({
-        ...prev,
-        exp_date: normalizedExpDate,
-        title: expTitle,
-      }));
-    }
-  }, [isExpRecordSubmitted, expDate, expTitle, setAnswer]);
+  // useEffect(() => {
+  //   if (isExpRecordSubmitted) {
+  //     if (expDate == null || expTitle == null || expTitle.trim() === "") {
+  //       setIsValid((prevState) => ({
+  //         ...prevState,
+  //         upper: false,
+  //       }));
+  //     }
+  //   }
+  // }, [isExpRecordSubmitted, expDate, expTitle, setAnswer]);
 
+  // useEffect(() => {
+  //   const normalizedExpDate = normalizeDate(expDate);
+  //   setAnswer((prev) => ({
+  //     ...prev,
+  //     exp_date: normalizedExpDate,
+  //     title: expTitle,
+  //   }));
+  // }, [isAllValid]);
+
+  console.log ("answeR: ", answer)
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}
@@ -66,7 +92,8 @@ const UppderArea = () => {
           </StyledLabel>
           <StyledInput
             type="text"
-            value={expTitle}
+            // value={expTitle}
+            defaultValue={answer?.title}
             onChange={handleTitleChange}
           />
         </UppderPart>
