@@ -68,8 +68,8 @@ const EditProjectModal = ({
 
 
     useEffect(() => {
-        console.log(projectData.finish_date?.length !== 0);
-        if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0 && projectData?.name !== null && projectData?.description !== null && projectData?.part !== null && projectData?.start_date !== null && projectData?.finish_date !== null) {
+        console.log(projectData?.finish_date?.length !== 0);
+        if (projectData?.name !== undefined && projectData?.description !== undefined && projectData?.part !== undefined && projectData?.start_date !== undefined && projectData?.finish_date !== undefined && projectData?.name?.length !== 0 && projectData?.description?.length !== 0 && projectData?.part?.length !== 0 && projectData?.start_date?.length !== 0 && projectData?.finish_date?.length !== 0 && projectData?.name !== null && projectData?.description !== null && projectData?.part !== null && projectData?.start_date !== null && projectData?.finish_date !== null) {
             setValid(true);
         }
         else {
@@ -127,7 +127,7 @@ const EditProjectModal = ({
 
     const editProjectHandler = async () => {
         if (valid) {
-            if (projectData.start_date > projectData.finish_date) {
+            if (projectData?.start_date > projectData?.finish_date) {
                 // alert("프로젝트 시작일이 종료일보다 늦습니다. 진행기간을 다시 확인 후, 재설정해주세요.");
                 setToast(true);
                 return 0;
@@ -139,7 +139,7 @@ const EditProjectModal = ({
                 // 이미지가 수정되었을 경우에만 업로드 
                 if (imageChanged) {
                     const formData = new FormData();
-                    formData.append('image', projectData.picture);
+                    formData.append('image', projectData?.picture);
                     const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
                     console.log(response2);
                 }
@@ -266,20 +266,20 @@ const EditProjectModal = ({
                             프로젝트 대표 이미지
                         </ModalProjectImageText>
                         <ModalProjectImageUpload name="picture">{
-                            projectData.project_image || projectData.image ?
+                            projectData?.project_image || projectData?.image ?
 
                                 <ModalProjectImageUploadLeft>
                                     {
-                                        projectData.image ?
+                                        projectData?.image ?
                                             <ModalProjectImageUploadInner>
                                                 <ModalProjectImageUploadContent onClick={handleDivClick}>
                                                     <img
-                                                        src={projectData.image}
+                                                        src={projectData?.image}
                                                         alt="프로젝트 대표 사진"
                                                         style={{ width: '18px', height: '18px', objectFit: 'cover', marginLeft: "24px", marginRight: "7px" }}
                                                     />
                                                     <ModalProjectImageNameDiv>
-                                                        {projectData.picture.name}
+                                                        {projectData?.picture.name}
                                                     </ModalProjectImageNameDiv>
                                                     <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                                 </ModalProjectImageUploadContent>
@@ -298,7 +298,7 @@ const EditProjectModal = ({
                                             <ModalProjectImageUploadInner>
                                                 <ModalProjectImageUploadContent onClick={handleDivClick}>
                                                     <ModalProjectImageNameDiv2>
-                                                        {projectData.project_image}
+                                                        {projectData?.project_image}
                                                     </ModalProjectImageNameDiv2>
                                                     <ModalProjectImageInput type="file" ref={fileInputRef} onChange={fileUploadHandler} />
                                                 </ModalProjectImageUploadContent>

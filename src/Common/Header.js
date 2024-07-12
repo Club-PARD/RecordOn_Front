@@ -235,7 +235,7 @@ const Header = () => {
   return (
     <HeaderContainer $scrolled={isScrolled}>
       <Div>
-        <LogoDiv onClick={handleLogoClick}>logo</LogoDiv>
+        <LogoDiv onClick={isLoggedIn ? handleLogoClick : null}>logo</LogoDiv>
         {isLoggedIn ? (
           // 구글 로그인 구현시 프로필 사진 삽입 가능한 원형으로 수정
           <UserProfileDiv ref={profileRef}>
