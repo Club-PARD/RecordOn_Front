@@ -95,6 +95,7 @@ const AnswerArea = () => {
             selectedQuestionId: null,
             isTagSelected: false,
             isQuestionSelected: false,
+            text:"",
           };
         }
 
@@ -110,6 +111,7 @@ const AnswerArea = () => {
           selectedQuestionId: null,
           isTagSelected: true,
           isQuestionSelected: false,
+          text:"",
         };
       }
       return section;
@@ -139,6 +141,7 @@ const AnswerArea = () => {
     );
     setExperienceSections(updatedSections);
   };
+
 
   // 제출 처리
   useEffect(() => {

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components";
 // import DefaultCardImg from "../../../Assets/Experience_Default.png"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -97,6 +97,17 @@ const ExperienceCard = ({ experienceData }) => {
 
 }
 
+const mouseHover = keyframes` 
+  0% {
+    -webkit-transform: scale(1.0);
+            transform: scale(1.0);
+  }
+  100% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+`;
+
 const Container = styled.div`
 width: 384px;
 height: 290px;
@@ -106,6 +117,10 @@ justify-content: center;
 box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.10);
 cursor: pointer;
 user-select : none;
+
+&:hover {
+    animation: ${mouseHover} 0.2s forwards;
+  }
 `
 const CardContent = styled.div`
 width: 312px;
