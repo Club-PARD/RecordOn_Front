@@ -5,7 +5,9 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import {
   handleExpRecordEditSubmit,
-  answerState
+  answerState,
+  isAllValidState,
+  tempInputState,
 } from "../../../Atom/ExpRecordAtom";
 import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
 
@@ -18,55 +20,117 @@ import ContentsArea from "./Components/ContentsArea";
 
 const EditPage = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
   const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
+  const [snack, setSnack] = useRecoilState(recoilSnack);
+  const [isAllValid, setIsAllValid] = useRecoilState(isAllValidState);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expId, setExpId] = useState(null);
 
-  const [snack, setSnack] = useRecoilState(recoilSnack);
+  const validateTempInput = (input) => {
+    // 유효성 검사 로직 추가
+    const {
+      user_id,
+      projects_id,
+      exp_date,
+      title,
+      question_answers,
+      question_ids,
+      tag_ids,
+      reference_links,
+      common_question_answer,
+    } = input;
 
-  const handleSubmit = async () => {
+    // 필수 필드 null 또는 빈 문자열 검사
+    if (
+      !user_id ||
+      !projects_id ||
+      !exp_date ||
+      !title ||
+      title.trim() === "" ||
+      common_question_answer.trim() === ""
+    ) {
+      return false;
+    }
+
+    // reference_links 유효성 검사
+    if (!isValidURL(reference_links)) {
+      return false;
+    }
+    // question_answers 배열 유효성 검사
+    if (
+      !Array.isArray(question_answers) ||
+      question_answers.length === 0 ||
+      question_answers.some((answer) => !answer.trim())
+    ) {
+      return false;
+    }
+
+    // question_ids 배열 유효성 검사
+    if (
+      !Array.isArray(question_ids) ||
+      question_ids.length === 0 ||
+      question_ids.some((id) => !Number.isInteger(id))
+    ) {
+      return false;
+    }
+
+    // tag_ids 배열 유효성 검사
+    if (
+      !Array.isArray(tag_ids) ||
+      tag_ids.length === 0 ||
+      tag_ids.some((id) => !Number.isInteger(id))
+    ) {
+      return false;
+    }
+    return true;
+  };
+
+  const isValidURL = (url) => {
+    // URL 유효성 검사 함수
+    const urlPattern =
+      /^((http|https):\/\/)?([^\s/:]+\.[^\s/:]+(?:\/[^\s/:]*)*)?$/;
+    return urlPattern.test(url);
+  };
+
+  const handleSubmit = () => {
     setIsExpRecordSubmitted(true);
-    try {
-      const errors = validateExperience(answer);
-      if (errors.length > 0) {
-        // alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
-        setSnack((prevSnack) => ({
-          ...prevSnack,
-          experienceValidation: true,
-        }));
-        setIsExpRecordSubmitted(false);
-        return;
-      }
 
-      await resolveAfter2Seconds();
-      await editOneExpereienceAPI(expId, answer);
-      console.log("경험 데이터가 수정되었습니다.");
-      setSnack((prevSnack) => ({
-        ...prevSnack,
-        experienceEdit: true,
-      }));
-      navigate("/view");
-    } catch (error) {
-      console.error("경험 데이터 수정 중 오류가 발생했습니다:", error);
-      setIsExpRecordSubmitted(false);
+    if (validateTempInput(tempInput)) {
+      setIsAllValid(true);
+      editOneExpereienceAPI(expId, tempInput)
+        .then(() => {
+          // 성공 시 처리 로직
+          // setSnack({ message: "경험이 수정되었습니다.", severity: "success" });
+          alert("대성공");
+        })
+        .catch((error) => {
+          // 실패 시 처리 로직
+          // setSnack({
+          //   message: "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+          //   severity: "error",
+          // });
+          alert("서버 에러");
+        });
+    } else {
+      setIsAllValid(false);
+      // setSnack({
+      //   message: "필수 항목을 모두 채워주세요.",
+      //   severity: "warning",
+      // });
+      alert("유효성 검사");
     }
   };
 
-  const resolveAfter2Seconds = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 2000);
-    });
-  };
-
   useEffect(() => {
-    userInfo && setExpId(userInfo.id);
+    if (userInfo) {
+      setExpId(userInfo.id);
+    }
   }, [userInfo]);
 
   const openModal = () => {
@@ -77,111 +141,18 @@ const EditPage = () => {
     setIsModalOpen(false);
   };
 
-  const validateUserId = (userId, errors) => {
-    if (!userId || typeof userId !== "string" || userId.trim() === "") {
-      errors.push("유효하지 않은 유저 ID입니다.");
-    }
-  };
-
-  const validateProjectsId = (projectsId, errors) => {
-    if (projectsId === null || projectsId === undefined) {
-      errors.push("유효하지 않은 프로젝트 ID입니다.");
-    }
-  };
-
-  const validateTitle = (title, errors) => {
-    if (!title || typeof title !== "string" || title.trim() === "") {
-      errors.push("제목을 입력해 주세요.");
-    }
-  };
-
-  const validateTagIds = (tagIds, errors) => {
-    if (!Array.isArray(tagIds)) {
-      errors.push("유효하지 않은 태그 ID 배열입니다.");
-    } else {
-      tagIds.forEach((tagId) => {
-        if (typeof tagId !== "number") {
-          errors.push("경험태그를 선택해 주세요.");
-        }
-      });
-    }
-  };
-
-  const validateQuestionIds = (questionIds, errors) => {
-    if (!Array.isArray(questionIds)) {
-      errors.push("유효하지 않은 질문 ID 배열입니다.");
-    } else {
-      questionIds.forEach((questionId) => {
-        if (typeof questionId !== "number") {
-          errors.push("답변을 작성할 질문을 선택해 주세요.");
-        }
-      });
-    }
-  };
-
-  const validateQuestionAnswers = (questionAnswers, errors) => {
-    if (!Array.isArray(questionAnswers)) {
-      errors.push("유효하지 않은 질문 답변 배열입니다.");
-    } else {
-      questionAnswers.forEach((answer) => {
-        if (typeof answer !== "string") {
-          console.log("답변: ", answer);
-          errors.push("선택한 질문에 대한 답변을 작성해 주세요.");
-        }
-      });
-    }
-  };
-
-  const validateCommonQuestionAnswer = (commonQuestionAnswer, errors) => {
-    if (typeof commonQuestionAnswer !== "string") {
-      errors.push("연상되는 단어를 입력해 주세요.");
-    }
-  };
-
-  const validateReferenceLinks = (referenceLinks, errors) => {
-    const urlPattern = new RegExp(
-      "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
-      "i"
-    ); // fragment locator
-    if (!Array.isArray(referenceLinks)) {
-      errors.push("유효하지 않은 참조 링크 배열입니다.");
-    } else {
-      referenceLinks.forEach((link) => {
-        if (!urlPattern.test(link)) {
-          errors.push("유효하지 않은 URL 형식입니다: " + link);
-        }
-      });
-    }
-  };
-
-  const validateExperience = (experience) => {
-    let errors = [];
-    validateUserId(experience.user_id, errors);
-    validateProjectsId(experience.projects_id, errors);
-    validateTitle(experience.title, errors);
-    validateTagIds(experience.tag_ids, errors);
-    validateQuestionIds(experience.question_ids, errors);
-    validateQuestionAnswers(experience.question_answers, errors);
-    validateCommonQuestionAnswer(experience.common_question_answer, errors);
-    validateReferenceLinks(experience.reference_links, errors); // reference_links 유효성 검사 추가
-
-    return errors;
-  };
-
   const { location } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
 
+  // console.log("answer: ", answer);
+
   return (
     <Div>
       {/* 뒤로 가기 */}
+
       <GoBackArea>
         <MarginTopForGoBackDiv />
         <GoBackDiv onClick={openModal}>

@@ -6,16 +6,19 @@ import {
 } from "./LowerComponents/LowerArea";
 import { useRecoilState } from "recoil";
 import {
+  isValidState,
   handleExpRecordEditSubmit,
   answerState,
+  tempInputState,
 } from "../../../../../Atom/ExpRecordAtom";
 import styled from "styled-components";
 const FixedArea = () => {
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
   const [answer, setAnswer] = useRecoilState(answerState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
-
+  const [isValid, setIsValid] = useRecoilState(isValidState);
   const [commonQuestionAnswer, setCommonQuestionAnswer] = useState("");
 
   useEffect(() => {
@@ -27,32 +30,22 @@ const FixedArea = () => {
   // 입력 내용을 임시 변수에 관리
   const handleChange = (e) => {
     setCommonQuestionAnswer(e.target.value);
-  };
-
-  const validateCommonQuestionAnswer = (commonQuestionAnswer) => {
-    const errors = [];
-    if (commonQuestionAnswer.trim().split(' ').length < 3) {
-      errors.push("연상되는 단어를 최소 3가지 이상 적어주세요.");
-    }
-    return errors;
+    setTempInput({
+      ...tempInput,
+      common_question_answer: e.target.value});
   };
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
     if (isExpRecordSubmitted) {
-      const errors = validateCommonQuestionAnswer(commonQuestionAnswer);
-
-      if (errors.length === 0) {
-        setAnswer((prev) => ({
-          ...prev,
-          common_question_answer: commonQuestionAnswer,
-        }));
-      } else {
-        setIsExpRecordSubmitted(false);
-        alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
-      }
+      setTempInput((prev) => ({
+        ...prev,
+        common_question_answer: commonQuestionAnswer,
+      }));
+    } else {
+      setIsExpRecordSubmitted(false);
     }
-  }, [isExpRecordSubmitted, commonQuestionAnswer]);
+  }, [isExpRecordSubmitted, commonQuestionAnswer, setTempInput]);
 
   return (
     <>
@@ -64,7 +57,8 @@ const FixedArea = () => {
         </FixAreaLabel>
         <TextAreaWidth
           height="88px"
-          value={commonQuestionAnswer}
+          // value={commonQuestionAnswer}
+          defaultValue={answer?.common_question_answer}
           onChange={handleChange}
         />
       </FixArea>
@@ -73,11 +67,11 @@ const FixedArea = () => {
 };
 
 const Asterisk = styled.div`
-width: 10px;
-height: 23px;
-color: ${(props) => props.theme.color.fail};
-justify-content: center;
-margin-left: 2px;
-`
+  width: 10px;
+  height: 23px;
+  color: ${(props) => props.theme.color.fail};
+  justify-content: center;
+  margin-left: 2px;
+`;
 
 export default FixedArea;

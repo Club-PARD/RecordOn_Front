@@ -3,17 +3,20 @@ import styled from "styled-components";
 import Bookmark from "./Bookmark";
 import { useRecoilState } from "recoil";
 import {
+  isValidState,
+  tempInputState,
   answerState,
   handleExpRecordEditSubmit,
 } from "../../../../../../Atom/ExpRecordAtom";
 import { ReactComponent as CloseIcon } from "../../../../../../Assets/close.svg";
 
 const LowerArea = () => {
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
   const [answer, setAnswer] = useRecoilState(answerState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
-
+  const [isValid, setIsValid] = useRecoilState(isValidState);
   const [freeContent, setFreeContent] = useState("");
   const [linkArea, setLinkArea] = useState([
     {
@@ -25,10 +28,10 @@ const LowerArea = () => {
 
   useEffect(() => {
     if (answer) {
-      setFreeContent(answer.free_content || "");
+      // setFreeContent(answer.free_content || "");
 
-      if (answer.reference_link && answer.reference_link.length > 0) {
-        const initialLinks = answer.reference_link.map((link, index) => ({
+      if (answer.reference_links && answer.reference_links.length > 0) {
+        const initialLinks = answer.reference_links.map((link, index) => ({
           id: index + 1,
           linkUrl: link,
           isSubmitted: true,
@@ -42,7 +45,13 @@ const LowerArea = () => {
 
   // 자유란 변경 상태 관리
   const handleFreeChange = (e) => {
-    setFreeContent(e.target.value);
+    console.log(e.target.value);
+    // setFreeContent(e.target.value);
+    setTempInput({
+      ...tempInput,
+      free_content: e.target.value,
+    }
+   );
   };
 
   // 링크 입력 값 변경 핸들러
@@ -97,13 +106,14 @@ const LowerArea = () => {
   useEffect(() => {
     if (isExpRecordSubmitted) {
       const links = linkArea.map((link) => link.linkUrl).filter(Boolean);
-      setAnswer((prev) => ({
+      setTempInput((prev) => ({
         ...prev,
-        free_content: freeContent,
         reference_links: links,
       }));
     }
-  }, [isExpRecordSubmitted, freeContent, linkArea, setAnswer]);
+  }, [isExpRecordSubmitted, freeContent, linkArea, setTempInput]);
+
+  console.log("tempInput", tempInput);
 
   return (
     <>
@@ -115,9 +125,9 @@ const LowerArea = () => {
           <FixAreaLabel>자유 작성란</FixAreaLabel>
           <TextAreaWidth
             height="150px"
-            value={freeContent}
+            defaultValue={answer?.free_content}
             placeholder="상단 태그별 질문을 통해 다 작성하지 못한 내용을 자유 작성란에 작성해보세요.&#13;&#10;하지만 자유 작성란만 작성하는 것은 불가능해요. 최소 질문 한 가지에 답하고 와주세요:)"
-            onChange={handleFreeChange}
+            onChange={(handleFreeChange)}
           />
           <DivForMargin height={"60px"} />
         </FixArea>
