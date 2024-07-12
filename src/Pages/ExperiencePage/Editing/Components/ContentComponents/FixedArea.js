@@ -6,14 +6,12 @@ import {
 } from "./LowerComponents/LowerArea";
 import { useRecoilState } from "recoil";
 import {
-  expEditState,
   handleExpRecordEditSubmit,
   answerState,
 } from "../../../../../Atom/ExpRecordAtom";
 import styled from "styled-components";
 const FixedArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(expEditState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
@@ -45,7 +43,7 @@ const FixedArea = () => {
       const errors = validateCommonQuestionAnswer(commonQuestionAnswer);
 
       if (errors.length === 0) {
-        setExperience((prev) => ({
+        setAnswer((prev) => ({
           ...prev,
           common_question_answer: commonQuestionAnswer,
         }));

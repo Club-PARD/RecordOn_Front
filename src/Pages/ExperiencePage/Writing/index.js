@@ -24,9 +24,10 @@ const WritingPage = () => {
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const openModal = () => {
     setIsModalOpen(true);
-    setIsModalOpen(false);
+    setIsExpRecordSubmitted(false);
   };
   const closeModal = () => {
     setIsModalOpen(false);
