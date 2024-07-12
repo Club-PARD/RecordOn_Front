@@ -294,6 +294,7 @@ align-items: center;
 text-align: center;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
+white-space: pre-wrap;
 `
 
 const ProjectRole = styled.div`
