@@ -34,7 +34,11 @@ const EditPage = () => {
     try {
       const errors = validateExperience(experience);
       if (errors.length > 0) {
-        alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
+        // alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
+        setSnack((prevSnack) => ({
+          ...prevSnack,
+          experienceValidation: true,
+        }));
         setIsExpRecordSubmitted(false);
         return;
       }
@@ -137,11 +141,11 @@ const EditPage = () => {
   const validateReferenceLinks = (referenceLinks, errors) => {
     const urlPattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
       "i"
     ); // fragment locator
     if (!Array.isArray(referenceLinks)) {

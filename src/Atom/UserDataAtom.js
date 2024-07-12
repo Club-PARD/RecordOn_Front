@@ -94,6 +94,7 @@ export const recoilSnack = atom({
         experienceAdd: false,
         experienceEdit: false,
         experienceDelete: false,
+        experienceValidation: false,
     },
     effects_UNSTABLE: [persistAtom],
 });
