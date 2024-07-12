@@ -74,18 +74,12 @@ const PaginationExperience = () => {
 
     return (
         <PaginationDiv>
-            <NavButton onClick={startCardNum} disabled={experiencePagination.pageNum === 1}>
-                <ArrowLeft2 src={ArrowImage2} />
-            </NavButton>
             <NavButton onClick={prevCardNum} disabled={experiencePagination.pageNum === 1}>
                 <ArrowLeft src={ArrowImage} />
             </NavButton>
             {renderPageNumbers()}
             <NavButton onClick={nextCardNum} disabled={experiencePagination.pageNum === lastPage}>
                 <ArrowRight src={ArrowImage} />
-            </NavButton>
-            <NavButton onClick={endCardNum} disabled={experiencePagination.pageNum === lastPage}>
-                <ArrowRight2 src={ArrowImage2} />
             </NavButton>
         </PaginationDiv>
     );
