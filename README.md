@@ -78,8 +78,6 @@
     <li><a href="#deployment-link">Deployment Link</a></li>
     <li><a href="#user-guide">User Guide</a></li>
     <li><a href="#erd">ERD</a></li>
-    <li><a href="#commit-message-convention">Commit Message Convention</a></li>
-    <li><a href="#branch-criteria">Branch Criteria</a></li>
     <li><a href="#stack">Stack</a></li>
     <li><a href="#documentation">Documentation</a></li>
     <li><a href="#team-member">Team member</a></li>
@@ -277,46 +275,9 @@
 
 ## ERD
 
-<img src="https://github.com/user-attachments/assets/22d9334c-d7f3-4c86-a405-f9025f5255fa">
+<img src="https://github.com/user-attachments/assets/7cb351ec-ee2a-43ad-92bb-e7ed07d996c1">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Commit Message Convention
-
-- By default, create a commit using the icon in https://gitmoji.dev/.
-
-```
- < form >
-{한다} {무엇을} {어떻게}
-{세부 내용 설명}
-
- < ex >
-:sparkles: Add login pages
-:bug: Fix CORS Error
-```
-```
-🚀 - Deploy stuff `:rocket:`
-
-⚡ - Improve performance `:zap:`
-
-🔥 - Remove code or files `:fire:`
-
-🐛 - Fix a bug `:bug:`
-
-✨ - Introduce new features `:sparkles:`
-
-✅ - Add, Update `:white_check_mark:`
-
-📝 - Add or update documentation `:memo:`
-
-🙈 - Add or update ignore `:see_no_evil:`
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Branch Criteria
-
-<img src="https://github.com/user-attachments/assets/399474e3-1c20-4bc2-85d9-7b4ea040bcf4">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
