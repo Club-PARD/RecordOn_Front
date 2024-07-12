@@ -121,7 +121,7 @@ const LowerArea = () => {
                 ) : (
                   <StyledUrlInput
                     type="url"
-                    placeholder="해당 기록에 대한 참고자료 URL 링크를 임베드해보세요."
+                    placeholder="해당 기록에 대한 참고자료 URL 링크를 복사 - 붙여넣기 해보세요."
                     value={link.linkUrl}
                     onChange={(e) => handleLinkChange(index, e.target.value)}
                     onPaste={(e) => handlePaste(e, index)}
@@ -177,6 +177,7 @@ const FixAreaLabel = styled.label`
   color: ${(props) => props.theme.color.black};
   line-height: 31.2px;
   word-break: keep-all;
+  flex-direction: row;
 `;
 
 const LinkField = styled.div`

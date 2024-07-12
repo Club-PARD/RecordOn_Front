@@ -63,7 +63,7 @@ const UppderArea = () => {
       {/* 상단 영역: 소제목, 경험한 날*/}
       <Upper>
         <UppderPart width={"840px"}>
-          <StyledLabel>소제목</StyledLabel>
+          <StyledLabel>소제목<Asterisk>*</Asterisk></StyledLabel>
           <StyledInput
             type="text"
             value={expTitle}
@@ -136,6 +136,13 @@ const StyledInput = styled.input`
     color: ${(props) => props.theme.color.base6};
   }
 `;
+const Asterisk = styled.div`
+width: 10px;
+height: 23px;
+color: ${(props) => props.theme.color.fail};
+justify-content: center;
+margin-left: 2px;
+`
 
 export default UppderArea;
 export { Upper, UppderPart, StyledLabel, StyledInput };
