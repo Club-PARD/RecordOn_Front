@@ -93,11 +93,11 @@ const ViewPage = () => {
 
   // 중간 배열 생성
   const combinedArray =
-    answerObject.question_text &&
-    answerObject.question_text.map((_, index) => [
-      answerObject.tag_id[index],
-      answerObject.question_text[index],
-      answerObject.question_answer[index],
+    answerObject.question_texts &&
+    answerObject.question_texts.map((_, index) => [
+      answerObject.tag_ids[index],
+      answerObject.question_texts[index],
+      answerObject.question_answers[index],
     ]);
 
   const { location } = useLocation();
@@ -151,14 +151,14 @@ const ViewPage = () => {
         </>
       )}
 
-      {answerObject.reference_link &&
-        answerObject.reference_link.length != 0 && (
+      {answerObject.reference_links &&
+        answerObject.reference_links.length != 0 && (
           <>
             <StyledHr />
             <FixArea>
               <FixAreaLabel>관련 자료 링크</FixAreaLabel>
-              {answerObject.reference_link &&
-                answerObject.reference_link.map((link, index) => (
+              {answerObject.reference_links &&
+                answerObject.reference_links.map((link, index) => (
                   <BookmarkComponent key={index}>
                     <Bookmark url={link} />
                   </BookmarkComponent>
