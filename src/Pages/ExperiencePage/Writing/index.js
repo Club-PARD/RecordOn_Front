@@ -19,7 +19,6 @@ const WritingPage = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordSubmit
   );
-  // const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
 
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
