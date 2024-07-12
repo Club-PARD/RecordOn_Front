@@ -167,7 +167,7 @@ const FixArea = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-
+  white-space: pre-wrap;
   width: 840px;
 `;
 
@@ -178,6 +178,7 @@ const FixAreaLabel = styled.label`
   line-height: 31.2px;
   word-break: keep-all;
   flex-direction: row;
+  white-space: pre-wrap;
 `;
 
 const LinkField = styled.div`

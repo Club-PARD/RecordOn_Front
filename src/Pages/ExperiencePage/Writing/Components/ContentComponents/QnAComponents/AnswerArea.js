@@ -199,8 +199,8 @@ const AnswerArea = () => {
             disabled={!section.isQuestionSelected}
             placeholder={
               section.id === 0
-                ? "첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!"
-                : ""
+                ? "태그별 첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!"
+                : "기록할수록 더욱 단단해지는 경험!"
             }
           />{" "}
         </SectionWrapper>
