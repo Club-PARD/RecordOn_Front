@@ -63,7 +63,7 @@ const ProjectFilter = () => {
     setIsOpen(!isOpen);
   }
 
-  console.log(isOpen);
+  // console.log(isOpen);
 
   const addKeyword = value => () => {
     if (!selectedKeyword.includes(value) && selectedKeyword.length < 3) {
@@ -120,7 +120,7 @@ const ProjectFilter = () => {
 
   }
 
-  console.log("프로젝트 필터 ", projectFilter);
+  // console.log("프로젝트 필터 ", projectFilter);
 
   // 드롭다운 외부 클릭시 안보이게 하는 부분들
   const dropdownRef = useRef(null);

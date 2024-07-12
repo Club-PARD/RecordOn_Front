@@ -182,12 +182,12 @@ const EditPage = () => {
         keepButtonWidth="151px"
         onKeep={() => {
           // '계속 작성' 버튼 클릭 시 처리 로직
-          console.log("계속 작성");
+          // console.log("계속 작성");
           closeModal(); // 모달 닫기
         }}
         onDelete={() => {
           // '나가기' 버튼 클릭 시 처리 로직
-          console.log("나가기");
+          // console.log("나가기");
           closeModal(); // 모달 닫기
           navigate("/experience");
         }}

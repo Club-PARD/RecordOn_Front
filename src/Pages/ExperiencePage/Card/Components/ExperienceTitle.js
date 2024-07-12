@@ -26,15 +26,15 @@ const ExperienceTitle = () => {
     const [projectData, setProjectData] = useState({});
     const navigate = useNavigate();
 
-    console.log("답변 상태", answerStateRecoil);
+    // console.log("답변 상태", answerStateRecoil);
     useEffect(() => {
-        console.log(userData);
-        console.log(experienceData);
+        // console.log(userData);
+        // console.log(experienceData);
 
         const getData = async () => {
 
             const response = await getUserExperienceDataAPI(userData);
-            console.log(response);
+            // console.log(response);
             setProjectData(response);
         }
         getData();
@@ -51,7 +51,7 @@ const ExperienceTitle = () => {
         setIsModalOpen(true);
     }
 
-    console.log(experienceData);
+    // console.log(experienceData);
 
     return (
         <ExperienceTitleDiv>

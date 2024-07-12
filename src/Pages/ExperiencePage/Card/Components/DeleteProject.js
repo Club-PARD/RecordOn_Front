@@ -16,7 +16,7 @@ const DeleteProject = () => {
     const handleDeleteProject = async () => {
         try {
             const response = await deleteProjectAPI(userData);
-            console.log(response);
+            // console.log(response);
             setModalOn(false);
             setSnack({
                 ...snack,
@@ -25,13 +25,13 @@ const DeleteProject = () => {
             navigate("/project");
         }
         catch (error) {
-            console.log(error);
+            // console.log(error);
         }
 
 
     }
 
-    console.log(modalOn);
+    // console.log(modalOn);
     return (
         <>
             <DeleteProjectButton onClick={() => setModalOn(true)}>

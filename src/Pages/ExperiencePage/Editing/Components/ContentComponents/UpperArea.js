@@ -57,8 +57,8 @@ const UppderArea = () => {
       title: e.target.value,
     })
   };
-  console.log("expTitle", expTitle);
-  console.log("tempInput", tempInput);
+  // console.log("expTitle", expTitle);
+  // console.log("tempInput", tempInput);
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   // useEffect(() => {
@@ -81,7 +81,7 @@ const UppderArea = () => {
   //   }));
   // }, [isAllValid]);
 
-  console.log ("answeR: ", answer)
+  // console.log ("answeR: ", answer)
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}

@@ -33,7 +33,7 @@ const ProjectCardGrid = () => {
             setLoading(true);
             try {
                 const response = await getUserProjectDataFilteredAPI(projectFilter);
-                console.log(response);
+                // console.log(response);
                 const cardArray = Array.from({ length: response?.length }, (_, index) => index);
                 setProjectCardNum(cardArray);
                 setProjectNum(response?.length);
@@ -41,7 +41,7 @@ const ProjectCardGrid = () => {
                 setLoading(false);
             }
             catch (error) {
-                console.log(error);
+                // console.log(error);
             }
 
         }
@@ -53,11 +53,11 @@ const ProjectCardGrid = () => {
 
     }
 
-    console.log(projectCardNum);
+    // console.log(projectCardNum);
 
     return (
         <ProjectCardDiv>
-            {loading ? <Loading /> : null}
+            {/* {loading ? <Loading /> : null} */}
             {projectCardNum.length == 0
                 ?
                 <div>

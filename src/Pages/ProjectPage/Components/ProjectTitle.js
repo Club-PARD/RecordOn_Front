@@ -26,8 +26,8 @@ const ProjectTitle = () => {
         }
     }, [firstLoginRecoil])
 
-    console.log("experienceStateRecoil", experienceStateRecoil);
-    console.log("유저 정보", userData);
+    // console.log("experienceStateRecoil", experienceStateRecoil);
+    // console.log("유저 정보", userData);
 
     useEffect(() => {
         if (userData.user_id == null) {
@@ -37,7 +37,7 @@ const ProjectTitle = () => {
         // console.log(userData.user_id);
         const getData = async () => {
             const response = await getUserProjectDataAPI(userData.user_id);
-            console.log(response);
+            // console.log(response);
             setUserName(response?.user_name);
         }
         getData();
@@ -67,9 +67,9 @@ const ProjectTitle = () => {
             </ProjectTitleText2>
             <AddProject />
 
-            {welcomeModalOn && (
+            {/* {welcomeModalOn && (
                 <WelcomeModal onClose={welcomeModalOff} />
-            )}
+            )} */}
         </ProjectTitleDiv>
     );
 };

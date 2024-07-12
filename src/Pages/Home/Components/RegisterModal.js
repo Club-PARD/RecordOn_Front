@@ -34,14 +34,14 @@ function RegisterModal({ show, onClose, defaultName }) {
 
   const openPrivacyModal = () => {
     setIsPrivacyModalOpen(true);
-    console.log(isPrivacyModalOpen);
+    // console.log(isPrivacyModalOpen);
   };
 
   const closePrivacyModal = () => setIsPrivacyModalOpen(false);
 
   const openServiceModal = () => {
     setIsServiceModalOpen(true);
-    console.log(isServiceModalOpen);
+    // console.log(isServiceModalOpen);
   };
   const closeServiceModal = () => setIsServiceModalOpen(false);
   //약관 모달 출력 관련 함수 끝
@@ -52,10 +52,10 @@ function RegisterModal({ show, onClose, defaultName }) {
     // setIsRegisterDataSubmitted(true);
     try {
       const response = await registerUserAPI(registerData);
-      console.log(response);
+      // console.log(response);
     }
     catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     setIsLoggedIn(true);
@@ -72,8 +72,8 @@ function RegisterModal({ show, onClose, defaultName }) {
     })
   }, [userData])
 
-  console.log(registerData);
-  console.log(loginData.imageUrl);
+  // console.log(registerData);
+  // console.log(loginData.imageUrl);
 
   const [selectedJobKeyword, setSelectedJobKeyword] = useState("");
 
@@ -114,17 +114,17 @@ function RegisterModal({ show, onClose, defaultName }) {
   if (!show) {
     return null;
   }
-  console.log(isBox1Checked);
-  console.log(isBox2Checked);
-  console.log(isFormValid);
+  // console.log(isBox1Checked);
+  // console.log(isBox2Checked);
+  // console.log(isFormValid);
   const box1Checking = () => {
     setIsBox1Checked((prev) => (!prev));
-    console.log(isBox1Checked);
+    // console.log(isBox1Checked);
   }
 
   const box2Checking = () => {
     setIsBox2Checked((prev) => (!prev));
-    console.log(isBox2Checked);
+    // console.log(isBox2Checked);
   }
 
   return (
