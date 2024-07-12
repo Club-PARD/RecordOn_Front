@@ -447,7 +447,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 &::placeholder {
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base5};
   }
 `;
 
@@ -485,7 +485,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 &::placeholder {
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base5};
     white-space: pre-wrap;
   }
 `;
@@ -533,7 +533,7 @@ const ModalProjectRoleInput = styled.input.attrs({
     line-height: 18.2px;
     letter-spacing: -0.28px;
     &::placeholder {
-      color: ${(props) => props.theme.color.base6};
+      color: ${(props) => props.theme.color.base5};
     }
   `;
 
@@ -554,6 +554,7 @@ justify-content:space-between;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 flex-direction:row;
+
 `;
 
 const ModalProjectDateCalendar = styled.div`
@@ -562,6 +563,9 @@ height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 justify-content: space-between;
+&::placeholder {
+    color: ${(props) => props.theme.color.base5};
+  }
 `;
 
 const ProjectDateWrapper = styled.div`
@@ -570,6 +574,7 @@ height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 justify-content: start;
+
 
 
 /* DatePicker에 직접 하면 적용이 안된다.. */
@@ -685,6 +690,9 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 text-align: center;
+&::placeholder {
+    color: ${(props) => props.theme.color.base5};
+  }
 `
 
 
@@ -710,6 +718,9 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 text-align: center;
+&::placeholder {
+    color: ${(props) => props.theme.color.base5};
+  }
 `
 
 const ModalProjectImage = styled.div`

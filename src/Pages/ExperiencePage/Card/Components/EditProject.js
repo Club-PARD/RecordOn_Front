@@ -40,7 +40,7 @@ const EditProject = () => {
     return (
         <>
             <EditProjectButton onClick={editClickHandler}>
-                편집
+                편집하기
             </EditProjectButton>
             {modalOn && <EditProjectModal isOpen={modalOn} onClose={() => setModalOn(false)} propsProjectData={projectData} />}
         </>
@@ -49,19 +49,18 @@ const EditProject = () => {
 
 
 const EditProjectButton = styled.button`
-width: 42px;
+width: 62px;
 height: 32px;
 /* border: 1px solid black; */
 color: ${(props) => props.theme.color.main};
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
-justify-content: end;
-align-items: end;
+justify-content: center;
+align-items: center;
 margin-top: 4px;
-text-decoration: underline;
+/* text-decoration: underline; */
 cursor: pointer;
 white-space : nowrap;
-z-index: 2;
 `
 
 export default EditProject;
