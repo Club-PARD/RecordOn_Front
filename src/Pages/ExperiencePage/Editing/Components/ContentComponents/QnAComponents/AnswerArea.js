@@ -109,9 +109,9 @@ const AnswerArea = () => {
             selectedQuestionId: null,
             isTagSelected: false,
             isQuestionSelected: false,
+            text:"",
           };
         }
-        console.log(section.selectedTag);
         // 새로운 태그를 선택한 경우
         const newQuestionOptionTexts = tagAndQuestion[tagId]?.questions || [];
         const newQuestionOptionIds = tagAndQuestion[tagId]?.question_ids || [];
@@ -125,6 +125,7 @@ const AnswerArea = () => {
           selectedQuestionId: null,
           isTagSelected: true,
           isQuestionSelected: false,
+          text:"",
         };
       }
 
@@ -164,7 +165,7 @@ const AnswerArea = () => {
 
     const selectedQuestionIds = updatedSections
       .filter((section) => section.selectedQuestionId !== null)
-      .map((section) => section.selectedQuestionId + 1); // 태그 ID는 그대로 사용
+      .map((section) => section.selectedQuestionId); // 태그 ID는 그대로 사용
 
     setTempInput({
       ...tempInput,
@@ -178,29 +179,16 @@ const AnswerArea = () => {
       section.id === id ? { ...section, text } : section
     );
     setExperienceSections(updatedSections);
+
+    const questionAnswers = updatedSections
+      .filter((section) => section.text !== null)
+      .map((section) => section.text); // 태그 ID는 그대로 사용
+
     setTempInput({
       ...tempInput,
-      question_answers: updatedSections,
+      question_answers: questionAnswers,
     });
   };
-
-  // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
-  useEffect(() => {
-    if (isExpRecordSubmitted) {
-      setTempInput((prev) => ({
-        ...prev,
-        tag_ids: experienceSections.map((section) =>
-          section.selectedTag !== null ? section.selectedTag + 1 : null
-        ),
-        question_ids: experienceSections.map((section) =>
-          section.selectedQuestionId !== null
-            ? section.selectedQuestionId + 1
-            : null
-        ),
-        question_answers: experienceSections.map((section) => section.text),
-      }));
-    }
-  }, [isExpRecordSubmitted, experienceSections, setTempInput]);
 
   console.log("tempInput", tempInput);
 
