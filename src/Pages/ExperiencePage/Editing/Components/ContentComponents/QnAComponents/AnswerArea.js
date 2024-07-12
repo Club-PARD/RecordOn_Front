@@ -31,16 +31,16 @@ const AnswerArea = () => {
   // 경험 섹션 초기값 설정
   useEffect(() => {
     if (answer && tagAndQuestion.length > 0) {
-      const initialSections = answer.tag_id.map((_, index) => ({
+      const initialSections = answer.tag_ids.map((_, index) => ({
         id: index,
-        selectedTag: answer.tag_id[index] - 1,
-        selectedQuestionText: answer.question_text[index],
-        selectedQuestionId: answer.question_id[index] - 1,
+        selectedTag: answer.tag_ids[index] - 1,
+        selectedQuestionText: answer.question_texts[index],
+        selectedQuestionId: answer.question_ids[index] - 1,
         questionOptionIds:
-          tagAndQuestion[answer.tag_id[index] - 1]?.question_ids || [],
+          tagAndQuestion[answer.tag_ids[index] - 1]?.question_ids || [],
         questionOptionTexts:
-          tagAndQuestion[answer.tag_id[index] - 1]?.questions || [],
-        text: answer.question_answer[index],
+          tagAndQuestion[answer.tag_ids[index] - 1]?.questions || [],
+        text: answer.question_answers[index],
         isTagSelected: true, // true일 경우, 질문 드롭다운 스타일이 달라짐
         isQuestionSelected: true, // true일 경우, textarea 배경색이 달라짐
       }));

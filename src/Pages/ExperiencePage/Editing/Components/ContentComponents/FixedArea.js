@@ -19,8 +19,8 @@ const FixedArea = () => {
   const [commonQuestionAnswer, setCommonQuestionAnswer] = useState("");
 
   useEffect(() => {
-    if (answer && answer.common_question_answer) {
-      setCommonQuestionAnswer(answer.common_question_answer);
+    if (answer && answer.common_question_answers) {
+      setCommonQuestionAnswer(answer.common_question_answers);
     }
   }, [answer]);
 
@@ -45,7 +45,7 @@ const FixedArea = () => {
       if (errors.length === 0) {
         setAnswer((prev) => ({
           ...prev,
-          common_question_answer: commonQuestionAnswer,
+          common_question_answers: commonQuestionAnswer,
         }));
       } else {
         setIsExpRecordSubmitted(false);

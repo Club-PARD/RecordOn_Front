@@ -27,8 +27,8 @@ const LowerArea = () => {
     if (answer) {
       setFreeContent(answer.free_content || "");
 
-      if (answer.reference_link && answer.reference_link.length > 0) {
-        const initialLinks = answer.reference_link.map((link, index) => ({
+      if (answer.reference_links && answer.reference_links.length > 0) {
+        const initialLinks = answer.reference_links.map((link, index) => ({
           id: index + 1,
           linkUrl: link,
           isSubmitted: true,

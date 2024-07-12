@@ -24,7 +24,7 @@ const UppderArea = () => {
   useEffect(() => {
     if (answer) {
       setExpDate(new Date(answer.exp_date));
-      setExpTitle(answer.experience_name || "");
+      setExpTitle(answer.title || "");
     }
   }, [answer]);
 
