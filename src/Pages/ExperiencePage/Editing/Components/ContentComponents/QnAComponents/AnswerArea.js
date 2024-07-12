@@ -19,7 +19,6 @@ import {
 const AnswerArea = () => {
   // 리코일 변수
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(expEditState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
@@ -161,7 +160,7 @@ const AnswerArea = () => {
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
   useEffect(() => {
     if (isExpRecordSubmitted) {
-      setExperience((prev) => ({
+      setAnswer((prev) => ({
         ...prev,
         tag_ids: experienceSections.map((section) =>
           section.selectedTag !== null ? section.selectedTag + 1 : null
@@ -174,7 +173,7 @@ const AnswerArea = () => {
         question_answers: experienceSections.map((section) => section.text),
       }));
     }
-  }, [isExpRecordSubmitted, experienceSections, setExperience]);
+  }, [isExpRecordSubmitted, experienceSections, setAnswer]);
 
   return (
     <>

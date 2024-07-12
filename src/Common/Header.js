@@ -164,6 +164,14 @@ const Header = () => {
         experienceDelete: false,
       });
     }
+    else if (snack.experienceValidation) {
+      setToastMessage("필수 항목을 모두 입력해주세요!")
+      setToast(true);
+      setSnack({
+        ...snack,
+        experienceValidation: false,
+      });
+    }
   }, [snack])
 
   return (

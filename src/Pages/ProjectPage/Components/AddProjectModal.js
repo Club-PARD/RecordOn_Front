@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
-import { expEditState, experienceState } from "../../../Atom/ExpRecordAtom";
+import { answerState, experienceState } from "../../../Atom/ExpRecordAtom";
 
 
 
@@ -36,7 +36,7 @@ const AddProjectModal = ({
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
-    const [expEditStateRecoil, setExpEditStateRecoil] = useRecoilState(expEditState);
+    const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
     const [snack, setSnack] = useRecoilState(recoilSnack);
 
     const [valid, setValid] = useState(false);
@@ -162,9 +162,9 @@ const AddProjectModal = ({
                     ...experienceStateRecoil,
                     projects_id: response.response_object.id,
                 })
-                setExpEditStateRecoil({
-                    ...expEditStateRecoil,
-                    projects_id: projectData.project_id,
+                setAnswerStateRecoil({
+                    ...answerStateRecoil,
+                    projects_id: response.response_object.id,
                 })
                 console.log(experienceFilter);
                 if (projectData.picture !== undefined) {
@@ -225,7 +225,7 @@ const AddProjectModal = ({
                                 *
                             </Asterisk>
                         </ModalProjectGoalText>
-                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="프로젝트 내 팀의 목표 또는 개인의 목표를 짧게 남겨주세요! &#13;&#10;50자 이내로 입력해주세요.">
+                        <ModalProjectGoalInput name="description" onChange={userInputHandler} placeholder="프로젝트 내 팀의 목표 또는 개인의 목표를 짧게 남겨주세요! &#13;&#10;70자 이내로 입력해주세요.">
 
                         </ModalProjectGoalInput>
                     </ModalProjectGoal>
@@ -432,11 +432,11 @@ letter-spacing: -0.28px;
 
 const ModalProjectGoal = styled.div`
 width: 636px;
-height: 108px;
+height: 88px;
 /* border: 1px solid black; */
 justify-content: space-between;
 align-items: start;
-margin-bottom: 20px;
+margin-bottom: 22px;
 `;
 
 const ModalProjectGoalText = styled.div`
@@ -451,10 +451,10 @@ flex-direction:row;
 `;
 
 const ModalProjectGoalInput = styled.textarea.attrs({
-    maxLength: 50
+    maxLength: 70
 })`
 width: 636px;
-height: 80px;
+height: 60px;
 border-radius: 10px;
 background-color: ${(props) => props.theme.color.base2};
 padding: 11px 16px;
@@ -692,12 +692,12 @@ text-align: center;
 `
 
 const ModalProjectImage = styled.div`
-width: 290px;
+width: 306px;
 height: 68px;
 /* border: 1px solid black; */
 justify-content: space-between;
 align-items: start;
-margin-bottom: 12px;
+margin-bottom: 30px;
 `;
 
 const ModalProjectImageText = styled.div`

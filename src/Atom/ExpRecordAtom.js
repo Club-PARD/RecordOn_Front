@@ -25,33 +25,18 @@ export const experienceState = atom({
 export const answerState = atom({
   key: "answerState",
   default: {
-    exp_date: "",
-    experience_name: "",
-    tag_id: [],
-    free_content: "",
-    question_id: [],
-    question_answer: [],
-    question_text: [],
-    reference_link: [],
-    common_question_answer: "",
-  },
-  effects_UNSTABLE: [persistAtom],
-});
-
-// 제출 내용 관리 (수정)
-export const expEditState = atom({
-  key: "expEditState",
-  default: {
     user_id: "",
     projects_id: null,
-    title: "",
+
     exp_date: "",
-    free_content: "",
-    common_question_answer: "",
+    title: "",
     tag_ids: [],
+    free_content: "",
     question_ids: [],
     question_answers: [],
+    question_texts: [],
     reference_links: [],
+    common_question_answer: "",
   },
   effects_UNSTABLE: [persistAtom],
 });
