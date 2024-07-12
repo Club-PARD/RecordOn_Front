@@ -15,15 +15,17 @@ import LinkPage from "./Link";
 import { useNavigate } from "react-router-dom";
 import EditProject from "./EditProject";
 import DeleteProject from "./DeleteProject";
-import { experienceState } from "../../../../Atom/ExpRecordAtom";
+import { answerState, experienceState } from "../../../../Atom/ExpRecordAtom";
 
 const ExperienceTitle = () => {
 
     const [userData, setUserData] = useRecoilState(recoilUserData);
     const [experienceData, setExperienceData] = useRecoilState(experienceState);
+    const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
     const [projectData, setProjectData] = useState({});
     const navigate = useNavigate();
 
+    console.log("답변 상태", answerStateRecoil);
     useEffect(() => {
         console.log(userData);
         console.log(experienceData);
