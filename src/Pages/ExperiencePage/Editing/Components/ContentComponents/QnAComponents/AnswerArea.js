@@ -26,6 +26,7 @@ const AnswerArea = () => {
   );
   const [isValid, setIsValid] = useRecoilState(isValidState);
 
+
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
   // 경험 입력 영역 (리코일에 올라가기 전, 임시 변수)

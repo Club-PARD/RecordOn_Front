@@ -15,6 +15,7 @@ const DropdownQuestion = ({
 }) => {
   // 드롭다운 열림 상태
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+  const [shouldIgnoreChanges, setShouldIgnoreChanges] = useState(true); // 상태 추가
 
   // 선택된 질문을 저장하는 상태 (임시변수)
   const [tmpId, setTmpId] = useState(selectedQuestionId);
@@ -37,19 +38,20 @@ const DropdownQuestion = ({
 
   useEffect(() => {
     console.log("selectedQuesitonId: ", tmpId);
-    if (selectedQuestionId !== null) {
-      console.log("handleSelect: " + tmpText);
-      onSelect(tmpId, tmpText);
-    }
+
+    console.log("handleSelect: " + tmpText);
+    onSelect(tmpId, tmpText);
   }, [tmpId, tmpText]);
 
-  // useEffect(() => {
-  //   if (!isTagSelected || selectedTag !== null) {
-  //     setTmpId(null);
-  //     setTmpText("");
-  //     setIsQuestionOpen(false);
-  //   }
-  // }, [isTagSelected, selectedTag]);
+  useEffect(() => {
+    // 최초 마운트 시나 태그 선택/변경 시 초기화하는 부분
+    if (!shouldIgnoreChanges) {
+      setIsQuestionOpen(false);
+      setTmpId(null);
+      setTmpText("");
+    }
+    setShouldIgnoreChanges(false); // 최초 마운트 후에는 false로 설정
+  }, [isTagSelected, selectedTag]);
 
   return (
     <DropdownContainer>
