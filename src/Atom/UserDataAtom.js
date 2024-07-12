@@ -8,6 +8,11 @@ export const isLogined = atom({
     default: false,
     effects_UNSTABLE: [persistAtom],
 });
+export const isFirstLogin = atom({
+    key: "isFirstLogin",
+    default: false,
+    effects_UNSTABLE: [persistAtom],
+});
 export const recoilLoginData = atom({
     key: "loginData",
     default: {
@@ -103,6 +108,7 @@ export const recoilSnack = atom({
         experienceEdit: false,
         experienceDelete: false,
         experienceValidation: false,
+        dateValidation: false,
     },
     effects_UNSTABLE: [persistAtom],
 });

@@ -56,6 +56,7 @@ height: 50px;
 border: 1px solid black;
 border-radius: 30px;
 color: ${(props) => props.theme.color.white};
+font-size : ${(props) => props.theme.fontSizes.TextS};
 background-color: ${(props) => props.theme.color.base7};
 position: absolute;
 left: 50%;
@@ -64,4 +65,5 @@ transform:translate(-50%,-50%);
 justify-content: center;
 align-items: center;
 animation: ${slideTop} 0.3s forwards, ${disappear} 0.3s forwards 2s;
+z-index: 9999999;
 `
