@@ -35,7 +35,7 @@
 
 <br>
 
-<img src="asset/images/typo_logo.png" width="45%">
+<img src="src/Assets/typo_logo.png" width="45%">
 
 </div>
 
@@ -171,7 +171,7 @@
 
 ## ERD
 
-<img src="asset/images/Record_on_ERD(1).png">
+<img src="src/Assets/Record_on_ERD(1).png">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -210,7 +210,7 @@
 
 ## Branch Criteria
 
-<img src="./asset/images/Branch_Citeria.png">
+<img src="src/Assets/Branch_Citeria.png">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -250,10 +250,10 @@
 |                                                🐣 조예은                                                 |                          🐭 박예람                           |                          🦉 김기영                           |                          🐱 전소명                           |
 |:-----------------------------------------------------------------------------------------------------:|:---------------------------------------------------------:|:---------------------------------------------------------:|:---------------------------------------------------------:|
 |                                                  PM                                                   |                            기획                             |                            백엔드                            |                            백엔드                            |
-|  <img src="asset/images/profile/yeeun.jpeg" style="width: 150px; height: 150px; object-fit: cover;">  |  <img src="asset/images/profile/yeram.jpeg" style="width: 150px; height: 150px; object-fit: cover;">   | <img src="asset/images/profile/giyoung.png" style="width: 150px; height: 150px; object-fit: cover;"> | <img src="asset/images/profile/somyung.jpeg" style="width: 150px; height: 150px; object-fit: cover;"> |
+|  <img src="src/Assets/yeeun.jpeg" style="width: 150px; height: 150px; object-fit: cover;">  |  <img src="src/Assets/yeram.jpeg" style="width: 150px; height: 150px; object-fit: cover;">   | <img src="src/Assets/giyoung.png" style="width: 150px; height: 150px; object-fit: cover;"> | <img src="src/Assets/somyung.jpeg" style="width: 150px; height: 150px; object-fit: cover;"> |
 |                                                🐰 이윤서                                                 |                          🐹 김예은                           |                          🐨 박주영                           |                          🐶 이민규                           |
 |                                                  디자인                                                  |                           프론트엔드                           |                           프론트엔드                           |                           프론트엔드                           |
-| <img src="asset/images/profile/yunseo1.jpeg" style="width: 150px; height: 150px; object-fit: cover;"> | <img src="asset/images/profile/yepal.jpeg" style="width: 150px; height: 150px; object-fit: cover;"> | <img src="asset/images/profile/juyoung.png" style="width: 150px; height: 150px; object-fit: cover;"> | <img src="asset/images/profile/mingyu.jpeg" style="width: 150px; height: 150px; object-fit: cover;"> |
+| <img src="src/Assets/yunseo1.jpeg" style="width: 150px; height: 150px; object-fit: cover;"> | <img src="src/Assets/yepal.jpeg" style="width: 150px; height: 150px; object-fit: cover;"> | <img src="src/Assets/juyoung.png" style="width: 150px; height: 150px; object-fit: cover;"> | <img src="src/Assets/mingyu.jpeg" style="width: 150px; height: 150px; object-fit: cover;"> |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

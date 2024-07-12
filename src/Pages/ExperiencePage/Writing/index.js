@@ -150,6 +150,12 @@ const WritingPage = () => {
   };
 
   const submitData = async () => {
+    console.log(
+      "유저 및 프로젝트 정보: ",
+      experience.user_id,
+      experience.projects_id
+    );
+
     if (isExpRecordSubmitted && isUpdated) {
       try {
         await checkUserAndProjectInfo();
