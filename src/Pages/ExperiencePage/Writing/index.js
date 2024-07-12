@@ -11,24 +11,34 @@ import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
 import { postExperienceAPI } from "../../../Axios/ExperienceApi";
 import DeleteModal from "../../../Common/DeleteModal";
-import useModal from "../../../Common/useModal";
 import { resetExperienceState } from "./Components/resetExperienceState";
 
 const WritingPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
-  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(handleExpRecordSubmit);
-  
-  const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
+    handleExpRecordSubmit
+  );
+
   const [isUpdated, setIsUpdated] = useState(false);
   const [snack, setSnack] = useRecoilState(recoilSnack);
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsExpRecordSubmitted(false);
+  };
+
+  const navigate = useNavigate();
+
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
     await new Promise((resolve) => setTimeout(resolve, 0));
     setIsUpdated(true);
   };
-  
+
   const checkUserAndProjectInfo = async () => {
     // 유저 ID와 프로젝트 ID를 비동기적으로 확인하는 로직
     if (
@@ -42,26 +52,26 @@ const WritingPage = () => {
       throw new Error("유저 ID나 프로젝트 ID가 올바르지 않습니다.");
     }
   };
-  
+
   // 유효성 검사
   const validateUserId = (userId, errors) => {
     if (!userId || typeof userId !== "string" || userId.trim() === "") {
       errors.push("유효하지 않은 유저 ID입니다.");
     }
   };
-  
+
   const validateProjectsId = (projectsId, errors) => {
     if (projectsId === null || projectsId === undefined) {
       errors.push("유효하지 않은 프로젝트 ID입니다.");
     }
   };
-  
+
   const validateTitle = (title, errors) => {
     if (!title || typeof title !== "string" || title.trim() === "") {
       errors.push("제목을 입력해 주세요.");
     }
   };
-  
+
   const validateTagIds = (tagIds, errors) => {
     if (!Array.isArray(tagIds)) {
       errors.push("유효하지 않은 태그 ID 배열입니다.");
@@ -73,7 +83,7 @@ const WritingPage = () => {
       });
     }
   };
-  
+
   const validateQuestionIds = (questionIds, errors) => {
     if (!Array.isArray(questionIds)) {
       errors.push("유효하지 않은 질문 ID 배열입니다.");
@@ -85,7 +95,7 @@ const WritingPage = () => {
       });
     }
   };
-  
+
   const validateQuestionAnswers = (questionAnswers, errors) => {
     if (!Array.isArray(questionAnswers)) {
       errors.push("유효하지 않은 질문 답변 배열입니다.");
@@ -97,7 +107,7 @@ const WritingPage = () => {
       });
     }
   };
-  
+
   const validateCommonQuestionAnswer = (commonQuestionAnswer, errors) => {
     if (typeof commonQuestionAnswer !== "string") {
       errors.push("연상되는 단어를 입력해 주세요.");
@@ -105,12 +115,15 @@ const WritingPage = () => {
   };
 
   const validateReferenceLinks = (referenceLinks, errors) => {
-    const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    const urlPattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
+      "i"
+    ); // fragment locator
     if (!Array.isArray(referenceLinks)) {
       errors.push("유효하지 않은 참조 링크 배열입니다.");
     } else {
@@ -121,7 +134,7 @@ const WritingPage = () => {
       });
     }
   };
-  
+
   const validateExperience = (experience) => {
     let errors = [];
     validateUserId(experience.user_id, errors);
@@ -134,13 +147,17 @@ const WritingPage = () => {
     validateReferenceLinks(experience.reference_links, errors);
     return errors;
   };
-  
+
   const submitData = async () => {
     if (isExpRecordSubmitted && isUpdated) {
       try {
         await checkUserAndProjectInfo();
-        console.log("유저 및 프로젝트 정보: ", experience.user_id, experience.projects_id);
-  
+        console.log(
+          "유저 및 프로젝트 정보: ",
+          experience.user_id,
+          experience.projects_id
+        );
+
         // 유효성 검사 추가
         const errors = validateExperience(experience);
         if (errors.length > 0) {
@@ -149,7 +166,7 @@ const WritingPage = () => {
           setIsUpdated(false);
           return;
         }
-  
+
         const response = await postExperienceAPI(experience);
         console.log("request successful: ", response);
         setSnack((prevSnack) => ({
@@ -164,17 +181,17 @@ const WritingPage = () => {
       }
     }
   };
-  
+
   useEffect(() => {
     submitData();
   }, [isUpdated]);
-  
+
   const { location } = useLocation();
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-  
+
   return (
     <Div>
       {/* 뒤로 가기 */}
