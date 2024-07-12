@@ -63,7 +63,7 @@ const ExperienceTitle = () => {
     const [toolBoxClicked, setToolBoxClicked] = useState(false);
     const toolBoxClickHandler = () => {
         setToolBoxClicked((prev) => !prev);
-      }
+    }
 
     // console.log(experienceData);
 
@@ -159,26 +159,25 @@ const ExperienceTitle = () => {
                     <img src={ArrowWhite} style={{ width: "10px", marginLeft: "7px" }} />
                 </OpenExperienceLinkModal>
                 <ExperienceTitleRightDiv>
-                <DeleteProjectDiv >
-           
-                    <DeleteProjectText  onClick={toolBoxClickHandler}>
-                프로젝트 삭제/편집
-            </DeleteProjectText>
-                </DeleteProjectDiv>
-                {toolBoxClicked && (
-           <Example />
-            )}
-            </ExperienceTitleRightDiv>
+                    <DeleteProjectDiv >
+                        <DeleteProjectText onClick={toolBoxClickHandler}>
+                            프로젝트 삭제/편집
+                        </DeleteProjectText>
+                    </DeleteProjectDiv>
+                    {toolBoxClicked && (
+                        <Example />
+                    )}
+                </ExperienceTitleRightDiv>
             </ExperienceTitleRight>
-            
+
             {isModalOpen && <LinkPage isOpen={isModalOpen} onClose={closeModal} />}
-            
+
         </ExperienceTitleDiv>
-        
+
     );
 };
 
-const ToolBoxDiv = styled.div `
+const ToolBoxDiv = styled.div`
 flex-direction: column;
 /* position: fixed; */
 justify-content: start;

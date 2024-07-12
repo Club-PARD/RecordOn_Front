@@ -52,7 +52,7 @@ const EditProjectButton = styled.button`
 width: 62px;
 height: 32px;
 /* border: 1px solid black; */
-color: ${(props) => props.theme.color.main};
+/* color: ${(props) => props.theme.color.main}; */
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 justify-content: center;
