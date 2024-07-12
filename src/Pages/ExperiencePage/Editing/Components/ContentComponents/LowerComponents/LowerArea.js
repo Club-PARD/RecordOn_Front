@@ -118,6 +118,7 @@ const LowerArea = () => {
           <TextAreaWidth
             height="150px"
             value={freeContent}
+            placeholder="상단 태그별 질문을 통해 다 작성하지 못한 내용을 자유 작성란에 작성해보세요.&#13;&#10;하지만 자유 작성란만 작성하는 것은 불가능해요. 최소 질문 한 가지에 답하고 와주세요:)"
             onChange={handleFreeChange}
           />
           <DivForMargin height={"60px"} />
@@ -245,6 +246,7 @@ const TextAreaWidth = styled.textarea`
 
   &::placeholder {
     color: ${(props) => props.theme.color.base6};
+    white-space: pre-wrap;
   }
 `;
 
@@ -276,7 +278,7 @@ const StyledUrlInput = styled.input`
   padding: 0 24px 0 24px;
   width: 840px;
   height: 50px;
-
+  overflow-x: hidden;
   border-radius: 10px;
   background-color: ${(props) => props.theme.color.base2};
 
