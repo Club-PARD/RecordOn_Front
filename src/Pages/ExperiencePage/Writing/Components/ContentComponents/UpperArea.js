@@ -69,7 +69,7 @@ const UppderArea = () => {
       {/* 상단 영역: 소제목, 경험한 날*/}
       <Upper>
         <UppderPart width={"840px"}>
-          <StyledLabel>소제목</StyledLabel>
+          <StyledLabel>소제목<Asterisk>*</Asterisk></StyledLabel>
           <StyledInput
             type="text"
             placeholder="가장 기억에 남는 활동 중심으로 소제목을 작성해보세요! (15자 이내 공백 미포함)"
@@ -123,6 +123,7 @@ const StyledLabel = styled.label`
   white-space: nowrap;
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
   font-size: ${(props) => props.theme.fontSizes.TextXL};
+  flex-direction: row;
 `;
 
 const StyledInput = styled.input`
@@ -142,6 +143,13 @@ const StyledInput = styled.input`
     font-size: ${(props) => props.theme.fontSizes.TextL};
     color: ${(props) => props.theme.color.base6};
   }
+`;
+const Asterisk = styled.div`
+width: 10px;
+height: 23px;
+color: ${(props) => props.theme.color.fail};
+justify-content: center;
+margin-left: 2px;
 `;
 
 export default UppderArea;

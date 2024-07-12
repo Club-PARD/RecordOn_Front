@@ -284,7 +284,7 @@ font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: 600;
 `
 const ProjectGoalContents = styled.div`
-width: 600px;
+width: 465px;
 height: 46px;
 /* border: 1px solid black; */
 justify-content:start;

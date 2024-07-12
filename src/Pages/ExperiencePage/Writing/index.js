@@ -11,17 +11,27 @@ import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentArea from "./Components/ContentsArea";
 import { postExperienceAPI } from "../../../Axios/ExperienceApi";
 import DeleteModal from "../../../Common/DeleteModal";
-import useModal from "../../../Common/useModal";
 import { resetExperienceState } from "./Components/resetExperienceState";
 
 const WritingPage = () => {
   const [experience, setExperience] = useRecoilState(experienceState);
-  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(handleExpRecordSubmit);
 
   const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useModal();
   const [isUpdated, setIsUpdated] = useState(false);
   const [snack, setSnack] = useRecoilState(recoilSnack);
+  const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
+    handleExpRecordSubmit
+  );
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsExpRecordSubmitted(false);
+  };
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
@@ -105,12 +115,15 @@ const WritingPage = () => {
   };
 
   const validateReferenceLinks = (referenceLinks, errors) => {
-    const urlPattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    const urlPattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+      "i"
+    ); // fragment locator
     if (!Array.isArray(referenceLinks)) {
       errors.push("유효하지 않은 참조 링크 배열입니다.");
     } else {
@@ -139,7 +152,11 @@ const WritingPage = () => {
     if (isExpRecordSubmitted && isUpdated) {
       try {
         await checkUserAndProjectInfo();
-        console.log("유저 및 프로젝트 정보: ", experience.user_id, experience.projects_id);
+        console.log(
+          "유저 및 프로젝트 정보: ",
+          experience.user_id,
+          experience.projects_id
+        );
 
         // 유효성 검사 추가
         const errors = validateExperience(experience);

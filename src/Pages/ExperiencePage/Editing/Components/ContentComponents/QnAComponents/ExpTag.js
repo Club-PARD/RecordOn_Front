@@ -38,7 +38,7 @@ const ExpTag = ({ selectedTag, onSelect }) => {
       <Div>
         {/* "경험태그 > " */}
         <TitleButton>
-          <div>경험태그</div>
+        <TitleDiv>경험태그<Asterisk>*</Asterisk></TitleDiv>
           <RightArrow />
         </TitleButton>
 
@@ -75,7 +75,7 @@ const TitleButton = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  width: 113px;
+  width: 120px;
 
   font-size: ${(props) => props.theme.fontSizes.TextXL};
   font-weight: ${(props) => props.theme.fontWeights.TextXL};
@@ -100,6 +100,11 @@ const StyledButton = styled.button`
   font-size: ${(props) => props.theme.fontSizes.TextL};
   font-weight: ${(props) => props.theme.fontWeights.TextL};
   cursor: pointer;
+  
+  &:hover {
+    border-color: ${({ color }) => color};
+    color: ${({ color }) => color};
+  }
 
   //항상 맨 아래에 둬야 함!
   border-color: ${({ isClicked, color }) =>
@@ -107,5 +112,17 @@ const StyledButton = styled.button`
   color: ${({ isClicked, color }) =>
     isClicked ? color : "${(props) => props.theme.color.black"};
 `;
+
+const TitleDiv = styled.div`
+flex-direction: row;
+`
+
+const Asterisk = styled.div`
+width: 10px;
+height: 23px;
+color: ${(props) => props.theme.color.fail};
+justify-content: center;
+margin-left: 2px;
+`
 
 export default ExpTag;

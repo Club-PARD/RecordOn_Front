@@ -22,12 +22,12 @@ const EditPage = () => {
     handleExpRecordEditSubmit
   );
   const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
-  const [snack, setSnack] = useRecoilState(recoilSnack);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expId, setExpId] = useState(null);
-  const [errorMessages, setErrorMessages] = useState([]);
+
+  const [snack, setSnack] = useRecoilState(recoilSnack);
 
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
