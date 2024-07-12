@@ -111,7 +111,7 @@ const AnswerArea = () => {
             isQuestionSelected: false,
           };
         }
-
+        console.log (section.selectedTag);
         // 새로운 태그를 선택한 경우
         const newQuestionOptionTexts = tagAndQuestion[tagId]?.questions || [];
         const newQuestionOptionIds = tagAndQuestion[tagId]?.question_ids || [];
@@ -130,13 +130,14 @@ const AnswerArea = () => {
 
       return section;
     });
-
+    
     setExperienceSections(updatedSections);
     setTempInput({
       ...tempInput,
       tag_ids: (updatedSections.selectedTag)-1,
     })
   };
+
   // 질문 선택 핸들러
   const handleQuestionSelectInSection = (
     selectedQuestionId,
