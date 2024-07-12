@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 import { useRecoilState } from "recoil";
 import {
-  expEditState,
   handleExpRecordEditSubmit,
+  answerState
 } from "../../../Atom/ExpRecordAtom";
 import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
 
@@ -17,7 +17,7 @@ import { ReactComponent as GoBackIcon } from "../../../Assets/GoBackIcon.svg";
 import ContentsArea from "./Components/ContentsArea";
 
 const EditPage = () => {
-  const [experience, setExperience] = useRecoilState(expEditState);
+  const [answer, setAnswer] = useRecoilState(answerState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
@@ -33,7 +33,7 @@ const EditPage = () => {
     setIsExpRecordSubmitted(true);
     try {
       await resolveAfter2Seconds();
-      await editOneExpereienceAPI(expId, experience);
+      await editOneExpereienceAPI(expId, answer);
       console.log("경험 데이터가 수정되었습니다.");
       setSnack((prevSnack) => ({
         ...prevSnack,

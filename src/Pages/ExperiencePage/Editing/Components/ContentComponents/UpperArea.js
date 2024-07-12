@@ -8,13 +8,11 @@ import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
 import {
   answerState,
-  expEditState,
   handleExpRecordEditSubmit,
 } from "../../../../../Atom/ExpRecordAtom";
 
 const UppderArea = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
-  const [experience, setExperience] = useRecoilState(expEditState);
   const [expDate, setExpDate] = useState(new Date());
   const [expTitle, setExpTitle] = useState("");
 
@@ -50,20 +48,22 @@ const UppderArea = () => {
   useEffect(() => {
     const normalizedExpDate = normalizeDate(expDate);
     if (isExpRecordSubmitted) {
-      setExperience((prev) => ({
+      setAnswer((prev) => ({
         ...prev,
         exp_date: normalizedExpDate,
         title: expTitle,
       }));
     }
-  }, [isExpRecordSubmitted, expDate, expTitle, setExperience]);
+  }, [isExpRecordSubmitted, expDate, expTitle, setAnswer]);
 
   return (
     <>
       {/* 상단 영역: 소제목, 경험한 날*/}
       <Upper>
         <UppderPart width={"840px"}>
-          <StyledLabel>소제목<Asterisk>*</Asterisk></StyledLabel>
+          <StyledLabel>
+            소제목<Asterisk>*</Asterisk>
+          </StyledLabel>
           <StyledInput
             type="text"
             value={expTitle}
@@ -137,12 +137,12 @@ const StyledInput = styled.input`
   }
 `;
 const Asterisk = styled.div`
-width: 10px;
-height: 23px;
-color: ${(props) => props.theme.color.fail};
-justify-content: center;
-margin-left: 2px;
-`
+  width: 10px;
+  height: 23px;
+  color: ${(props) => props.theme.color.fail};
+  justify-content: center;
+  margin-left: 2px;
+`;
 
 export default UppderArea;
 export { Upper, UppderPart, StyledLabel, StyledInput };

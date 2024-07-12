@@ -6,7 +6,7 @@ import axios from 'axios'
 import api from '../../../Axios/axiosConfig.mjs';
 import { useRecoilState } from "recoil";
 import { isLogined, recoilLoginData, recoilUserData, recoilUserExperienceFilter, recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
-import { expEditState, experienceState } from "../../../Atom/ExpRecordAtom";
+import { answerState, expEditState, experienceState } from "../../../Atom/ExpRecordAtom";
 import { useState, useEffect } from "react";
 import RegisterModal from "./RegisterModal";
 import Cookies from 'js-cookie';
@@ -18,7 +18,7 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
     const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
-    const [expEditStateRecoil, setExpEditStateRecoil] = useRecoilState(expEditState);
+    const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
 
     const [isNewUser, setIsNewUser] = useState(null);
     const navigate = useNavigate();
@@ -121,9 +121,10 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
                 ...experienceStateRecoil,
                 user_id: response.data.user_id,
             })
-            setExpEditStateRecoil({
-                ...expEditStateRecoil,
+            setAnswerStateRecoil({
+                ...answerStateRecoil,
                 user_id: response.data.user_id,
+
             })
 
 
