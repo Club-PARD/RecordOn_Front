@@ -4,25 +4,25 @@ import styled, { keyframes } from "styled-components";
 
 
 export default function Toast({
-    message,
-    setToast,
-    height,
+  message,
+  setToast,
+  height,
 }) {
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setToast(false);
-        }, 3000);
-        return () => {
-            clearTimeout(timer);
-        };
-    }, [setToast]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setToast(false);
+    }, 3000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [setToast]);
 
-    return (
-        <Container height={height}>
-            <p>{message}</p>
-        </Container>
-    );
+  return (
+    <Container height={height}>
+      <p>{message}</p>
+    </Container>
+  );
 }
 
 
@@ -33,7 +33,7 @@ const slideTop = keyframes`
             transform: translate(-50%, -50%) translateY(0);
   }
   100% {
-    opacity: 100%;
+    opacity: 90%;
     -webkit-transform: translate(-50%, -50%) translateY(-80px);
             transform: translate(-50%, -50%) translateY(-80px);
   }
@@ -42,7 +42,7 @@ const slideTop = keyframes`
 
 const disappear = keyframes` 
   0% {
-    opacity: 100%;
+    opacity: 90%;
   }
   100% {
     opacity: 0%;
@@ -56,7 +56,7 @@ height: 50px;
 border: 1px solid black;
 border-radius: 30px;
 color: ${(props) => props.theme.color.white};
-background-color: ${(props) => props.theme.color.black};
+background-color: ${(props) => props.theme.color.base7};
 position: absolute;
 left: 50%;
 top: ${(props) => props.height};

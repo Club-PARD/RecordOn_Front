@@ -430,7 +430,7 @@ letter-spacing: -0.28px;
 
 const ModalProjectGoal = styled.div`
 width: 636px;
-height: 108px;
+height: 88px;
 /* border: 1px solid black; */
 justify-content: space-between;
 align-items: start;
@@ -449,10 +449,10 @@ flex-direction:row;
 `;
 
 const ModalProjectGoalInput = styled.textarea.attrs({
-    maxLength: 50
+    maxLength: 70
 })`
 width: 636px;
-height: 80px;
+height: 60px;
 border-radius: 10px;
 background-color: ${(props) => props.theme.color.base2};
 padding: 11px 16px;
@@ -697,12 +697,12 @@ text-align: center;
 `
 
 const ModalProjectImage = styled.div`
-width: 290px;
+width: 306px;
 height: 68px;
 /* border: 1px solid black; */
 justify-content: space-between;
 align-items: start;
-margin-bottom: 12px;
+margin-bottom: 30px;
 `;
 
 const ModalProjectImageText = styled.div`

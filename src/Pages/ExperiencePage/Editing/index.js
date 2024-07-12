@@ -28,10 +28,21 @@ const EditPage = () => {
   const [expId, setExpId] = useState(null);
 
   const [snack, setSnack] = useRecoilState(recoilSnack);
-  
+
   const handleSubmit = async () => {
     setIsExpRecordSubmitted(true);
     try {
+      const errors = validateExperience(experience);
+      if (errors.length > 0) {
+        // alert("다음 항목을 확인해 주세요:\n" + errors.join("\n"));
+        setSnack((prevSnack) => ({
+          ...prevSnack,
+          experienceValidation: true,
+        }));
+        setIsExpRecordSubmitted(false);
+        return;
+      }
+
       await resolveAfter2Seconds();
       await editOneExpereienceAPI(expId, answer);
       console.log("경험 데이터가 수정되었습니다.");
@@ -64,6 +75,102 @@ const EditPage = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const validateUserId = (userId, errors) => {
+    if (!userId || typeof userId !== "string" || userId.trim() === "") {
+      errors.push("유효하지 않은 유저 ID입니다.");
+    }
+  };
+
+  const validateProjectsId = (projectsId, errors) => {
+    if (projectsId === null || projectsId === undefined) {
+      errors.push("유효하지 않은 프로젝트 ID입니다.");
+    }
+  };
+
+  const validateTitle = (title, errors) => {
+    if (!title || typeof title !== "string" || title.trim() === "") {
+      errors.push("제목을 입력해 주세요.");
+    }
+  };
+
+  const validateTagIds = (tagIds, errors) => {
+    if (!Array.isArray(tagIds)) {
+      errors.push("유효하지 않은 태그 ID 배열입니다.");
+    } else {
+      tagIds.forEach((tagId) => {
+        if (typeof tagId !== "number") {
+          errors.push("경험태그를 선택해 주세요.");
+        }
+      });
+    }
+  };
+
+  const validateQuestionIds = (questionIds, errors) => {
+    if (!Array.isArray(questionIds)) {
+      errors.push("유효하지 않은 질문 ID 배열입니다.");
+    } else {
+      questionIds.forEach((questionId) => {
+        if (typeof questionId !== "number") {
+          errors.push("답변을 작성할 질문을 선택해 주세요.");
+        }
+      });
+    }
+  };
+
+  const validateQuestionAnswers = (questionAnswers, errors) => {
+    if (!Array.isArray(questionAnswers)) {
+      errors.push("유효하지 않은 질문 답변 배열입니다.");
+    } else {
+      questionAnswers.forEach((answer) => {
+        if (typeof answer !== "string") {
+          console.log("답변: ", answer);
+          errors.push("선택한 질문에 대한 답변을 작성해 주세요.");
+        }
+      });
+    }
+  };
+
+  const validateCommonQuestionAnswer = (commonQuestionAnswer, errors) => {
+    if (typeof commonQuestionAnswer !== "string") {
+      errors.push("연상되는 단어를 입력해 주세요.");
+    }
+  };
+
+  const validateReferenceLinks = (referenceLinks, errors) => {
+    const urlPattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+      "i"
+    ); // fragment locator
+    if (!Array.isArray(referenceLinks)) {
+      errors.push("유효하지 않은 참조 링크 배열입니다.");
+    } else {
+      referenceLinks.forEach((link) => {
+        if (!urlPattern.test(link)) {
+          errors.push("유효하지 않은 URL 형식입니다: " + link);
+        }
+      });
+    }
+  };
+
+  const validateExperience = (experience) => {
+    let errors = [];
+    validateUserId(experience.user_id, errors);
+    validateProjectsId(experience.projects_id, errors);
+    validateTitle(experience.title, errors);
+    validateTagIds(experience.tag_ids, errors);
+    validateQuestionIds(experience.question_ids, errors);
+    validateQuestionAnswers(experience.question_answers, errors);
+    validateCommonQuestionAnswer(experience.common_question_answer, errors);
+    validateReferenceLinks(experience.reference_links, errors); // reference_links 유효성 검사 추가
+
+    return errors;
   };
 
   const { location } = useLocation();
