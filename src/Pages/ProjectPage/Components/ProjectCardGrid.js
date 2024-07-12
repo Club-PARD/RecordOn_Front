@@ -8,6 +8,7 @@ import { recoilProjectPagination, recoilUserProjectFilter, recoilUserProjectNum 
 import FolderNone from "../../../Assets/ProjEmpty.svg"
 import FolderNoneFiltered from "../../../Assets/FolderNoneFiltered.svg"
 import AddProjectModal from "./AddProjectModal";
+import Loading from "../../../Common/Loading";
 
 const ProjectCardGrid = () => {
 
@@ -19,6 +20,7 @@ const ProjectCardGrid = () => {
     const [projectFilter, setProjectFilter] = useRecoilState(recoilUserProjectFilter);
     const [projectPagination, setProjectPagination] = useRecoilState(recoilProjectPagination);
     const [modalOn, setModalOn] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setVisibleCardStart(projectPagination.startNum);
@@ -28,12 +30,20 @@ const ProjectCardGrid = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await getUserProjectDataFilteredAPI(projectFilter);
-            console.log(response);
-            const cardArray = Array.from({ length: response?.length }, (_, index) => index);
-            setProjectCardNum(cardArray);
-            setProjectNum(response?.length);
-            setUserProjectData(response);
+            setLoading(true);
+            try {
+                const response = await getUserProjectDataFilteredAPI(projectFilter);
+                // console.log(response);
+                const cardArray = Array.from({ length: response?.length }, (_, index) => index);
+                setProjectCardNum(cardArray);
+                setProjectNum(response?.length);
+                setUserProjectData(response);
+                setLoading(false);
+            }
+            catch (error) {
+                // console.log(error);
+            }
+
         }
         getData();
 
@@ -43,10 +53,11 @@ const ProjectCardGrid = () => {
 
     }
 
-    console.log(projectCardNum);
+    // console.log(projectCardNum);
 
     return (
         <ProjectCardDiv>
+            {/* {loading ? <Loading /> : null} */}
             {projectCardNum.length == 0
                 ?
                 <div>

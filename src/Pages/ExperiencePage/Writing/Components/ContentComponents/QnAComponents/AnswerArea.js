@@ -48,7 +48,7 @@ const AnswerArea = () => {
         const response = await getAllTagAndQuestionAPI();
         setTagAndQuestion(response);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
     fetchData();
@@ -95,7 +95,7 @@ const AnswerArea = () => {
             selectedQuestionId: null,
             isTagSelected: false,
             isQuestionSelected: false,
-            text:"",
+            text: "",
           };
         }
 
@@ -111,7 +111,7 @@ const AnswerArea = () => {
           selectedQuestionId: null,
           isTagSelected: true,
           isQuestionSelected: false,
-          text:"",
+          text: "",
         };
       }
       return section;

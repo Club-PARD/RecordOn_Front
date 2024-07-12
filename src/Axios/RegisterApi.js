@@ -6,12 +6,12 @@ import qs from 'qs';
 export const registerUserAPI = async (loginData) => {
 
     try {
-        console.log(loginData)
+        // console.log(loginData)
         const response = await api.put(`${process.env.REACT_APP_DEV_URL}user/register`, loginData);
-        console.log(response.data)
+        // console.log(response.data)
         return response.data
     } catch (error) {
-        console.error('Error fetching data: ', error);
+        // console.error('Error fetching data: ', error);
         // alert("유저 정보 로딩에 실패하였습니다.");
     }
 

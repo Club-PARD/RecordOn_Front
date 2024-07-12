@@ -15,7 +15,7 @@ const EditProject = () => {
 
     const getProjectData = async () => {
         const response = await getOneProjectDataAPI(userData);
-        console.log(response);
+        // console.log(response);
         setProjectData({
             user_id: userData.user_id,
             name: response.project_name,
@@ -30,11 +30,11 @@ const EditProject = () => {
 
     const editClickHandler = async () => {
         const done = await getProjectData();
-        console.log(done);
+        // console.log(done);
         setModalOn(true);
     }
 
-    console.log(projectData);
+    // console.log(projectData);
     // console.log(new Date(projectData.finish_date));
 
     return (
@@ -52,7 +52,7 @@ const EditProjectButton = styled.button`
 width: 62px;
 height: 32px;
 /* border: 1px solid black; */
-color: ${(props) => props.theme.color.main};
+/* color: ${(props) => props.theme.color.main}; */
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 justify-content: center;

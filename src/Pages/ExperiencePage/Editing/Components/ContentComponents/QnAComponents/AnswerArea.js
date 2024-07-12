@@ -50,7 +50,7 @@ const AnswerArea = () => {
       }));
 
       setExperienceSections(initialSections);
-      console.log("지금: ", initialSections);
+      // console.log("지금: ", initialSections);
     }
   }, [answer, tagAndQuestion]);
 
@@ -61,7 +61,7 @@ const AnswerArea = () => {
         const response = await getAllTagAndQuestionAPI();
         setTagAndQuestion(response);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
     fetchData();
@@ -110,7 +110,7 @@ const AnswerArea = () => {
             selectedQuestionId: null,
             isTagSelected: false,
             isQuestionSelected: false,
-            text:"",
+            text: "",
           };
         }
         // 새로운 태그를 선택한 경우
@@ -126,7 +126,7 @@ const AnswerArea = () => {
           selectedQuestionId: null,
           isTagSelected: true,
           isQuestionSelected: false,
-          text:"",
+          text: "",
         };
       }
 
@@ -154,11 +154,11 @@ const AnswerArea = () => {
     const updatedSections = experienceSections.map((section) =>
       section.id === id
         ? {
-            ...section,
-            selectedQuestionId: selectedQuestionId,
-            selectedQuestionText: selectedQuestionText,
-            isQuestionSelected: true,
-          }
+          ...section,
+          selectedQuestionId: selectedQuestionId,
+          selectedQuestionText: selectedQuestionText,
+          isQuestionSelected: true,
+        }
         : section
     );
     setExperienceSections(updatedSections);
@@ -191,7 +191,7 @@ const AnswerArea = () => {
     });
   };
 
-  console.log("tempInput", tempInput);
+  // console.log("tempInput", tempInput);
 
   return (
     <>
@@ -298,7 +298,7 @@ const TextAreaWidth = styled.textarea`
 
   &::placeholder {
     color: ${({ isQuestionSelected, theme }) =>
-      isQuestionSelected ? theme.color.base6 : theme.color.base3};
+    isQuestionSelected ? theme.color.base6 : theme.color.base3};
   }
 `;
 

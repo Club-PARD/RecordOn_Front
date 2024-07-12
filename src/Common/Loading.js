@@ -6,8 +6,8 @@ import Spinner from '../Assets/spinner.svg';
 export const Loading = () => {
   return (
     <Background>
-      <LoadingText>잠시만 기다려 주세요.</LoadingText>
       <img src={Spinner} alt="로딩중" width="5%" />
+      <LoadingText>쫌만 기다리라고</LoadingText>
     </Background>
   );
 };
@@ -18,7 +18,8 @@ const Background = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  background: #ffffffb7;
+  background: #111111;
+  opacity: 0.4;
   z-index: 999;
   display: flex;
   flex-direction: column;

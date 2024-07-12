@@ -9,6 +9,7 @@ import ArrowGray from "../../../../Assets/GoBackIcon.svg"
 import ArrowWhite from "../../../../Assets/ArrowWhite.svg"
 import BarIcon from "../../../../Assets/BarIcon.svg"
 import Project_Default from "../../../../Assets/Project_Default.png"
+import Project_Default2 from "../../../../Assets/Project_Default2.svg"
 import FinishProject from "./FinishProject";
 import RestartProject from "./RestartProject";
 import LinkPage from "./Link";
@@ -26,15 +27,15 @@ const ExperienceTitle = () => {
     const [projectData, setProjectData] = useState({});
     const navigate = useNavigate();
 
-    console.log("답변 상태", answerStateRecoil);
+    // console.log("답변 상태", answerStateRecoil);
     useEffect(() => {
-        console.log(userData);
-        console.log(experienceData);
+        // console.log(userData);
+        // console.log(experienceData);
 
         const getData = async () => {
 
             const response = await getUserExperienceDataAPI(userData);
-            console.log(response);
+            // console.log(response);
             setProjectData(response);
         }
         getData();
@@ -62,9 +63,9 @@ const ExperienceTitle = () => {
     const [toolBoxClicked, setToolBoxClicked] = useState(false);
     const toolBoxClickHandler = () => {
         setToolBoxClicked((prev) => !prev);
-      }
+    }
 
-    console.log(experienceData);
+    // console.log(experienceData);
 
     return (
         <ExperienceTitleDiv>
@@ -79,7 +80,7 @@ const ExperienceTitle = () => {
                     {
                         projectData?.project_image == null
                             ?
-                            <img src={Project_Default} style={{ width: "126px", height: "126px", border: "1px solid #DCDCDC", borderRadius: "100px" }} />
+                            <img src={Project_Default2} style={{ width: "126px", height: "126px", border: "1px solid #DCDCDC", borderRadius: "100px" }} />
                             :
                             <img src={projectData?.project_image} style={{ width: "126px", height: "126px", border: "1px solid #DCDCDC", borderRadius: "100px" }} />
                     }
@@ -158,26 +159,25 @@ const ExperienceTitle = () => {
                     <img src={ArrowWhite} style={{ width: "10px", marginLeft: "7px" }} />
                 </OpenExperienceLinkModal>
                 <ExperienceTitleRightDiv>
-                <DeleteProjectDiv >
-           
-                    <DeleteProjectText  onClick={toolBoxClickHandler}>
-                프로젝트 삭제/편집
-            </DeleteProjectText>
-                </DeleteProjectDiv>
-                {toolBoxClicked && (
-           <Example />
-            )}
-            </ExperienceTitleRightDiv>
+                    <DeleteProjectDiv >
+                        <DeleteProjectText onClick={toolBoxClickHandler}>
+                            프로젝트 삭제/편집
+                        </DeleteProjectText>
+                    </DeleteProjectDiv>
+                    {toolBoxClicked && (
+                        <Example />
+                    )}
+                </ExperienceTitleRightDiv>
             </ExperienceTitleRight>
-            
+
             {isModalOpen && <LinkPage isOpen={isModalOpen} onClose={closeModal} />}
-            
+
         </ExperienceTitleDiv>
-        
+
     );
 };
 
-const ToolBoxDiv = styled.div `
+const ToolBoxDiv = styled.div`
 flex-direction: column;
 /* position: fixed; */
 justify-content: start;

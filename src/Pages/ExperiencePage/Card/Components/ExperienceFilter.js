@@ -35,12 +35,12 @@ const ExperienceFilter = () => {
 
 
   useEffect(() => {
-    console.log(userData);
+    // console.log(userData);
 
     const getData = async () => {
 
       const response = await getUserExperienceDataAPI(userData);
-      console.log(response);
+      // console.log(response);
       setProjectStartDate(response.start_date);
       setProjectEndDate(response.finish_date);
     }
@@ -51,7 +51,7 @@ const ExperienceFilter = () => {
   const toggling = () => setIsOpen(!isOpen);
 
   const searchInput = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setExperienceFilter({
       ...experienceFilter,
       search_text: e.target.value,
@@ -130,7 +130,7 @@ const ExperienceFilter = () => {
   }, []);
 
 
-  console.log(experienceFilter);
+  // console.log(experienceFilter);
 
   return (
     <FilterDiv>

@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { ReactComponent as Confetti } from "../../../Assets/Confetti.svg";
+import { recoilLoginData } from "../../../Atom/UserDataAtom";
+import { useRecoilState } from "recoil";
 
 const WelcomeModal = ({ isOpen, onClose }) => {
   // if (!isOpen) return null;
+
+  const [loginData, setLoginData] = useRecoilState(recoilLoginData);
 
   //오버레이 영역 선택하면 모달 닫힘
   const handleOverlayClick = (e) => {
@@ -21,7 +25,7 @@ const WelcomeModal = ({ isOpen, onClose }) => {
             <Confetti />
           </DesignArea>
           <BigAlert>
-            000님의
+            {loginData?.name}님의
             <br />
             가입을 축하합니다!
           </BigAlert>
@@ -122,8 +126,8 @@ height: 40px;
 border-radius: 18px;
 background-color: ${(props) => props.theme.color.main};
 color: ${(props) => props.theme.color.white};
-font-size: ${(props) => props.theme.fontSizes.TextM};
-font-weight: ${(props) => props.theme.fontWeights.TextM};
+font-size: ${(props) => props.theme.fontSizes.TextL};
+font-weight: ${(props) => props.theme.fontWeights.TextL};
 cursor: pointer;
 `;
 export default WelcomeModal;
