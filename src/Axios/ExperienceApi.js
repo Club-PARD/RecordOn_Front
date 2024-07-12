@@ -65,7 +65,7 @@ export const deleteOneExperienceAPI = async (expId, user_id) => {
 // 경험 기록 수정 API
 export const editOneExpereienceAPI = async (id, data) => {
   {
-    console.log("id: " + id, "data: " + JSON.stringify(data));
+    console.log("id: " + id, "data: ", data);
   }
   try {
     const response = await api.put(`${server}experiences/${id}`, data);

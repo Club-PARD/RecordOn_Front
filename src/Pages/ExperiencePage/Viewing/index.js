@@ -111,6 +111,8 @@ const ViewPage = () => {
     }
   }, [answerObject, setAnswer]);
 
+  console.log(answer);
+
   // 중간 배열 생성
   const combinedArray =
     answerObject.question_texts &&

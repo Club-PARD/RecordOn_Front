@@ -11,6 +11,7 @@ import { getAllTagAndQuestionAPI } from "../../../../../../Axios/StoredTagInfoAp
 // 리코일
 import { useRecoilState } from "recoil";
 import {
+  isValidState,
   handleExpRecordEditSubmit,
   answerState,
   tempInputState,
@@ -23,6 +24,7 @@ const AnswerArea = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
+  const [isValid, setIsValid] = useRecoilState(isValidState);
 
   // 서버에서 받아온 태그와 질문
   const [tagAndQuestion, setTagAndQuestion] = useState([]);
@@ -130,6 +132,10 @@ const AnswerArea = () => {
     });
 
     setExperienceSections(updatedSections);
+    setTempInput({
+      ...tempInput,
+      tag_ids: (updatedSections.selectedTag)-1,
+    })
   };
   // 질문 선택 핸들러
   const handleQuestionSelectInSection = (
@@ -148,6 +154,10 @@ const AnswerArea = () => {
         : section
     );
     setExperienceSections(updatedSections);
+    setTempInput({
+      ...tempInput,
+      question_ids:(updatedSections.selectedQuestionId)-1,
+    })
   };
 
   // 텍스트 변경 핸들러
@@ -156,6 +166,10 @@ const AnswerArea = () => {
       section.id === id ? { ...section, text } : section
     );
     setExperienceSections(updatedSections);
+    setTempInput({
+      ...tempInput,
+      question_answers: updatedSections,
+    })
   };
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
@@ -175,6 +189,8 @@ const AnswerArea = () => {
       }));
     }
   }, [isExpRecordSubmitted, experienceSections, setTempInput]);
+
+  console.log("tempInput", tempInput);
 
   return (
     <>

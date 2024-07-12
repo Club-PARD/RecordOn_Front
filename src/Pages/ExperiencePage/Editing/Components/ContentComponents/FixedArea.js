@@ -6,6 +6,7 @@ import {
 } from "./LowerComponents/LowerArea";
 import { useRecoilState } from "recoil";
 import {
+  isValidState,
   handleExpRecordEditSubmit,
   answerState,
   tempInputState,
@@ -17,7 +18,7 @@ const FixedArea = () => {
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
-
+  const [isValid, setIsValid] = useRecoilState(isValidState);
   const [commonQuestionAnswer, setCommonQuestionAnswer] = useState("");
 
   useEffect(() => {
@@ -29,6 +30,9 @@ const FixedArea = () => {
   // 입력 내용을 임시 변수에 관리
   const handleChange = (e) => {
     setCommonQuestionAnswer(e.target.value);
+    setTempInput({
+      ...tempInput,
+      common_question_answer: e.target.value});
   };
 
   // 상위 컴포넌트에서 버튼 선택된 경우 리코일에 값을 할당
@@ -53,7 +57,8 @@ const FixedArea = () => {
         </FixAreaLabel>
         <TextAreaWidth
           height="88px"
-          value={commonQuestionAnswer}
+          // value={commonQuestionAnswer}
+          defaultValue={answer?.common_question_answer}
           onChange={handleChange}
         />
       </FixArea>

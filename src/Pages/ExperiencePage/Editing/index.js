@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import {
   handleExpRecordEditSubmit,
   answerState,
+  isAllValidState,
   tempInputState,
 } from "../../../Atom/ExpRecordAtom";
 import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
@@ -19,20 +20,23 @@ import ContentsArea from "./Components/ContentsArea";
 
 const EditPage = () => {
   const [answer, setAnswer] = useRecoilState(answerState);
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
   const [isExpRecordSubmitted, setIsExpRecordSubmitted] = useRecoilState(
     handleExpRecordEditSubmit
   );
   const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
-  const [tempInput, setTempInput] = useRecoilState(tempInputState);
   const [snack, setSnack] = useRecoilState(recoilSnack);
+  const [isAllValid, setIsAllValid] = useRecoilState(isAllValidState);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expId, setExpId] = useState(null);
-  const [isValid, setIsValid] = useState(false);
 
   const handleSubmit = () => {
-    editOneExpereienceAPI(expId, answer);
+    setIsExpRecordSubmitted(true);
+    if (isAllValid) {
+      editOneExpereienceAPI(expId, tempInput);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +60,7 @@ const EditPage = () => {
   }, [location]);
 
   console.log("answer: ", answer);
-  console.log("tempInput: ", tempInput);
+
   return (
     <Div>
       {/* 뒤로 가기 */}

@@ -69,3 +69,18 @@ export const handleExpRecordEditSubmit = atom({
   key: "handleExpRecordEditSubmit",
   default: false,
 });
+
+export const isValidState = atom({
+  key: "isValidState",
+  default: {
+    upper: true,
+    fixed: true,
+    lower: true,
+    answer: true,
+  },
+});
+
+export const isAllValidState = atom({
+  key: "isAllValidState",
+  default: true,
+});
