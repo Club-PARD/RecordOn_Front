@@ -141,7 +141,7 @@ const StyledInput = styled.input`
   &::placeholder {
     font-weight: ${(props) => props.theme.fontWeights.TextL};
     font-size: ${(props) => props.theme.fontSizes.TextL};
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base5};
   }
 `;
 const Asterisk = styled.div`

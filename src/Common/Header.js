@@ -10,6 +10,8 @@ import { handleRegisterDataSubmit } from "../Atom/RegisterDataAtom";
 import { answerState, experienceState, handleExpRecordSubmit } from "../Atom/ExpRecordAtom";
 import Toast from "./Toast";
 import useWindowSize from "./useWindowSize";
+import WelcomeModal from "../Pages/Home/Components/WelcomeModal";
+
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
@@ -165,11 +167,19 @@ const Header = () => {
       });
     }
     else if (snack.experienceValidation) {
-      setToastMessage("필수 항목을 모두 입력해주세요!")
+      setToastMessage("필수항목을 모두 입력해주세요!")
       setToast(true);
       setSnack({
         ...snack,
         experienceValidation: false,
+      });
+    }
+    else if (snack.dateValidation) {
+      setToastMessage("진행기간을 확인해주세요")
+      setToast(true);
+      setSnack({
+        ...snack,
+        dateValidation: false,
       });
     }
   }, [snack])

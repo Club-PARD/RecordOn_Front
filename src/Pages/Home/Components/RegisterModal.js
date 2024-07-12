@@ -11,8 +11,7 @@ import { registerUserAPI } from '../../../Axios/RegisterApi.js'
 import { useNavigate } from 'react-router-dom';
 import PrivacyPolicyModal from './PrivacyPolicyModal.js';
 import ServicePolicyModal from './ServicePolicyModal.js';
-
-
+import WelcomeModal from "./WelcomeModal.js";
 
 function RegisterModal({ show, onClose, defaultName }) {
   const [isRegisterDataSubmitted, setIsRegisterDataSubmitted] = useRecoilState(
@@ -23,19 +22,22 @@ function RegisterModal({ show, onClose, defaultName }) {
   const [userData, setUserData] = useRecoilState(recoilUserData);
   const [registerData, setRegisterData] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
+
+
   const navigate = useNavigate();
 
   //약관 모달
   //약관 모달 출력 관련 함수 시작
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const openPrivacyModal = () => {
     setIsPrivacyModalOpen(true);
     console.log(isPrivacyModalOpen);
   };
-  const closePrivacyModal = () => setIsPrivacyModalOpen(false);
 
+  const closePrivacyModal = () => setIsPrivacyModalOpen(false);
 
   const openServiceModal = () => {
     setIsServiceModalOpen(true);
@@ -57,8 +59,11 @@ function RegisterModal({ show, onClose, defaultName }) {
     }
 
     setIsLoggedIn(true);
+
+
     // navigate("/project");
   };
+
   useEffect(() => {
     setRegisterData({
       ...registerData,
@@ -68,6 +73,7 @@ function RegisterModal({ show, onClose, defaultName }) {
   }, [userData])
 
   console.log(registerData);
+  console.log(loginData.imageUrl);
 
   const [selectedJobKeyword, setSelectedJobKeyword] = useState("");
 

@@ -5,7 +5,7 @@ import { ReactComponent as GoogleLogo } from "../../../Assets/GoogleLogo.svg"
 import axios from 'axios'
 import api from '../../../Axios/axiosConfig.mjs';
 import { useRecoilState } from "recoil";
-import { isLogined, recoilLoginData, recoilUserData, recoilUserExperienceFilter, recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
+import { isFirstLogin, isLogined, recoilLoginData, recoilUserData, recoilUserExperienceFilter, recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
 import { answerState, expEditState, experienceState } from "../../../Atom/ExpRecordAtom";
 import { useState, useEffect } from "react";
 import RegisterModal from "./RegisterModal";
@@ -19,6 +19,8 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
     const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
+    const [firstLoginRecoil, isFirstLoginRecoil] = useRecoilState(isFirstLogin);
+
 
     const [isNewUser, setIsNewUser] = useState(null);
     const navigate = useNavigate();
@@ -104,7 +106,7 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
             setIsNewUser(response.data.is_new_user);
             // console.log(userData1);
             setLoginData(userData);
-            // console.log(userData);
+            console.log(userData);
             setUserData({
                 ...userData1,
                 user_id: response.data.user_id
@@ -138,6 +140,7 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
     useEffect(() => {
         if (isNewUser == true) {
             console.log("New User");
+            isFirstLoginRecoil(true);
             handleRegisterClick();
         }
         else if (isNewUser == false) {
