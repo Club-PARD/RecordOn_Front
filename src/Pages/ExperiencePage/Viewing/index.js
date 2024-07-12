@@ -7,7 +7,7 @@ import {
 } from "../../../Axios/ExperienceApi";
 
 import { useRecoilState } from "recoil";
-import { answerState } from "../../../Atom/ExpRecordAtom";
+import { answerState, tempInputState } from "../../../Atom/ExpRecordAtom";
 import { recoilSnack, recoilUserData } from "../../../Atom/UserDataAtom";
 
 import UpperArea, { StyledTag, FixAreaLabel } from "./Components/UpperArea";
@@ -37,6 +37,7 @@ const ViewPage = () => {
 
   const [userInfo, setUserInfo] = useRecoilState(recoilUserData);
   const [answer, setAnswer] = useRecoilState(answerState);
+  const [tempInput, setTempInput] = useRecoilState(tempInputState);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answerObject, setAnswerObject] = useState({});
@@ -64,9 +65,14 @@ const ViewPage = () => {
 
   useEffect(() => {
     if (userInfo.id != null) setExpId(userInfo.id);
-    if (userInfo.user_id != "") setUserId(userInfo.userId);
-    console.log(expId, userId);
+    if (userInfo.user_id != "") setUserId(userInfo.user_id);
+    console.log("line 69: ", userInfo.id, userInfo.user_id);
   }, [userInfo]);
+
+  //temp
+  useEffect(() => {
+    setTempInput(answer);
+  }, [setAnswer, answer]);
 
   useEffect(() => {
     const getRecord = async (id) => {
@@ -75,7 +81,10 @@ const ViewPage = () => {
         const response = await getOneExperienceAPI(id);
         console.log(response.success);
         if (response) {
+          console.log(response);
           setAnswerObject(response.response_object);
+
+          // setTempInput(response.response_object);
         }
       } catch (error) {
         console.error(error);
@@ -87,9 +96,22 @@ const ViewPage = () => {
   // answerObject가 업데이트되면 answer 상태를 업데이트
   useEffect(() => {
     if (answerObject !== null) {
-      setAnswer(answerObject);
+      setAnswer({
+        ...answer,
+        exp_date: answerObject.exp_date,
+        title: answerObject.title,
+        tag_ids: answerObject.tag_ids,
+        free_content: answerObject.free_content,
+        question_ids: answerObject.question_ids,
+        question_answers: answerObject.question_answers,
+        question_texts: answerObject.question_texts,
+        reference_links: answerObject.reference_links,
+        common_question_answer: answerObject.common_question_answer,
+      });
     }
   }, [answerObject, setAnswer]);
+
+  console.log(answer);
 
   // 중간 배열 생성
   const combinedArray =
@@ -204,19 +226,20 @@ const ViewPage = () => {
           console.log("삭제");
           console.log("경험: " + expId, "사용자: " + userInfo.user_id);
           try {
-            const response = await deleteOneExperienceAPI(expId, userInfo.user_id);
+            const response = await deleteOneExperienceAPI(
+              expId,
+              userInfo.user_id
+            );
             console.log(response);
             setSnack({
               ...snack,
               experienceDelete: true,
-            })
-          }
-          catch (error) {
+            });
+          } catch (error) {
             console.log(error);
           }
           closeModal(); // 모달 닫기
           navigate("/experience");
-
         }}
       />
     </Div>
@@ -251,7 +274,7 @@ const ButtonArea = styled.div`
 
   margin-top: 60px;
   margin-bottom: 136px;
-  user-select : none;
+  user-select: none;
 `;
 
 const Button = styled.div`

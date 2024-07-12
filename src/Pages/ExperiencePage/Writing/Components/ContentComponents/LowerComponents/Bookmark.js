@@ -7,15 +7,16 @@ const Bookmark = ({ url }) => {
   const [metaData, setMetaData] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const defaultImageUrl = Favicon;
-
+ 
   // 서버로부터 데이터 받아오는 로직
-  useEffect(() => {
-    const getMetaData = async (url) => {
-      const data = await getUrlMetaData(url);
-      setMetaData(data);
-    };
-    getMetaData(url);
-  }, [url]);
+ useEffect(() => {
+  const getMetaData = async (url) => {
+    const data = await getUrlMetaData(url);
+    setMetaData(data);
+  };
+  getMetaData(url);
+}, [url]);
+  
 
   
   useEffect(() => {
@@ -31,11 +32,15 @@ const Bookmark = ({ url }) => {
 
   if (!metaData) return <MariginDiv></MariginDiv>;
 
+   // title 디코딩
+   const decodedTitle = decodeURIComponent(metaData.title);
+
   return (
     <StyledA href={url} target="_blank" rel="noopener noreferrer">
       <img src={metaData.imageUrl || defaultImageUrl} alt={metaData.title} style={{ display: imageLoaded ? "block" : "none" }} />
       {!imageLoaded && <MariginDiv></MariginDiv>}
-      <div>{metaData.title}</div>
+      {/* <div>{metaData.title}</div> */}
+      <div>{decodedTitle}</div>
     </StyledA>
   );
 };
