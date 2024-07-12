@@ -33,6 +33,14 @@ export const recoilUserProjectNum = atom({
     default: 0,
     effects_UNSTABLE: [persistAtom],
 });
+export const recoilUserProjectDate = atom({
+    key: "experiencePagination",
+    default: {
+        start_date: "",
+        finish_date: "",
+    },
+    effects_UNSTABLE: [persistAtom],
+});
 export const recoilUserProjectFilter = atom({
     key: "projectFilter",
     default: {
