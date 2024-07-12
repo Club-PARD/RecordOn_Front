@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import {
     recoilUserData,
     recoilUserExperienceFilter,
+    recoilUserProjectDate,
 } from "../../../Atom/UserDataAtom";
 import { answerState, experienceState } from "../../../Atom/ExpRecordAtom";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +22,11 @@ const ProjectCard = ({ projectData }) => {
     const [experienceStateRecoil, setExperienceStateRecoil] =
         useRecoilState(experienceState);
     const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
+    const [projectDate, setProjectDate] = useRecoilState(recoilUserProjectDate);
     const [allowNavigate, setAllowNavigate] = useState(false);
+
+    console.log("답변 상태", answerStateRecoil);
+
 
     const projectCardClickHandler = () => {
         setExperienceFilter({
@@ -46,6 +51,10 @@ const ProjectCard = ({ projectData }) => {
             ...answerStateRecoil,
             projects_id: projectData.project_id,
         });
+        // setProjectDate({
+        //     start_date: projectData.stazrt_date,
+        //     finish_date: projectData.finish_date,
+        // })
         setAllowNavigate(true);
     };
 

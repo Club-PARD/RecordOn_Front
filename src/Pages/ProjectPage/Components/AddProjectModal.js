@@ -6,7 +6,7 @@ import ImageIcon from "../../../Assets/ImageIcon.svg";
 import { useRef } from "react";
 import { postNewProjectAPI, postNewProjectImageAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState } from "recoil";
-import { recoilSnack, recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
+import { recoilSnack, recoilUserData, recoilUserExperienceFilter, recoilUserProjectDate } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
@@ -38,6 +38,7 @@ const AddProjectModal = ({
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
     const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
     const [snack, setSnack] = useRecoilState(recoilSnack);
+    const [projectDate, setProjectDate] = useRecoilState(recoilUserProjectDate);
 
     const [valid, setValid] = useState(false);
     const navigate = useNavigate();
@@ -166,6 +167,10 @@ const AddProjectModal = ({
                     ...answerStateRecoil,
                     projects_id: response.response_object.id,
                 })
+                // setProjectDate({
+                //     start_date: response.response_object.start_date,
+                //     finish_date: response.response_object.finish_date,
+                // })
                 console.log(experienceFilter);
                 if (projectData.picture !== undefined) {
                     const formData = new FormData();

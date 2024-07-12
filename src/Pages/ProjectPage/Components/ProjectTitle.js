@@ -17,6 +17,7 @@ const ProjectTitle = () => {
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
 
     console.log("experienceStateRecoil", experienceStateRecoil);
+    console.log("유저 정보", userData);
 
     useEffect(() => {
         if (userData.user_id == null) {
@@ -26,7 +27,7 @@ const ProjectTitle = () => {
         // console.log(userData.user_id);
         const getData = async () => {
             const response = await getUserProjectDataAPI(userData.user_id);
-            // console.log(response.user_name);
+            console.log(response);
             setUserName(response?.user_name);
         }
         getData();

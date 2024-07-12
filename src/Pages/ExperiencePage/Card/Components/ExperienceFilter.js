@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import { ko } from "date-fns/locale";
 import { useRecoilState } from "recoil";
-import { recoilUserExperienceFilter } from "../../../../Atom/UserDataAtom";
+import { recoilUserData, recoilUserExperienceFilter } from "../../../../Atom/UserDataAtom";
 import ResetIcon from "../../../../Assets/ResetIcon.svg"
 import SearchIcon from "../../../../Assets/SearchIcon.svg"
 import DropdownArrow from "../../../../Assets/DropdownArrow.svg"
@@ -15,6 +15,7 @@ import XLearn from "../../../../Assets/XLearn.svg"
 import XSuccess from "../../../../Assets/XSuccess.svg"
 import { useEffect } from "react";
 import { useRef } from "react";
+import { getUserExperienceDataAPI } from "../../../../Axios/ProjectDataApi";
 
 // import { getUserExperienceDataFilteredAPI } from "../../../Axios/ExperienceDataApi";
 
@@ -22,14 +23,30 @@ const ExperienceFilter = () => {
 
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
+  const [projectStartDate, setProjectStartDate] = useState("");
+  const [projectEndDate, setProjectEndDate] = useState("");
 
   const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState([]);
   const keywords = ['도전', '어려움', '성공', '실패', '배움'];
+  const [userData, setUserData] = useRecoilState(recoilUserData);
 
 
+  useEffect(() => {
+    console.log(userData);
+
+    const getData = async () => {
+
+      const response = await getUserExperienceDataAPI(userData);
+      console.log(response);
+      setProjectStartDate(response.start_date);
+      setProjectEndDate(response.finish_date);
+    }
+    getData();
+
+  }, [userData])
 
   const toggling = () => setIsOpen(!isOpen);
 
@@ -134,8 +151,8 @@ const ExperienceFilter = () => {
               shouldCloseOnSelect
               disabledKeyboardNavigation
               placeholderText="YYYY.MM.DD"
-              minDate={new Date('1980-01-01')}
-              maxDate={new Date('2100-12-31')}
+              minDate={new Date(projectStartDate)}
+              maxDate={new Date(projectEndDate)}
               locale={ko}
               selected={experienceFilter.start_date}
               onChange={(date) => {
@@ -155,8 +172,8 @@ const ExperienceFilter = () => {
               shouldCloseOnSelect
               disabledKeyboardNavigation
               placeholderText="YYYY.MM.DD"
-              minDate={new Date('1980-01-01')}
-              maxDate={new Date('2100-12-31')}
+              minDate={new Date(projectStartDate)}
+              maxDate={new Date(projectEndDate)}
               locale={ko}
               selected={experienceFilter.finish_date}
               onChange={(date) => {
@@ -445,6 +462,9 @@ justify-content: start;
     visibility: hidden;
   }
 
+  /* .react-datepicker__day--disabled {
+  display: none;
+} */
 
 `
 
