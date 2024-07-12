@@ -161,7 +161,7 @@ flex-direction:row;
 margin-top: 40px;
 /* border: 1px solid black; */
 justify-content: space-between;
-align-items:start;
+align-items: start;
 `
 const ExperienceTitleLeft = styled.div`
 width: 300px;
@@ -210,7 +210,7 @@ const ProjectProcess = styled.div`
 width: 65px;
 height: 25px;
 /* border: 1px solid black; */
-align-items:start;
+align-items: end;
 justify-content: center;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};

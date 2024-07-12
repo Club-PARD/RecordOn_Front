@@ -196,6 +196,8 @@ const CardDateText = styled.div`
   align-items: start;
   /* border: 1px solid black; */
   color: ${(props) => props.theme.color.base6};
+  font-size: ${(props) => props.theme.fontSizes.TextS};
+  font-weight: ${(props) => props.theme.fontWeights.TextS};
 `;
 
 const CardDate = styled.div`
@@ -219,6 +221,7 @@ const CardTitle = styled.div`
   line-height: 130%;
   margin-top: 20px;
   align-items: start;
+  white-space: pre-wrap;
 `;
 
 const ProjectKeywordDiv = styled.div`

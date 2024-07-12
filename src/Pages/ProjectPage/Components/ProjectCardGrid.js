@@ -79,7 +79,7 @@ const ProjectCardGrid = () => {
 const ProjectCardDiv = styled.div`
 width: 1200px;
 height: 638px;
-margin-top: 55px;
+margin-top: 0px;
 /* border: 1px solid black; */
 `
 

@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
+import Toast from "../../../../Common/Toast";
+import useWindowSize from "../../../../Common/useWindowSize";
 
 const EditProjectModal = ({
     isOpen,
@@ -35,6 +37,8 @@ const EditProjectModal = ({
     const [valid, setValid] = useState(true);
     const [snack, setSnack] = useRecoilState(recoilSnack);
     const navigate = useNavigate();
+    const [toast, setToast] = useState(false);
+    const { height } = useWindowSize();
 
     console.log(projectData);
 
@@ -124,7 +128,8 @@ const EditProjectModal = ({
     const editProjectHandler = async () => {
         if (valid) {
             if (projectData.start_date > projectData.finish_date) {
-                alert("프로젝트 시작일이 종료일보다 늦습니다. 진행기간을 다시 확인 후, 재설정해주세요.");
+                // alert("프로젝트 시작일이 종료일보다 늦습니다. 진행기간을 다시 확인 후, 재설정해주세요.");
+                setToast(true);
                 return 0;
             }
             try {
@@ -335,6 +340,13 @@ const EditProjectModal = ({
                     </ModalProjectButtonDiv>
                 </ModalContentDiv>
             </Modal>
+            {toast && (
+                <Toast
+                    setToast={setToast}
+                    message="날짜를 확인해주세요"
+                    height={`${height}px`}
+                />
+            )}
         </Overlay>
     );
 };

@@ -194,7 +194,7 @@ const AnswerArea = () => {
 
   return (
     <>
-      <Guide>* 경험태그 선택 후, 질문을 선택해 주세요.</Guide>
+      <Guide>Tip. 각 경험태그의 첫 번째 질문부터 답하면 경험을 정리하는데 도움이 될거예요!</Guide>
       {/* 한 세트 */}
       {experienceSections.map((section) => (
         <SectionWrapper key={section.id}>

@@ -3,10 +3,12 @@ import AddProject from "./AddProject";
 import { useState } from "react";
 import { getUserProjectDataAPI } from "../../../Axios/ProjectDataApi";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
+import { isFirstLogin, recoilUserData, recoilUserExperienceFilter } from "../../../Atom/UserDataAtom";
 import { useEffect } from "react";
 import ProjectTitleFolder from "../../../Assets/ProjectTitleFolder.png"
 import { experienceState } from "../../../Atom/ExpRecordAtom";
+import WelcomeModal from "../../Home/Components/WelcomeModal";
+import { tr } from "date-fns/locale";
 
 
 const ProjectTitle = () => {
@@ -15,6 +17,14 @@ const ProjectTitle = () => {
     const [userName, setUserName] = useState("");
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
+    const [firstLoginRecoil, isFirstLoginRecoil] = useRecoilState(isFirstLogin);
+    const [welcomeModalOn, setWelcomeModalOn] = useState(false);
+
+    useEffect(() => {
+        if (firstLoginRecoil == true) {
+            setWelcomeModalOn(true);
+        }
+    }, [firstLoginRecoil])
 
     console.log("experienceStateRecoil", experienceStateRecoil);
     console.log("유저 정보", userData);
@@ -41,17 +51,25 @@ const ProjectTitle = () => {
         });
     }, [])
 
+    const welcomeModalOff = () => {
+        isFirstLoginRecoil(false);
+        setWelcomeModalOn(false);
+    }
 
     return (
         <ProjectTitleDiv>
             <ProjectTitleImage src={ProjectTitleFolder} />
             <ProjectTitleText>
-                {userName}님이
+                {userName}님의
             </ProjectTitleText>
             <ProjectTitleText2>
-                해낸 프로젝트들이에요!
+                프로젝트가 쌓이는 공간이에요!
             </ProjectTitleText2>
             <AddProject />
+
+            {welcomeModalOn && (
+                <WelcomeModal onClose={welcomeModalOff} />
+            )}
         </ProjectTitleDiv>
     );
 };

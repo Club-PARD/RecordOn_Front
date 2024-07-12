@@ -123,10 +123,10 @@ const AnswerArea = () => {
     const updatedSections = experienceSections.map((section) =>
       section.id === id
         ? {
-            ...section,
-            selectedQuestionId: selectedQuestionId,
-            isQuestionSelected: true,
-          }
+          ...section,
+          selectedQuestionId: selectedQuestionId,
+          isQuestionSelected: true,
+        }
         : section
     );
     setExperienceSections(updatedSections);
@@ -253,7 +253,7 @@ const TextAreaWidth = styled.textarea`
 
   &::placeholder {
     color: ${({ isQuestionSelected, theme }) =>
-      isQuestionSelected ? theme.color.base6 : theme.color.base4};
+    isQuestionSelected ? theme.color.base5 : theme.color.base3};
   }
 `;
 
