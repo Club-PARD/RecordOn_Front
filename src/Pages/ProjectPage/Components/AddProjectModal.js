@@ -36,7 +36,7 @@ const AddProjectModal = ({
     const [projectId, setProjectID] = useRecoilState(recoilUserExperienceFilter);
     const [experienceFilter, setExperienceFilter] = useRecoilState(recoilUserExperienceFilter);
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
-   const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
+    const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
     const [snack, setSnack] = useRecoilState(recoilSnack);
 
     const [valid, setValid] = useState(false);
@@ -164,7 +164,7 @@ const AddProjectModal = ({
                 })
                 setAnswerStateRecoil({
                     ...answerStateRecoil,
-                    projects_id: projectData.project_id,
+                    projects_id: response.response_object.id,
                 })
                 console.log(experienceFilter);
                 if (projectData.picture !== undefined) {
