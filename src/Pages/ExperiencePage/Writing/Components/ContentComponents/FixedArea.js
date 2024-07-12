@@ -9,6 +9,7 @@ import {
   experienceState,
   handleExpRecordSubmit,
 } from "../../../../../Atom/ExpRecordAtom";
+import styled from "styled-components";
 
 const FixedArea = () => {
   // 리코일 변수
@@ -40,7 +41,7 @@ const FixedArea = () => {
       {/* 고정 질문 영역 */}
       <FixArea>
         <FixAreaLabel>
-          Q. 오늘 있었던 경험을 되돌아보며, 연상되는 단어를 최소 3가지 이상 적어보세요!
+          Q. 오늘 있었던 경험을 되돌아보며, 연상되는 단어를 최소 3가지 이상 적어보세요!<Asterisk>*</Asterisk>
         </FixAreaLabel>
         <TextAreaWidth
           placeholder="예시) 현직자 멘토링, 굿즈 발주, 원페이저 작성, 디자이너와의 소통이슈, B2B 전략수립"
@@ -52,5 +53,13 @@ const FixedArea = () => {
     </>
   );
 };
+
+const Asterisk = styled.div`
+width: 10px;
+height: 23px;
+color: ${(props) => props.theme.color.fail};
+justify-content: center;
+margin-left: 2px;
+`
 
 export default FixedArea;

@@ -60,6 +60,8 @@ align-items: end;
 margin-top: 4px;
 text-decoration: underline;
 cursor: pointer;
+white-space : nowrap;
+z-index: 2;
 `
 
 export default EditProject;
