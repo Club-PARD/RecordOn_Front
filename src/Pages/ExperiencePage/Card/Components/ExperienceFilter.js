@@ -41,8 +41,8 @@ const ExperienceFilter = () => {
 
       const response = await getUserExperienceDataAPI(userData);
       // console.log(response);
-      setProjectStartDate(response.start_date);
-      setProjectEndDate(response.finish_date);
+      setProjectStartDate(response?.start_date);
+      setProjectEndDate(response?.finish_date);
     }
     getData();
 

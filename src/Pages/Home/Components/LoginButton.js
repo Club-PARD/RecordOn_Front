@@ -6,7 +6,7 @@ import axios from 'axios'
 import api from '../../../Axios/axiosConfig.mjs';
 import { useRecoilState } from "recoil";
 import { isFirstLogin, isLogined, recoilLoginData, recoilUserData, recoilUserExperienceFilter, recoilUserProjectFilter } from "../../../Atom/UserDataAtom";
-import { answerState, expEditState, experienceState } from "../../../Atom/ExpRecordAtom";
+import { answerState, expEditState, experienceState, tempInputState } from "../../../Atom/ExpRecordAtom";
 import { useState, useEffect } from "react";
 import RegisterModal from "./RegisterModal";
 import Cookies from 'js-cookie';
@@ -20,6 +20,7 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
     const [experienceStateRecoil, setExperienceStateRecoil] = useRecoilState(experienceState);
     const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
     const [firstLoginRecoil, isFirstLoginRecoil] = useRecoilState(isFirstLogin);
+    const [temp, setTemp] = useRecoilState(tempInputState);
 
 
     const [isNewUser, setIsNewUser] = useState(null);
@@ -127,6 +128,10 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
                 ...answerStateRecoil,
                 user_id: response.data.user_id,
 
+            })
+            setTemp({
+                ...temp,
+                user_id: response.data.user_id,
             })
 
 
