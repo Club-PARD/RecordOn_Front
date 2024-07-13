@@ -77,7 +77,7 @@ const UppderArea = () => {
           />
         </UppderPart>
 
-        <UppderPart width={"263px"}>
+        <UppderPart width={"227px"}>
           <StyledLabel>경험한 날<Asterisk>*</Asterisk></StyledLabel>
           <ProjectDateWrapper>
             <ProjectDateStart

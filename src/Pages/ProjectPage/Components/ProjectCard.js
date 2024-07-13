@@ -7,139 +7,144 @@ import FolderOn from "../../../Assets/FolderOn.svg";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import {
-    recoilUserData,
-    recoilUserExperienceFilter,
-    recoilUserProjectDate,
+  recoilUserData,
+  recoilUserExperienceFilter,
+  recoilUserProjectDate,
 } from "../../../Atom/UserDataAtom";
-import { answerState, experienceState } from "../../../Atom/ExpRecordAtom";
+import { answerState, experienceState, tempInputState } from "../../../Atom/ExpRecordAtom";
 import { useNavigate } from "react-router-dom";
 
 
 const ProjectCard = ({ projectData }) => {
-    const keyword = [...new Set(projectData.competency_tag_name)];
-    const [experienceFilter, setExperienceFilter] = useRecoilState(
-        recoilUserExperienceFilter
-    );
-    const [userData, setUserData] = useRecoilState(recoilUserData);
-    const navigate = useNavigate();
-    const [experienceStateRecoil, setExperienceStateRecoil] =
-        useRecoilState(experienceState);
-    const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
-    const [projectDate, setProjectDate] = useRecoilState(recoilUserProjectDate);
-    const [allowNavigate, setAllowNavigate] = useState(false);
+  const keyword = [...new Set(projectData.competency_tag_name)];
+  const [experienceFilter, setExperienceFilter] = useRecoilState(
+    recoilUserExperienceFilter
+  );
+  const [userData, setUserData] = useRecoilState(recoilUserData);
+  const navigate = useNavigate();
+  const [experienceStateRecoil, setExperienceStateRecoil] =
+    useRecoilState(experienceState);
+  const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
+  const [projectDate, setProjectDate] = useRecoilState(recoilUserProjectDate);
+  const [allowNavigate, setAllowNavigate] = useState(false);
+  const [temp, setTemp] = useRecoilState(tempInputState);
 
-    // console.log("답변 상태", answerStateRecoil);
+  // console.log("답변 상태", answerStateRecoil);
 
 
-    const projectCardClickHandler = () => {
-        setExperienceFilter({
-            ...experienceFilter,
-            project_id: projectData.project_id,
-        });
-        // console.log(userData);
-        // console.log({
-        //     ...userData,
-        //     project_id: projectData.project_id,
-        // });
-        // console.log(userData);
-        setUserData({
-            ...userData,
-            project_id: projectData.project_id,
-        });
-        setExperienceStateRecoil({
-            ...experienceStateRecoil,
-            projects_id: projectData.project_id,
-        });
-        setAnswerStateRecoil({
-            ...answerStateRecoil,
-            projects_id: projectData.project_id,
-        });
-        // setProjectDate({
-        //     start_date: projectData.stazrt_date,
-        //     finish_date: projectData.finish_date,
-        // })
-        setAllowNavigate(true);
-    };
+  const projectCardClickHandler = () => {
+    setExperienceFilter({
+      ...experienceFilter,
+      project_id: projectData.project_id,
+    });
+    // console.log(userData);
+    // console.log({
+    //     ...userData,
+    //     project_id: projectData.project_id,
+    // });
+    // console.log(userData);
+    setUserData({
+      ...userData,
+      project_id: projectData.project_id,
+    });
+    setExperienceStateRecoil({
+      ...experienceStateRecoil,
+      projects_id: projectData.project_id,
+    });
+    setAnswerStateRecoil({
+      ...answerStateRecoil,
+      projects_id: projectData.project_id,
+    });
+    setTemp({
+      ...temp,
+      projects_id: projectData.project_id,
+    })
+    // setProjectDate({
+    //     start_date: projectData.stazrt_date,
+    //     finish_date: projectData.finish_date,
+    // })
+    setAllowNavigate(true);
+  };
 
-    useEffect(() => {
-        if (allowNavigate) {
-            navigate("/experience");
-        }
-    }, [allowNavigate]);
+  useEffect(() => {
+    if (allowNavigate) {
+      navigate("/experience");
+    }
+  }, [allowNavigate]);
 
-    // const navigateToExperience = async () => {
-    //     const response = await projectCardClickHandler();
-    //     console.log(response);
-    //     console.log(experienceStateRecoil);
-    //     navigate("/experience");
-    // }
+  // const navigateToExperience = async () => {
+  //     const response = await projectCardClickHandler();
+  //     console.log(response);
+  //     console.log(experienceStateRecoil);
+  //     navigate("/experience");
+  // }
 
-    // console.log(key);
-    // console.log(projectData);
-    // console.log(keyword);
+  // console.log(key);
+  // console.log(projectData);
+  // console.log(keyword);
 
-    return (
-        <>
+  return (
+    <>
 
-            {projectData.is_finished == 1 ? (
-                <Container backGroundImg={FolderDone} onClick={projectCardClickHandler}>
-                    <CardContent>
-                        <CardTopDiv>
-                            <CardImageDiv>
-                                <CardImage
-                                    src={
-                                        projectData.project_image == null ||
-                                            projectData.project_image == ""
-                                            ? DefaultCardImg2
-                                            : projectData.project_image
-                                    }
-                                />
-                            </CardImageDiv>
-                            <CardDateDiv>
-                                <CardDateText>프로젝트 진행 기간</CardDateText>
-                                <CardDate>
-                                    {projectData.start_date?.substring(0, 10)} ~{" "}
-                                    {projectData.finish_date?.substring(0, 10)}
-                                </CardDate>
-                            </CardDateDiv>
-                        </CardTopDiv>
-                        <CardTitle>{projectData.project_name}</CardTitle>
-                        <ProjectKeywordDiv>
-                            {keyword.slice(0, 3).map((tag) => (
-                                <ProjectKeyword>{tag}</ProjectKeyword>
-                            ))}
-                        </ProjectKeywordDiv>
-                    </CardContent>
-                </Container>
-            ) : (
-                <Container backGroundImg={FolderOn} onClick={projectCardClickHandler}>
-                    <CardContent2>
-                        <CardTopDiv2>
-                            <CardImageDiv2>
-                                <CardImage2
-                                    src={
-                                        projectData.project_image == null ||
-                                            projectData.project_image == ""
-                                            ? DefaultCardImg2
-                                            : projectData.project_image
-                                    }
-                                />
-                            </CardImageDiv2>
-                            <CardDateDiv2>
-                                <CardDateText2>프로젝트 진행 기간</CardDateText2>
-                                <CardDate2>
-                                    {projectData.start_date?.substring(0, 10)} ~{" "}
-                                    {projectData.finish_date?.substring(0, 10)}
-                                </CardDate2>
-                            </CardDateDiv2>
-                        </CardTopDiv2>
-                        <CardTitle2>{projectData.project_name}</CardTitle2>
-                    </CardContent2>
-                </Container>
-            )}
+      {projectData.is_finished == 1 ? (
+        <Container backGroundImg={FolderDone} onClick={projectCardClickHandler}>
+          <CardContent>
+            <CardTopDiv>
+              <CardImageDiv>
+                <CardImage
+                  src={
+                    projectData.project_image == null ||
+                      projectData.project_image == ""
+                      ? DefaultCardImg2
+                      : projectData.project_image
+                  }
+                />
+              </CardImageDiv>
+              <CardDateDiv>
+                <CardDateText>프로젝트 진행 기간</CardDateText>
+                <CardDate>
+                  {projectData.start_date?.substring(0, 10)} ~{" "}
+                  {projectData.finish_date?.substring(0, 10)}
+                </CardDate>
+              </CardDateDiv>
+            </CardTopDiv>
+            <CardTitle>{projectData.project_name}</CardTitle>
+            <ProjectKeywordDiv>
+              {keyword.slice(0, 3).map((tag) => (
+                <ProjectKeyword>{tag}</ProjectKeyword>
+              ))}
+            </ProjectKeywordDiv>
+          </CardContent>
+        </Container>
+      ) : (
+        <Container backGroundImg={FolderOn} onClick={projectCardClickHandler}>
+          <CardContent2>
+            <CardTopDiv2>
+              <CardImageDiv2>
+                <CardImage2
+                  src={
+                    projectData.project_image == null ||
+                      projectData.project_image == ""
+                      ? DefaultCardImg2
+                      : projectData.project_image
+                  }
+                />
+              </CardImageDiv2>
+              <CardDateDiv2>
+                <CardDateText2>프로젝트 진행 기간</CardDateText2>
+                <CardDate2>
+                  {projectData.start_date?.substring(0, 10)} ~{" "}
+                  {projectData.finish_date?.substring(0, 10)}
+                </CardDate2>
+              </CardDateDiv2>
+            </CardTopDiv2>
+            <CardTitle2>{projectData.project_name}</CardTitle2>
+          </CardContent2>
+        </Container>
+      )}
 
-        </>
-    );
+    </>
+  );
 };
 
 const mouseHover = keyframes` 
