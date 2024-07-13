@@ -15,6 +15,7 @@ const Layout = () => {
 
 const Content = styled.main`
   margin-top: 70px;
+  /* border: 1px solid black; */
 `;
 
 export default Layout;

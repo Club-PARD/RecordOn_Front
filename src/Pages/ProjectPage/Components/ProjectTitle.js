@@ -26,8 +26,8 @@ const ProjectTitle = () => {
         }
     }, [firstLoginRecoil])
 
-    console.log("experienceStateRecoil", experienceStateRecoil);
-    console.log("유저 정보", userData);
+    // console.log("experienceStateRecoil", experienceStateRecoil);
+    // console.log("유저 정보", userData);
 
     useEffect(() => {
         if (userData.user_id == null) {
@@ -37,7 +37,7 @@ const ProjectTitle = () => {
         // console.log(userData.user_id);
         const getData = async () => {
             const response = await getUserProjectDataAPI(userData.user_id);
-            console.log(response);
+            // console.log(response);
             setUserName(response?.user_name);
         }
         getData();
@@ -63,13 +63,13 @@ const ProjectTitle = () => {
                 {userName}님의
             </ProjectTitleText>
             <ProjectTitleText2>
-                프로젝트가 쌓이는 공간이에요!
+                프로젝트 저장소예요!
             </ProjectTitleText2>
             <AddProject />
 
-            {welcomeModalOn && (
+            {/* {welcomeModalOn && (
                 <WelcomeModal onClose={welcomeModalOff} />
-            )}
+            )} */}
         </ProjectTitleDiv>
     );
 };

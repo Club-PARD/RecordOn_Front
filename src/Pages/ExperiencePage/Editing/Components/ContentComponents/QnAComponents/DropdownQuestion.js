@@ -37,9 +37,9 @@ const DropdownQuestion = ({
   };
 
   useEffect(() => {
-    console.log("selectedQuesitonId: ", tmpId);
+    // console.log("selectedQuesitonId: ", tmpId);
 
-    console.log("handleSelect: " + tmpText);
+    // console.log("handleSelect: " + tmpText);
     onSelect(tmpId, tmpText);
   }, [tmpId, tmpText]);
 

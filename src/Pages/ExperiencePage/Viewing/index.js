@@ -66,7 +66,7 @@ const ViewPage = () => {
   useEffect(() => {
     if (userInfo.id != null) setExpId(userInfo.id);
     if (userInfo.user_id != "") setUserId(userInfo.user_id);
-    console.log("line 69: ", userInfo.id, userInfo.user_id);
+    // console.log("line 69: ", userInfo.id, userInfo.user_id);
   }, [userInfo]);
 
   //temp
@@ -76,18 +76,18 @@ const ViewPage = () => {
 
   useEffect(() => {
     const getRecord = async (id) => {
-      console.log(id);
+      // console.log(id);
       try {
         const response = await getOneExperienceAPI(id);
-        console.log(response.success);
+        // console.log(response.success);
         if (response) {
-          console.log(response);
+          // console.log(response);
           setAnswerObject(response.response_object);
 
           // setTempInput(response.response_object);
         }
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
     if (expId) getRecord(expId);
@@ -111,7 +111,7 @@ const ViewPage = () => {
     }
   }, [answerObject, setAnswer]);
 
-  console.log(answer);
+  // console.log(answer);
 
   // 중간 배열 생성
   const combinedArray =
@@ -218,25 +218,25 @@ const ViewPage = () => {
         keepButtonWidth="174px"
         onKeep={() => {
           // '계속 작성' 버튼 클릭 시 처리 로직
-          console.log("유지");
+          // console.log("유지");
           closeModal(); // 모달 닫기
         }}
         onDelete={async () => {
           // '삭제' 버튼 클릭 시 처리 로직
-          console.log("삭제");
-          console.log("경험: " + expId, "사용자: " + userInfo.user_id);
+          // console.log("삭제");
+          // console.log("경험: " + expId, "사용자: " + userInfo.user_id);
           try {
             const response = await deleteOneExperienceAPI(
               expId,
               userInfo.user_id
             );
-            console.log(response);
+            // console.log(response);
             setSnack({
               ...snack,
               experienceDelete: true,
             });
           } catch (error) {
-            console.log(error);
+            // console.log(error);
           }
           closeModal(); // 모달 닫기
           navigate("/experience");

@@ -24,8 +24,8 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
 
     const [isNewUser, setIsNewUser] = useState(null);
     const navigate = useNavigate();
-    console.log(userData1);
-    console.log(loginData);
+    // console.log(userData1);
+    // console.log(loginData);
 
     const [showRegisterModal, setShowRegisterModal] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogined);
@@ -38,13 +38,13 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
     const googleLogin = useGoogleLogin({
         // 구글 로그인 실행
         onSuccess: (res) => {
-            console.log(res);
-            console.log(res.access_token);
+            // console.log(res);
+            // console.log(res.access_token);
             // setAccessToken(res.access_token);
             handleLogin(res.access_token); //억세스 토큰을 로컬스토리지에 저장하고 악시오스로 구글에게 보냄.
         },
         onFailure: (err) => {
-            console.log(err);
+            // console.log(err);
             alert("구글 로그인에 실패하였습니다.");
             // navigate("/");
         },
@@ -66,7 +66,7 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
                     },
                 }
             );
-            console.log("서버 응답:", response.data);
+            // console.log("서버 응답:", response.data);
 
             // 빋은 데이터를 서버로 보내서 디비에 저장
             sendUserDataToServer({
@@ -82,13 +82,13 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
     };
 
     const sendUserDataToServer = async (userData) => {
-        console.log(userData);
+        // console.log(userData);
 
         //유저의 구글정보를 서버로 보내서 디비에 저장
         try {
             const jsonUserData = JSON.stringify(userData);
-            console.log(`${process.env.REACT_APP_DEV_URL}auth/login`);
-            console.log(jsonUserData);
+            // console.log(`${process.env.REACT_APP_DEV_URL}auth/login`);
+            // console.log(jsonUserData);
             const response = await api.post(
                 `${process.env.REACT_APP_DEV_URL}auth/login`,
                 jsonUserData,
@@ -98,15 +98,15 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
                     },
                 }
             );
-            console.log("서버 응답2:", response.data);
+            // console.log("서버 응답2:", response.data);
             // 쿠키에 토큰이 제대로 설정되는지 확인
-            console.log('Access Token:', Cookies.get('access_token'));
-            console.log('Refresh Token:', Cookies.get('refresh_token'));
+            // console.log('Access Token:', Cookies.get('access_token'));
+            // console.log('Refresh Token:', Cookies.get('refresh_token'));
 
             setIsNewUser(response.data.is_new_user);
             // console.log(userData1);
             setLoginData(userData);
-            console.log(userData);
+            // console.log(userData);
             setUserData({
                 ...userData1,
                 user_id: response.data.user_id
@@ -131,7 +131,7 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
 
 
         } catch (error) {
-            console.error("서버 요청 에러2:", error);
+            // console.error("서버 요청 에러2:", error);
             alert("유저 정보 저장에 실패하였습니다.");
             // navigate("/");
         }
@@ -139,18 +139,18 @@ const LoginButton = ({ buttonText, buttonWidth, buttonColor }) => {
 
     useEffect(() => {
         if (isNewUser == true) {
-            console.log("New User");
+            // console.log("New User");
             isFirstLoginRecoil(true);
             handleRegisterClick();
         }
         else if (isNewUser == false) {
-            console.log("Previous User");
+            // console.log("Previous User");
             setIsLoggedIn(true);
             navigate("/project");
         }
     }, [isNewUser])
 
-    console.log(buttonText);
+    // console.log(buttonText);
 
     return (
         <Container>

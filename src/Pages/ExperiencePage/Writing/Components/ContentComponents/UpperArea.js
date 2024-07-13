@@ -103,7 +103,6 @@ const Upper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
-
   margin-top: 153px;
   margin-bottom: 70px;
 `;

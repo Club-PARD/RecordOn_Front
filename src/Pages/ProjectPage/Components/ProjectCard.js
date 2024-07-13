@@ -28,7 +28,7 @@ const ProjectCard = ({ projectData }) => {
     const [projectDate, setProjectDate] = useRecoilState(recoilUserProjectDate);
     const [allowNavigate, setAllowNavigate] = useState(false);
 
-    console.log("답변 상태", answerStateRecoil);
+    // console.log("답변 상태", answerStateRecoil);
 
 
     const projectCardClickHandler = () => {
@@ -36,12 +36,12 @@ const ProjectCard = ({ projectData }) => {
             ...experienceFilter,
             project_id: projectData.project_id,
         });
-        console.log(userData);
-        console.log({
-            ...userData,
-            project_id: projectData.project_id,
-        });
-        console.log(userData);
+        // console.log(userData);
+        // console.log({
+        //     ...userData,
+        //     project_id: projectData.project_id,
+        // });
+        // console.log(userData);
         setUserData({
             ...userData,
             project_id: projectData.project_id,

@@ -16,7 +16,7 @@ const ExpTag = ({ selectedTag, onSelect }) => {
 
   useEffect(() => {
     setClickedButtonIndex(selectedTag);
-  },[selectedTag]);
+  }, [selectedTag]);
 
   const handleButtonClick = (index) => {
     if (clickedButtonIndex === index) {
@@ -26,9 +26,9 @@ const ExpTag = ({ selectedTag, onSelect }) => {
     } else {
       // 새로운 태그를 선택한 경우
       setClickedButtonIndex(index);
-  
+
     }
-    console.log ("index: " + index);
+    // console.log ("index: " + index);
     // onSelect에 현재 선택된 태그의 인덱스 전달
     onSelect(index);
   };
@@ -38,7 +38,7 @@ const ExpTag = ({ selectedTag, onSelect }) => {
       <Div>
         {/* "경험태그 > " */}
         <TitleButton>
-        <TitleDiv>경험태그<Asterisk>*</Asterisk></TitleDiv>
+          <TitleDiv>경험태그<Asterisk>*</Asterisk></TitleDiv>
           <RightArrow />
         </TitleButton>
 

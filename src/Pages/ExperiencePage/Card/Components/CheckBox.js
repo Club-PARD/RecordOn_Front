@@ -9,7 +9,7 @@ function CheckBox({ id, onSelect }) {
     setIsChecked(!isChecked);
   };
 
-  console.log(id + "isChecked: " + isChecked);
+  // console.log(id + "isChecked: " + isChecked);
 
   return (
     <Div>

@@ -98,16 +98,25 @@ const EditPage = () => {
     return urlPattern.test(url);
   };
 
+  console.log("userInfo", userInfo);
+  console.log("expId", expId);
   const handleSubmit = () => {
     setIsExpRecordSubmitted(true);
 
     if (validateTempInput(tempInput)) {
+      console.log("expId", expId);
+      console.log("tempInput", tempInput);
       setIsAllValid(true);
       editOneExpereienceAPI(expId, tempInput)
         .then(() => {
           // 성공 시 처리 로직
           // setSnack({ message: "경험이 수정되었습니다.", severity: "success" });
-          alert("대성공");
+          // alert("대성공");
+          setSnack({
+            ...snack,
+            experienceEdit: true,
+          })
+          navigate("/experience");
         })
         .catch((error) => {
           // 실패 시 처리 로직
@@ -182,12 +191,12 @@ const EditPage = () => {
         keepButtonWidth="151px"
         onKeep={() => {
           // '계속 작성' 버튼 클릭 시 처리 로직
-          console.log("계속 작성");
+          // console.log("계속 작성");
           closeModal(); // 모달 닫기
         }}
         onDelete={() => {
           // '나가기' 버튼 클릭 시 처리 로직
-          console.log("나가기");
+          // console.log("나가기");
           closeModal(); // 모달 닫기
           navigate("/experience");
         }}

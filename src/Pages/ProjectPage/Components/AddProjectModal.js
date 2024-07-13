@@ -79,7 +79,7 @@ const AddProjectModal = ({
         })
     }, [])
 
-    console.log(projectData);
+    // console.log(projectData);
 
     useEffect(() => {
         if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0 && projectData?.name !== null && projectData?.description !== null && projectData?.part !== null && projectData?.start_date !== null && projectData?.finish_date !== null) {
@@ -155,10 +155,10 @@ const AddProjectModal = ({
                 return 0;
             }
             try {
-                console.log(projectData);
+                // console.log(projectData);
                 const response = await postNewProjectAPI(projectData);
-                console.log(response);
-                console.log(response.response_object.id);
+                // console.log(response);
+                // console.log(response.response_object.id);
                 setProjectID(response.response_object.id);
                 setUserData({
                     ...userData,
@@ -180,12 +180,12 @@ const AddProjectModal = ({
                 //     start_date: response.response_object.start_date,
                 //     finish_date: response.response_object.finish_date,
                 // })
-                console.log(experienceFilter);
+                // console.log(experienceFilter);
                 if (projectData.picture !== undefined) {
                     const formData = new FormData();
                     formData.append('image', projectData.picture);
                     const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
-                    console.log(response2);
+                    // console.log(response2);
                 }
                 handleOverlayClick();
                 setSnack({
@@ -195,7 +195,7 @@ const AddProjectModal = ({
                 navigate("/experience");
             }
             catch (error) {
-                console.log(error);
+                // console.log(error);
                 handleOverlayClick();
             }
             onClose();
@@ -447,7 +447,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 &::placeholder {
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base5};
   }
 `;
 
@@ -485,7 +485,7 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 &::placeholder {
-    color: ${(props) => props.theme.color.base6};
+    color: ${(props) => props.theme.color.base5};
     white-space: pre-wrap;
   }
 `;
@@ -533,7 +533,7 @@ const ModalProjectRoleInput = styled.input.attrs({
     line-height: 18.2px;
     letter-spacing: -0.28px;
     &::placeholder {
-      color: ${(props) => props.theme.color.base6};
+      color: ${(props) => props.theme.color.base5};
     }
   `;
 
@@ -554,6 +554,7 @@ justify-content:space-between;
 font-size: ${(props) => props.theme.fontSizes.TextM};
 font-weight: ${(props) => props.theme.fontWeights.TextM};
 flex-direction:row;
+
 `;
 
 const ModalProjectDateCalendar = styled.div`
@@ -562,6 +563,9 @@ height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 justify-content: space-between;
+&::placeholder {
+    color: ${(props) => props.theme.color.base5};
+  }
 `;
 
 const ProjectDateWrapper = styled.div`
@@ -570,6 +574,7 @@ height: 40px;
 /* border: 1px solid black; */
 flex-direction: row;
 justify-content: start;
+
 
 
 /* DatePicker에 직접 하면 적용이 안된다.. */
@@ -685,6 +690,9 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 text-align: center;
+&::placeholder {
+    color: ${(props) => props.theme.color.base5};
+  }
 `
 
 
@@ -710,6 +718,9 @@ font-weight: ${(props) => props.theme.fontWeights.TextS};
 line-height: 18.2px;
 letter-spacing: -0.28px;
 text-align: center;
+&::placeholder {
+    color: ${(props) => props.theme.color.base5};
+  }
 `
 
 const ModalProjectImage = styled.div`

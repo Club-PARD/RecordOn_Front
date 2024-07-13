@@ -33,7 +33,7 @@ const DropdownQuestion = ({
 
   useEffect(() => {
     if (selectedQuestionId !== null) {
-      console.log("handleSelect: " + selectedQuestionId);
+      // console.log("handleSelect: " + selectedQuestionId);
       onSelect(selectedQuestionId);
     }
   }, [selectedQuestionId]);

@@ -22,9 +22,9 @@ const ExpTag = ({ onSelect }) => {
     } else {
       // 새로운 태그를 선택한 경우
       setClickedButtonIndex(index);
-  
+
     }
-    console.log ("index: " + index);
+    // console.log ("index: " + index);
     // onSelect에 현재 선택된 태그의 인덱스 전달
     onSelect(index);
   };
