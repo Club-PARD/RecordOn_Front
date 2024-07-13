@@ -113,7 +113,6 @@ const UppderPart = styled.div`
   flex-direction: row;
   align-self: flex-start;
   justify-content: space-between;
-  gap
   width: ${({ width }) => width};
 `;
 
