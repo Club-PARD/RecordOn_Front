@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
-import { answerState, experienceState } from "../../../Atom/ExpRecordAtom";
+import { answerState, experienceState, tempInputState } from "../../../Atom/ExpRecordAtom";
 import Toast from "../../../Common/Toast";
 import useWindowSize from "../../../Common/useWindowSize";
 
@@ -41,6 +41,9 @@ const AddProjectModal = ({
     const [answerStateRecoil, setAnswerStateRecoil] = useRecoilState(answerState);
     const [snack, setSnack] = useRecoilState(recoilSnack);
     const [projectDate, setProjectDate] = useRecoilState(recoilUserProjectDate);
+    const [temp, setTemp] = useRecoilState(tempInputState);
+
+
 
     const [valid, setValid] = useState(false);
     const navigate = useNavigate();
@@ -174,6 +177,10 @@ const AddProjectModal = ({
                 })
                 setAnswerStateRecoil({
                     ...answerStateRecoil,
+                    projects_id: response.response_object.id,
+                })
+                setTemp({
+                    ...temp,
                     projects_id: response.response_object.id,
                 })
                 // setProjectDate({

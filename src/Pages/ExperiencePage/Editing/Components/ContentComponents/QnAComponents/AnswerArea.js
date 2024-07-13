@@ -166,7 +166,7 @@ const AnswerArea = () => {
 
     const selectedQuestionIds = updatedSections
       .filter((section) => section.selectedQuestionId !== null)
-      .map((section) => section.selectedQuestionId); // 태그 ID는 그대로 사용
+      .map((section) => section.selectedQuestionId + 1); // 태그 ID는 그대로 사용
 
     setTempInput({
       ...tempInput,
@@ -244,8 +244,8 @@ const AnswerArea = () => {
             disabled={!section.isQuestionSelected}
             placeholder={
               section.id === 0
-                ? "첫 번째 질문부터 답하면 작성하는 데 도움이 될거예요!"
-                : ""
+                ? "경험들을 차곡차곡 모아두면, 자기소개서를 작성할 때 필요한 경험들을 즉시 꺼내볼 수 있어요."
+                : "경험들을 차곡차곡 모아두면, 자기소개서를 작성할 때 필요한 경험들을 즉시 꺼내볼 수 있어요."
             }
           />{" "}
         </SectionWrapper>
@@ -298,7 +298,7 @@ const TextAreaWidth = styled.textarea`
 
   &::placeholder {
     color: ${({ isQuestionSelected, theme }) =>
-    isQuestionSelected ? theme.color.base6 : theme.color.base3};
+    isQuestionSelected ? theme.color.base5 : theme.color.base3};
   }
 `;
 

@@ -7,7 +7,7 @@ import { isFirstLogin, isLogined, recoilExperiencePagination, recoilLoginData, r
 import LoginButton from "../Pages/Home/Components/LoginButton";
 import Logout from "../Assets/Logout.svg"
 import { handleRegisterDataSubmit } from "../Atom/RegisterDataAtom";
-import { answerState, experienceState, handleExpRecordEditSubmit, handleExpRecordSubmit } from "../Atom/ExpRecordAtom";
+import { answerState, experienceState, handleExpRecordEditSubmit, handleExpRecordSubmit, tempInputState } from "../Atom/ExpRecordAtom";
 import Toast from "./Toast";
 import useWindowSize from "./useWindowSize";
 import DeleteModal from "./DeleteModal";
@@ -24,7 +24,9 @@ const Header = () => {
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const { height } = useWindowSize();
-  // console.log(height);
+  const [temp, setTemp] = useRecoilState(tempInputState);
+
+  console.log("temp", temp);
 
 
   const resetIsLogined = useResetRecoilState(isLogined);
@@ -44,6 +46,8 @@ const Header = () => {
   const resetRecoilSnack = useResetRecoilState(recoilSnack);
   const resetHandleExpRecordSubmit = useResetRecoilState(handleExpRecordSubmit);
   const resetHandleExpRecordEditSubmit = useResetRecoilState(handleExpRecordEditSubmit);
+  const resetTempInputState = useResetRecoilState(tempInputState);
+
 
 
 
@@ -86,7 +90,7 @@ const Header = () => {
   const handleLogoClick = () => {
     if (location.pathname === "/writing") {
       openModal();
-    } 
+    }
     else if (location.pathname === "/edit") {
       openEditModal();
     }
@@ -94,7 +98,7 @@ const Header = () => {
       navigate("/project");
     }
   };
- /* 여기까지 예은이가 한 부분 */
+  /* 여기까지 예은이가 한 부분 */
 
   // 스크롤시 box shadow 나타나게 함
   useEffect(() => {
@@ -151,6 +155,7 @@ const Header = () => {
     resetIsFirstLogin();
     resetRecoilSnack();
     resetHandleExpRecordEditSubmit();
+    resetTempInputState();
     setProfileClicked(false)
     setIsLoggedIn(false);
   };
@@ -262,47 +267,47 @@ const Header = () => {
           height={`${height}px`}
         />
       )}
-     {/* 글 작성 중 로고 클릭할 경우 */}
+      {/* 글 작성 중 로고 클릭할 경우 */}
       {isDeleteModalOpen && (
         <DeleteModal isOpen={isDeleteModalOpen}
-        onClose={closeModal} // 모달 닫기 함수 설정
-        bigAlertText1="중단하신 기록은"
-        bigAlertText2="저장되지 않습니다."
-        smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
-        keepButtonText="남아서 기록하기"
-        deleteButtonText="나가기"
-        keepButtonWidth="151px"
-        onKeep={() => {
-          console.log("계속 작성");
-          closeModal();
-        }}
-        onDelete={() => {
-          console.log("나가기");
-          resetExperienceState(setExperience, setIsExpRecordSubmitted);
-          closeModal(); // 모달 닫기
-          navigate("/experience");
-        }}/>
-      )} 
+          onClose={closeModal} // 모달 닫기 함수 설정
+          bigAlertText1="중단하신 기록은"
+          bigAlertText2="저장되지 않습니다."
+          smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
+          keepButtonText="남아서 기록하기"
+          deleteButtonText="나가기"
+          keepButtonWidth="151px"
+          onKeep={() => {
+            console.log("계속 작성");
+            closeModal();
+          }}
+          onDelete={() => {
+            console.log("나가기");
+            resetExperienceState(setExperience, setIsExpRecordSubmitted);
+            closeModal(); // 모달 닫기
+            navigate("/experience");
+          }} />
+      )}
       {/* 글 수정 중 로고 클릭할 경우 */}
       {isEditModalOpen && (
         <DeleteModal isOpen={isEditModalOpen}
-        onClose={closeEditModal} // 모달 닫기 함수 설정
-        bigAlertText1="중단하신 기록은"
-        bigAlertText2="저장되지 않습니다."
-        smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
-        keepButtonText="남아서 기록하기"
-        deleteButtonText="나가기"
-        keepButtonWidth="151px"
-        onKeep={() => {
-          console.log("계속 작성");
-          closeEditModal();
-        }}
-        onDelete={() => {
-          console.log("나가기");
-          closeEditModal(); // 모달 닫기
-          navigate("/experience");
-        }}/>
-      )} 
+          onClose={closeEditModal} // 모달 닫기 함수 설정
+          bigAlertText1="중단하신 기록은"
+          bigAlertText2="저장되지 않습니다."
+          smallAlertText="경험 기록 페이지에서 정말 나가시겠습니까?"
+          keepButtonText="남아서 기록하기"
+          deleteButtonText="나가기"
+          keepButtonWidth="151px"
+          onKeep={() => {
+            console.log("계속 작성");
+            closeEditModal();
+          }}
+          onDelete={() => {
+            console.log("나가기");
+            closeEditModal(); // 모달 닫기
+            navigate("/experience");
+          }} />
+      )}
     </HeaderContainer>
   );
 };
