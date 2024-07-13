@@ -28,10 +28,12 @@ const WritingPage = () => {
   const openModal = () => {
     setIsModalOpen(true);
     setIsExpRecordSubmitted(false);
+    setIsUpdated(false);
   };
   const closeModal = () => {
     setIsModalOpen(false);
     setIsExpRecordSubmitted(false);
+    setIsUpdated(false);
   };
 
   const handleSubmit = async () => {
@@ -118,11 +120,11 @@ const WritingPage = () => {
   const validateReferenceLinks = (referenceLinks, errors) => {
     const urlPattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
       "i"
     ); // fragment locator
     if (!Array.isArray(referenceLinks)) {
@@ -172,7 +174,7 @@ const WritingPage = () => {
           setSnack({
             ...snack,
             experienceValidation: true,
-          })
+          });
           setIsExpRecordSubmitted(false);
           setIsUpdated(false);
           return;
@@ -237,7 +239,6 @@ const WritingPage = () => {
         }}
         onDelete={() => {
           // console.log("나가기");
-          resetExperienceState(setExperience, setIsExpRecordSubmitted);
           closeModal(); // 모달 닫기
           navigate("/experience");
         }}
