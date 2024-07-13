@@ -23,8 +23,8 @@ const ExperienceCardGrid = () => {
 
 
     // console.log(visibleCardStart, visibleCardEnd);
-    console.log(userExperienceData);
-    console.log(experienceFilter);
+    // console.log(userExperienceData);
+    // console.log(experienceFilter);
 
 
 
@@ -36,9 +36,9 @@ const ExperienceCardGrid = () => {
 
     useEffect(() => {
         const getData = async () => {
-            console.log(experienceFilter);
+            // console.log(experienceFilter);
             const response = await getUserExperienceDataFilteredAPI(experienceFilter);
-            console.log(response);
+            // console.log(response);
             const cardArray = Array.from({ length: response?.length }, (_, index) => index);
             setExperienceCardNum(cardArray);
             setExperienceNum(response?.length);

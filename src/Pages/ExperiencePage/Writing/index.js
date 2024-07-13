@@ -150,20 +150,20 @@ const WritingPage = () => {
   };
 
   const submitData = async () => {
-    console.log(
-      "유저 및 프로젝트 정보: ",
-      experience.user_id,
-      experience.projects_id
-    );
+    // console.log(
+    //   "유저 및 프로젝트 정보: ",
+    //   experience.user_id,
+    //   experience.projects_id
+    // );
 
     if (isExpRecordSubmitted && isUpdated) {
       try {
         await checkUserAndProjectInfo();
-        console.log(
-          "유저 및 프로젝트 정보: ",
-          experience.user_id,
-          experience.projects_id
-        );
+        // console.log(
+        //   "유저 및 프로젝트 정보: ",
+        //   experience.user_id,
+        //   experience.projects_id
+        // );
 
         // 유효성 검사 추가
         const errors = validateExperience(experience);
@@ -179,14 +179,14 @@ const WritingPage = () => {
         }
 
         const response = await postExperienceAPI(experience);
-        console.log("request successful: ", response);
+        // console.log("request successful: ", response);
         setSnack((prevSnack) => ({
           ...prevSnack,
           experienceAdd: true,
         }));
         navigate("/experience");
       } catch (error) {
-        console.error("request failed: ", error);
+        // console.error("request failed: ", error);
         setIsExpRecordSubmitted(false);
         setIsUpdated(false);
       }
@@ -232,11 +232,11 @@ const WritingPage = () => {
         deleteButtonText="나가기"
         keepButtonWidth="151px"
         onKeep={() => {
-          console.log("계속 작성");
+          // console.log("계속 작성");
           closeModal();
         }}
         onDelete={() => {
-          console.log("나가기");
+          // console.log("나가기");
           resetExperienceState(setExperience, setIsExpRecordSubmitted);
           closeModal(); // 모달 닫기
           navigate("/experience");

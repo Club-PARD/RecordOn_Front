@@ -40,7 +40,7 @@ const EditProjectModal = ({
     const [toast, setToast] = useState(false);
     const { height } = useWindowSize();
 
-    console.log(projectData);
+    // console.log(projectData);
 
     const userInputHandler = (e) => [
         setProjectData({
@@ -68,8 +68,8 @@ const EditProjectModal = ({
 
 
     useEffect(() => {
-        console.log(projectData?.finish_date?.length !== 0);
-        if (projectData?.name !== undefined && projectData?.description !== undefined && projectData?.part !== undefined && projectData?.start_date !== undefined && projectData?.finish_date !== undefined && projectData?.name?.length !== 0 && projectData?.description?.length !== 0 && projectData?.part?.length !== 0 && projectData?.start_date?.length !== 0 && projectData?.finish_date?.length !== 0 && projectData?.name !== null && projectData?.description !== null && projectData?.part !== null && projectData?.start_date !== null && projectData?.finish_date !== null) {
+        // console.log(projectData.finish_date?.length !== 0);
+        if (projectData.name !== undefined && projectData.description !== undefined && projectData.part !== undefined && projectData.start_date !== undefined && projectData.finish_date !== undefined && projectData.name?.length !== 0 && projectData.description?.length !== 0 && projectData.part?.length !== 0 && projectData.start_date?.length !== 0 && projectData.finish_date?.length !== 0 && projectData?.name !== null && projectData?.description !== null && projectData?.part !== null && projectData?.start_date !== null && projectData?.finish_date !== null) {
             setValid(true);
         }
         else {
@@ -134,14 +134,14 @@ const EditProjectModal = ({
             }
             try {
                 const response = await updateProjectAPI(projectId.project_id, projectData);
-                console.log(response);
+                // console.log(response);
 
                 // 이미지가 수정되었을 경우에만 업로드 
                 if (imageChanged) {
                     const formData = new FormData();
                     formData.append('image', projectData?.picture);
                     const response2 = await postNewProjectImageAPI(formData, response.response_object.id);
-                    console.log(response2);
+                    // console.log(response2);
                 }
                 setUserData({
                     ...userData,
@@ -156,7 +156,7 @@ const EditProjectModal = ({
                 navigate("/experience");
             }
             catch (error) {
-                console.log(error);
+                // console.log(error);
                 handleOverlayClick();
             }
             onClose();

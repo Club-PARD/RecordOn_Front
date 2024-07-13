@@ -17,8 +17,8 @@ const CheckboxGrid = () => {
   const putProjectTagHandler = async () => {
     try {
       const response = await putProjectTagAPI(userData, checkedItems);
-      console.log('Checkboxes Put:', checkedItems);
-      console.log(response + "///");
+      // console.log('Checkboxes Put:', checkedItems);
+      // console.log(response + "///");
       setProjectFilter({
         ...projectFilter,
         competency_tag_name: [],
@@ -28,7 +28,7 @@ const CheckboxGrid = () => {
       })
       navigate("/project");
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   };
 
@@ -47,7 +47,7 @@ const CheckboxGrid = () => {
   };
 
   useEffect(() => {
-    console.log('Selected checkboxes:', checkedItems);
+    // console.log('Selected checkboxes:', checkedItems);
   }, [checkedItems]);
 
   const isFormValid = (checkedItems.length === 0);

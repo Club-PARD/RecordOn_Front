@@ -45,13 +45,13 @@ const LowerArea = () => {
 
   // 자유란 변경 상태 관리
   const handleFreeChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     // setFreeContent(e.target.value);
     setTempInput({
       ...tempInput,
       free_content: e.target.value,
     }
-   );
+    );
   };
 
   // 링크 입력 값 변경 핸들러
@@ -113,7 +113,7 @@ const LowerArea = () => {
     }
   }, [isExpRecordSubmitted, freeContent, linkArea, setTempInput]);
 
-  console.log("tempInput", tempInput);
+  // console.log("tempInput", tempInput);
 
   return (
     <>
